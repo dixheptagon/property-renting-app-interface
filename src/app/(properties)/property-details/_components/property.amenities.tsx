@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Wifi, Tv, Wind, Car, UtensilsCrossed, Waves } from 'lucide-react';
+import React, { useState } from "react";
+import { Wifi, Tv, Wind, Car, UtensilsCrossed, Waves } from "lucide-react";
 
 export default function PropertyAmenities() {
   const [showAmenities, setShowAmenities] = useState(false);
 
   // Sample data - ganti dengan data dari API lo
   const amenities = [
-    { icon: Wifi, label: 'Free WiFi' },
-    { icon: Tv, label: 'Smart TV' },
-    { icon: Wind, label: 'Air Conditioning' },
-    { icon: Car, label: 'Free Parking' },
-    { icon: UtensilsCrossed, label: 'Kitchen' },
-    { icon: Waves, label: 'Swimming Pool' },
-    { icon: Car, label: 'Free Parking' },
-    { icon: UtensilsCrossed, label: 'Kitchen' },
-    { icon: Waves, label: 'Swimming Pool' },
+    { icon: Wifi, label: "Free WiFi" },
+    { icon: Tv, label: "Smart TV" },
+    { icon: Wind, label: "Air Conditioning" },
+    { icon: Car, label: "Free Parking" },
+    { icon: UtensilsCrossed, label: "Kitchen" },
+    { icon: Waves, label: "Swimming Pool" },
+    { icon: Car, label: "Free Parking" },
+    { icon: UtensilsCrossed, label: "Kitchen" },
+    { icon: Waves, label: "Swimming Pool" },
   ];
 
   // Show only 6 amenities by default
   const displayedAmenities = showAmenities ? amenities : amenities.slice(0, 6);
 
   return (
-    <div className="mx-auto max-w-7xl">
+    <div id="amenities">
       {/* Amenities */}
-      <div className="rounded-xl bg-white p-6 shadow-md">
+      <div className="rounded-xl border-2 bg-white p-6 shadow-md">
         <h2 className="mb-4 text-xl font-bold text-gray-900">Amenities</h2>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {displayedAmenities.map((amenity, index) => {
@@ -50,7 +50,7 @@ export default function PropertyAmenities() {
             onClick={() => setShowAmenities(!showAmenities)}
             className="mt-4 font-medium text-blue-500 transition-colors hover:text-blue-700"
           >
-            {showAmenities ? 'Show Less' : 'Show More'}
+            {showAmenities ? "Show Less" : "Show More"}
           </button>
         )}
       </div>

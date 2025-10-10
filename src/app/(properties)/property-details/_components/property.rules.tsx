@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Ban, PawPrint, Clock, Users, Music, Home } from 'lucide-react';
+import React, { useState } from "react";
+import { Ban, PawPrint, Clock, Users, Music, Home } from "lucide-react";
 
 export default function PropertyRules() {
   const [showRules, setShowRules] = useState(false);
 
   // Sample data - ganti dengan data dari API lo
   const rules = [
-    { icon: Ban, label: 'No Smoking' },
-    { icon: PawPrint, label: 'No Pets' },
-    { icon: Clock, label: 'Check-in after 3 PM' },
-    { icon: Users, label: 'Max 4 guests' },
-    { icon: Music, label: 'No loud music' },
-    { icon: Home, label: 'No outside guests' },
-    { icon: Ban, label: 'No Smoking' },
-    { icon: PawPrint, label: 'No Pets' },
-    { icon: Clock, label: 'Check-in after 3 PM' },
+    { icon: Ban, label: "No Smoking" },
+    { icon: PawPrint, label: "No Pets" },
+    { icon: Clock, label: "Check-in after 3 PM" },
+    { icon: Users, label: "Max 4 guests" },
+    { icon: Music, label: "No loud music" },
+    { icon: Home, label: "No outside guests" },
+    { icon: Ban, label: "No Smoking" },
+    { icon: PawPrint, label: "No Pets" },
+    { icon: Clock, label: "Check-in after 3 PM" },
   ];
 
   // Show only 6 rules by default
   const displayedRules = showRules ? rules : rules.slice(0, 6);
 
   return (
-    <div className="mx-auto max-w-7xl py-5">
+    <div className="" id="rules">
       {/* Amenities */}
-      <div className="rounded-xl bg-white p-6 shadow-md">
+      <div className="rounded-xl border-2 bg-white p-6 shadow-md">
         <h2 className="mb-4 text-xl font-bold text-gray-900">Rules</h2>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {displayedRules.map((rule, index) => {
@@ -48,7 +48,7 @@ export default function PropertyRules() {
             onClick={() => setShowRules(!showRules)}
             className="mt-4 font-medium text-blue-500 transition-colors hover:text-blue-700"
           >
-            {showRules ? 'Show Less' : 'Show More'}
+            {showRules ? "Show Less" : "Show More"}
           </button>
         )}
       </div>

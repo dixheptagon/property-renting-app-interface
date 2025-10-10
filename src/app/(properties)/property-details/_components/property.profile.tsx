@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Star } from 'lucide-react';
+import React, { useState } from "react";
+import { Star } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from "@/components/ui/tooltip";
 
 export default function PropertyProfile() {
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -14,17 +14,17 @@ export default function PropertyProfile() {
 
   // Sample data - ganti dengan data dari API lo
   const property = {
-    title: 'Luxury Apartment with Ocean View',
-    category: 'Apartment',
-    address: 'Jl. Sudirman No. 123',
-    city: 'Jakarta Selatan',
-    country: 'Indonesia',
-    postalCode: '12190',
+    title: "Luxury Apartment with Ocean View",
+    category: "Apartment",
+    address: "Jl. Sudirman No. 123",
+    city: "Jakarta Selatan",
+    country: "Indonesia",
+    postalCode: "12190",
     description:
       "Experience luxury living in this stunning apartment featuring breathtaking ocean views. This modern space offers a perfect blend of comfort and style, with floor-to-ceiling windows that flood the rooms with natural light. The apartment is fully furnished with high-end amenities and designer furniture. Located in the heart of the city, you'll have easy access to shopping centers, restaurants, and entertainment venues. Perfect for both short and long-term stays. The space includes a fully equipped kitchen, spacious living area, comfortable bedroom, and a modern bathroom. Enjoy sunset views from your private balcony while sipping your favorite beverage.",
     host: {
-      name: 'John Doe',
-      contact: '+62 812 3456 7890',
+      name: "John Doe",
+      contact: "+62 812 3456 7890",
     },
     rating: 4.8,
     reviews: 127,
@@ -34,23 +34,23 @@ export default function PropertyProfile() {
 
   const truncateTitle = (text: string, maxLength = 35) => {
     if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
+    return text.substring(0, maxLength) + "...";
   };
 
   const truncateAddress = (text: string, maxLength = 85) => {
     if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
+    return text.substring(0, maxLength) + "...";
   };
 
   const truncateDescription = (text: string, maxLength = 200) => {
     if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
+    return text.substring(0, maxLength) + "...";
   };
 
   return (
-    <div className="mx-auto max-w-7xl py-10">
+    <div className="space-y-8" id="profile">
       {/* Title and Rating Section */}
-      <div className="rounded-xl bg-white p-6 shadow-md">
+      <div className="rounded-xl border-2 bg-white p-6 shadow-md">
         <div className="mb-4 flex items-start justify-between">
           <div>
             <div className="mb-2 flex items-center gap-3">
@@ -77,7 +77,7 @@ export default function PropertyProfile() {
                 onClick={() => setShowFullAddress(!showFullAddress)}
                 className="mt-3 font-medium text-blue-600 transition-colors hover:text-blue-700"
               >
-                {showFullAddress ? 'Show less' : 'Show detail'}
+                {showFullAddress ? "Show less" : "Show detail"}
               </button>
             )}
           </div>
@@ -112,7 +112,7 @@ export default function PropertyProfile() {
       </div>
 
       {/* Description Section */}
-      <div className="rounded-xl bg-white p-6 shadow-md">
+      <div className="rounded-xl border-2 bg-white p-6 shadow-md">
         <h2 className="mb-4 text-xl font-bold text-gray-900">Description</h2>
         <p className="leading-relaxed text-gray-700">
           {showFullDescription
@@ -124,7 +124,7 @@ export default function PropertyProfile() {
             onClick={() => setShowFullDescription(!showFullDescription)}
             className="mt-3 font-medium text-blue-500 transition-colors hover:text-blue-700"
           >
-            {showFullDescription ? 'Show less' : 'Read more'}
+            {showFullDescription ? "Show less" : "Read more"}
           </button>
         )}
       </div>

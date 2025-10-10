@@ -1,12 +1,12 @@
-'use client';
-import React, { useState } from 'react';
-import { MapPin, Navigation, ExternalLink } from 'lucide-react';
+"use client";
+import React, { useState } from "react";
+import { MapPin, Navigation, ExternalLink } from "lucide-react";
 
 export default function PropertyLocation({
-  address = 'Jl. Sudirman No. 123',
-  city = 'Jakarta Selatan',
-  country = 'Indonesia',
-  postalCode = '12190',
+  address = "Jl. Sudirman No. 123",
+  city = "Jakarta Selatan",
+  country = "Indonesia",
+  postalCode = "12190",
   latitude = -8.70492838459429,
   longitude = 115.18387623594676,
 }) {
@@ -25,7 +25,7 @@ export default function PropertyLocation({
   const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
 
   return (
-    <div className="mx-auto my-10 max-w-7xl">
+    <div className="" id="location">
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-md">
         <h2 className="mb-6 text-2xl font-bold text-gray-900">Location</h2>
 

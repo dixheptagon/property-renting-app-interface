@@ -1,13 +1,7 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -66,7 +60,7 @@ body {
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
+  --primary: oklch(62.3% 0.214 259.815);
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
@@ -134,4 +128,14 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Scroll offset for sticky navbar */
+#photos,
+#amenities,
+#rules,
+#room-type,
+#location,
+#reviews-ratings {
+  scroll-margin-top: 5rem; /* 80px - accounts for navbar height + padding */
 }

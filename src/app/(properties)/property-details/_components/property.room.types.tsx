@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Wifi, Tv, Wind, Car, UtensilsCrossed, Waves } from 'lucide-react';
+import React, { useState } from "react";
+import { Wifi, Tv, Wind, Car, UtensilsCrossed, Waves } from "lucide-react";
 import {
   Users,
   Bed,
@@ -12,12 +12,12 @@ import {
   ChevronLeft,
   ChevronRight,
   Check,
-} from 'lucide-react';
+} from "lucide-react";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from '@/components/ui/popover';
+} from "@/components/ui/popover";
 
 export default function PropertyRoomTypes() {
   // Selected Room State
@@ -31,89 +31,89 @@ export default function PropertyRoomTypes() {
   const rooms = [
     {
       id: 1,
-      name: 'Deluxe Ocean View',
+      name: "Deluxe Ocean View",
       description:
-        'Spacious room with stunning ocean views, perfect for couples or small families. Features modern amenities and elegant design.',
+        "Spacious room with stunning ocean views, perfect for couples or small families. Features modern amenities and elegant design.",
       guest: 2,
       bedroom: 1,
       bed: 1,
       bathroom: 1,
       images: [
-        'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80',
-        'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=80',
-        'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80',
+        "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80",
+        "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=80",
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80",
       ],
       Highlight: [
-        { icon: Wifi, label: 'Free WiFi' },
-        { icon: Tv, label: 'Smart TV' },
-        { icon: Wind, label: 'Air Conditioning' },
-        { icon: Car, label: 'Free Parking' },
-        { icon: UtensilsCrossed, label: 'Kitchen' },
-        { icon: Waves, label: 'Swimming Pool' },
-        { icon: Car, label: 'Free Parking' },
-        { icon: UtensilsCrossed, label: 'Kitchen' },
-        { icon: Waves, label: 'Swimming Pool' },
-        { icon: Wifi, label: 'Free WiFi' },
-        { icon: Tv, label: 'Smart TV' },
-        { icon: Wind, label: 'Air Conditioning' },
-        { icon: Car, label: 'Free Parking' },
-        { icon: UtensilsCrossed, label: 'Kitchen' },
-        { icon: Waves, label: 'Swimming Pool' },
-        { icon: Car, label: 'Free Parking' },
-        { icon: UtensilsCrossed, label: 'Kitchen' },
-        { icon: Waves, label: 'Swimming Pool' },
+        { icon: Wifi, label: "Free WiFi" },
+        { icon: Tv, label: "Smart TV" },
+        { icon: Wind, label: "Air Conditioning" },
+        { icon: Car, label: "Free Parking" },
+        { icon: UtensilsCrossed, label: "Kitchen" },
+        { icon: Waves, label: "Swimming Pool" },
+        { icon: Car, label: "Free Parking" },
+        { icon: UtensilsCrossed, label: "Kitchen" },
+        { icon: Waves, label: "Swimming Pool" },
+        { icon: Wifi, label: "Free WiFi" },
+        { icon: Tv, label: "Smart TV" },
+        { icon: Wind, label: "Air Conditioning" },
+        { icon: Car, label: "Free Parking" },
+        { icon: UtensilsCrossed, label: "Kitchen" },
+        { icon: Waves, label: "Swimming Pool" },
+        { icon: Car, label: "Free Parking" },
+        { icon: UtensilsCrossed, label: "Kitchen" },
+        { icon: Waves, label: "Swimming Pool" },
       ],
     },
     {
       id: 2,
-      name: 'Premium Suite',
+      name: "Premium Suite",
       description:
-        'Luxurious suite with separate living area and bedroom. Ideal for extended stays with maximum comfort and privacy.',
+        "Luxurious suite with separate living area and bedroom. Ideal for extended stays with maximum comfort and privacy.",
       guest: 4,
       bedroom: 2,
       bed: 2,
       bathroom: 2,
       images: [
-        'https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800&q=80',
-        'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80',
-        'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800&q=80',
+        "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800&q=80",
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
+        "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800&q=80",
       ],
       Highlight: [
-        { icon: Wifi, label: 'Free WiFi' },
-        { icon: Tv, label: 'Smart TV' },
-        { icon: Wind, label: 'Air Conditioning' },
-        { icon: Car, label: 'Free Parking' },
-        { icon: UtensilsCrossed, label: 'Kitchen' },
-        { icon: Waves, label: 'Swimming Pool' },
-        { icon: Car, label: 'Free Parking' },
-        { icon: UtensilsCrossed, label: 'Kitchen' },
-        { icon: Waves, label: 'Swimming Pool' },
+        { icon: Wifi, label: "Free WiFi" },
+        { icon: Tv, label: "Smart TV" },
+        { icon: Wind, label: "Air Conditioning" },
+        { icon: Car, label: "Free Parking" },
+        { icon: UtensilsCrossed, label: "Kitchen" },
+        { icon: Waves, label: "Swimming Pool" },
+        { icon: Car, label: "Free Parking" },
+        { icon: UtensilsCrossed, label: "Kitchen" },
+        { icon: Waves, label: "Swimming Pool" },
       ],
     },
     {
       id: 3,
-      name: 'Family Room',
+      name: "Family Room",
       description:
-        'Perfect for families with children. Spacious layout with multiple beds and kid-friendly amenities for a comfortable stay.',
+        "Perfect for families with children. Spacious layout with multiple beds and kid-friendly amenities for a comfortable stay.",
       guest: 6,
       bedroom: 3,
       bed: 3,
       bathroom: 2,
       images: [
-        'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80',
-        'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80',
-        'https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=80',
+        "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80",
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80",
+        "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=80",
       ],
       Highlight: [
-        { icon: Wifi, label: 'Free WiFi' },
-        { icon: Tv, label: 'Smart TV' },
-        { icon: Wind, label: 'Air Conditioning' },
-        { icon: Car, label: 'Free Parking' },
-        { icon: UtensilsCrossed, label: 'Kitchen' },
-        { icon: Waves, label: 'Swimming Pool' },
-        { icon: Car, label: 'Free Parking' },
-        { icon: UtensilsCrossed, label: 'Kitchen' },
-        { icon: Waves, label: 'Swimming Pool' },
+        { icon: Wifi, label: "Free WiFi" },
+        { icon: Tv, label: "Smart TV" },
+        { icon: Wind, label: "Air Conditioning" },
+        { icon: Car, label: "Free Parking" },
+        { icon: UtensilsCrossed, label: "Kitchen" },
+        { icon: Waves, label: "Swimming Pool" },
+        { icon: Car, label: "Free Parking" },
+        { icon: UtensilsCrossed, label: "Kitchen" },
+        { icon: Waves, label: "Swimming Pool" },
       ],
     },
   ];
@@ -139,11 +139,11 @@ export default function PropertyRoomTypes() {
   const handleSelectRoom = (roomId: number) => {
     // Logic untuk select room - bisa integrate dengan state management lo
     setSelectedRoom(roomId);
-    console.log('Selected room:', roomId);
+    console.log("Selected room:", roomId);
   };
 
   return (
-    <div className="mx-auto max-w-7xl">
+    <div className="" id="room-type">
       <h2 className="mb-8 text-3xl font-bold text-gray-900">
         Choose Your Room
       </h2>
@@ -153,10 +153,10 @@ export default function PropertyRoomTypes() {
         {rooms.map((room) => (
           <div
             key={room.id}
-            className={`overflow-hidden rounded-xl border-2 bg-white transition-all duration-300 ${
+            className={`overflow-hidden rounded-xl border-2 bg-white shadow-md transition-all duration-300 ${
               selectedRoom === room.id
-                ? 'border-green-500 shadow-lg shadow-green-100'
-                : 'border-gray-200 hover:border-blue-300 hover:shadow-md'
+                ? "border-green-500 shadow-lg shadow-green-100"
+                : "border-gray-200 hover:border-blue-300 hover:shadow-md"
             }`}
           >
             <div className="grid grid-cols-1 gap-6 p-6 lg:grid-cols-3">
@@ -301,8 +301,8 @@ export default function PropertyRoomTypes() {
                   disabled={selectedRoom === room.id}
                   className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all duration-200 ${
                     selectedRoom === room.id
-                      ? 'cursor-default bg-green-500 text-white'
-                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                      ? "cursor-default bg-green-500 text-white"
+                      : "bg-blue-600 text-white hover:bg-blue-700"
                   }`}
                 >
                   {selectedRoom === room.id ? (
@@ -311,7 +311,7 @@ export default function PropertyRoomTypes() {
                       Selected
                     </>
                   ) : (
-                    'Select'
+                    "Select"
                   )}
                 </button>
               </div>
@@ -379,8 +379,8 @@ export default function PropertyRoomTypes() {
                   onClick={() => setCurrentImageIndex(index)}
                   className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                     currentImageIndex === index
-                      ? 'opacity-100 ring-2 ring-white'
-                      : 'opacity-50 hover:opacity-75'
+                      ? "opacity-100 ring-2 ring-white"
+                      : "opacity-50 hover:opacity-75"
                   }`}
                 >
                   <img

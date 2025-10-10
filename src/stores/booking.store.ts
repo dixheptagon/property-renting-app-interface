@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { useState } from "react";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface Room {
   id: string;
@@ -38,8 +38,8 @@ export const useBookingStore = create<BookingState>()(
       propertyId: null,
       propertyName: null,
       selectedRoom: null,
-      checkInDate: '',
-      checkOutDate: '',
+      checkInDate: "",
+      checkOutDate: "",
       guests: 2,
       totalNights: 0,
       subtotal: 0,
@@ -97,8 +97,8 @@ export const useBookingStore = create<BookingState>()(
           propertyId: null,
           propertyName: null,
           selectedRoom: null,
-          checkInDate: '',
-          checkOutDate: '',
+          checkInDate: "",
+          checkOutDate: "",
           guests: 2,
           totalNights: 0,
           subtotal: 0,
@@ -108,7 +108,7 @@ export const useBookingStore = create<BookingState>()(
         }),
     }),
     {
-      name: 'booking-storage',
+      name: "booking-storage",
     }
   )
 );
@@ -116,22 +116,22 @@ export const useBookingStore = create<BookingState>()(
 // ============================================
 // MOCK STORE FOR DEMO - Remove this when using real Zustand
 // ============================================
-export const useMockBookingStore = () => {
-  const [state] = useState({
-    selectedRoom: {
-      id: '1',
-      name: 'Deluxe Ocean View',
-      type: 'Deluxe',
-      pricePerNight: 850000,
-    },
-    checkInDate: '2025-10-31',
-    checkOutDate: '2025-11-02',
-    guests: 2,
-    totalNights: 2,
-    subtotal: 1700000,
-    tax: 187000,
-    serviceFee: 85000,
-    total: 1972000,
-  });
-  return state;
-};
+// export const useMockBookingStore = () => {
+//   const [state] = useState({
+//     selectedRoom: {
+//       id: '1',
+//       name: 'Deluxe Ocean View',
+//       type: 'Deluxe',
+//       pricePerNight: 850000,
+//     },
+//     checkInDate: '2025-10-31',
+//     checkOutDate: '2025-11-02',
+//     guests: 2,
+//     totalNights: 2,
+//     subtotal: 1700000,
+//     tax: 187000,
+//     serviceFee: 85000,
+//     total: 1972000,
+//   });
+//   return state;
+// };

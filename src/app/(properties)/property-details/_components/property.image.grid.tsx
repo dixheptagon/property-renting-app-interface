@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { X, ChevronLeft, ChevronRight, Image } from 'lucide-react';
+import React, { useState } from "react";
+import { X, ChevronLeft, ChevronRight, Image } from "lucide-react";
 
 export default function PropertyImageGrid() {
   const [showLightbox, setShowLightbox] = useState(false);
@@ -9,11 +9,11 @@ export default function PropertyImageGrid() {
 
   // Sample property images - ganti dengan data real lo
   const images = [
-    'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80',
-    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80',
-    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
-    'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80',
-    'https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80',
+    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
+    "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80",
+    "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80",
   ];
 
   const handlePrevImage = () => {
@@ -32,7 +32,7 @@ export default function PropertyImageGrid() {
   return (
     <>
       {/* Main Grid Layout */}
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="" id="photos">
         <div className="grid h-[400px] grid-cols-4 gap-2 overflow-hidden rounded-xl">
           {/* Main Image - Left Side */}
           <div
@@ -134,8 +134,8 @@ export default function PropertyImageGrid() {
                 onClick={() => setCurrentImageIndex(index)}
                 className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                   currentImageIndex === index
-                    ? 'opacity-100 ring-2 ring-white'
-                    : 'opacity-50 hover:opacity-75'
+                    ? "opacity-100 ring-2 ring-white"
+                    : "opacity-50 hover:opacity-75"
                 }`}
               >
                 <img

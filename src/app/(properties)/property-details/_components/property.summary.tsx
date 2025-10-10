@@ -1,36 +1,54 @@
-'use client';
-import { useMockBookingStore } from '@/stores/booking.store';
-import { Calendar, ChevronDown, User } from 'lucide-react';
-import { useState } from 'react';
-
+"use client";
+import DateRangePicker from "@/components/ui/date.range.picker";
+import { GuestDropdown } from "@/components/ui/dropdown.guest.input";
+import { useBookingStore } from "@/stores/booking.store";
+import { Calendar, User } from "lucide-react";
+import { DateRange } from "react-day-picker";
 export default function PropertySummary() {
-  // Replace with real Zustand store: const bookingState = useBookingStore();
-  const bookingState = useMockBookingStore();
+  const bookingState = useBookingStore();
+  const { setCheckInDate, setCheckOutDate, setGuests } = useBookingStore();
 
-  const [guestDropdownOpen, setGuestDropdownOpen] = useState(false);
+  // Convert string dates to DateRange for the picker
+  const dateRange: DateRange | undefined =
+    bookingState.checkInDate && bookingState.checkOutDate
+      ? {
+          from: new Date(bookingState.checkInDate),
+          to: new Date(bookingState.checkOutDate),
+        }
+      : undefined;
+
+  // Handle date range change
+  const handleDateRangeChange = (range: DateRange | undefined) => {
+    if (range?.from) {
+      setCheckInDate(range.from.toISOString().split("T")[0]);
+    }
+    if (range?.to) {
+      setCheckOutDate(range.to.toISOString().split("T")[0]);
+    }
+  };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
       minimumFractionDigits: 0,
     }).format(price);
   };
 
   const formatDate = (dateString: string) => {
-    if (!dateString) return 'Select date';
+    if (!dateString) return "Select date";
     const date = new Date(dateString);
-    return date.toLocaleDateString('id-ID', {
-      day: 'numeric',
-      month: 'numeric',
-      year: 'numeric',
+    return date.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
     });
   };
 
   const handleBookNow = () => {
     // Navigate to payment page or show confirmation
-    console.log('Booking:', bookingState);
-    alert('Proceeding to payment...');
+    console.log("Booking:", bookingState);
+    alert("Proceeding to payment...");
   };
 
   if (!bookingState.selectedRoom) {
@@ -44,10 +62,10 @@ export default function PropertySummary() {
   }
 
   return (
-    <div className="z-20 mx-auto max-w-7xl py-10">
-      <div className="sticky top-6 overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-lg">
+    <div className="" id="booked">
+      <div className="rounded-xl border-2 border-gray-200 bg-white shadow-md">
         {/* Room Type Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4">
+        <div className="rounded-t-xl bg-gradient-to-r from-blue-600 to-purple-600 p-4">
           <p className="mb-1 text-sm font-medium text-white">Selected Room</p>
           <h3 className="text-xl font-bold text-white">
             {bookingState.selectedRoom.name}
@@ -66,81 +84,28 @@ export default function PropertySummary() {
             <p className="text-sm text-gray-500">Inclusive of all taxes</p>
           </div>
 
-          {/* Check-in / Check-out */}
-          <div className="mb-4 grid grid-cols-2 gap-3">
-            <div className="cursor-pointer rounded-lg border-2 border-gray-200 p-3 transition-colors hover:border-blue-400">
-              <label className="mb-1 block text-xs font-medium text-gray-500">
-                CHECK-IN
-              </label>
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-gray-400" />
-                <span className="text-sm font-semibold text-gray-900">
-                  {formatDate(bookingState.checkInDate)}
-                </span>
-              </div>
-            </div>
-
-            <div className="cursor-pointer rounded-lg border-2 border-gray-200 p-3 transition-colors hover:border-blue-400">
-              <label className="mb-1 block text-xs font-medium text-gray-500">
-                CHECK-OUT
-              </label>
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-gray-400" />
-                <span className="text-sm font-semibold text-gray-900">
-                  {formatDate(bookingState.checkOutDate)}
-                </span>
-              </div>
-            </div>
+          {/* Date Range Picker */}
+          <div className="mb-4">
+            <label className="mb-2 block text-xs font-medium text-gray-500">
+              CHECK-IN / CHECK-OUT
+            </label>
+            <DateRangePicker />
           </div>
 
           {/* Guests Selector */}
           <div className="relative mb-6">
             <label className="mb-2 block text-xs font-medium text-gray-500">
-              TAMU
+              GUESTS
             </label>
-            <button
-              onClick={() => setGuestDropdownOpen(!guestDropdownOpen)}
-              className="flex w-full items-center justify-between rounded-lg border-2 border-gray-200 p-3 transition-colors hover:border-blue-400"
-            >
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4 text-gray-400" />
-                <span className="text-sm font-semibold text-gray-900">
-                  {bookingState.guests} tamu
-                </span>
-              </div>
-              <ChevronDown
-                className={`h-5 w-5 text-gray-400 transition-transform ${guestDropdownOpen ? 'rotate-180' : ''}`}
-              />
-            </button>
 
-            {/* Dropdown - Hidden for now, but you can add increment/decrement buttons */}
-            {guestDropdownOpen && (
-              <div className="absolute top-full right-0 left-0 z-10 mt-2 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-lg">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700">
-                    Number of guests
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <button className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 hover:border-blue-500">
-                      -
-                    </button>
-                    <span className="w-8 text-center font-semibold">
-                      {bookingState.guests}
-                    </span>
-                    <button className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 hover:border-blue-500">
-                      +
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
+            <GuestDropdown value={bookingState.guests} onChange={setGuests} />
           </div>
 
           {/* Price Breakdown */}
           <div className="mb-4 space-y-3 border-t-2 border-gray-200 pt-4">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">
-                {formatPrice(bookingState.selectedRoom.pricePerNight)} ×{' '}
+                {formatPrice(bookingState.selectedRoom.pricePerNight)} ×{" "}
                 {bookingState.totalNights} nights
               </span>
               <span className="font-semibold text-gray-900">

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Star, ChevronDown, X } from 'lucide-react';
+import React, { useState } from "react";
+import { Star, ChevronDown, X } from "lucide-react";
 
 export default function PropertyReviews() {
   const [showAllReviews, setShowAllReviews] = useState(false);
@@ -11,63 +11,63 @@ export default function PropertyReviews() {
   const reviews = [
     {
       id: 1,
-      username: 'Sarah Johnson',
-      avatar: 'SJ',
-      joinDate: '2023',
+      username: "Sarah Johnson",
+      avatar: "SJ",
+      joinDate: "2023",
       rating: 5,
-      reviewDate: '2024-03-15',
+      reviewDate: "2024-03-15",
       description:
-        'Absolutely amazing stay! The property exceeded all our expectations. The location was perfect, right in the heart of the city with easy access to all major attractions. The apartment was spotlessly clean and beautifully decorated. The host was incredibly responsive and helpful. Would definitely recommend this place to anyone visiting!',
+        "Absolutely amazing stay! The property exceeded all our expectations. The location was perfect, right in the heart of the city with easy access to all major attractions. The apartment was spotlessly clean and beautifully decorated. The host was incredibly responsive and helpful. Would definitely recommend this place to anyone visiting!",
     },
     {
       id: 2,
-      username: 'Michael Chen',
-      avatar: 'MC',
-      joinDate: '2022',
+      username: "Michael Chen",
+      avatar: "MC",
+      joinDate: "2022",
       rating: 4,
-      reviewDate: '2024-03-10',
+      reviewDate: "2024-03-10",
       description:
-        'Great property overall. The amenities were top-notch and the view from the balcony was breathtaking. Only minor issue was the WiFi speed could be better for remote work. But everything else was fantastic. The host provided clear instructions for check-in and check-out.',
+        "Great property overall. The amenities were top-notch and the view from the balcony was breathtaking. Only minor issue was the WiFi speed could be better for remote work. But everything else was fantastic. The host provided clear instructions for check-in and check-out.",
     },
     {
       id: 3,
-      username: 'Emily Rodriguez',
-      avatar: 'ER',
-      joinDate: '2024',
+      username: "Emily Rodriguez",
+      avatar: "ER",
+      joinDate: "2024",
       rating: 5,
-      reviewDate: '2024-03-05',
+      reviewDate: "2024-03-05",
       description:
-        'Perfect for families! We stayed here with our two kids and had a wonderful time. The space was larger than expected and very comfortable. The kitchen was fully equipped which made it easy to prepare meals. The swimming pool was a huge hit with the kids.',
+        "Perfect for families! We stayed here with our two kids and had a wonderful time. The space was larger than expected and very comfortable. The kitchen was fully equipped which made it easy to prepare meals. The swimming pool was a huge hit with the kids.",
     },
     {
       id: 4,
-      username: 'David Kim',
-      avatar: 'DK',
-      joinDate: '2023',
+      username: "David Kim",
+      avatar: "DK",
+      joinDate: "2023",
       rating: 5,
-      reviewDate: '2024-02-28',
+      reviewDate: "2024-02-28",
       description:
         "One of the best stays I've had! The property is exactly as shown in the photos. Very modern and well-maintained. The bed was super comfortable and I slept like a baby. Great communication with the host throughout our stay.",
     },
     {
       id: 5,
-      username: 'Lisa Anderson',
-      avatar: 'LA',
-      joinDate: '2022',
+      username: "Lisa Anderson",
+      avatar: "LA",
+      joinDate: "2022",
       rating: 4,
-      reviewDate: '2024-02-20',
+      reviewDate: "2024-02-20",
       description:
         "Lovely apartment in a great location. Walking distance to many restaurants and shops. The apartment was clean and cozy. Would have given 5 stars but the air conditioning in one room wasn't working properly. Host was quick to respond though.",
     },
     {
       id: 6,
-      username: 'James Wilson',
-      avatar: 'JW',
-      joinDate: '2023',
+      username: "James Wilson",
+      avatar: "JW",
+      joinDate: "2023",
       rating: 5,
-      reviewDate: '2024-02-15',
+      reviewDate: "2024-02-15",
       description:
-        'Highly recommend! Beautiful property with stunning ocean views. Everything was perfect from start to finish. The host went above and beyond to make sure we had everything we needed. Will definitely be back!',
+        "Highly recommend! Beautiful property with stunning ocean views. Everything was perfect from start to finish. The host went above and beyond to make sure we had everything we needed. Will definitely be back!",
     },
   ];
 
@@ -93,7 +93,7 @@ export default function PropertyReviews() {
 
   const truncateText = (text: string, maxLength = 150) => {
     if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
+    return text.substring(0, maxLength) + "...";
   };
 
   const renderStars = (rating: number) => {
@@ -102,8 +102,8 @@ export default function PropertyReviews() {
         key={index}
         className={`h-4 w-4 ${
           index < rating
-            ? 'fill-yellow-400 text-yellow-400'
-            : 'fill-gray-300 text-gray-300'
+            ? "fill-yellow-400 text-yellow-400"
+            : "fill-gray-300 text-gray-300"
         }`}
       />
     ));
@@ -111,15 +111,15 @@ export default function PropertyReviews() {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   return (
-    <div className="mx-auto max-w-7xl">
+    <div className="" id="reviews-ratings">
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-md">
         {/* Header with Average Rating */}
         <div className="mb-6 flex items-center justify-center">
@@ -192,7 +192,7 @@ export default function PropertyReviews() {
                     onClick={() => toggleExpandReview(review.id)}
                     className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
                   >
-                    {isExpanded ? 'View Less' : 'View More'}
+                    {isExpanded ? "View Less" : "View More"}
                   </button>
                 )}
               </div>
