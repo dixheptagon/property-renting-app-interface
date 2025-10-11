@@ -1,4 +1,5 @@
-import Navbar from "./_components/property.navbar";
+import { PropertyNavbar } from "@/components/features/property-details";
+import { QueryClientProviders } from "@/components/providers/query.client.providers";
 
 export default function RootLayout({
   children,
@@ -8,8 +9,10 @@ export default function RootLayout({
   return (
     <>
       <div className="flex min-h-screen flex-col">
-        <Navbar />
-        {children}
+        <QueryClientProviders>
+          <PropertyNavbar />
+          {children}
+        </QueryClientProviders>
       </div>
     </>
   );

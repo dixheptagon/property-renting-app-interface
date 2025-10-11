@@ -1,5 +1,5 @@
 "use client";
-import staysia_logo from "../../../../../public/logo/staysia-logo.png";
+import staysia_logo from "../../../../public/logo/staysia-logo.png";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
