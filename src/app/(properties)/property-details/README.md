@@ -4,6 +4,8 @@
 
 This module provides a comprehensive property details page for the property renting application. It displays detailed information about a property, including images, profile, amenities, rules, room types, location, reviews, and booking functionality.
 
+The page now uses TanStack Query for data fetching from the `/api/properties/[id]` endpoint, with Axios for HTTP requests. Data is fetched once and distributed to child components via props.
+
 ## File Structure
 
 ```
@@ -80,10 +82,36 @@ Shows user reviews and ratings.
 
 Navigation component (not currently used in main page).
 
+## Data Fetching
+
+The property details page uses TanStack Query (`useQuery`) to fetch data from the API endpoint `/api/properties/[id]`. The implementation includes:
+
+- **Hook**: `fetchPropertyById` in `src/hooks/api/use.fetch.property.ts` using Axios
+- **Types**: TypeScript interfaces in `src/types/property.ts`
+- **Query**: `useQuery` in `page.tsx` with loading and error states
+- **Props Distribution**: Fetched data is passed to components via props
+
+### Data Flow
+
+```
+API (/api/properties/[id]) → fetchPropertyById → useQuery → page.tsx → Component Props
+```
+
+### Component Props
+
+- `PropertyImageGrid`: `images` (PropertyImage[])
+- `PropertyProfile`: `title`, `rating`, `description`, `host`, `category`, `reviews`, `address`
+- `PropertyAmenities`: `amenities` (Amenities object)
+- `PropertyRules`: `rules` (Rules object)
+- `PropertyRoomTypes`: `rooms` (Room[])
+- `PropertyLocation`: `address`, `city`, `country`, `postalCode`, `latitude`, `longitude`
+
 ## Dependencies
 
 - React
 - Next.js
+- TanStack Query (for data fetching)
+- Axios (for HTTP requests)
 - Lucide React (for icons)
 - Zustand (for booking store)
 - React Day Picker (for date selection)
@@ -91,8 +119,16 @@ Navigation component (not currently used in main page).
 
 ## Usage
 
-This module is part of a Next.js app route group. Access it via `/properties/[id]` where `[id]` is the property ID.
+This module is part of a Next.js app route group. Access it via `/property-details?id=1` where the ID parameter is extracted from the URL params.
 
-The page expects property data to be available (currently uses sample data). Components use Zustand store for booking state management.
+The page fetches property data using TanStack Query and handles loading/error states. Components receive data via props and use Zustand store for booking state management.
 
-To integrate with API, replace sample data in components with actual API calls.
+### Error Handling
+
+- **Loading State**: Shows spinner and loading message
+- **Error State**: Shows error message with retry suggestion
+- **Not Found**: Shows not found message for invalid property IDs
+
+### TypeScript Support
+
+All components are fully typed with TypeScript interfaces defined in `src/types/property.ts`.

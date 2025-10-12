@@ -17,7 +17,7 @@ const dummyProperty = {
   longitude: 106.845599,
   place_id: "ChIJnUvjRenzaS4RILB9CikUYU",
   map_url:
-    "https://www.google.com/maps/place/Jl.+Sudirman,+Jakarta/@-6.2087634,106.845599,17z",
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1764461057637!2d106.67272907475082!3d-6.240461493747818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fbf72fac4ae5%3A0x5574e2db8395e4f7!2sTransmart%20Graha%20Raya!5e0!3m2!1sid!2sid!4v1760257663728!5m2!1sid!2sid",
   amenities: {
     wifi: true,
     parking: true,
@@ -27,12 +27,14 @@ const dummyProperty = {
     kitchen: true,
     laundry: false,
     pet_friendly: false,
+    others: ["24-hour front desk", "24-hour security", "24-hour concierge"],
   },
   rules: {
     no_smoking: true,
     no_pets: true,
     check_in_after: "14:00",
     check_out_before: "11:00",
+    others: ["No parties or events", "No smoking in the common areas"],
   },
   rating_avg: 4.5,
   rating_count: 25,
@@ -42,7 +44,7 @@ const dummyProperty = {
   updated_at: "2023-10-01T08:00:00Z",
   tenant: {
     id: 1,
-    display_name: "Ahmad Rahman",
+    display_name: "John Smith",
     image:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
   },
@@ -64,6 +66,27 @@ const dummyProperty = {
     {
       id: 3,
       url: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+      is_main: false,
+      order_index: 2,
+      created_at: "2023-06-15T10:00:00Z",
+    },
+    {
+      id: 4,
+      url: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=765",
+      is_main: false,
+      order_index: 2,
+      created_at: "2023-06-15T10:00:00Z",
+    },
+    {
+      id: 5,
+      url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1175",
+      is_main: false,
+      order_index: 2,
+      created_at: "2023-06-15T10:00:00Z",
+    },
+    {
+      id: 6,
+      url: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
       is_main: false,
       order_index: 2,
       created_at: "2023-06-15T10:00:00Z",
@@ -121,15 +144,23 @@ const dummyProperty = {
       highlight: {
         garden_view: true,
         queen_bed: true,
+        others: ["Private balcony", "En-suite bathroom", "City view"],
       },
       total_units: 1,
       created_at: "2023-06-15T10:00:00Z",
       images: [
         {
-          id: 3,
+          id: 1,
           url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&h=600&fit=crop",
           is_main: true,
           order_index: 0,
+          created_at: "2023-06-15T10:00:00Z",
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop",
+          is_main: false,
+          order_index: 1,
           created_at: "2023-06-15T10:00:00Z",
         },
       ],

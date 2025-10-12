@@ -1,31 +1,12 @@
 "use client";
 import DateRangePicker from "@/components/ui/date.range.picker";
 import { GuestDropdown } from "@/components/ui/dropdown.guest.input";
+import { Label } from "@/components/ui/label";
 import { useBookingStore } from "@/stores/booking.store";
-import { Calendar, User } from "lucide-react";
-import { DateRange } from "react-day-picker";
-export default function PropertySummary() {
+import { Room } from "@/types/property";
+import { CircleX } from "lucide-react";
+export default function PropertySummary({ rooms }: { rooms: Room[] }) {
   const bookingState = useBookingStore();
-  const { setCheckInDate, setCheckOutDate, setGuests } = useBookingStore();
-
-  // Convert string dates to DateRange for the picker
-  const dateRange: DateRange | undefined =
-    bookingState.checkInDate && bookingState.checkOutDate
-      ? {
-          from: new Date(bookingState.checkInDate),
-          to: new Date(bookingState.checkOutDate),
-        }
-      : undefined;
-
-  // Handle date range change
-  const handleDateRangeChange = (range: DateRange | undefined) => {
-    if (range?.from) {
-      setCheckInDate(range.from.toISOString().split("T")[0]);
-    }
-    if (range?.to) {
-      setCheckOutDate(range.to.toISOString().split("T")[0]);
-    }
-  };
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -33,16 +14,6 @@ export default function PropertySummary() {
       currency: "IDR",
       minimumFractionDigits: 0,
     }).format(price);
-  };
-
-  const formatDate = (dateString: string) => {
-    if (!dateString) return "Select date";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-    });
   };
 
   const handleBookNow = () => {
@@ -65,8 +36,12 @@ export default function PropertySummary() {
     <div className="" id="booked">
       <div className="rounded-xl border-2 border-gray-200 bg-white shadow-md">
         {/* Room Type Header */}
-        <div className="rounded-t-xl bg-gradient-to-r from-blue-600 to-purple-600 p-4">
+        <div className="rounded-t-xl bg-blue-600 bg-gradient-to-r p-4">
           <p className="mb-1 text-sm font-medium text-white">Selected Room</p>
+          <CircleX
+            className="absolute top-3 right-5 h-8 w-8 text-white hover:text-gray-300"
+            onClick={bookingState.clearBooking}
+          />
           <h3 className="text-xl font-bold text-white">
             {bookingState.selectedRoom.name}
           </h3>
@@ -74,10 +49,10 @@ export default function PropertySummary() {
 
         <div className="p-6">
           {/* Price Display */}
-          <div className="mb-6">
+          <div className="mb-3">
             <div className="mb-2 flex items-baseline justify-between">
               <span className="text-3xl font-bold text-gray-900">
-                {formatPrice(bookingState.selectedRoom.pricePerNight)}
+                {formatPrice(bookingState.selectedRoom.base_price)}
               </span>
               <span className="text-gray-600">/ night</span>
             </div>
@@ -86,42 +61,30 @@ export default function PropertySummary() {
 
           {/* Date Range Picker */}
           <div className="mb-4">
-            <label className="mb-2 block text-xs font-medium text-gray-500">
+            <Label htmlFor="dates" className="px-1 pb-2 text-xs text-gray-500">
               CHECK-IN / CHECK-OUT
-            </label>
+            </Label>
             <DateRangePicker />
           </div>
 
           {/* Guests Selector */}
-          <div className="relative mb-6">
+          <div className="relative mb-4">
             <label className="mb-2 block text-xs font-medium text-gray-500">
               GUESTS
             </label>
 
-            <GuestDropdown value={bookingState.guests} onChange={setGuests} />
+            <GuestDropdown max_guest={bookingState.selectedRoom.max_guest} />
           </div>
 
           {/* Price Breakdown */}
           <div className="mb-4 space-y-3 border-t-2 border-gray-200 pt-4">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">
-                {formatPrice(bookingState.selectedRoom.pricePerNight)} ×{" "}
+                {formatPrice(bookingState.selectedRoom.base_price)} ×{" "}
                 {bookingState.totalNights} nights
               </span>
               <span className="font-semibold text-gray-900">
-                {formatPrice(bookingState.subtotal)}
-              </span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Tax (11%)</span>
-              <span className="font-semibold text-gray-900">
-                {formatPrice(bookingState.tax)}
-              </span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Service Fee (5%)</span>
-              <span className="font-semibold text-gray-900">
-                {formatPrice(bookingState.serviceFee)}
+                {formatPrice(bookingState.total)}
               </span>
             </div>
           </div>
@@ -142,7 +105,7 @@ export default function PropertySummary() {
           {/* Book Now Button */}
           <button
             onClick={handleBookNow}
-            className="w-full rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 py-4 font-bold text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl"
+            className="w-full rounded-lg bg-blue-600 bg-gradient-to-r py-4 font-bold text-white shadow-lg transition-all duration-200 hover:bg-blue-700 hover:shadow-xl"
           >
             Book Now
           </button>

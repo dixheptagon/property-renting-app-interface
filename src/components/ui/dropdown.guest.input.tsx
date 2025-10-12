@@ -8,27 +8,26 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import { useBookingStore } from "@/stores/booking.store";
 
-interface GuestDropdownProps {
-  value: number;
-  onChange: (value: number) => void;
-}
-
-export function GuestDropdown({ value, onChange }: GuestDropdownProps) {
+export function GuestDropdown({ max_guest }: { max_guest: number }) {
+  const { guests, setGuests } = useBookingStore();
   const [open, setOpen] = useState(false);
 
-  const totalGuests = value;
+  const totalGuests = guests;
 
   const handleDecrement = () => {
-    if (value > 1) onChange(value - 1);
+    if (guests > 1) setGuests(guests - 1);
   };
 
   const handleIncrement = () => {
-    onChange(value + 1);
+    if (guests < max_guest) {
+      setGuests(guests + 1);
+    }
   };
 
   const handleClear = () => {
-    onChange(1);
+    setGuests(1);
   };
 
   const handleSave = () => {
@@ -40,7 +39,7 @@ export function GuestDropdown({ value, onChange }: GuestDropdownProps) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="w-full justify-start p-6 text-left font-normal"
+          className="w-full justify-start p-5 text-left font-normal"
         >
           {totalGuests} Guest{totalGuests !== 1 ? "s" : ""}
           <ChevronDown className="ml-auto h-4 w-4" />
@@ -55,12 +54,17 @@ export function GuestDropdown({ value, onChange }: GuestDropdownProps) {
                 variant="outline"
                 size="icon"
                 onClick={handleDecrement}
-                disabled={value <= 1}
+                disabled={guests <= 1}
               >
                 -
               </Button>
-              <span className="w-8 text-center">{value}</span>
-              <Button variant="outline" size="icon" onClick={handleIncrement}>
+              <span className="w-8 text-center">{guests}</span>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleIncrement}
+                disabled={guests >= max_guest}
+              >
                 +
               </Button>
             </div>

@@ -1,95 +1,115 @@
 "use client";
 
-import React, { useState } from "react";
-import { Star, ChevronDown, X } from "lucide-react";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Star, ChevronDown } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import axios from "axios";
+import Image from "next/image";
 
-export default function PropertyReviews() {
-  const [showAllReviews, setShowAllReviews] = useState(false);
-  const [expandedReviews, setExpandedReviews] = useState(new Set());
+// Helper functions
+const getInitials = (name: string): string => {
+  return name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("")
+    .slice(0, 2);
+};
 
-  // Sample reviews data - ganti dengan data dari API lo
-  const reviews = [
-    {
-      id: 1,
-      username: "Sarah Johnson",
-      avatar: "SJ",
-      joinDate: "2023",
-      rating: 5,
-      reviewDate: "2024-03-15",
-      description:
-        "Absolutely amazing stay! The property exceeded all our expectations. The location was perfect, right in the heart of the city with easy access to all major attractions. The apartment was spotlessly clean and beautifully decorated. The host was incredibly responsive and helpful. Would definitely recommend this place to anyone visiting!",
+const getRandomJoinYear = (): number => {
+  return Math.floor(Math.random() * 5) + 2020; // 2020-2024
+};
+
+interface ApiReview {
+  id: number;
+  propertyId: number;
+  user: {
+    id: number;
+    name: string;
+    avatar: string;
+  };
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
+
+interface PropertyReviewsProps {
+  propertyId: number;
+}
+
+export default function PropertyReviews({ propertyId }: PropertyReviewsProps) {
+  // Fetch reviews from API
+  const {
+    data: apiReviews,
+    isLoading,
+    error,
+  } = useQuery<ApiReview[]>({
+    queryKey: ["reviews", propertyId],
+    queryFn: async () => {
+      const response = await axios.get<ApiReview[]>(
+        `/api/reviews/${propertyId}`
+      );
+      return response.data;
     },
-    {
-      id: 2,
-      username: "Michael Chen",
-      avatar: "MC",
-      joinDate: "2022",
-      rating: 4,
-      reviewDate: "2024-03-10",
-      description:
-        "Great property overall. The amenities were top-notch and the view from the balcony was breathtaking. Only minor issue was the WiFi speed could be better for remote work. But everything else was fantastic. The host provided clear instructions for check-in and check-out.",
-    },
-    {
-      id: 3,
-      username: "Emily Rodriguez",
-      avatar: "ER",
-      joinDate: "2024",
-      rating: 5,
-      reviewDate: "2024-03-05",
-      description:
-        "Perfect for families! We stayed here with our two kids and had a wonderful time. The space was larger than expected and very comfortable. The kitchen was fully equipped which made it easy to prepare meals. The swimming pool was a huge hit with the kids.",
-    },
-    {
-      id: 4,
-      username: "David Kim",
-      avatar: "DK",
-      joinDate: "2023",
-      rating: 5,
-      reviewDate: "2024-02-28",
-      description:
-        "One of the best stays I've had! The property is exactly as shown in the photos. Very modern and well-maintained. The bed was super comfortable and I slept like a baby. Great communication with the host throughout our stay.",
-    },
-    {
-      id: 5,
-      username: "Lisa Anderson",
-      avatar: "LA",
-      joinDate: "2022",
-      rating: 4,
-      reviewDate: "2024-02-20",
-      description:
-        "Lovely apartment in a great location. Walking distance to many restaurants and shops. The apartment was clean and cozy. Would have given 5 stars but the air conditioning in one room wasn't working properly. Host was quick to respond though.",
-    },
-    {
-      id: 6,
-      username: "James Wilson",
-      avatar: "JW",
-      joinDate: "2023",
-      rating: 5,
-      reviewDate: "2024-02-15",
-      description:
-        "Highly recommend! Beautiful property with stunning ocean views. Everything was perfect from start to finish. The host went above and beyond to make sure we had everything we needed. Will definitely be back!",
-    },
-  ];
+  });
+
+  // Transform API reviews to component format
+  const reviews =
+    apiReviews?.map((review) => ({
+      id: review.id,
+      username: review.user.name,
+      avatar: review.user.avatar,
+      joinDate: getRandomJoinYear().toString(),
+      rating: review.rating,
+      reviewDate: new Date(review.createdAt).toISOString().split("T")[0], // YYYY-MM-DD
+      description: review.comment,
+    })) || [];
+
+  // Handle loading state
+  if (isLoading) {
+    return (
+      <div className="" id="reviews-ratings">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-md">
+          <div className="flex items-center justify-center py-8">
+            <div className="text-center">
+              <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+              <p className="text-gray-600">Loading reviews...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <div className="" id="reviews-ratings">
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-md">
+          <div className="flex items-center justify-center py-8">
+            <div className="text-center">
+              <p className="text-red-600">Failed to load reviews</p>
+              <p className="text-gray-600">Please try again later</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Show only 4 reviews initially
-  const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 4);
+  const displayedReviews = reviews.slice(0, 4);
 
   // Calculate average rating
   const averageRating = (
     reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
   ).toFixed(1);
-
-  const toggleExpandReview = (reviewId: number) => {
-    setExpandedReviews((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(reviewId)) {
-        newSet.delete(reviewId);
-      } else {
-        newSet.add(reviewId);
-      }
-      return newSet;
-    });
-  };
 
   const truncateText = (text: string, maxLength = 150) => {
     if (text.length <= maxLength) return text;
@@ -144,7 +164,6 @@ export default function PropertyReviews() {
         {/* Reviews Grid */}
         <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
           {displayedReviews.map((review) => {
-            const isExpanded = expandedReviews.has(review.id);
             const needsTruncation = review.description.length > 150;
 
             return (
@@ -154,9 +173,21 @@ export default function PropertyReviews() {
               >
                 {/* User Info */}
                 <div className="mb-4 flex items-start gap-3">
-                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 font-semibold text-white">
-                    {review.avatar}
-                  </div>
+                  {/* Avatar */}
+                  {review.avatar ? (
+                    <Image
+                      src={review.avatar}
+                      alt={review.username}
+                      className="h-12 w-12 rounded-full object-cover"
+                      width={48}
+                      height={48}
+                    />
+                  ) : (
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 object-cover font-semibold text-white">
+                      {review.avatar}
+                    </div>
+                  )}
+
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-900">
                       {review.username}
@@ -180,45 +211,128 @@ export default function PropertyReviews() {
                 {/* Review Description */}
                 <div className="mb-3">
                   <p className="leading-relaxed text-gray-700">
-                    {isExpanded
-                      ? review.description
-                      : truncateText(review.description)}
+                    {truncateText(review.description)}
                   </p>
                 </div>
 
-                {/* View More Button */}
+                {/* Show More Button */}
                 {needsTruncation && (
-                  <button
-                    onClick={() => toggleExpandReview(review.id)}
-                    className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
-                  >
-                    {isExpanded ? "View Less" : "View More"}
-                  </button>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <button className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700">
+                        Show More
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Review by {review.username}</DialogTitle>
+                      </DialogHeader>
+                      <div className="mt-4">
+                        <p className="leading-relaxed text-gray-700">
+                          {review.description}
+                        </p>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 )}
               </div>
             );
           })}
         </div>
 
-        {/* Show All Reviews Button */}
+        {/* Show All Reviews Dialog */}
         {reviews.length > 4 && (
           <div className="flex justify-center">
-            <button
-              onClick={() => setShowAllReviews(!showAllReviews)}
-              className="flex items-center gap-2 rounded-lg border-2 border-gray-900 px-8 py-3 font-semibold text-gray-900 transition-all duration-200 hover:bg-gray-900 hover:text-white"
-            >
-              {showAllReviews ? (
-                <>
-                  <ChevronDown className="h-5 w-5 rotate-180" />
-                  Show Less Reviews
-                </>
-              ) : (
-                <>
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="flex items-center gap-2 rounded-lg border-2 border-gray-900 px-8 py-3 font-semibold text-gray-900 transition-all duration-200 hover:bg-gray-900 hover:text-white">
                   <ChevronDown className="h-5 w-5" />
                   Show All Reviews ({reviews.length})
-                </>
-              )}
-            </button>
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-h-[80vh] !max-w-6xl overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>All Reviews</DialogTitle>
+                </DialogHeader>
+                <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {reviews.map((review) => {
+                    const needsTruncation = review.description.length > 150;
+
+                    return (
+                      <div
+                        key={review.id}
+                        className="rounded-lg border border-gray-200 bg-gray-50 p-5"
+                      >
+                        {/* User Info */}
+                        <div className="mb-4 flex items-start gap-3">
+                          {review.avatar ? (
+                            <Image
+                              src={review.avatar}
+                              alt={review.username}
+                              className="h-12 w-12 rounded-full object-cover"
+                              width={48}
+                              height={48}
+                            />
+                          ) : (
+                            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 object-cover font-semibold text-white">
+                              {review.avatar}
+                            </div>
+                          )}
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-gray-900">
+                              {review.username}
+                            </h4>
+                            <p className="text-sm text-gray-500">
+                              Joined in {review.joinDate}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Rating and Date */}
+                        <div className="mb-3 flex items-center justify-between">
+                          <div className="flex items-center gap-1">
+                            {renderStars(review.rating)}
+                          </div>
+                          <span className="text-sm text-gray-500">
+                            {formatDate(review.reviewDate)}
+                          </span>
+                        </div>
+
+                        {/* Review Description */}
+                        <div className="mb-3">
+                          <p className="leading-relaxed text-gray-700">
+                            {truncateText(review.description)}
+                          </p>
+                        </div>
+
+                        {/* Show More Button */}
+                        {needsTruncation && (
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <button className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700">
+                                Show More
+                              </button>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>
+                                  Review by {review.username}
+                                </DialogTitle>
+                              </DialogHeader>
+                              <div className="mt-4">
+                                <p className="leading-relaxed text-gray-700">
+                                  {review.description}
+                                </p>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         )}
       </div>

@@ -2,26 +2,29 @@
 
 import React, { useState } from "react";
 import { X, ChevronLeft, ChevronRight, Image } from "lucide-react";
+import { PropertyImage } from "@/types/property";
 
-export default function PropertyImageGrid() {
+interface PropertyImageGridProps {
+  images: PropertyImage[];
+}
+
+export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
   const [showLightbox, setShowLightbox] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Sample property images - ganti dengan data real lo
-  const images = [
-    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
-    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
-    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
-    "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80",
-    "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80",
-  ];
+  // Map PropertyImage to string URLs for compatibility
+  const imageUrls = images.map((img) => img.url);
 
   const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? imageUrls.length - 1 : prev - 1
+    );
   };
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setCurrentImageIndex((prev) =>
+      prev === imageUrls.length - 1 ? 0 : prev + 1
+    );
   };
 
   const handleImageClick = (index: number) => {
@@ -40,7 +43,7 @@ export default function PropertyImageGrid() {
             onClick={() => handleImageClick(0)}
           >
             <img
-              src={images[0]}
+              src={imageUrls[0]}
               alt="Main property view"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
@@ -48,14 +51,14 @@ export default function PropertyImageGrid() {
           </div>
 
           {/* Grid Images - Right Side */}
-          {images.slice(1, 5).map((image, index) => (
+          {imageUrls.slice(1, 5).map((imageUrl, index) => (
             <div
               key={index}
               className="group relative cursor-pointer overflow-hidden"
               onClick={() => handleImageClick(index + 1)}
             >
               <img
-                src={image}
+                src={imageUrl}
                 alt={`Property view ${index + 2}`}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
@@ -98,7 +101,7 @@ export default function PropertyImageGrid() {
 
           {/* Image Counter */}
           <div className="absolute top-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-2 text-lg font-medium text-white">
-            {currentImageIndex + 1} / {images.length}
+            {currentImageIndex + 1} / {imageUrls.length}
           </div>
 
           {/* Previous Button */}
@@ -112,7 +115,7 @@ export default function PropertyImageGrid() {
           {/* Current Image */}
           <div className="mx-4 max-h-[80vh] max-w-5xl">
             <img
-              src={images[currentImageIndex]}
+              src={imageUrls[currentImageIndex]}
               alt={`Property view ${currentImageIndex + 1}`}
               className="max-h-[80vh] max-w-full rounded-lg object-contain"
             />
@@ -128,7 +131,7 @@ export default function PropertyImageGrid() {
 
           {/* Thumbnail Strip */}
           <div className="absolute bottom-4 left-1/2 flex max-w-[90vw] -translate-x-1/2 gap-2 overflow-x-auto px-4">
-            {images.map((image, index) => (
+            {imageUrls.map((imageUrl, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
@@ -139,7 +142,7 @@ export default function PropertyImageGrid() {
                 }`}
               >
                 <img
-                  src={image}
+                  src={imageUrl}
                   alt={`Thumbnail ${index + 1}`}
                   className="h-full w-full object-cover"
                 />

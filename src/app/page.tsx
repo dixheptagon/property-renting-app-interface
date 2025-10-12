@@ -1,5 +1,6 @@
 "use client";
 
+import MapEmbed from "@/components/ui/maps.embed";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -41,6 +42,8 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      <MapEmbed src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1764461057637!2d106.67272907475082!3d-6.240461493747818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fbf72fac4ae5%3A0x5574e2db8395e4f7!2sTransmart%20Graha%20Raya!5e0!3m2!1sid!2sid!4v1760257663728!5m2!1sid!2sid" />
     </div>
   );
 }

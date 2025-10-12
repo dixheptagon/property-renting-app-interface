@@ -1,26 +1,51 @@
 "use client";
 
 import React, { useState } from "react";
-import { Wifi, Tv, Wind, Car, UtensilsCrossed, Waves } from "lucide-react";
+import {
+  Wifi,
+  Tv,
+  Wind,
+  Car,
+  UtensilsCrossed,
+  Waves,
+  BadgeCheck,
+} from "lucide-react";
+import { Amenities } from "@/types/property";
 
-export default function PropertyAmenities() {
+interface PropertyAmenitiesProps {
+  amenities: Amenities;
+}
+
+export default function PropertyAmenities({
+  amenities,
+}: PropertyAmenitiesProps) {
   const [showAmenities, setShowAmenities] = useState(false);
 
-  // Sample data - ganti dengan data dari API lo
-  const amenities = [
-    { icon: Wifi, label: "Free WiFi" },
-    { icon: Tv, label: "Smart TV" },
-    { icon: Wind, label: "Air Conditioning" },
-    { icon: Car, label: "Free Parking" },
-    { icon: UtensilsCrossed, label: "Kitchen" },
-    { icon: Waves, label: "Swimming Pool" },
-    { icon: Car, label: "Free Parking" },
-    { icon: UtensilsCrossed, label: "Kitchen" },
-    { icon: Waves, label: "Swimming Pool" },
-  ];
+  // Map amenities object to array with icons
+  const amenitiesList: { icon: React.ComponentType<any>; label: string }[] = [];
+  if (amenities.wifi) amenitiesList.push({ icon: Wifi, label: "Free WiFi" });
+  if (amenities.air_conditioning)
+    amenitiesList.push({ icon: Wind, label: "Air Conditioning" });
+  if (amenities.parking)
+    amenitiesList.push({ icon: Car, label: "Free Parking" });
+  if (amenities.kitchen)
+    amenitiesList.push({ icon: UtensilsCrossed, label: "Kitchen" });
+  if (amenities.pool)
+    amenitiesList.push({ icon: Waves, label: "Swimming Pool" });
+  if (amenities.gym) amenitiesList.push({ icon: Tv, label: "Gym" });
+  if (amenities.laundry) amenitiesList.push({ icon: Tv, label: "Laundry" });
+  if (amenities.pet_friendly)
+    amenitiesList.push({ icon: Tv, label: "Pet Friendly" });
+  if (amenities.others) {
+    amenities.others.forEach((other) => {
+      amenitiesList.push({ icon: BadgeCheck, label: other });
+    });
+  }
 
   // Show only 6 amenities by default
-  const displayedAmenities = showAmenities ? amenities : amenities.slice(0, 6);
+  const displayedAmenities = showAmenities
+    ? amenitiesList
+    : amenitiesList.slice(0, 6);
 
   return (
     <div id="amenities">
@@ -45,7 +70,7 @@ export default function PropertyAmenities() {
         </div>
 
         {/* Show More Button */}
-        {amenities.length > 6 && (
+        {amenitiesList.length > 6 && (
           <button
             onClick={() => setShowAmenities(!showAmenities)}
             className="mt-4 font-medium text-blue-500 transition-colors hover:text-blue-700"

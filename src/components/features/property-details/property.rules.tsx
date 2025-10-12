@@ -1,30 +1,49 @@
 "use client";
 
 import React, { useState } from "react";
-import { Ban, PawPrint, Clock, Users, Music, Home } from "lucide-react";
+import {
+  Ban,
+  PawPrint,
+  Clock,
+  Users,
+  Music,
+  Home,
+  OctagonX,
+} from "lucide-react";
+import { Rules } from "@/types/property";
 
-export default function PropertyRules() {
+interface PropertyRulesProps {
+  rules: Rules;
+}
+
+export default function PropertyRules({ rules }: PropertyRulesProps) {
   const [showRules, setShowRules] = useState(false);
 
-  // Sample data - ganti dengan data dari API lo
-  const rules = [
-    { icon: Ban, label: "No Smoking" },
-    { icon: PawPrint, label: "No Pets" },
-    { icon: Clock, label: "Check-in after 3 PM" },
-    { icon: Users, label: "Max 4 guests" },
-    { icon: Music, label: "No loud music" },
-    { icon: Home, label: "No outside guests" },
-    { icon: Ban, label: "No Smoking" },
-    { icon: PawPrint, label: "No Pets" },
-    { icon: Clock, label: "Check-in after 3 PM" },
-  ];
+  // Map rules object to array with icons
+  const rulesList: { icon: React.ComponentType<any>; label: string }[] = [];
+  if (rules.no_smoking) rulesList.push({ icon: Ban, label: "No Smoking" });
+  if (rules.no_pets) rulesList.push({ icon: PawPrint, label: "No Pets" });
+  if (rules.check_in_after)
+    rulesList.push({
+      icon: Clock,
+      label: `Check-in after ${rules.check_in_after}`,
+    });
+  if (rules.check_out_before)
+    rulesList.push({
+      icon: Clock,
+      label: `Check-out before ${rules.check_out_before}`,
+    });
+  if (rules.others)
+    rules.others.forEach((other) => {
+      rulesList.push({ icon: OctagonX, label: other });
+    });
 
   // Show only 6 rules by default
-  const displayedRules = showRules ? rules : rules.slice(0, 6);
+  const displayedRules = showRules ? rulesList : rulesList.slice(0, 6);
 
   return (
     <div className="" id="rules">
-      {/* Amenities */}
+      {/* Rules */}
       <div className="rounded-xl border-2 bg-white p-6 shadow-md">
         <h2 className="mb-4 text-xl font-bold text-gray-900">Rules</h2>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -43,7 +62,7 @@ export default function PropertyRules() {
         </div>
 
         {/* Show More Button */}
-        {rules.length > 6 && (
+        {rulesList.length > 6 && (
           <button
             onClick={() => setShowRules(!showRules)}
             className="mt-4 font-medium text-blue-500 transition-colors hover:text-blue-700"

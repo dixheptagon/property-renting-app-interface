@@ -1,32 +1,22 @@
-import { useState } from "react";
+import { Property, Room } from "@/types/property";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-interface Room {
-  id: string;
-  name: string;
-  type: string;
-  pricePerNight: number;
-}
+import { type DateRange } from "react-day-picker";
 
 interface BookingState {
+  property: Property | null;
   propertyId: string | null;
   propertyName: string | null;
   selectedRoom: Room | null;
-  checkInDate: string;
-  checkOutDate: string;
+  dateRange: DateRange | undefined;
   guests: number;
   totalNights: number;
-  subtotal: number;
-  tax: number;
-  serviceFee: number;
   total: number;
 
   // Actions
-  setProperty: (id: string, name: string) => void;
+  setProperty: (property: Property) => void;
   setRoom: (room: Room) => void;
-  setCheckInDate: (date: string) => void;
-  setCheckOutDate: (date: string) => void;
+  setDateRange: (dateRange: DateRange | undefined) => void;
   setGuests: (count: number) => void;
   calculateTotal: () => void;
   clearBooking: () => void;
@@ -35,75 +25,67 @@ interface BookingState {
 export const useBookingStore = create<BookingState>()(
   persist(
     (set, get) => ({
+      property: null,
       propertyId: null,
       propertyName: null,
       selectedRoom: null,
-      checkInDate: "",
-      checkOutDate: "",
-      guests: 2,
+      dateRange: undefined,
+      guests: 1,
       totalNights: 0,
-      subtotal: 0,
-      tax: 0,
-      serviceFee: 0,
       total: 0,
 
-      setProperty: (id, name) => set({ propertyId: id, propertyName: name }),
+      setProperty: (property) =>
+        set({
+          property,
+          propertyId: property.uid,
+          propertyName: property.title,
+        }),
 
       setRoom: (room) => {
         set({ selectedRoom: room });
         get().calculateTotal();
       },
 
-      setCheckInDate: (date) => {
-        set({ checkInDate: date });
+      setDateRange: (dateRange) => {
+        set({ dateRange });
         get().calculateTotal();
       },
-
-      setCheckOutDate: (date) => {
-        set({ checkOutDate: date });
-        get().calculateTotal();
-      },
-
       setGuests: (count) => set({ guests: count }),
 
       calculateTotal: () => {
         const state = get();
-        if (!state.selectedRoom || !state.checkInDate || !state.checkOutDate) {
+        if (
+          !state.selectedRoom ||
+          !state.dateRange?.from ||
+          !state.dateRange?.to
+        ) {
           return;
         }
 
-        const checkIn = new Date(state.checkInDate);
-        const checkOut = new Date(state.checkOutDate);
+        const checkIn = new Date(state.dateRange.from);
+        const checkOut = new Date(state.dateRange.to);
+        console.log(checkIn, checkOut);
         const nights = Math.ceil(
           (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
         );
 
-        const subtotal = state.selectedRoom.pricePerNight * nights;
-        const tax = subtotal * 0.11; // 11% tax
-        const serviceFee = subtotal * 0.05; // 5% service fee
-        const total = subtotal + tax + serviceFee;
+        const total = state.selectedRoom.base_price * nights;
 
         set({
           totalNights: nights,
-          subtotal,
-          tax,
-          serviceFee,
           total,
         });
       },
 
       clearBooking: () =>
         set({
+          property: null,
           propertyId: null,
           propertyName: null,
           selectedRoom: null,
-          checkInDate: "",
-          checkOutDate: "",
-          guests: 2,
+          dateRange: undefined,
+          guests: 1,
           totalNights: 0,
-          subtotal: 0,
-          tax: 0,
-          serviceFee: 0,
           total: 0,
         }),
     }),
@@ -112,26 +94,3 @@ export const useBookingStore = create<BookingState>()(
     }
   )
 );
-
-// ============================================
-// MOCK STORE FOR DEMO - Remove this when using real Zustand
-// ============================================
-// export const useMockBookingStore = () => {
-//   const [state] = useState({
-//     selectedRoom: {
-//       id: '1',
-//       name: 'Deluxe Ocean View',
-//       type: 'Deluxe',
-//       pricePerNight: 850000,
-//     },
-//     checkInDate: '2025-10-31',
-//     checkOutDate: '2025-11-02',
-//     guests: 2,
-//     totalNights: 2,
-//     subtotal: 1700000,
-//     tax: 187000,
-//     serviceFee: 85000,
-//     total: 1972000,
-//   });
-//   return state;
-// };

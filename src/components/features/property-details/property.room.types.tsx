@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { Wifi, Tv, Wind, Car, UtensilsCrossed, Waves } from "lucide-react";
 import {
   Users,
   Bed,
@@ -18,105 +17,24 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import { Room } from "@/types/property";
+import { useBookingStore } from "@/stores/booking.store";
 
-export default function PropertyRoomTypes() {
-  // Selected Room State
-  const [selectedRoom, setSelectedRoom] = useState<null | number>(null);
+const formatIDR = (price: number): string => {
+  return price.toLocaleString("id-ID");
+};
+
+interface PropertyRoomTypesProps {
+  rooms: Room[];
+}
+
+export default function PropertyRoomTypes({ rooms }: PropertyRoomTypesProps) {
+  const { selectedRoom, setRoom } = useBookingStore();
+
   // Image Room State
-  const [selectedRoomImage, setSelectedRoomImage] = useState<null | any>(null);
+  const [selectedRoomImage, setSelectedRoomImage] = useState<null | Room>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  // Sample room data - ganti dengan data dari API lo
-  const rooms = [
-    {
-      id: 1,
-      name: "Deluxe Ocean View",
-      description:
-        "Spacious room with stunning ocean views, perfect for couples or small families. Features modern amenities and elegant design.",
-      guest: 2,
-      bedroom: 1,
-      bed: 1,
-      bathroom: 1,
-      images: [
-        "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80",
-        "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=80",
-        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80",
-      ],
-      Highlight: [
-        { icon: Wifi, label: "Free WiFi" },
-        { icon: Tv, label: "Smart TV" },
-        { icon: Wind, label: "Air Conditioning" },
-        { icon: Car, label: "Free Parking" },
-        { icon: UtensilsCrossed, label: "Kitchen" },
-        { icon: Waves, label: "Swimming Pool" },
-        { icon: Car, label: "Free Parking" },
-        { icon: UtensilsCrossed, label: "Kitchen" },
-        { icon: Waves, label: "Swimming Pool" },
-        { icon: Wifi, label: "Free WiFi" },
-        { icon: Tv, label: "Smart TV" },
-        { icon: Wind, label: "Air Conditioning" },
-        { icon: Car, label: "Free Parking" },
-        { icon: UtensilsCrossed, label: "Kitchen" },
-        { icon: Waves, label: "Swimming Pool" },
-        { icon: Car, label: "Free Parking" },
-        { icon: UtensilsCrossed, label: "Kitchen" },
-        { icon: Waves, label: "Swimming Pool" },
-      ],
-    },
-    {
-      id: 2,
-      name: "Premium Suite",
-      description:
-        "Luxurious suite with separate living area and bedroom. Ideal for extended stays with maximum comfort and privacy.",
-      guest: 4,
-      bedroom: 2,
-      bed: 2,
-      bathroom: 2,
-      images: [
-        "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800&q=80",
-        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80",
-        "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=800&q=80",
-      ],
-      Highlight: [
-        { icon: Wifi, label: "Free WiFi" },
-        { icon: Tv, label: "Smart TV" },
-        { icon: Wind, label: "Air Conditioning" },
-        { icon: Car, label: "Free Parking" },
-        { icon: UtensilsCrossed, label: "Kitchen" },
-        { icon: Waves, label: "Swimming Pool" },
-        { icon: Car, label: "Free Parking" },
-        { icon: UtensilsCrossed, label: "Kitchen" },
-        { icon: Waves, label: "Swimming Pool" },
-      ],
-    },
-    {
-      id: 3,
-      name: "Family Room",
-      description:
-        "Perfect for families with children. Spacious layout with multiple beds and kid-friendly amenities for a comfortable stay.",
-      guest: 6,
-      bedroom: 3,
-      bed: 3,
-      bathroom: 2,
-      images: [
-        "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80",
-        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80",
-        "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=80",
-      ],
-      Highlight: [
-        { icon: Wifi, label: "Free WiFi" },
-        { icon: Tv, label: "Smart TV" },
-        { icon: Wind, label: "Air Conditioning" },
-        { icon: Car, label: "Free Parking" },
-        { icon: UtensilsCrossed, label: "Kitchen" },
-        { icon: Waves, label: "Swimming Pool" },
-        { icon: Car, label: "Free Parking" },
-        { icon: UtensilsCrossed, label: "Kitchen" },
-        { icon: Waves, label: "Swimming Pool" },
-      ],
-    },
-  ];
 
   const handleViewImages = (room: any) => {
     setSelectedRoomImage(room);
@@ -126,19 +44,19 @@ export default function PropertyRoomTypes() {
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === 0 ? selectedRoomImage.images.length - 1 : prev - 1
+      prev === 0 ? selectedRoomImage!.images.length - 1 : prev - 1
     );
   };
 
   const handleNextImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === selectedRoomImage.images.length - 1 ? 0 : prev + 1
+      prev === selectedRoomImage!.images.length - 1 ? 0 : prev + 1
     );
   };
 
   const handleSelectRoom = (roomId: number) => {
     // Logic untuk select room - bisa integrate dengan state management lo
-    setSelectedRoom(roomId);
+    setRoom(rooms.find((room) => room.id === roomId)!);
     console.log("Selected room:", roomId);
   };
 
@@ -154,7 +72,7 @@ export default function PropertyRoomTypes() {
           <div
             key={room.id}
             className={`overflow-hidden rounded-xl border-2 bg-white shadow-md transition-all duration-300 ${
-              selectedRoom === room.id
+              selectedRoom?.id === room.id
                 ? "border-green-500 shadow-lg shadow-green-100"
                 : "border-gray-200 hover:border-blue-300 hover:shadow-md"
             }`}
@@ -169,7 +87,7 @@ export default function PropertyRoomTypes() {
                       <h3 className="text-2xl font-bold text-gray-900">
                         {room.name}
                       </h3>
-                      {selectedRoom === room.id && (
+                      {selectedRoom?.id === room.id && (
                         <span className="flex items-center gap-1 rounded-full bg-green-500 px-3 py-1 text-sm font-medium text-white">
                           <Check className="h-4 w-4 stroke-3" />
                           Selected Room
@@ -191,7 +109,7 @@ export default function PropertyRoomTypes() {
                     <div>
                       <p className="text-sm text-gray-500">Guest</p>
                       <p className="font-semibold text-gray-900">
-                        {room.guest}
+                        {room.max_guest}
                       </p>
                     </div>
                   </div>
@@ -203,7 +121,7 @@ export default function PropertyRoomTypes() {
                     <div>
                       <p className="text-sm text-gray-500">Bedroom</p>
                       <p className="font-semibold text-gray-900">
-                        {room.bedroom}
+                        {room.bedrooms}
                       </p>
                     </div>
                   </div>
@@ -214,7 +132,7 @@ export default function PropertyRoomTypes() {
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">Bed</p>
-                      <p className="font-semibold text-gray-900">{room.bed}</p>
+                      <p className="font-semibold text-gray-900">{room.beds}</p>
                     </div>
                   </div>
 
@@ -225,7 +143,7 @@ export default function PropertyRoomTypes() {
                     <div>
                       <p className="text-sm text-gray-500">Bathroom</p>
                       <p className="font-semibold text-gray-900">
-                        {room.bathroom}
+                        {room.bathrooms}
                       </p>
                     </div>
                   </div>
@@ -234,39 +152,85 @@ export default function PropertyRoomTypes() {
                 {/* Highlights */}
                 <div className="pt-4">
                   <div className="flex flex-wrap gap-2">
-                    {room.Highlight.slice(0, 3).map((highlight, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1 text-sm"
-                      >
-                        <highlight.icon className="h-4 w-4" />
-                        {highlight.label}
-                      </div>
-                    ))}
-                    {room.Highlight.length > 3 && (
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <button className="rounded-lg bg-gray-100 px-3 py-1 text-sm text-gray-600 hover:bg-gray-200">
-                            +{room.Highlight.length - 3} more
-                          </button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-80">
-                          <div className="grid grid-cols-2 gap-2">
-                            {room.Highlight.map((highlight, index) => (
+                    {(() => {
+                      const highlightKeys = Object.keys(room.highlight).filter(
+                        (key) => {
+                          const value =
+                            room.highlight[key as keyof typeof room.highlight];
+                          if (key === "others" && Array.isArray(value)) {
+                            return false;
+                          }
+                          return value === true;
+                        }
+                      );
+                      if (
+                        room.highlight.others &&
+                        Array.isArray(room.highlight.others)
+                      ) {
+                        highlightKeys.push(...room.highlight.others);
+                      }
+                      const visibleHighlights = highlightKeys.slice(0, 4);
+                      const otherHighlights = highlightKeys.slice(4);
+
+                      return (
+                        <>
+                          {visibleHighlights.map((key, index) => {
+                            const label = key.includes(" ")
+                              ? key
+                              : key
+                                  .replace(/_/g, " ")
+                                  .replace(/\b\w/g, (l) => l.toUpperCase());
+                            return (
                               <div
                                 key={index}
-                                className="flex items-center gap-2"
+                                className="text-md flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1"
                               >
-                                <highlight.icon className="h-4 w-4" />
-                                <span className="text-sm">
-                                  {highlight.label}
-                                </span>
+                                <span className="text-md">{label}</span>
                               </div>
-                            ))}
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    )}
+                            );
+                          })}
+                          {otherHighlights.length > 0 && (
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <button className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1 text-sm transition-colors hover:bg-gray-200">
+                                  <span className="text-md">
+                                    +{otherHighlights.length} more
+                                  </span>
+                                </button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-80">
+                                <div className="space-y-2">
+                                  <h4 className="text-md font-semibold">
+                                    Other Highlights
+                                  </h4>
+                                  <div className="flex flex-wrap gap-2">
+                                    {otherHighlights.map((key, index) => {
+                                      const label = key.includes(" ")
+                                        ? key
+                                        : key
+                                            .replace(/_/g, " ")
+                                            .replace(/\b\w/g, (l) =>
+                                              l.toUpperCase()
+                                            );
+                                      return (
+                                        <div
+                                          key={index}
+                                          className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1 text-sm"
+                                        >
+                                          <span className="text-md">
+                                            {label}
+                                          </span>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </PopoverContent>
+                            </Popover>
+                          )}
+                        </>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>
@@ -278,7 +242,7 @@ export default function PropertyRoomTypes() {
                   onClick={() => handleViewImages(room)}
                 >
                   <img
-                    src={room.images[0]}
+                    src={room.images[0].url}
                     alt={room.name}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
@@ -298,20 +262,36 @@ export default function PropertyRoomTypes() {
                 </div>
                 <button
                   onClick={() => handleSelectRoom(room.id)}
-                  disabled={selectedRoom === room.id}
+                  disabled={selectedRoom?.id === room.id}
                   className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all duration-200 ${
-                    selectedRoom === room.id
+                    selectedRoom?.id === room.id
                       ? "cursor-default bg-green-500 text-white"
                       : "bg-blue-600 text-white hover:bg-blue-700"
                   }`}
                 >
-                  {selectedRoom === room.id ? (
+                  {selectedRoom?.id === room.id ? (
                     <>
-                      <Check className="h-5 w-5 stroke-3" />
-                      Selected
+                      <div className="flex flex-col">
+                        <div className="flex items-center justify-center gap-2 text-xs">
+                          <Check className="h-3 w-3 stroke-3" />
+                          Selected
+                        </div>
+                        <div className="text-lg">
+                          Rp{formatIDR(room.base_price)}{" "}
+                          <sub className="text-xs">/night</sub>
+                        </div>
+                      </div>
                     </>
                   ) : (
-                    "Select"
+                    <div className="flex flex-col">
+                      <div className="flex items-center justify-center gap-2 text-xs">
+                        Select
+                      </div>
+                      <div className="text-lg">
+                        Rp{formatIDR(room.base_price)}{" "}
+                        <sub className="text-xs">/night</sub>
+                      </div>
+                    </div>
                   )}
                 </button>
               </div>
@@ -354,7 +334,7 @@ export default function PropertyRoomTypes() {
           {/* Current Image */}
           <div className="max-h-[80vh] max-w-5xl">
             <img
-              src={selectedRoomImage.images[currentImageIndex]}
+              src={selectedRoomImage.images[currentImageIndex].url}
               alt={`${selectedRoomImage.name} - Image ${currentImageIndex + 1}`}
               className="max-h-[80vh] max-w-full rounded-lg object-contain"
             />
@@ -373,7 +353,7 @@ export default function PropertyRoomTypes() {
           {/* Thumbnail Strip */}
           {selectedRoomImage.images.length > 1 && (
             <div className="absolute bottom-4 left-1/2 flex max-w-[90vw] -translate-x-1/2 gap-2 overflow-x-auto px-4">
-              {selectedRoomImage.images.map((image: string, index: number) => (
+              {selectedRoomImage.images.map((image, index: number) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
@@ -384,7 +364,7 @@ export default function PropertyRoomTypes() {
                   }`}
                 >
                   <img
-                    src={image}
+                    src={image.url}
                     alt={`Thumbnail ${index + 1}`}
                     className="h-full w-full object-cover"
                   />
