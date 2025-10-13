@@ -3,9 +3,14 @@
 import MapEmbed from "@/components/ui/maps.embed";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [count, setCount] = useState(0);
+
+  const increment = () => setCount((prev) => prev + 1);
+  const decrement = () => setCount((prev) => Math.max(0, prev - 1));
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["property", "1"],
     queryFn: async () => {
@@ -24,6 +29,25 @@ export default function Home() {
   return (
     <div>
       <h1>Home</h1>
+
+      {/* Counter Section */}
+      <div className="my-6 flex items-center gap-4">
+        <button
+          onClick={decrement}
+          className="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+        >
+          -
+        </button>
+        <span className="text-2xl font-bold">{count}</span>
+        <button
+          onClick={increment}
+          className="rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+        >
+          +
+        </button>
+      </div>
+
+      {/* Rest of the existing content */}
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
       {data && <p>Data fetched successfully. Check console for details.</p>}

@@ -1,11 +1,17 @@
 "use client";
-import DateRangePicker from "@/components/ui/date.range.picker";
-import { GuestDropdown } from "@/components/ui/dropdown.guest.input";
+import DateRangePicker from "@/components/features/property-details/summary/date.range.picker";
+import { GuestDropdown } from "@/components/features/property-details/summary/dropdown.guest.input";
 import { Label } from "@/components/ui/label";
 import { useBookingStore } from "@/stores/booking.store";
-import { Room } from "@/types/property";
+import { Room, RoomUnavailability } from "@/types/property";
 import { CircleX } from "lucide-react";
-export default function PropertySummary({ rooms }: { rooms: Room[] }) {
+export default function PropertySummary({
+  rooms,
+  room_unavailabilities,
+}: {
+  rooms: Room[];
+  room_unavailabilities: RoomUnavailability[];
+}) {
   const bookingState = useBookingStore();
 
   const formatPrice = (price: number) => {
@@ -105,7 +111,10 @@ export default function PropertySummary({ rooms }: { rooms: Room[] }) {
           {/* Book Now Button */}
           <button
             onClick={handleBookNow}
-            className="w-full rounded-lg bg-blue-600 bg-gradient-to-r py-4 font-bold text-white shadow-lg transition-all duration-200 hover:bg-blue-700 hover:shadow-xl"
+            disabled={
+              !(bookingState.dateRange?.from && bookingState.dateRange?.to)
+            }
+            className="w-full rounded-lg bg-blue-600 bg-gradient-to-r py-4 font-bold text-white shadow-lg transition-all duration-200 hover:bg-blue-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
           >
             Book Now
           </button>
