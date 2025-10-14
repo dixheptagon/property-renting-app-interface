@@ -2,6 +2,7 @@ import { Property, Room } from "@/types/property";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type DateRange } from "react-day-picker";
+import { differenceInCalendarDays, eachDayOfInterval, format } from "date-fns";
 
 interface BookingState {
   property: Property | null;
@@ -12,6 +13,11 @@ interface BookingState {
   guests: number;
   totalNights: number;
   total: number;
+
+  basePrice: number;
+  normalNights: number;
+  peakSeasonPrice: number;
+  peakSeasonNights: number;
 
   // Actions
   setProperty: (property: Property) => void;
@@ -34,6 +40,11 @@ export const useBookingStore = create<BookingState>()(
       totalNights: 0,
       total: 0,
 
+      basePrice: 0,
+      normalNights: 0,
+      peakSeasonPrice: 0,
+      peakSeasonNights: 0,
+
       setProperty: (property) =>
         set({
           property,
@@ -53,44 +64,90 @@ export const useBookingStore = create<BookingState>()(
       setGuests: (count) => set({ guests: count }),
 
       calculateTotal: () => {
-        const state = get();
-        if (
-          !state.selectedRoom ||
-          !state.dateRange?.from ||
-          !state.dateRange?.to
-        ) {
+        const { dateRange, selectedRoom, property } = get();
+        if (!dateRange?.from || !dateRange?.to || !selectedRoom || !property)
           return;
-        }
 
-        const checkIn = new Date(state.dateRange.from);
-        const checkOut = new Date(state.dateRange.to);
-        console.log(checkIn, checkOut);
-        const nights = Math.ceil(
-          (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
-        );
+        const days = eachDayOfInterval({
+          start: dateRange.from,
+          end: dateRange.to,
+        });
 
-        const total = state.selectedRoom.base_price * nights;
+        let total = 0;
+        let normalNights = 0;
+        let peakSeasonNights = 0;
+
+        days.forEach((day) => {
+          const peak = property.peak_season_rates.find((rate) => {
+            const start = new Date(rate.start_date);
+            const end = new Date(rate.end_date);
+            return (
+              (!rate.room_id || rate.room_id === selectedRoom.id) &&
+              day >= start &&
+              day <= end
+            );
+          });
+
+          if (peak) {
+            peakSeasonNights++;
+            const peakPrice =
+              peak.adjustment_type === "percentage"
+                ? selectedRoom.base_price * (1 + peak.adjustment_value / 100)
+                : selectedRoom.base_price + peak.adjustment_value;
+            total += peakPrice;
+          } else {
+            normalNights++;
+            total += selectedRoom.base_price;
+          }
+        });
 
         set({
-          totalNights: nights,
+          totalNights: days.length - 1,
           total,
+          basePrice: selectedRoom.base_price,
+          normalNights,
+          peakSeasonPrice:
+            selectedRoom.base_price +
+              (property.peak_season_rates.find(
+                (rate) => !rate.room_id || rate.room_id === selectedRoom.id
+              )?.adjustment_type === "percentage"
+                ? (selectedRoom.base_price *
+                    (property.peak_season_rates.find(
+                      (rate) =>
+                        !rate.room_id || rate.room_id === selectedRoom.id
+                    )?.adjustment_value || 0)) /
+                  100
+                : property.peak_season_rates.find(
+                    (rate) => !rate.room_id || rate.room_id === selectedRoom.id
+                  )?.adjustment_value || 0) || selectedRoom.base_price,
+          peakSeasonNights,
         });
       },
 
-      clearBooking: () =>
+      clearBooking: () => {
+        const currentProperty = get().property;
         set({
-          property: null,
-          propertyId: null,
-          propertyName: null,
           selectedRoom: null,
           dateRange: undefined,
           guests: 1,
           totalNights: 0,
           total: 0,
-        }),
+          basePrice: 0,
+          normalNights: 0,
+          peakSeasonPrice: 0,
+          peakSeasonNights: 0,
+        });
+        // Keep property data so calculateTotal can work when dates are selected again
+      },
     }),
     {
       name: "booking-storage",
+
+      partialize: (state) => ({
+        propertyId: state.propertyId,
+        propertyName: state.propertyName,
+        selectedRoom: state.selectedRoom,
+      }),
     }
   )
 );

@@ -113,8 +113,8 @@ export default function PropertyDetails({ params }: PropertyDetailsPageProps) {
 
         <div className="col-span-1 self-start lg:sticky lg:top-18">
           <PropertySummary
-            rooms={property.rooms}
             room_unavailabilities={property.room_unavailabilities}
+            peak_season_price={property.peak_season_rates}
           />
         </div>
       </div>

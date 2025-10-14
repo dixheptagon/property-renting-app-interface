@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo } from "react";
 import { ChevronDownIcon } from "lucide-react";
 import { type DateRange } from "react-day-picker";
 
@@ -12,63 +12,68 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useBookingStore } from "@/stores/booking.store";
+import { PeakSeasonRate, RoomUnavailability } from "@/types/property";
 
-const isPastDate = (date: Date) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return date < today;
-};
+export default function DatePickerRange({
+  room_unavailabilities,
+  room_price,
+  peak_season_price,
+}: {
+  room_unavailabilities: RoomUnavailability[];
+  room_price: number;
+  peak_season_price: PeakSeasonRate[];
+}) {
+  // 🔒 Compute disabled days from unavailabilities
+  const disabledDays = useMemo(
+    () => [
+      { before: new Date() },
+      ...room_unavailabilities.map((item) => ({
+        from: new Date(item.start_date),
+        to: new Date(item.end_date),
+      })),
+    ],
+    [room_unavailabilities]
+  );
 
-export default function DatePickerRange() {
+  // 🧠 Flatten unavailable date ranges into a sorted array of actual Date objects
+  const unavailableDates = useMemo(() => {
+    const allDates: Date[] = [];
+    room_unavailabilities.forEach((u) => {
+      const start = new Date(u.start_date);
+      const end = new Date(u.end_date);
+      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        allDates.push(new Date(d));
+      }
+    });
+    return allDates.sort((a, b) => a.getTime() - b.getTime());
+  }, [room_unavailabilities]);
+
   const { dateRange, setDateRange } = useBookingStore();
-  const [mode, setMode] = useState<"single" | "range">("single");
-  const [open, setOpen] = useState(false);
 
-  const handleDateSelect = (range: DateRange | undefined) => {
-    if (!range || !range.from) return;
-
-    // Check if this is a new check-in date (different from current from)
-    const isNewStart =
-      !dateRange?.from || range.from.getTime() !== dateRange.from.getTime();
-
-    if (isNewStart) {
-      // Start a new range selection
-      setDateRange({ from: range.from, to: undefined });
-      setMode("range");
-    } else if (
-      range.to &&
-      range.to > range.from &&
-      range.to.getTime() !== range.from.getTime()
-    ) {
-      // Complete the range selection
-      setDateRange(range);
-      setMode("single");
-      setOpen(false); // Close popover after selecting both dates
-    } else if (range.to && range.to.getTime() === range.from.getTime()) {
-      // Same day selection - don't allow
+  // 🧩 Handle select logic
+  const handleSelect = (dateRange: DateRange | undefined) => {
+    if (!dateRange?.from) {
+      setDateRange(undefined);
       return;
-    } else {
-      // Invalid selection (e.g., check-out before check-in) - reset
-      setDateRange({ from: range.from, to: undefined });
     }
-  };
 
-  const handleOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-    if (newOpen) {
-      // Clear date range when opening the picker
-      setDateRange(undefined);
-      setMode("single");
-    } else if (!newOpen && mode === "range" && !dateRange?.to) {
-      // If closing without selecting check-out, reset
-      setDateRange(undefined);
-      setMode("single");
+    // cari tanggal disabled terdekat setelah check-in
+    const nextUnavailable = unavailableDates.find((d) => d > dateRange.from!);
+
+    // jika user pilih check-out yang melewati unavailable date
+    if (dateRange.to && nextUnavailable && dateRange.to >= nextUnavailable) {
+      // batasi check-out sebelum tanggal unavailable
+      const adjustedTo = new Date(nextUnavailable);
+      adjustedTo.setDate(adjustedTo.getDate() - 1);
+      setDateRange({ from: dateRange.from, to: adjustedTo });
+    } else {
+      setDateRange(dateRange);
     }
   };
 
   return (
     <div className="w-full space-y-2">
-      <Popover open={open} onOpenChange={handleOpenChange}>
+      <Popover>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
@@ -76,19 +81,27 @@ export default function DatePickerRange() {
             className="w-full justify-between p-5 font-normal"
           >
             {dateRange?.from instanceof Date && dateRange?.to instanceof Date
-              ? `${dateRange.from.toLocaleDateString()} - ${dateRange.to.toLocaleDateString()}`
+              ? `${dateRange.from.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} - ${dateRange.to.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}`
               : dateRange?.from instanceof Date
-                ? `Check-in: ${dateRange.from.toLocaleDateString()} - Select check-out`
+                ? `Check-in: ${dateRange.from.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })} - Select check-out`
                 : "Pick a date"}
             <ChevronDownIcon />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+        <PopoverContent
+          className="flex w-auto overflow-hidden p-0"
+          align="start"
+          sideOffset={-200}
+          alignOffset={-10}
+        >
           <Calendar
             mode="range"
             selected={dateRange}
-            onSelect={handleDateSelect}
-            disabled={isPastDate}
+            onSelect={handleSelect}
+            disabled={disabledDays}
+            room_price={room_price}
+            peak_season_price={peak_season_price}
+            room_unavailabilities={room_unavailabilities}
           />
         </PopoverContent>
       </Popover>

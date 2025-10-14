@@ -3,14 +3,14 @@ import DateRangePicker from "@/components/features/property-details/summary/date
 import { GuestDropdown } from "@/components/features/property-details/summary/dropdown.guest.input";
 import { Label } from "@/components/ui/label";
 import { useBookingStore } from "@/stores/booking.store";
-import { Room, RoomUnavailability } from "@/types/property";
+import { PeakSeasonRate, RoomUnavailability } from "@/types/property";
 import { CircleX } from "lucide-react";
 export default function PropertySummary({
-  rooms,
   room_unavailabilities,
+  peak_season_price,
 }: {
-  rooms: Room[];
   room_unavailabilities: RoomUnavailability[];
+  peak_season_price: PeakSeasonRate[];
 }) {
   const bookingState = useBookingStore();
 
@@ -42,7 +42,7 @@ export default function PropertySummary({
     <div className="" id="booked">
       <div className="rounded-xl border-2 border-gray-200 bg-white shadow-md">
         {/* Room Type Header */}
-        <div className="rounded-t-xl bg-blue-600 bg-gradient-to-r p-4">
+        <div className="rounded-t-xl bg-blue-600 bg-linear-to-t bg-gradient-to-r p-4">
           <p className="mb-1 text-sm font-medium text-white">Selected Room</p>
           <CircleX
             className="absolute top-3 right-5 h-8 w-8 text-white hover:text-gray-300"
@@ -70,7 +70,11 @@ export default function PropertySummary({
             <Label htmlFor="dates" className="px-1 pb-2 text-xs text-gray-500">
               CHECK-IN / CHECK-OUT
             </Label>
-            <DateRangePicker />
+            <DateRangePicker
+              room_unavailabilities={room_unavailabilities}
+              room_price={bookingState.selectedRoom.base_price}
+              peak_season_price={peak_season_price}
+            />
           </div>
 
           {/* Guests Selector */}
@@ -84,14 +88,34 @@ export default function PropertySummary({
 
           {/* Price Breakdown */}
           <div className="mb-4 space-y-3 border-t-2 border-gray-200 pt-4">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">
-                {formatPrice(bookingState.selectedRoom.base_price)} ×{" "}
-                {bookingState.totalNights} nights
-              </span>
-              <span className="font-semibold text-gray-900">
-                {formatPrice(bookingState.total)}
-              </span>
+            <div className="flex flex-col">
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-600">
+                  {formatPrice(bookingState.selectedRoom.base_price)} ×{" "}
+                  {bookingState.normalNights} nights
+                </span>
+                <span className="font-semibold text-gray-900">
+                  {formatPrice(
+                    bookingState.basePrice * bookingState.normalNights
+                  )}
+                </span>
+              </div>
+              <div className="flex justify-between text-sm">
+                {bookingState.peakSeasonNights > 0 && (
+                  <>
+                    <span className="text-gray-600">
+                      {formatPrice(bookingState.peakSeasonPrice)} ×{" "}
+                      {bookingState.peakSeasonNights} nights
+                    </span>
+                    <span className="font-semibold text-gray-900">
+                      {formatPrice(
+                        bookingState.peakSeasonPrice *
+                          bookingState.peakSeasonNights
+                      )}
+                    </span>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 

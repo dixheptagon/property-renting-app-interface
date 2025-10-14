@@ -4,7 +4,7 @@ This folder contains components for displaying and managing property room types 
 
 ## Components
 
-### `property.room.types.tsx`
+### `index.tsx`
 
 The main component that orchestrates room selection and display.
 
