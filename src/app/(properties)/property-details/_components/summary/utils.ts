@@ -1,4 +1,4 @@
-import { RoomUnavailability } from "@/types/property";
+import { RoomUnavailability } from "@/app/(properties)/property-details/_types/property";
 import { DateRange } from "react-day-picker";
 
 // Check if the selected date range conflicts with any existing unavailability

@@ -11,8 +11,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useBookingStore } from "@/stores/booking.store";
-import { PeakSeasonRate, RoomUnavailability } from "@/types/property";
+import { useBookingStore } from "@/app/(properties)/property-details/_stores/booking.store";
+import {
+  PeakSeasonRate,
+  RoomUnavailability,
+} from "@/app/(properties)/property-details/_types/property";
 
 export default function DatePickerRange({
   room_unavailabilities,

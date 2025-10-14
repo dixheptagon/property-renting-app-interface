@@ -1,6 +1,6 @@
 import React from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { Room } from "@/types/property";
+import { Room } from "@/app/(properties)/property-details/_types/property";
 
 interface ImageLightboxProps {
   room: Room | null;

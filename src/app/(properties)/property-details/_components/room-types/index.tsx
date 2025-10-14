@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Room } from "@/types/property";
-import { useBookingStore } from "@/stores/booking.store";
+import { Room } from "@/app/(properties)/property-details/_types/property";
+import { useBookingStore } from "@/app/(properties)/property-details/_stores/booking.store";
 import { RoomCard } from "./room-card";
 import { ImageLightbox } from "./image.lightbox";
 

@@ -11,7 +11,10 @@ import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { PeakSeasonRate, RoomUnavailability } from "@/types/property";
+import {
+  PeakSeasonRate,
+  RoomUnavailability,
+} from "@/app/(properties)/property-details/_types/property";
 
 function formatCurrency(value: number): string {
   if (value >= 1_000_000_000) {

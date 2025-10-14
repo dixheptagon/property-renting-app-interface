@@ -11,10 +11,10 @@ import {
   PropertyReviews,
   PropertyRules,
   PropertySummary,
-} from "@/components/features/property-details/index";
-import { Property } from "@/types/property";
+} from "@/app/(properties)/property-details/_components/index";
+import { Property } from "@/app/(properties)/property-details/_types/property";
 import axios from "axios";
-import { useBookingStore } from "@/stores/booking.store";
+import { useBookingStore } from "@/app/(properties)/property-details/_stores/booking.store";
 
 interface PropertyDetailsPageProps {
   params: {

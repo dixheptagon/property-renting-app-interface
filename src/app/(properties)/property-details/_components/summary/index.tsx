@@ -1,9 +1,12 @@
 "use client";
-import DateRangePicker from "@/components/features/property-details/summary/date.range.picker";
-import { GuestDropdown } from "@/components/features/property-details/summary/dropdown.guest.input";
+import DateRangePicker from "./date.range.picker";
+import { GuestDropdown } from "./dropdown.guest.input";
 import { Label } from "@/components/ui/label";
-import { useBookingStore } from "@/stores/booking.store";
-import { PeakSeasonRate, RoomUnavailability } from "@/types/property";
+import { useBookingStore } from "@/app/(properties)/property-details/_stores/booking.store";
+import {
+  PeakSeasonRate,
+  RoomUnavailability,
+} from "@/app/(properties)/property-details/_types/property";
 import { CircleX } from "lucide-react";
 export default function PropertySummary({
   room_unavailabilities,

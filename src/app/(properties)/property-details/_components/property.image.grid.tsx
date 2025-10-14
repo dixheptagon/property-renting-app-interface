@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { X, ChevronLeft, ChevronRight, Image } from "lucide-react";
-import { PropertyImage } from "@/types/property";
+import { PropertyImage } from "@/app/(properties)/property-details/_types/property";
 
 interface PropertyImageGridProps {
   images: PropertyImage[];

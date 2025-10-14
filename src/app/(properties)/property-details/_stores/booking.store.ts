@@ -1,4 +1,7 @@
-import { Property, Room } from "@/types/property";
+import {
+  Property,
+  Room,
+} from "@/app/(properties)/property-details/_types/property";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type DateRange } from "react-day-picker";

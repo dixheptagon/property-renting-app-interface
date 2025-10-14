@@ -10,7 +10,7 @@ import {
   Home,
   OctagonX,
 } from "lucide-react";
-import { Rules } from "@/types/property";
+import { Rules } from "@/app/(properties)/property-details/_types/property";
 
 interface PropertyRulesProps {
   rules: Rules;

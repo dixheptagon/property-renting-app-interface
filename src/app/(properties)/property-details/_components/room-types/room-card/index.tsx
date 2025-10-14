@@ -5,7 +5,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import { Room } from "@/types/property";
+import { Room } from "@/app/(properties)/property-details/_types/property";
 import { formatIDR, processHighlights, formatHighlightLabel } from "../utils";
 import { SpecItem } from "./spec.item";
 import { SelectRoomButton } from "./select.room.button";

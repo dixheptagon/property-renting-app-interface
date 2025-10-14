@@ -10,7 +10,7 @@ import {
   Waves,
   BadgeCheck,
 } from "lucide-react";
-import { Amenities } from "@/types/property";
+import { Amenities } from "@/app/(properties)/property-details/_types/property";
 
 interface PropertyAmenitiesProps {
   amenities: Amenities;

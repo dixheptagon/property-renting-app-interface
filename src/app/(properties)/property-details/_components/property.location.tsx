@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { MapPin, Navigation, ExternalLink } from "lucide-react";
 import MapEmbed from "@/components/ui/maps.embed";
-import { Property } from "@/types/property";
+import { Property } from "@/app/(properties)/property-details/_types/property";
 
 export default function PropertyLocation({
   address = "Jl. Sudirman No. 123",

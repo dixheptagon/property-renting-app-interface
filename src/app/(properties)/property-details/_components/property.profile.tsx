@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Tenant } from "@/types/property";
+import { Tenant } from "@/app/(properties)/property-details/_types/property";
 import Image from "next/image";
 
 interface PropertyProfileProps {
