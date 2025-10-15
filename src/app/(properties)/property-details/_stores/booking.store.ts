@@ -147,9 +147,17 @@ export const useBookingStore = create<BookingState>()(
       name: "booking-storage",
 
       partialize: (state) => ({
+        property: state.property,
         propertyId: state.propertyId,
         propertyName: state.propertyName,
         selectedRoom: state.selectedRoom,
+        dateRange: state.dateRange,
+        basePrice: state.basePrice,
+        normalNights: state.normalNights,
+        peakSeasonPrice: state.peakSeasonPrice,
+        peakSeasonNights: state.peakSeasonNights,
+        totalNights: state.totalNights,
+        total: state.total,
       }),
     }
   )
