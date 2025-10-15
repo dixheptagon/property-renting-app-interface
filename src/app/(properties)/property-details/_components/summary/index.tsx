@@ -8,6 +8,8 @@ import {
   RoomUnavailability,
 } from "@/app/(properties)/property-details/_types/property";
 import { CircleX } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 export default function PropertySummary({
   room_unavailabilities,
   peak_season_price,
@@ -15,6 +17,7 @@ export default function PropertySummary({
   room_unavailabilities: RoomUnavailability[];
   peak_season_price: PeakSeasonRate[];
 }) {
+  const Router = useRouter();
   const bookingState = useBookingStore();
 
   const formatPrice = (price: number) => {
@@ -27,8 +30,7 @@ export default function PropertySummary({
 
   const handleBookNow = () => {
     // Navigate to payment page or show confirmation
-    console.log("Booking:", bookingState);
-    alert("Proceeding to payment...");
+    Router.push("/booking");
   };
 
   if (!bookingState.selectedRoom) {
