@@ -14,7 +14,7 @@ import {
 } from "@/app/(properties)/property-details/_components/index";
 import { Property } from "@/app/(properties)/property-details/_types/property";
 import axios from "axios";
-import { useBookingStore } from "@/app/(properties)/property-details/_stores/booking.store";
+import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
 
 interface PropertyDetailsPageProps {
   params: {

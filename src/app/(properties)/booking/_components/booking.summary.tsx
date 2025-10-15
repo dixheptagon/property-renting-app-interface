@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useBookingStore } from "../../property-details/_stores/booking.store";
+import { useBookingStore } from "../../_stores/booking.store";
 import { formatDate } from "../_utils/format.date";
 
 export default function BookingSummary() {
