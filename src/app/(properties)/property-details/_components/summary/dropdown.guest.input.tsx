@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
-import { useBookingStore } from "@/app/(properties)/property-details/_stores/booking.store";
+import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
 
 export function GuestDropdown({ max_guest }: { max_guest: number }) {
   const { guests, setGuests } = useBookingStore();

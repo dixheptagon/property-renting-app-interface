@@ -11,7 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useBookingStore } from "@/app/(properties)/property-details/_stores/booking.store";
+import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
 import {
   PeakSeasonRate,
   RoomUnavailability,

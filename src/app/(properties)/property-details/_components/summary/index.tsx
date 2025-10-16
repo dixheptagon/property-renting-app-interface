@@ -2,7 +2,7 @@
 import DateRangePicker from "./date.range.picker";
 import { GuestDropdown } from "./dropdown.guest.input";
 import { Label } from "@/components/ui/label";
-import { useBookingStore } from "@/app/(properties)/property-details/_stores/booking.store";
+import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
 import {
   PeakSeasonRate,
   RoomUnavailability,

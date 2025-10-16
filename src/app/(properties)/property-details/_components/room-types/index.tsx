@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Room } from "@/app/(properties)/property-details/_types/property";
-import { useBookingStore } from "@/app/(properties)/property-details/_stores/booking.store";
+import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
 import { RoomCard } from "./room-card";
 import { ImageLightbox } from "./image.lightbox";
 

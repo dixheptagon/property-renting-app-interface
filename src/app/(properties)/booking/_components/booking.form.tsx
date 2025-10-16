@@ -1,17 +1,20 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useBookingStore } from "../../property-details/_stores/booking.store";
+import { useBookingStore } from "../../_stores/booking.store";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { BookingFormValidationSchema } from "../_validations/booking.form";
 import { formatPrice } from "../_utils/format.price";
+import { useRouter } from "next/navigation";
 
 export default function BookingForm() {
   const bookingState = useBookingStore();
+  const router = useRouter();
 
   const handleSubmit = (values: any) => {
     console.log("Form submitted with values:", values);
     // Handle form submission here
+    router.push("/payment");
   };
 
   return (
