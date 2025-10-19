@@ -5,6 +5,13 @@ import {
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "../_components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowDownNarrowWide,
+  Home,
+  HousePlus,
+  SlidersHorizontal,
+} from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -15,26 +22,31 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { ArrowDownNarrowWide, SlidersHorizontal } from "lucide-react";
+import AccomodationCard from "./_components/accomodation.card";
 
-export default function Page() {
+export default function MyAccomodation() {
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-white transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
+          <div className="flex w-full items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
-            <span className="text-sm font-semibold sm:text-base">
-              Order List
-            </span>
+            <div className="flex w-full items-center justify-between">
+              <span className="text-sm font-semibold sm:text-base">
+                My Accomodation
+              </span>
+              <Button className="group/btn transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
+                <HousePlus className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-15" />
+                Add New Accomodation
+              </Button>
+            </div>
           </div>
         </header>
 
@@ -43,7 +55,7 @@ export default function Page() {
             <div className="flex gap-4">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button>
+                  <Button className="group/btn w-full transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
                     <SlidersHorizontal />
                     Filters
                   </Button>
@@ -81,30 +93,17 @@ export default function Page() {
                 Clear All
               </Button>
             </div>
-            <Button>
+            <Button className="group/btn w-full transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
               <ArrowDownNarrowWide />
               Sort By
             </Button>
           </section>
 
-          <section className="my-4">
-            <div className="mb-6 flex justify-between rounded-lg border-2 bg-white p-4 font-semibold text-gray-600 shadow-lg">
-              <span>Id</span>
-              <span>Property Name</span>
-              <span>Check In/Check Out</span>
-              <span>Price</span>
-              <span>Status</span>
-              <span>Action</span>
-            </div>
-
-            <div className="flex justify-between rounded-lg border-2 bg-white p-4 font-semibold text-gray-600 shadow-lg">
-              <span>#XXXX</span>
-              <span>[Property_Name]</span>
-              <span>[Check_in_date - Check out date]</span>
-              <span>RpXXX.XXX,XX</span>
-              <span>pending</span>
-              <span>Action</span>
-            </div>
+          <section className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-4">
+            <AccomodationCard />
+            <AccomodationCard />
+            <AccomodationCard />
+            <AccomodationCard />
           </section>
         </div>
       </SidebarInset>

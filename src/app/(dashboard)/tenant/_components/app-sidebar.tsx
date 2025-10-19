@@ -7,11 +7,16 @@ import {
   ReceiptText,
   BaggageClaim,
   CirclePower,
+  House,
+  UsersRound,
+  FileChartColumn,
+  MapPinPlus,
+  HousePlus,
 } from "lucide-react";
 
-import { NavMain } from "@/app/(dashboard)/user/_components/nav-main";
-import { NavProjects } from "@/app/(dashboard)/user/_components/nav-projects";
-import { UserProfile } from "@/app/(dashboard)/user/_components/user.profile";
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { TenantProfile } from "./tenant.profile";
 import {
   Sidebar,
   SidebarContent,
@@ -22,7 +27,7 @@ import {
 
 // This is sample data.
 const data = {
-  user: {
+  tenant: {
     name: "shadcn",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
@@ -31,20 +36,35 @@ const data = {
     {
       name: "[Username]",
       logo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
-      plan: "Guest",
+      plan: "Tenant",
     },
   ],
   navMain: [
     {
-      title: "My Booking",
-      url: "/user/my-booking",
-      icon: ReceiptText,
+      title: "My Accomodation",
+      url: "/tenant/my-accomodation",
+      icon: House,
       isActive: true,
     },
     {
       title: "Order List",
-      url: "/user/order-list",
+      url: "/tenant/order-list",
       icon: BaggageClaim,
+    },
+    {
+      title: "Review",
+      url: "/tenant/reviews",
+      icon: UsersRound,
+    },
+    {
+      title: "Report",
+      url: "/tenant/reports",
+      icon: FileChartColumn,
+    },
+    {
+      title: "Create Accomodation",
+      url: "#",
+      icon: HousePlus,
     },
   ],
   projects: [
@@ -65,7 +85,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <UserProfile teams={data.teams} />
+        <TenantProfile teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

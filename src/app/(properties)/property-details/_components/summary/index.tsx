@@ -1,5 +1,5 @@
 "use client";
-import DateRangePicker from "./date.range.picker";
+import DateRangePicker from "./custom.date.range.picker";
 import { GuestDropdown } from "./dropdown.guest.input";
 import { Label } from "@/components/ui/label";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";

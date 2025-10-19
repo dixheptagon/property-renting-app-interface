@@ -5,7 +5,7 @@ import { ChevronDownIcon } from "lucide-react";
 import { type DateRange } from "react-day-picker";
 
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar } from "@/app/(properties)/property-details/_components/summary/custom.calendar";
 import {
   Popover,
   PopoverContent,
