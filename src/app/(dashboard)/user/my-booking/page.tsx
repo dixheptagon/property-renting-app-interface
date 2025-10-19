@@ -137,7 +137,7 @@ export default function MyBooking() {
                     </div>
 
                     {/* Action Button */}
-                    <Button className="group/btn w-full px-6 py-6 transition-all hover:from-blue-700 hover:to-purple-700 hover:shadow-lg sm:w-auto">
+                    <Button className="group/btn w-full px-6 py-6 transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
                       <Link
                         href="/confirmed"
                         className="flex items-center gap-2"
