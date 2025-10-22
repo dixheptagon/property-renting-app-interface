@@ -139,3 +139,40 @@ body {
 #reviews-ratings {
   scroll-margin-top: 5rem; /* 80px - accounts for navbar height + padding */
 }
+
+.auth-background {
+  background:
+    linear-gradient(rgba(45, 45, 45, 0.5), rgba(23, 23, 23, 0.5)),
+    url("/background/tokyo-tower-wallpaper.jpg");
+  background-size: 100%;
+  background-position: center center;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.toaster [data-type="success"] {
+  background-color: #e6fffa !important;
+  color: #065f46 !important;
+  border: 1px solid #10b981 !important;
+}
+
+.toaster [data-type="error"] {
+  background-color: #fee2e2 !important;
+  color: #7f1d1d !important;
+  border: 1px solid #ef4444 !important;
+  position: absolute !important;
+}
+
+.toaster [data-type="warning"] {
+  background-color: #fff3cd !important;
+  color: #92400e !important;
+  border: 1px solid #f59e0b !important;
+  position: "top-right" !important;
+}
+
+.toaster [data-type="info"] {
+  background-color: #d1d5db !important;
+  color: #374151 !important;
+  border: 1px solid #4b5563 !important;
+  position: "top-right" !important;
+}
