@@ -12,6 +12,7 @@ export * as input from "./input";
 export * as label from "./label";
 export * as mapEmbed from "./maps.embed";
 export * as popover from "./popover";
+export * as select from "./select";
 export * as separator from "./separator";
 export * as sheet from "./sheet";
 export * as sidebar from "./sidebar";
