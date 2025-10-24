@@ -150,6 +150,16 @@ body {
   background-repeat: no-repeat;
 }
 
+.landing-page-background {
+  background:
+    linear-gradient(rgba(45, 45, 45, 0.5), rgba(23, 23, 23, 0.5)),
+    url("/background/landing-page.jpg");
+  background-size: 100%;
+  background-position: center center;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
 .toaster [data-type="success"] {
   background-color: #e6fffa !important;
   color: #065f46 !important;
