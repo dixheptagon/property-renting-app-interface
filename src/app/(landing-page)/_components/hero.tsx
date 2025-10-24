@@ -30,7 +30,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative h-[90vh] w-full overflow-hidden">
+    <section id="home" className="relative h-[90vh] w-full overflow-hidden">
       <Image
         src="/background/landing-page.jpg"
         alt="background"

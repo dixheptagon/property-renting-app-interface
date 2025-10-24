@@ -3,14 +3,34 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const navLinks = [
-  { name: "Home", href: "/", icon: Home },
+  { name: "Home", href: "/#home", icon: Home },
   { name: "Property List", href: "/#property-list", icon: Building2 },
   { name: "Contact Us", href: "/contact", icon: Phone },
   { name: "My Bookings", href: "/bookings", icon: Calendar },
 ];
 
+const scrollToSection = (href: string) => {
+  if (href.startsWith("/#")) {
+    const elementId = href.split("#")[1];
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+};
+
 export function NavigationLink({ scrolled }: { scrolled: boolean }) {
   const router = useRouter();
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    if (href.startsWith("/#")) {
+      e.preventDefault();
+      scrollToSection(href);
+    }
+  };
 
   return (
     <div className="hidden items-center gap-8 lg:flex">
@@ -18,6 +38,7 @@ export function NavigationLink({ scrolled }: { scrolled: boolean }) {
         <Link
           key={link.name}
           href={link.href}
+          onClick={(e) => handleClick(e, link.href)}
           className={`group relative flex items-center gap-2 font-semibold transition-colors hover:text-blue-600 ${
             scrolled ? "text-gray-700" : "text-white"
           }`}
@@ -38,6 +59,19 @@ export function MobileNavigationLink({
 }: {
   setMobileMenuOpen: (value: boolean) => void;
 }) {
+  const handleClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    if (href.startsWith("/#")) {
+      e.preventDefault();
+      scrollToSection(href);
+      setMobileMenuOpen(false);
+    } else {
+      setMobileMenuOpen(false);
+    }
+  };
+
   return (
     <div className="flex-1 overflow-y-auto p-4">
       <div className="space-y-1">
@@ -45,7 +79,7 @@ export function MobileNavigationLink({
           <Link
             key={link.name}
             href={link.href}
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => handleClick(e, link.href)}
             className="flex items-center gap-3 rounded-lg px-4 py-3 font-semibold text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-600"
           >
             <link.icon className="h-5 w-5" />

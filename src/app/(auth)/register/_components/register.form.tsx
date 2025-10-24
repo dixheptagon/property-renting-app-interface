@@ -34,8 +34,8 @@ export function RegisterForm({
     onSuccess: (data) => {
       console.log(data);
       storeAuth(data.data);
-
       toast.success(data?.message);
+      router.push("/");
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {

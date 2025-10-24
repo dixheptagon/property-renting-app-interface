@@ -1,5 +1,7 @@
+import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
+import { UserDropdown } from "./user.dropdown";
 
 export function AuthButtons({
   scrolled,
@@ -8,27 +10,35 @@ export function AuthButtons({
   scrolled: boolean;
   handleAuth: () => void;
 }) {
+  const { access_token } = useAuthStore();
+
   return (
-    <div className="hidden items-center gap-3 lg:flex">
-      <Button
-        variant="outline"
-        onClick={handleAuth}
-        className={`group relative overflow-hidden transition-all ${
-          scrolled
-            ? "border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-            : "border-2 border-white bg-transparent text-white hover:bg-white hover:text-blue-600"
-        }`}
-      >
-        <User className="mr-2 h-4 w-4" />
-        Log in
-      </Button>
-      <Button
-        onClick={handleAuth}
-        className="bg-blue-600 font-semibold shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
-      >
-        Register
-      </Button>
-    </div>
+    <>
+      {!access_token ? (
+        <div className="hidden items-center gap-3 lg:flex">
+          <Button
+            variant="outline"
+            onClick={handleAuth}
+            className={`group relative overflow-hidden transition-all ${
+              scrolled
+                ? "border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                : "border-2 border-white bg-transparent text-white hover:bg-white hover:text-blue-600"
+            }`}
+          >
+            <User className="mr-2 h-4 w-4" />
+            Log in
+          </Button>
+          <Button
+            onClick={handleAuth}
+            className="bg-blue-600 font-semibold shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
+          >
+            Register
+          </Button>
+        </div>
+      ) : (
+        <UserDropdown />
+      )}
+    </>
   );
 }
 

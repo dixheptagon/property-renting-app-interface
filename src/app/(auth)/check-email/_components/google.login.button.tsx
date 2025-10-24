@@ -4,8 +4,10 @@ import { useAuthStore } from "../../_stores/auth.store";
 import { auth, googleProvider } from "@/lib/firebase";
 import { useGoogleLogin } from "../../_hooks/use.google.login";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function GoogleLoginButton() {
+  const router = useRouter();
   const { storeToken, storeAuth } = useAuthStore();
 
   const { mutate: loginWithGoogle } = useGoogleLogin({
@@ -13,6 +15,7 @@ export default function GoogleLoginButton() {
       console.log(data);
       toast.success(data?.message);
       storeAuth(data?.data);
+      router.push("/");
     },
     onError: (error) => {
       console.log(error);

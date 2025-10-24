@@ -11,9 +11,9 @@ import { AuthButtons, MobileAuthButton } from "./navbar-ui/auth.button";
 import { Logo, MobileLogo } from "./navbar-ui/logo";
 
 export default function Navbar() {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +49,7 @@ export default function Navbar() {
       <header
         className={`fixed top-0 z-50 w-full transition-all duration-300 ${
           scrolled
-            ? "bg-white/95 shadow-lg backdrop-blur-md"
+            ? "bg-white/85 shadow-lg backdrop-blur-md"
             : "bg-gradient-to-b from-black/50 to-transparent"
         }`}
       >
