@@ -1,7 +1,8 @@
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
-import { UserDropdown } from "./user.dropdown";
+import { MobileUserDropdown, UserDropdown } from "./user.dropdown";
+import { access } from "fs";
 
 export function AuthButtons({
   scrolled,
@@ -36,7 +37,9 @@ export function AuthButtons({
           </Button>
         </div>
       ) : (
-        <UserDropdown />
+        <div className="hidden items-center gap-3 lg:flex">
+          <UserDropdown />
+        </div>
       )}
     </>
   );
@@ -49,30 +52,38 @@ export function MobileAuthButton({
   handleAuth: () => void;
   setMobileMenuOpen: (value: boolean) => void;
 }) {
+  const { access_token } = useAuthStore();
+
   return (
-    <div className="border-t p-4">
-      <div className="space-y-3">
-        <Button
-          variant="outline"
-          className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-          onClick={() => {
-            setMobileMenuOpen(false);
-            handleAuth();
-          }}
-        >
-          <User className="mr-2 h-4 w-4" />
-          Log in
-        </Button>
-        <Button
-          className="w-full font-semibold shadow-lg hover:bg-blue-700 hover:shadow-xl"
-          onClick={() => {
-            setMobileMenuOpen(false);
-            handleAuth();
-          }}
-        >
-          Register
-        </Button>
-      </div>
-    </div>
+    <>
+      {!access_token ? (
+        <div className="border-t p-4">
+          <div className="space-y-3">
+            <Button
+              variant="outline"
+              className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleAuth();
+              }}
+            >
+              <User className="mr-2 h-4 w-4" />
+              Log in
+            </Button>
+            <Button
+              className="w-full font-semibold shadow-lg hover:bg-blue-700 hover:shadow-xl"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleAuth();
+              }}
+            >
+              Register
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <MobileUserDropdown setMobileMenuOpen={setMobileMenuOpen} />
+      )}
+    </>
   );
 }

@@ -73,7 +73,7 @@ export function MobileNavigationLink({
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-4">
+    <div className="px-4">
       <div className="space-y-1">
         {navLinks.map((link) => (
           <Link

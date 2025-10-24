@@ -14,42 +14,42 @@ import {
   UserCircle,
   Home,
   LogOut,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 
+const menuItems = [
+  {
+    icon: ShoppingBag,
+    label: "Purchase List",
+    href: "/profile",
+    description: "View your orders",
+  },
+  {
+    icon: Calendar,
+    label: "My Booking",
+    href: "/profile",
+    description: "Manage reservations",
+  },
+];
+
+const accountItems = [
+  {
+    icon: UserCircle,
+    label: "My Account",
+    href: "/logout",
+    description: "Account settings",
+  },
+  {
+    icon: Home,
+    label: "Became a Host",
+    href: "/logout",
+    description: "Start hosting",
+  },
+];
+
 export function UserDropdown() {
   const { first_name, clearToken } = useAuthStore();
-
-  const menuItems = [
-    {
-      icon: ShoppingBag,
-      label: "Purchase List",
-      href: "/profile",
-      description: "View your orders",
-    },
-    {
-      icon: Calendar,
-      label: "My Booking",
-      href: "/profile",
-      description: "Manage reservations",
-    },
-  ];
-
-  const accountItems = [
-    {
-      icon: UserCircle,
-      label: "My Account",
-      href: "/logout",
-      description: "Account settings",
-    },
-    {
-      icon: Home,
-      label: "Became a Host",
-      href: "/logout",
-      description: "Start hosting",
-    },
-  ];
-
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -98,7 +98,7 @@ export function UserDropdown() {
 
         <Separator className="my-2" />
 
-        <div className="p-2">
+        <div className="p-1">
           {accountItems.map((item, index) => (
             <Link key={index} href={item.href}>
               <div className="group flex cursor-pointer items-start gap-3 rounded-lg px-3 py-3 transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50">
@@ -133,5 +133,88 @@ export function UserDropdown() {
         </div>
       </PopoverContent>
     </Popover>
+  );
+}
+
+export function MobileUserDropdown({
+  setMobileMenuOpen,
+}: {
+  setMobileMenuOpen: (value: boolean) => void;
+}) {
+  const { first_name, clearToken } = useAuthStore();
+
+  return (
+    <div className="border-t">
+      {/* Menu Items */}
+      <div className="p-2">
+        {menuItems.map((item, index) => (
+          <Link
+            key={index}
+            href={item.href}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <div className="group flex items-center justify-between rounded-lg px-3 py-3 transition-all duration-200 active:bg-blue-50">
+              <div className="flex items-center gap-3">
+                <div className={`rounded-md bg-blue-100 p-2`}>
+                  <item.icon className={`h-4 w-4 text-blue-600`} />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900">{item.label}</p>
+                  <p className="text-xs text-gray-500">{item.description}</p>
+                </div>
+              </div>
+              <ChevronRight className="h-4 w-4 text-gray-400" />
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <Separator className="my-2" />
+
+      {/* Account Items */}
+      <div className="p-2">
+        {accountItems.map((item, index) => (
+          <Link
+            key={index}
+            href={item.href}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <div className="group flex items-center justify-between rounded-lg px-3 py-3 transition-all duration-200 active:bg-purple-50">
+              <div className="flex items-center gap-3">
+                <div className={`rounded-md bg-purple-100 p-2`}>
+                  <item.icon className={`h-4 w-4 text-purple-600`} />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900">{item.label}</p>
+                  <p className="text-xs text-gray-500">{item.description}</p>
+                </div>
+              </div>
+              <ChevronRight className="h-4 w-4 text-gray-400" />
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <Separator className="my-2" />
+
+      {/* Logout Button */}
+      <div className="p-2 pb-4">
+        <button
+          onClick={() => {
+            clearToken();
+            setMobileMenuOpen(false);
+          }}
+          className="flex w-full items-center justify-between rounded-lg px-3 py-3 transition-all duration-200 active:bg-red-50"
+        >
+          <div className="flex items-center gap-3">
+            <div className="rounded-md bg-red-100 p-2">
+              <LogOut className="h-4 w-4 text-red-600" />
+            </div>
+            <span className="font-medium text-gray-900">Logout</span>
+          </div>
+          <ChevronRight className="h-4 w-4 text-gray-400" />
+        </button>
+      </div>
+    </div>
   );
 }
