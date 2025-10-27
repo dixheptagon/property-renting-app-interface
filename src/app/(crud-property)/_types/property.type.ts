@@ -54,9 +54,6 @@ interface UnavailabilityData {
 // State Utama
 interface PropertyState {
   // Status Wizard
-  currentStep: number;
-  // Submit handlers for each step
-  submitHandlers: Record<number, () => Promise<void> | void>;
 
   isDraft: boolean;
 
@@ -80,7 +77,10 @@ interface PropertyState {
 
     // Fitur Tambahan
     amenities: any;
+    custom_amenities: string[];
+
     rules: any;
+    custom_rules: string[];
   };
 
   // 1b. Property Images
@@ -97,11 +97,6 @@ interface PropertyState {
 }
 
 interface PropertyActions {
-  goToStep: (step: number) => void;
-  nextStep: () => void;
-  prevStep: () => void;
-  setSubmitHandler: (step: number, handler: () => Promise<void> | void) => void;
-
   setPropertyData: (data: Partial<PropertyState["property"]>) => void;
 
   addPropertyImage: (image: BaseImage) => void;

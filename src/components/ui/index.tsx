@@ -1,3 +1,4 @@
+export * as accordion from "./accordion";
 export * as avatar from "./avatar";
 export * as breadcrumb from "./breadcrumb";
 export * as button from "./button";
@@ -6,6 +7,7 @@ export * as card from "./card";
 export * as chart from "./chart";
 export * as checkbox from "./checkbox";
 export * as collapsible from "./collapsible";
+export * as command from "./command";
 export * as dialog from "./dialog";
 export * as dropdownMenu from "./dropdown-menu";
 export * as field from "./field";

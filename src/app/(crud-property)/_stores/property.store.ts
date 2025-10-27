@@ -1,17 +1,8 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type {
-  PropertyState,
-  PropertyActions,
-  BaseImage,
-  RoomData,
-  PeakRateData,
-  UnavailabilityData,
-} from "../_types/property.type";
+import type { PropertyState, PropertyActions } from "../_types/property.type";
 
 const initialState: PropertyState = {
-  currentStep: 0,
-
   isDraft: false,
   property: {
     title: "",
@@ -30,31 +21,23 @@ const initialState: PropertyState = {
     map_url: null,
 
     amenities: [],
+    custom_amenities: [],
+
     rules: [],
+    custom_rules: [],
   },
   propertyImages: [],
   rooms: [],
   peakSeasonRates: [],
   unavailabilities: [],
-  submitHandlers: {},
 };
 
 export const usePropertyStore = create<PropertyState & PropertyActions>()(
   persist(
     (set, get) => ({
       ...initialState, // Default state
-      submitHandlers: {},
-
-      setSubmitHandler: (step, handler) =>
-        set((state) => ({
-          submitHandlers: { ...state.submitHandlers, [step]: handler },
-        })),
 
       // --- ACTIONS ---
-
-      goToStep: (step) => set({ currentStep: step }),
-      nextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
-      prevStep: () => set((state) => ({ currentStep: state.currentStep - 1 })),
 
       // 1. Set Property Data
       setPropertyData: (data) =>
@@ -155,7 +138,6 @@ export const usePropertyStore = create<PropertyState & PropertyActions>()(
       name: "property-creation-draft",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
-        currentStep: state.currentStep,
         property: state.property,
         propertyImages: state.propertyImages,
         rooms: state.rooms,
