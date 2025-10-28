@@ -10,6 +10,7 @@ import { Camera } from "lucide-react";
 
 import ImageUploadDialog from "./_components/image.upload";
 import Image from "next/image";
+import ImagesPreview from "./_components/images.preview";
 
 export default function Page() {
   const router = useRouter();
@@ -17,13 +18,6 @@ export default function Page() {
   const isMobile = useIsMobile();
 
   const { propertyImages } = usePropertyStore();
-  const mainImage = propertyImages.find((image) => image.isMain);
-  const otherImages = propertyImages.filter((image) => !image.isMain);
-
-  console.log(propertyImages);
-  console.log("mainImage", mainImage);
-
-  // const [isImageExist, setIsImageExist] = useState<File[]>([]);
 
   return (
     <main>
@@ -42,49 +36,16 @@ export default function Page() {
         </div>
 
         {/* Image Upload */}
-        {propertyImages.length < 0 && (
+        {propertyImages.length === 0 && (
           <div className="mx-auto flex min-h-92 max-w-4xl flex-col items-center justify-center gap-4 rounded-lg border-2 bg-gray-50 shadow-xl">
             <Camera className="h-24 w-24 text-blue-500" />
 
-            <ImageUploadDialog />
+            <ImageUploadDialog buttonText="Upload Images" />
           </div>
         )}
 
         {/* Images Preview */}
-        {propertyImages.length > 0 && (
-          <div className="mx-auto flex max-w-4xl flex-col gap-4 lg:flex-row lg:gap-6">
-            {/* Left: main image */}
-            <div className="h-50 w-full overflow-hidden rounded-xl border border-gray-500 sm:h-80 lg:h-auto lg:min-h-92">
-              {mainImage && (
-                <img
-                  src={mainImage.secureUrl}
-                  alt="Main property image"
-                  width={1080}
-                  height={1080}
-                  className="h-full w-full object-cover"
-                />
-              )}
-            </div>
-
-            {/* Right: grid 2x2 */}
-            <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
-              {otherImages.slice(0, 4).map((image, index) => (
-                <div
-                  key={image.id || index}
-                  className="h-50 overflow-hidden rounded-xl border border-gray-500 sm:h-48 lg:h-auto lg:min-h-44"
-                >
-                  <Image
-                    src={image.secureUrl}
-                    alt="Property"
-                    width={1080}
-                    height={1080}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {propertyImages.length > 0 && <ImagesPreview />}
       </section>
 
       <section>

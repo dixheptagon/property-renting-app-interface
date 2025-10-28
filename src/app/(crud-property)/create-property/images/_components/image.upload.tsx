@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   X,
   Plus,
@@ -25,9 +25,15 @@ import { useUploadPropertyImages } from "@/app/(crud-property)/_hooks/use.upload
 import { toast } from "sonner";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 
-export default function ImageUploadDialog() {
+export default function ImageUploadDialog({
+  buttonText,
+  tempGroupId,
+}: {
+  buttonText: string;
+  tempGroupId?: string;
+}) {
   const [selectedImages, setSelectedImages] = useState<
-    { url: string; size: number; name: string; file?: File }[]
+    { url?: string; size?: number; name?: string; file: File }[]
   >([]);
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string>("");
@@ -35,12 +41,12 @@ export default function ImageUploadDialog() {
   const { addPropertyImage } = usePropertyStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+  const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
   const { mutate: uploadImages, isPending } = useUploadPropertyImages({
     onSuccess: (data) => {
       console.log(data);
       setSelectedImages([]);
-      addPropertyImage(data?.data || []);
+      addPropertyImage(data?.data);
       toast.success(data?.message || "Images uploaded successfully!");
       setOpen(false);
     },
@@ -78,17 +84,19 @@ export default function ImageUploadDialog() {
 
     if (oversizedFiles.length > 0) {
       setError(
-        `${oversizedFiles.length} file(s) exceed 5MB limit. Please select smaller images.`
+        `${oversizedFiles.length} file(s) exceed 3MB limit. Please select smaller images.`
       );
       return;
     }
 
     // Check limit total images (10)
     const remainingSlots = 10 - selectedImages.length;
+
     if (imageFiles.length > remainingSlots) {
       setError(
         `You can only upload ${remainingSlots} more image(s). Maximum 10 images total.`
       );
+
       return;
     }
 
@@ -141,6 +149,11 @@ export default function ImageUploadDialog() {
       }
     });
 
+    if (tempGroupId) {
+      formData.append("temp_group_id", tempGroupId);
+    }
+    console.log(formData);
+
     uploadImages(formData);
   };
 
@@ -150,16 +163,15 @@ export default function ImageUploadDialog() {
         <Button
           variant="outline"
           className="text-md p-6 font-semibold outline-2"
-          //   onClick={() => setOpen(true)}
         >
-          Upload photos
+          {buttonText}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <div className="flex-1 text-center">
-              <DialogTitle className="text-2xl">Upload photos</DialogTitle>
+              <DialogTitle className="text-2xl">{buttonText}</DialogTitle>
               <DialogDescription className="mt-2">
                 {selectedImages.length > 0
                   ? `${selectedImages.length} item${selectedImages.length > 1 ? "s" : ""} selected`
