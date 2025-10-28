@@ -38,8 +38,10 @@ export default function ImageUploadDialog({
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string>("");
   const [open, setOpen] = useState(false);
-  const { addPropertyImage } = usePropertyStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const { addPropertyImage, propertyImages } = usePropertyStore();
+  const normalizedPropertyImages = propertyImages.flat();
 
   const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
   const { mutate: uploadImages, isPending } = useUploadPropertyImages({
@@ -89,13 +91,13 @@ export default function ImageUploadDialog({
       return;
     }
 
-    // Check limit total images (10)
-    const remainingSlots = 10 - selectedImages.length;
+    // Check limit total images (10) including already uploaded ones
+    console.log(normalizedPropertyImages.length, selectedImages.length);
+    const totalImages = normalizedPropertyImages.length + selectedImages.length;
+    const remainingSlots = 10 - totalImages;
 
     if (imageFiles.length > remainingSlots) {
-      setError(
-        `You can only upload ${remainingSlots} more image(s). Maximum 10 images total.`
-      );
+      setError("You can only upload maximum of 10 images.");
 
       return;
     }
@@ -138,6 +140,14 @@ export default function ImageUploadDialog({
 
   const handleUpload = () => {
     if (selectedImages.length === 0) return;
+
+    // Final check before upload: ensure total doesn't exceed 10
+    const totalImagesAfterUpload =
+      normalizedPropertyImages.length + selectedImages.length;
+    if (totalImagesAfterUpload > 10) {
+      setError("You can only upload up to 10 images.");
+      return;
+    }
 
     // Logic untuk upload gambar ke server
     console.log("Uploading images:", selectedImages);
@@ -197,7 +207,9 @@ export default function ImageUploadDialog({
           >
             <LoaderCircle className="h-4 w-4 animate-spin text-amber-500" />
             <AlertDescription>
-              Please wait while your image is being uploaded.
+              <p className="text-amber-600">
+                Please wait while your image is being uploaded.
+              </p>
             </AlertDescription>
           </Alert>
         )}
