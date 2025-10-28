@@ -3,9 +3,12 @@
 
 interface BaseImage {
   id: number; // ID record PropertyImage / RoomImage dari database (setelah upload TEMP)
-  url: string;
-  is_main: boolean;
-  order_index: number;
+  publicId: string;
+  secureUrl: string;
+  isMain: boolean;
+  orderIndex: number;
+  status: string;
+  tempGroupId: string;
 }
 
 interface RoomData {
