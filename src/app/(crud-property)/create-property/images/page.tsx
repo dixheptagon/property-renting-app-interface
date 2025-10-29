@@ -63,7 +63,7 @@ export default function Page() {
               className="p-6 shadow-lg"
               variant="outline"
               type="button"
-              onClick={() => router.push("/create-property/amenities")}
+              onClick={() => router.push("/create-property/rules")}
             >
               Back
             </Button>
@@ -71,10 +71,7 @@ export default function Page() {
             <Button
               className="p-6 shadow-lg hover:bg-blue-700"
               type="submit"
-              // disabled={
-              //   formik.values.rules.length === 0 &&
-              //   formik.values.custom_rules.length === 0
-              // }
+              onClick={() => router.push("/create-property/manage-rooms")}
             >
               Continue
             </Button>

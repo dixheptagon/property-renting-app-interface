@@ -27,7 +27,9 @@ interface RoomData {
   bedrooms: number;
   bathrooms: number;
   beds: number;
-  highlight: any; // Sesuaikan dengan tipe JSON yang kamu harapkan
+
+  highlight: string[]; // Sesuaikan dengan tipe JSON yang kamu harapkan
+  custom_highlight: string[];
 
   // Relasi: Image
   images: BaseImage[];
@@ -35,6 +37,7 @@ interface RoomData {
 
 interface PeakRateData {
   // Untuk menghubungkan ke Room di FE, sebelum ada room_id
+  tempId: string;
   targetTempRoomId: string | "PROPERTY";
 
   // Model PeakSeasonRate fields
@@ -46,6 +49,7 @@ interface PeakRateData {
 }
 
 interface UnavailabilityData {
+  tempId: string;
   targetTempRoomId: string;
 
   start_date: string;
