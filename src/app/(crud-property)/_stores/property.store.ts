@@ -49,14 +49,14 @@ export const usePropertyStore = create<PropertyState & PropertyActions>()(
       // 2. Manage Images
       addPropertyImage: (image) =>
         set((state) => ({
-          propertyImages: [...state.propertyImages, image],
+          propertyImages: [...state.propertyImages, image].flat(),
           isDraft: true,
         })),
       removePropertyImage: (imageId) =>
         set((state) => ({
-          propertyImages: state.propertyImages.filter(
-            (img) => img.id !== imageId
-          ),
+          propertyImages: state.propertyImages
+            .flat() // <--- ini yang nge-flatten array dua dimensi
+            .filter((img) => img.id !== imageId),
           isDraft: true,
         })),
 

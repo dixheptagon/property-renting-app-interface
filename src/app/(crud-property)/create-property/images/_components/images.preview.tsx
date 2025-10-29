@@ -1,16 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { MoreHorizontal, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Plus } from "lucide-react";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import ImageUploadDialog from "./image.upload";
+import ImageDelete from "./image.delete";
+import { useDeletePropertyImage } from "@/app/(crud-property)/_hooks/use.delete.property.image";
+import { toast } from "sonner";
+import Image from "next/image";
+import PhotoMenu from "./image.menu";
 
 interface Photo {
   id: string;
@@ -22,27 +20,62 @@ export default function ImagesPreview() {
   const { propertyImages, addPropertyImage, removePropertyImage } =
     usePropertyStore();
 
-  // const handleSetCover = (photoId: string) => {
-  //   setPhotos((prev) =>
-  //     prev.map((photo) => ({
-  //       ...photo,
-  //       isCover: photo.id === photoId,
-  //     }))
-  //   );
-  // };
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [deleteDialog, setDeleteDialog] = useState<{
+    open: boolean;
+    photoId: string | null;
+    tempGroupId: string | null;
+  }>({
+    open: false,
+    photoId: null,
+    tempGroupId: null,
+  });
 
-  // const handleDelete = (photoId: string) => {
-  //   setPhotos((prev) => prev.filter((photo) => photo.id !== photoId));
-  // };
+  const { mutate: removeImage, isPending } = useDeletePropertyImage({
+    onSuccess: (data) => {
+      console.log(data);
 
-  const handleAddMore = () => {
-    console.log("Add more photos clicked");
-    // Trigger file upload dialog
+      toast.success(data?.data?.message || "Images deleted successfully!");
+      setDeleteDialog({ open: false, photoId: null, tempGroupId: null });
+      removePropertyImage(Number(deleteDialog.photoId));
+    },
+    onError: (error) => {
+      console.log(error);
+      if (error?.response?.data?.error) {
+        toast.error(error.response?.data.error);
+      } else {
+        toast.error("Something went wrong, please try again later.");
+
+        // router.push("/");
+      }
+    },
+  });
+
+  const handleSetCover = (photoId: string | number) => {
+    setPhotos((prev) =>
+      prev.map((photo) => ({
+        ...photo,
+        isCover: photo.id === photoId,
+      }))
+    );
   };
 
-  const normalizedImages = propertyImages.flat();
-  const coverPhoto = normalizedImages.find((photo) => photo.isMain);
-  const otherPhotos = normalizedImages.filter((photo) => !photo.isMain);
+  const handleDeleteClick = (photoId: string, tempGroupId?: string) => {
+    setDeleteDialog({
+      open: true,
+      photoId,
+      tempGroupId: tempGroupId || null,
+    });
+  };
+
+  const handleDeleteConfirm = () => {
+    if (deleteDialog.photoId) {
+      removeImage({ imageId: Number(deleteDialog.photoId), tempGroupId });
+    }
+  };
+
+  const coverPhoto = propertyImages.find((photo) => photo.isMain);
+  const otherPhotos = propertyImages.filter((photo) => !photo.isMain);
   const tempGroupId = coverPhoto?.tempGroupId;
 
   return (
@@ -50,9 +83,11 @@ export default function ImagesPreview() {
       {/* Cover Photo */}
       {coverPhoto && (
         <div className="relative aspect-video w-full overflow-hidden rounded-2xl">
-          <img
+          <Image
             src={coverPhoto.secureUrl}
             alt="Cover Photo"
+            width={1080}
+            height={1080}
             className="h-full w-full object-cover"
           />
           <div className="absolute top-4 left-4">
@@ -60,11 +95,16 @@ export default function ImagesPreview() {
               Main Image
             </span>
           </div>
-          {/* <PhotoMenu
+          <PhotoMenu
             onSetCover={() => {}}
-            onDelete={() => handleDelete(coverPhoto.id)}
+            onDelete={() =>
+              handleDeleteClick(
+                coverPhoto.id.toString(),
+                coverPhoto.tempGroupId
+              )
+            }
             isCover={true}
-          /> */}
+          />
         </div>
       )}
 
@@ -75,15 +115,19 @@ export default function ImagesPreview() {
             key={photo.publicId}
             className="relative aspect-video overflow-hidden rounded-2xl"
           >
-            <img
+            <Image
               src={photo.secureUrl}
               alt={`Photo ${photo.id}`}
+              width={1080}
+              height={1080}
               className="h-full w-full object-cover"
             />
-            {/* <PhotoMenu
+            <PhotoMenu
               onSetCover={() => handleSetCover(photo.id)}
-              onDelete={() => handleDelete(photo.id)}
-            /> */}
+              onDelete={() =>
+                handleDeleteClick(photo.id.toString(), photo.tempGroupId)
+              }
+            />
           </div>
         ))}
 
@@ -96,41 +140,16 @@ export default function ImagesPreview() {
           />
         </div>
       </div>
-    </div>
-  );
-}
 
-// Photo Menu Component
-function PhotoMenu({
-  onSetCover,
-  onDelete,
-  isCover = false,
-}: {
-  onSetCover: () => void;
-  onDelete: () => void;
-  isCover?: boolean;
-}) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/90 shadow-md backdrop-blur-sm hover:bg-white"
-        >
-          <MoreHorizontal className="h-5 w-5 text-gray-700" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
-        {!isCover && (
-          <DropdownMenuItem onClick={onSetCover}>
-            Set as cover photo
-          </DropdownMenuItem>
-        )}
-        <DropdownMenuItem onClick={onDelete} className="text-red-600">
-          Delete photo
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      {/* Image Delete Dialog */}
+      <ImageDelete
+        open={deleteDialog.open}
+        onOpenChange={(open) => setDeleteDialog((prev) => ({ ...prev, open }))}
+        onConfirm={handleDeleteConfirm}
+        photoId={deleteDialog.photoId || undefined}
+        tempGroupId={deleteDialog.tempGroupId || undefined}
+        isPending={isPending}
+      />
+    </div>
   );
 }

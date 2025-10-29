@@ -43,7 +43,7 @@ export default function ImageUploadDialog({
   const { addPropertyImage, propertyImages } = usePropertyStore();
   const normalizedPropertyImages = propertyImages.flat();
 
-  const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
   const { mutate: uploadImages, isPending } = useUploadPropertyImages({
     onSuccess: (data) => {
       console.log(data);
@@ -86,13 +86,12 @@ export default function ImageUploadDialog({
 
     if (oversizedFiles.length > 0) {
       setError(
-        `${oversizedFiles.length} file(s) exceed 3MB limit. Please select smaller images.`
+        `${oversizedFiles.length} file(s) exceed 2MB limit. Please select smaller images.`
       );
       return;
     }
 
     // Check limit total images (10) including already uploaded ones
-    console.log(normalizedPropertyImages.length, selectedImages.length);
     const totalImages = normalizedPropertyImages.length + selectedImages.length;
     const remainingSlots = 10 - totalImages;
 
