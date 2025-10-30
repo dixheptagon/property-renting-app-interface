@@ -10,7 +10,7 @@ export const RoomValidationSchema = Yup.object().shape({
     .typeError("Price must be a number")
     .required("Price is required")
     .min(25000, "Minimum price is Rp 25.000")
-    .max(10000000, "Maximum price is Rp 10.000.000"),
+    .max(100000000, "Maximum price is Rp 100.000.0000"),
 
   max_guest: Yup.number().required("Room max guest is required"),
   total_units: Yup.number().required("Room total units is required"),

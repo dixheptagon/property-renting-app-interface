@@ -45,7 +45,7 @@ export default function Page() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      base_price: 100000,
+      base_price: currentRoom?.base_price || 100000,
     },
     validationSchema,
     onSubmit: (values) => {
