@@ -29,7 +29,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { PeakSeasonRateValidationSchema } from "@/app/(crud-property)/_validations/peak.season.rate.validation.schema";
 
 export default function PeakPriceContent() {
-  const { rooms, peakSeasonRates, addPeakRate } = usePropertyStore();
+  const { rooms, peakSeasonRates, addPeakRate, updatePeakRate } =
+    usePropertyStore();
   const isMobile = useIsMobile();
 
   //   1. get rooms
@@ -92,8 +93,19 @@ export default function PeakPriceContent() {
           adjustment_value: values.peakPricePercentage,
         };
 
-        // Add to global state
-        addPeakRate(peakRateData);
+        // Check if data exist updatate data else add new data
+        if (
+          peakSeasonRates.find(
+            (rate) =>
+              rate.targetTempRoomId === roomTempId &&
+              rate.start_date === peakRateData.start_date &&
+              rate.end_date === peakRateData.end_date
+          )
+        ) {
+          updatePeakRate(roomTempId, peakRateData);
+        } else {
+          addPeakRate(peakRateData);
+        }
       });
 
       // Reset form after successful submission

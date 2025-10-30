@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import CreatePropertyHeader from "../_components/create.property.header";
 import { CalendarPlus } from "lucide-react";
 import { SetDialogPeakPrice } from "./_components/set.dialog.peak.price";
+import ShowPeakRateData from "./_components/show.peak.rate.data";
 
 export default function Page() {
   return (
@@ -20,7 +21,8 @@ export default function Page() {
         </div>
 
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+          <ShowPeakRateData />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4">
             <SetDialogPeakPrice />
           </div>
         </div>
