@@ -82,6 +82,7 @@ export default function Page() {
             <Button
               className="p-6 shadow-lg hover:bg-blue-700"
               type="submit"
+              disabled={(currentRoom?.images?.length ?? 0) < 5}
               onClick={() =>
                 router.push(
                   `/create-property/manage-rooms/set-price?roomId=${roomId}`

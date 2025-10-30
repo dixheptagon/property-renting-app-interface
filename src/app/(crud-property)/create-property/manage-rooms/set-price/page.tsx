@@ -3,7 +3,6 @@
 import { Input } from "@/components/ui/input";
 import CreatePropertyHeader from "../../_components/create.property.header";
 import { useEffect, useRef, useState } from "react";
-import { formatToIDR } from "./_utils/format.price.idr";
 import { useFormik } from "formik";
 import { RoomValidationSchema } from "@/app/(crud-property)/_validations/room.validation.schema";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -13,6 +12,7 @@ import RoomProgressBar from "../../_components/room.progress.bar";
 import { Button } from "@/components/ui/button";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import { toast } from "sonner";
+import { formatToIDR } from "../_utils/format.price.idr";
 
 export default function Page() {
   const router = useRouter();
