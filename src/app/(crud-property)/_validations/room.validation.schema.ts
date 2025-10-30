@@ -6,7 +6,11 @@ export const RoomValidationSchema = Yup.object().shape({
   name: Yup.string().required("Room name is required"),
   description: Yup.string().required("Room description is required"),
 
-  base_price: Yup.number().required("Room base price is required"),
+  base_price: Yup.number()
+    .typeError("Price must be a number")
+    .required("Price is required")
+    .min(25000, "Minimum price is Rp 25.000")
+    .max(10000000, "Maximum price is Rp 10.000.000"),
 
   max_guest: Yup.number().required("Room max guest is required"),
   total_units: Yup.number().required("Room total units is required"),
@@ -14,7 +18,7 @@ export const RoomValidationSchema = Yup.object().shape({
   bathrooms: Yup.number().required("Room bathrooms is required"),
   beds: Yup.number().required("Room beds is required"),
 
-  highlight: Yup.string().required("Room highlight is required").min(1),
+  highlight: Yup.array().required("Please select at least one amenity").min(1),
   custom_highlight: Yup.array()
     .of(Yup.string().max(50, "Each custom rule must not exceed 50 characters"))
     .optional(),

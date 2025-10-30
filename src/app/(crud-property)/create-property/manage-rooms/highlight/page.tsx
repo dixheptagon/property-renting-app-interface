@@ -45,15 +45,13 @@ export default function Page() {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-
       if (!roomId || !currentRoom) {
         toast.error(`Room id ${roomId} not found, You will be redirected`, {
           duration: 4000,
         });
 
         setTimeout(() => {
-          router.push("/create-property/manage-rooms"); // ganti path sesuai kebutuhan
+          router.push("/create-property/manage-rooms");
         }, 4000);
 
         return;
@@ -63,7 +61,7 @@ export default function Page() {
         highlight: values.highlight,
         custom_highlight: values.custom_highlight,
       });
-      //   router.push(`/create-property/manage-rooms/images?roomId=${roomId}`);
+      router.push(`/create-property/manage-rooms/images?roomId=${roomId}`);
     },
   });
 
@@ -249,7 +247,11 @@ export default function Page() {
                 className="p-6 shadow-lg"
                 variant="outline"
                 type="button"
-                onClick={() => router.push("/create-property/map-spot")}
+                onClick={() =>
+                  router.push(
+                    `/create-property/manage-rooms/capacity?roomId=${roomId}`
+                  )
+                }
               >
                 Back
               </Button>

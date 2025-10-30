@@ -113,6 +113,7 @@ interface PropertyActions {
   updateRoom: (tempId: string, data: Partial<Omit<RoomData, "images">>) => void;
   removeRoom: (tempId: string) => void;
   addRoomImage: (tempId: string, image: BaseImage) => void;
+  removeRoomImage: (tempId: string, imageId: number) => void;
 
   addPeakRate: (rate: PeakRateData) => void;
   updatePeakRate: (tempId: string, data: Partial<PeakRateData>) => void;

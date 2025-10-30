@@ -78,11 +78,26 @@ export const usePropertyStore = create<PropertyState & PropertyActions>()(
           rooms: state.rooms.filter((room) => room.tempId !== tempId),
           isDraft: true,
         })),
+
+      // 3.1 Manage Room Images
       addRoomImage: (tempId, image) =>
         set((state) => ({
           rooms: state.rooms.map((room) =>
             room.tempId === tempId
-              ? { ...room, images: [...room.images, image] }
+              ? { ...room, images: [...room.images, image].flat() }
+              : room
+          ),
+          isDraft: true,
+        })),
+
+      removeRoomImage: (tempId, imageId) =>
+        set((state) => ({
+          rooms: state.rooms.map((room) =>
+            room.tempId === tempId
+              ? {
+                  ...room,
+                  images: room.images.filter((img) => img.id !== imageId),
+                }
               : room
           ),
           isDraft: true,
