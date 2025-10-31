@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { CirclePlus, Hotel, Bed, Users } from "lucide-react";
+import { CirclePlus, Hotel, Bed, Users, LogOut } from "lucide-react";
 import CreatePropertyHeader from "../_components/create.property.header";
 import Link from "next/link";
 import PropertyProgressBar from "../_components/property.progress.bar";
@@ -142,10 +142,12 @@ export default function Page() {
 
             <Button
               className="p-6 shadow-lg hover:bg-blue-700"
-              disabled
+              disabled={roomCounter <= 0}
               type="submit"
+              onClick={() => router.push("/create-property/summary")}
             >
-              Continue
+              Go to Summary
+              <LogOut className="ml-1 h-4 w-4 stroke-3" />
             </Button>
           </div>
         </div>
