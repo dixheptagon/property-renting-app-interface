@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { RoomCard } from "./room-card";
 import { ImageLightbox } from "./image.lightbox";
+import { CREATE_PROPERTY_STEPS } from "../../_constant/create.property.path";
+import ButtonEditSection from "../button.edit.section";
 
 /**
  * Main component for displaying property room types from store.
@@ -50,26 +52,18 @@ export default function PropertyRoomTypes() {
     );
   };
 
-  /**
-   * Edits a room by redirecting to title-description page.
-   * @param tempId - The tempId of the room to edit.
-   */
-  const handleEditRoom = (tempId: string) => {
-    router.push(
-      `/create-property/manage-rooms/title-description?roomId=${tempId}`
-    );
-  };
-
-  /**
-   * Removes a room using the property store.
-   * @param tempId - The tempId of the room to remove.
-   */
-  const handleRemoveRoom = (tempId: string) => {
-    removeRoom(tempId);
-  };
+  // Get path for editing
+  const manageRoomsPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Manage Rooms")
+      ?.value || "/create-property/manage-rooms";
 
   return (
-    <div className="" id="room-type">
+    <div className="relative" id="room-type">
+      {/* Button Edit Section */}
+      <div className="absolute -top-3 -right-3 z-10">
+        <ButtonEditSection path={manageRoomsPath} label="Property Room Types" />
+      </div>
+
       {/* Room Cards */}
       <div className="space-y-6">
         {createdRooms.map((room) => {

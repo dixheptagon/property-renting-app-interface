@@ -4,6 +4,8 @@ import { MapPin } from "lucide-react";
 import MapEmbed from "@/components/ui/maps.embed";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import { useIsMobile } from "@/hooks/use-mobile";
+import ButtonEditSection from "./button.edit.section";
+import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
 interface PropertyLocationProps {}
 
@@ -14,10 +16,26 @@ export default function PropertyLocation({}: PropertyLocationProps) {
   // Full address string
   const fullAddress = `${property.address}, ${property.city}, ${property.country} ${property.postal_code}`;
 
+  // Get paths for editing
+  const locationPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Location")?.value ||
+    "/create-property/location";
+
+  const mapSpotPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Map Spot")?.value ||
+    "/create-property/map-spot";
+
   return (
     <div className="" id="location">
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-md">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">Location</h2>
+      <div className="relative rounded-xl border border-gray-200 bg-white p-6 shadow-md">
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900">Location</h2>
+
+          {/* Button Edit Section */}
+          <div className="absolute -top-3 -right-3">
+            <ButtonEditSection path={locationPath} label="Property Location" />
+          </div>
+        </div>
 
         {/* Address Info */}
         <div className="mb-6 rounded-lg bg-gray-50 p-4">
@@ -35,9 +53,14 @@ export default function PropertyLocation({}: PropertyLocationProps) {
         </div>
 
         {/* Google Maps Embed */}
-        <div className="mb-6 overflow-hidden rounded-lg border-2 border-gray-200">
+        <div className="relative mb-6 rounded-lg border-2 border-gray-200">
+          {/* Button Edit Section */}
+          <div className="absolute -top-3 -right-3 z-10">
+            <ButtonEditSection path={mapSpotPath} label="Map Spot" />
+          </div>
+
           <div
-            className={`relative w-full bg-gray-100 ${isMobile ? "h-72" : "h-96"}`}
+            className={`relative w-full overflow-hidden rounded-lg bg-gray-100 ${isMobile ? "h-72" : "h-96"}`}
           >
             {property.map_url ? (
               <MapEmbed src={property.map_url} width="100%" height="100%" />

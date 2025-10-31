@@ -1,8 +1,27 @@
+"use client";
+
 import { MapPin } from "lucide-react";
+import ButtonEditSection from "./button.edit.section";
+import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
 export default function NoPropertyLocation() {
+  // Get paths for editing
+  const locationPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Location")?.value ||
+    "/create-property/location";
+
+  const mapSpotPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Map Spot")?.value ||
+    "/create-property/map-spot";
+
   return (
     <div className="relative flex min-h-120 w-full items-center justify-center overflow-hidden rounded-lg border border-red-200 bg-red-50 p-4 shadow-md">
+      {/* Button Edit Section */}
+      <div className="absolute -top-3 -right-3 flex gap-2">
+        <ButtonEditSection path={locationPath} label="Property Location" />
+        <ButtonEditSection path={mapSpotPath} label="Map Spot" />
+      </div>
+
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-200 blur-2xl"></div>
       <div className="absolute right-0 bottom-0 h-32 w-32 translate-x-1/2 translate-y-1/2 rounded-full bg-red-200 blur-2xl"></div>

@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, ChevronLeft, ChevronRight, Image } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Image, Edit } from "lucide-react";
 import { BaseImage } from "@/app/(crud-property)/_types/property.type";
+import ButtonEditSection from "./button.edit.section";
+import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PropertyImageGridProps {
@@ -34,59 +36,71 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
     setShowLightbox(true);
   };
 
+  // Get path for editing
+  const imagesPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Images")?.value ||
+    "/create-property/images";
+
   return (
     <>
       {/* Main Grid Layout */}
       <div className="" id="photos">
-        <div className="grid h-[400px] grid-cols-2 gap-2 overflow-hidden rounded-xl md:grid-cols-4">
-          {/* Main Image - Left Side */}
-          <div
-            className="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden"
-            onClick={() => handleImageClick(0)}
-          >
-            <img
-              src={imageUrls[0]}
-              alt="Main property view"
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
+        <div className="relative">
+          {/* Button Edit Section */}
+          <div className="absolute -top-3 -right-3 z-10">
+            <ButtonEditSection path={imagesPath} label="Property Images" />
           </div>
 
-          {/* Grid Images - Right Side */}
-          {imageUrls.slice(1, 5).map((imageUrl, index) => (
+          <div className="grid h-[400px] grid-cols-2 gap-2 overflow-hidden rounded-xl md:grid-cols-4">
+            {/* Main Image - Left Side */}
             <div
-              key={index}
-              className={`group relative cursor-pointer overflow-hidden`}
-              onClick={() => handleImageClick(index + 1)}
+              className="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden"
+              onClick={() => handleImageClick(0)}
             >
               <img
-                src={imageUrl}
-                alt={`Property view ${index + 2}`}
-                className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-105`}
+                src={imageUrls[0]}
+                alt="Main property view"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
-
-              {/* Show button on last image */}
-              {index === 3 && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowLightbox(true);
-                    setCurrentImageIndex(0);
-                  }}
-                  className="absolute right-4 bottom-4 flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-lg transition-colors duration-200 hover:bg-gray-100"
-                >
-                  <Image
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  />
-                  Show more photos
-                </button>
-              )}
             </div>
-          ))}
+
+            {/* Grid Images - Right Side */}
+            {imageUrls.slice(1, 5).map((imageUrl, index) => (
+              <div
+                key={index}
+                className={`group relative cursor-pointer overflow-hidden`}
+                onClick={() => handleImageClick(index + 1)}
+              >
+                <img
+                  src={imageUrl}
+                  alt={`Property view ${index + 2}`}
+                  className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-105`}
+                />
+                <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
+
+                {/* Show button on last image */}
+                {index === 3 && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowLightbox(true);
+                      setCurrentImageIndex(0);
+                    }}
+                    className="absolute right-4 bottom-4 flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-lg transition-colors duration-200 hover:bg-gray-100"
+                  >
+                    <Image
+                      className="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    />
+                    Show more photos
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

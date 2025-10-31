@@ -95,7 +95,7 @@ export default function Page() {
           </div>
 
           <div
-            className={`col-span-1 w-full space-y-4 md:self-start lg:sticky lg:top-24 ${isMobile ? "hidden" : ""}`}
+            className={`col-span-1 w-full space-y-8 md:self-start lg:sticky lg:top-24 ${isMobile ? "hidden" : ""}`}
           >
             {/* Property Peak Season Rates */}
             {peakSeasonRates && peakSeasonRates.length > 0 ? (

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { BadgeCheck } from "lucide-react";
 import { propertyAmenities } from "../_constant/property.amenities";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
+import ButtonEditSection from "./button.edit.section";
+import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
 interface PropertyAmenitiesProps {}
 
@@ -48,11 +50,27 @@ export default function PropertyAmenities({}: PropertyAmenitiesProps) {
     ? amenitiesList
     : amenitiesList.slice(0, 6);
 
+  // Get path for editing
+  const amenitiesPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Amenities")?.value ||
+    "/create-property/amenities";
+
   return (
     <div id="amenities">
       {/* Amenities */}
-      <div className="rounded-xl border-2 bg-white p-6 shadow-md">
-        <h2 className="mb-4 text-xl font-bold text-gray-900">Amenities</h2>
+      <div className="relative rounded-xl border-2 bg-white p-6 shadow-md">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-gray-900">Amenities</h2>
+
+          {/* Button Edit Section */}
+          <div className="absolute -top-3 -right-3">
+            <ButtonEditSection
+              path={amenitiesPath}
+              label="Property Amenities"
+            />
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {displayedAmenities.map((amenity, index) => {
             const Icon = amenity.icon;

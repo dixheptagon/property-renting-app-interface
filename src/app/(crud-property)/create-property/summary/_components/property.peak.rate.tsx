@@ -3,6 +3,8 @@
 import { TrendingUp, Flame, Sparkles, Target } from "lucide-react";
 
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
+import ButtonEditSection from "./button.edit.section";
+import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
 export default function PropertyPeakRate() {
   const { peakSeasonRates, rooms } = usePropertyStore();
@@ -11,20 +13,32 @@ export default function PropertyPeakRate() {
     new Set(peakSeasonRates.map((item) => item.targetTempRoomId))
   );
 
+  // Get path for editing
+  const peakRatePath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Create Peak Rate")
+      ?.value || "/create-property/create-peak-rate";
+
   return (
     <div id="peak-rates">
       <div className="rounded-xl border-2 bg-white p-6 shadow-md">
-        <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-orange-400 to-orange-600">
-            <Flame className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Peak Season Rates
-            </h2>
-            <p className="text-sm text-gray-600">
-              Special pricing for high-demand periods
-            </p>
+        {/* Button Edit Section */}
+        <div className="absolute -top-3 -right-3">
+          <ButtonEditSection path={peakRatePath} label="Create Peak Rate" />
+        </div>
+
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-orange-400 to-orange-600">
+              <Flame className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                Peak Season Rates
+              </h2>
+              <p className="text-sm text-gray-600">
+                Special pricing for high-demand periods
+              </p>
+            </div>
           </div>
         </div>
 

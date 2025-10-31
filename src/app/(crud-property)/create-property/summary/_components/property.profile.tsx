@@ -10,6 +10,8 @@ import {
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import { PROPERTY_CATEGORIES } from "../_constant/property.category";
+import ButtonEditSection from "./button.edit.section";
+import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
 interface PropertyProfileProps {}
 
@@ -52,10 +54,28 @@ export default function PropertyProfile({}: PropertyProfileProps) {
     return text.substring(0, maxLength) + "...";
   };
 
+  // Get paths for editing
+  const titleDescriptionPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Title & Description")
+      ?.value || "/create-property/title-description";
+
+  const categoryPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Select Category")
+      ?.value || "/create-property/select-category";
+
   return (
     <div className="space-y-8" id="profile">
       {/* Title and Rating Section */}
-      <div className="rounded-xl border-2 bg-white p-6 shadow-md">
+      <div className="relative rounded-xl border-2 bg-white p-6 shadow-md">
+        {/* Button Edit Section */}
+        <div className="absolute -top-3 -right-3">
+          <ButtonEditSection
+            path={categoryPath}
+            label="Property Category"
+            className="ml-2"
+          />
+        </div>
+
         <div className="mb-4 flex items-start justify-between">
           <div>
             <div className="mb-2 flex items-center gap-3">
@@ -86,30 +106,44 @@ export default function PropertyProfile({}: PropertyProfileProps) {
               </button>
             )}
           </div>
+
+          {/* Category */}
           <div className="flex flex-col items-center gap-2">
-            <span className="flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700 capitalize">
-              <CategoryIcon className="h-4 w-4" />
-              {categoryLabel}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700 capitalize">
+                <CategoryIcon className="h-4 w-4" />
+                {categoryLabel}
+              </span>
+            </div>
           </div>
         </div>
 
         {/* Host Info */}
-        <div className="flex items-center gap-3 border-t pt-4">
-          {/* Tenant Image */}
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-800 text-lg font-semibold text-white">
-            <ImageOff className="h-6 w-6" />
-          </div>
+        <div className="flex items-center justify-between border-t pt-4">
+          <div className="flex items-center gap-3">
+            {/* Tenant Image */}
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-800 text-lg font-semibold text-white">
+              <ImageOff className="h-6 w-6" />
+            </div>
 
-          <div>
-            <p className="font-medium text-gray-900">{fullName}</p>
-            <p className="text-sm text-gray-600">Host</p>
+            <div>
+              <p className="font-medium text-gray-900">{fullName}</p>
+              <p className="text-sm text-gray-600">Host</p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Description Section */}
-      <div className="rounded-xl border-2 bg-white p-6 shadow-md">
+      <div className="relative rounded-xl border-2 bg-white p-6 shadow-md">
+        {/* Button Edit Section */}
+        <div className="absolute -top-3 -right-3">
+          <ButtonEditSection
+            path={titleDescriptionPath}
+            label="Title & Description"
+          />
+        </div>
+
         <h2 className="mb-4 text-xl font-bold text-gray-900">Description</h2>
         <p className="leading-relaxed text-gray-700">
           {showFullDescription ? description : truncateDescription(description)}

@@ -1,46 +1,14 @@
 "use client";
 
 import React from "react";
-import {
-  Calendar,
-  Wrench,
-  DoorOpen,
-  AlertCircle,
-  Clock,
-  XCircle,
-  Ban,
-  Users,
-  Zap,
-} from "lucide-react";
-import { formatDate } from "../../_utils/format.date";
+import { Calendar, Ban, Users, DoorOpen } from "lucide-react";
+
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
+import ButtonEditSection from "./button.edit.section";
+import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
 export default function PropertyUnavailabilities() {
   const { unavailabilities, rooms } = usePropertyStore();
-
-  const getReasonIcon = (reason: string) => {
-    switch (reason.toLowerCase()) {
-      case "renovation":
-        return <Wrench className="h-5 w-5 text-orange-600" />;
-      case "maintenance":
-        return <AlertCircle className="h-5 w-5 text-blue-600" />;
-      case "booking":
-        return <Users className="h-5 w-5 text-green-600" />;
-      case "emergency":
-        return <Zap className="h-5 w-5 text-red-600" />;
-      default:
-        return <Clock className="h-5 w-5 text-gray-600" />;
-    }
-  };
-
-  const getRoomName = (tempId: string) => {
-    const room = rooms.find((r) => r.tempId === tempId);
-    return room ? room.name : "Unknown Room";
-  };
-
-  const formatDateRange = (startDate: string, endDate: string) => {
-    return `${formatDate(new Date(startDate))} - ${formatDate(new Date(endDate))}`;
-  };
 
   const calculateNights = (startDate: string, endDate: string) => {
     const start = new Date(startDate);
@@ -48,20 +16,35 @@ export default function PropertyUnavailabilities() {
     return Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
   };
 
+  // Get path for editing
+  const unavailabilitiesPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Unavailabilities")
+      ?.value || "/create-property/unavailabilities";
+
   return (
     <div id="unavailabilities">
-      <div className="rounded-xl border-2 bg-white p-6 shadow-md">
-        <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-red-400 to-red-600">
-            <Ban className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Room Unavailabilities
-            </h2>
-            <p className="text-sm text-gray-600">
-              Periods when rooms are not available for booking
-            </p>
+      <div className="relative rounded-xl border-2 bg-white p-6 shadow-md">
+        {/* Button Edit Section */}
+        <div className="absolute -top-3 -right-3">
+          <ButtonEditSection
+            path={unavailabilitiesPath}
+            label="Property Unavailabilities"
+          />
+        </div>
+
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-red-400 to-red-600">
+              <Ban className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                Room Unavailabilities
+              </h2>
+              <p className="text-sm text-gray-600">
+                Periods when rooms are not available for booking
+              </p>
+            </div>
           </div>
         </div>
 
