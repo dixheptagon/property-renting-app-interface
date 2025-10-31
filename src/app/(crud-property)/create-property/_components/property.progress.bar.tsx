@@ -1,6 +1,6 @@
+"use client";
 import { usePathname } from "next/navigation";
 import { PROPERTY_CREATION_STEPS } from "../_constants/create.property.steps";
-import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
 export default function PropertyProgressBar() {

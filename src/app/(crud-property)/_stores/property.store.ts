@@ -142,7 +142,7 @@ export const usePropertyStore = create<PropertyState & PropertyActions>()(
       removeUnavailability: (tempId) =>
         set((state) => ({
           unavailabilities: state.unavailabilities.filter(
-            (unavailability) => unavailability.targetTempRoomId !== tempId
+            (unavailability) => unavailability.tempId !== tempId
           ),
           isDraft: true,
         })),

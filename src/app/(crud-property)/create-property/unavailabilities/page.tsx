@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import CreatePropertyHeader from "../_components/create.property.header";
 import PropertyProgressBar from "../_components/property.progress.bar";
-import { SetDialogPeakPrice } from "./_components/set.dialog.peak.price";
-import ShowPeakRateData from "./_components/show.peak.rate.data";
-import Link from "next/link";
+import { SetUnavailabilities } from "./_components/set.unavalability";
+import UnavailabilitiesData from "./_components/unavailabilties.data";
+import { Button } from "@/components/ui/button";
 import { LogIn } from "lucide-react";
 
 export default function Page() {
@@ -12,20 +12,20 @@ export default function Page() {
       <CreatePropertyHeader />
 
       <section className="mb-30 min-h-screen space-y-12 px-4 py-16">
-        <div className="space-y-2">
+        <div className="mx-auto max-w-5xl space-y-2">
           <h1 className="text-center text-3xl font-bold">
-            Set special prices for high-demand periods
+            Set unavailable dates for your property
           </h1>
           <p className="text-center text-xl text-gray-600">
-            Easily define and manage seasonal pricing to maximize your revenue
-            during holidays, weekends, or peak travel seasons.
+            Easily mark dates when your property is closed or unavailable for
+            booking — to prevent unwanted reservations and keep your calendar
+            accurate.
           </p>
         </div>
 
-        <div className="mx-auto max-w-7xl space-y-8">
-          <SetDialogPeakPrice />
-
-          <ShowPeakRateData />
+        <div className="space-y-6">
+          <UnavailabilitiesData />
+          <SetUnavailabilities />
         </div>
       </section>
 

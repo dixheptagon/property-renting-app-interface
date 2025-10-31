@@ -15,7 +15,7 @@ export const PROPERTY_CREATION_STEPS: Step[] = [
   { id: 7, path: "rules", label: "Property Rules" },
   { id: 8, path: "images", label: "Property Images" },
   { id: 9, path: "manage-rooms", label: "Manage Rooms" },
-  { id: 10, path: "create-peak-rates", label: "Manage Peak Rates" },
+  { id: 10, path: "peak-season-rate", label: "Manage Peak Season Rates" },
   {
     id: 11,
     path: "unavailabilities",

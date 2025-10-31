@@ -21,7 +21,7 @@ export default function RemovePeakPrice({ tempId }: { tempId: string }) {
   };
 
   return (
-    <div className="absolute right-4 bottom-4 z-20">
+    <div className="absolute right-4 bottom-4">
       <Dialog>
         <DialogTrigger asChild>
           <button className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-white transition-colors duration-200 hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2">

@@ -33,10 +33,10 @@ export default function ButtonPeakPrice() {
 
       {/* Corner accent */}
       <div
-        className={`absolute top-3 right-3 h-2 w-2 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 opacity-50`}
+        className={`absolute top-3 right-3 h-2 w-2 rounded-full bg-blue-400`}
       ></div>
       <div
-        className={`absolute bottom-3 left-3 h-2 w-2 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 opacity-50`}
+        className={`absolute bottom-3 left-3 h-2 w-2 rounded-full bg-blue-400`}
       ></div>
     </button>
   );
