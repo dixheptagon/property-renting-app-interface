@@ -1,5 +1,6 @@
-import { formatDate } from "../../_utils/format.date";
-import { parseISO } from "date-fns";
+"use client";
+
+import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +13,13 @@ import {
 } from "@/components/ui/dialog";
 import { Trash2 } from "lucide-react";
 
-export default function RemovePeakPrice() {
+export default function RemovePeakPrice({ tempId }: { tempId: string }) {
+  const { removePeakRate } = usePropertyStore();
+
+  const handleRemove = () => {
+    removePeakRate(tempId);
+  };
+
   return (
     <div className="absolute right-4 bottom-4 z-20">
       <Dialog>
@@ -25,7 +32,7 @@ export default function RemovePeakPrice() {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Remove Room</DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-gray-600">
               Are you sure you want to remove "{"this room"}"? This action
               cannot be undone.
             </DialogDescription>
@@ -34,10 +41,7 @@ export default function RemovePeakPrice() {
             <DialogTrigger asChild>
               <Button variant="outline">Cancel</Button>
             </DialogTrigger>
-            <Button
-            // variant="destructive"
-            // onClick={() => onRemoveRoom(room.tempId)}
-            >
+            <Button variant="destructive" onClick={handleRemove}>
               Remove Room
             </Button>
           </DialogFooter>

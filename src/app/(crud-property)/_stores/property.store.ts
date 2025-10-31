@@ -119,7 +119,7 @@ export const usePropertyStore = create<PropertyState & PropertyActions>()(
       removePeakRate: (tempId) =>
         set((state) => ({
           peakSeasonRates: state.peakSeasonRates.filter(
-            (rate) => rate.targetTempRoomId !== tempId
+            (rate) => rate.tempId !== tempId
           ),
           isDraft: true,
         })),

@@ -28,7 +28,7 @@ import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { PeakSeasonRateValidationSchema } from "@/app/(crud-property)/_validations/peak.season.rate.validation.schema";
 
-export default function PeakPriceContent() {
+export default function PeakPriceDialogContent() {
   const { rooms, peakSeasonRates, addPeakRate, updatePeakRate } =
     usePropertyStore();
   const isMobile = useIsMobile();

@@ -13,33 +13,12 @@ import { formatPrice } from "../../_utils/format.price";
 import { calculatePeakPrice } from "../../_utils/calculate.peak.price";
 import RemovePeakPrice from "./remove.peak.price";
 import { SetDialogPeakPrice } from "./set.dialog.peak.price";
+import getRoomName from "../_utils/get.room.name";
+import getRoomBasePrice from "../_utils/get.room.base.price";
+import formatDateRange from "../_utils/format.date.range";
 
 export default function ShowPeakRateData() {
   const { peakSeasonRates, rooms } = usePropertyStore();
-
-  const formatDateRange = (startDate: string, endDate: string) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    return `${start.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    })} - ${end.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    })}`;
-  };
-
-  const getRoomName = (tempId: string) => {
-    const room = rooms.find((r) => r.tempId === tempId);
-    return room?.name || `Room ${tempId.split("-")[2]}`;
-  };
-
-  const getRoomBasePrice = (tempId: string) => {
-    const room = rooms.find((r) => r.tempId === tempId);
-    return room?.base_price || 0;
-  };
 
   const uniqueTargetIds = Array.from(
     new Set(peakSeasonRates.map((item) => item.targetTempRoomId))
@@ -83,8 +62,8 @@ export default function ShowPeakRateData() {
       {/* Peak Season Rates Data */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {peakSeasonRates.map((rate) => {
-          const roomName = getRoomName(rate.targetTempRoomId);
-          const basePrice = getRoomBasePrice(rate.targetTempRoomId);
+          const roomName = getRoomName(rate.targetTempRoomId, rooms);
+          const basePrice = getRoomBasePrice(rate.targetTempRoomId, rooms);
           const peakPrice = calculatePeakPrice(
             Number(basePrice),
             Number(rate.adjustment_value)
@@ -167,7 +146,7 @@ export default function ShowPeakRateData() {
 
               {/* Remove Button */}
               <div className="mt-4 flex justify-end">
-                <RemovePeakPrice />
+                <RemovePeakPrice tempId={rate.tempId} />
               </div>
             </div>
           );
