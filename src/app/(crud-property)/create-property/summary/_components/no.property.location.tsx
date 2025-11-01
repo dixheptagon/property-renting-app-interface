@@ -17,7 +17,7 @@ export default function NoPropertyLocation() {
   return (
     <div className="relative flex min-h-120 w-full items-center justify-center overflow-hidden rounded-lg border border-red-200 bg-red-50 p-4 shadow-md">
       {/* Button Edit Section */}
-      <div className="absolute -top-3 -right-3 flex gap-2">
+      <div className="absolute top-3 right-3 flex gap-2">
         <ButtonEditSection path={locationPath} label="Property Location" />
         <ButtonEditSection path={mapSpotPath} label="Map Spot" />
       </div>

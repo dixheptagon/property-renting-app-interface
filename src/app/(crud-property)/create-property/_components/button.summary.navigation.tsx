@@ -12,7 +12,7 @@ export default function ButtonSummaryNavigation() {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div className="fixed right-6 bottom-35 z-50 lg:top-25 lg:right-15">
+        <div className="fixed right-8 bottom-35 z-50">
           <Link
             href="/create-property/summary"
             className="group relative block rounded-full bg-gradient-to-br from-blue-400 to-blue-800 p-3 shadow-2xl transition-all duration-300 hover:scale-110 hover:shadow-blue-500/25"
@@ -28,7 +28,7 @@ export default function ButtonSummaryNavigation() {
         </div>
       </TooltipTrigger>
       <TooltipContent side="left">
-        <p>View Property Summary</p>
+        <p>Go to Summary</p>
       </TooltipContent>
     </Tooltip>
   );

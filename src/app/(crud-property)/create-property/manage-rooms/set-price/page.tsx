@@ -6,8 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import { RoomValidationSchema } from "@/app/(crud-property)/_validations/room.validation.schema";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useScrolled } from "@/hooks/use.scrolled";
-import { useIsMobile } from "@/hooks/use-mobile";
+
 import RoomProgressBar from "../../_components/room.progress.bar";
 import { Button } from "@/components/ui/button";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
@@ -16,8 +15,6 @@ import { formatToIDR } from "../_utils/format.price.idr";
 
 export default function Page() {
   const router = useRouter();
-  const scrolled = useScrolled();
-  const isMobile = useIsMobile();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -124,11 +121,7 @@ export default function Page() {
 
         <section>
           <div
-            className={`fixed bottom-0 w-full space-y-2 p-4 lg:fixed lg:bottom-0 ${
-              scrolled || isMobile
-                ? "border-t-2 bg-white/85 backdrop-blur-md"
-                : ""
-            }`}
+            className={`fixed bottom-0 w-full space-y-2 border-t-2 bg-white/40 p-4 backdrop-blur-md lg:fixed lg:bottom-0`}
           >
             <RoomProgressBar />
 

@@ -17,7 +17,7 @@ export default function NoPropertyImages() {
       <div className="oblur-3xl absolute bottom-0 left-0 h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-red-200 blur-3xl"></div>
 
       {/* Button Edit Section */}
-      <div className="absolute -top-3 -right-3 z-10">
+      <div className="absolute top-3 right-3 z-10">
         <ButtonEditSection path={imagesPath} label="Property Images" />
       </div>
 

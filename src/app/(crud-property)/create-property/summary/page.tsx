@@ -19,12 +19,28 @@ import PropertyLocation from "./_components/property.location";
 import NoPropertPeakRates from "./_components/no.property.peak.rate";
 import NoPropertyUnavailabilities from "./_components/no.property.unavailabilities";
 import { useIsMobile } from "@/hooks/use-mobile";
+import PropertyProgressBar from "../_components/property.progress.bar";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { CloudUpload, LogIn } from "lucide-react";
+import UploadProperty from "./_components/button-upload-property/button.upload.property";
 
 export default function Page() {
   const { propertyImages, property, rooms, peakSeasonRates, unavailabilities } =
     usePropertyStore();
 
   const isMobile = useIsMobile();
+
+  const disabledUpload =
+    !propertyImages?.length ||
+    !property?.category ||
+    !property?.title ||
+    !property?.description ||
+    !property?.base_price ||
+    !property?.address ||
+    !property?.map_url ||
+    !(property?.amenities?.length > 0) ||
+    !(property?.rules?.length > 0);
 
   return (
     <main>
@@ -33,6 +49,10 @@ export default function Page() {
       <section className="mb-30 min-h-screen space-y-12 px-4 py-16">
         <div className="space-y-2">
           <h1 className="text-center text-3xl font-bold">Property Summary</h1>
+          <p className="text-center text-xl text-gray-600">
+            You need to complete your property details before you can proceed,
+            Make sure all the details on this page are correct before proceeding
+          </p>
         </div>
 
         {/* Property Images */}
@@ -125,6 +145,27 @@ export default function Page() {
           ) : (
             <NoPropertyLocation />
           )}
+        </div>
+      </section>
+
+      <section>
+        <div
+          className={`fixed bottom-0 z-20 w-full space-y-2 border-t-2 bg-white/40 p-4 backdrop-blur-md lg:fixed lg:bottom-0`}
+        >
+          <PropertyProgressBar />
+
+          <div className="flex justify-between px-6">
+            <Link href="/create-property/manage-rooms">
+              <Button
+                className="p-6 hover:bg-gray-300 hover:shadow-xl"
+                variant={"secondary"}
+              >
+                Back
+              </Button>
+            </Link>
+
+            <UploadProperty disabledUpload={disabledUpload} />
+          </div>
         </div>
       </section>
     </main>

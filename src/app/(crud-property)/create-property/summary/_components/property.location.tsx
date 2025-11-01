@@ -67,8 +67,8 @@ export default function PropertyLocation({}: PropertyLocationProps) {
             ) : (
               <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-green-100 to-blue-100">
                 <div className="text-center">
-                  <MapPin className="mx-auto mb-2 h-10 w-10 text-gray-400" />
-                  <p className="text-sm font-semibold text-gray-600">
+                  <MapPin className="mx-auto mb-2 h-10 w-10 text-gray-600" />
+                  <p className="text-md font-semibold text-gray-600">
                     No Map Available
                   </p>
                 </div>

@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   Check,
   Users,
@@ -29,6 +30,7 @@ import { RoomData } from "@/app/(crud-property)/_types/property.type";
 import { SpecItem } from "./spec.item";
 import { formatToIDR } from "../../../_utils/format.price.idr";
 import { roomHighlights } from "../../../_constant/room.higlights";
+import { formatPrice } from "@/app/(crud-property)/create-property/_utils/format.price";
 
 interface RoomCardProps {
   room: RoomData;
@@ -48,6 +50,14 @@ export const RoomCard: React.FC<RoomCardProps> = ({
   onRemoveRoom,
   isLocked,
 }) => {
+  // State for show full description
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const truncateDescription = (text: string, maxLength = 100) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+
   // Create a flat map of all highlight items for easy lookup
   const highlightMap = React.useMemo(() => {
     const map = new Map<
@@ -91,7 +101,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
    * Renders the room highlights section with visible highlights and a popover for additional ones.
    */
   const renderHighlights = () => (
-    <div className="pt-4">
+    <div className="">
       <div className="flex flex-wrap gap-2">
         {visibleHighlights.map((highlight, index) => {
           const IconComponent = highlight.icon;
@@ -213,24 +223,20 @@ export const RoomCard: React.FC<RoomCardProps> = ({
                   {room.name}
                 </h3>
               </div>
-              <p className="max-w-105 leading-relaxed text-gray-600">
-                {room.description}
-              </p>
 
-              {/* Room Price */}
-              <section className="mt-4 rounded-lg bg-blue-600 p-3 shadow-lg md:absolute md:-top-2 md:right-2 md:mt-0 md:p-4">
-                <div className="flex flex-col">
-                  <span className="text-xs font-medium tracking-wider text-emerald-50 uppercase">
-                    Start from
-                  </span>
-                  <span className="text-lg font-bold text-white md:text-xl lg:text-2xl">
-                    {formatToIDR(room.base_price)}
-                    <sub className="self-end text-xs text-emerald-50">
-                      / night
-                    </sub>
-                  </span>
-                </div>
-              </section>
+              <p className="leading-relaxed whitespace-pre-line text-gray-600">
+                {showFullDescription
+                  ? room.description
+                  : truncateDescription(room.description)}
+              </p>
+              {room.description.length > 200 && (
+                <button
+                  onClick={() => setShowFullDescription(!showFullDescription)}
+                  className="font-medium text-blue-500 transition-colors hover:text-blue-700"
+                >
+                  {showFullDescription ? "Show less" : "Read more"}
+                </button>
+              )}
             </div>
           </div>
 
@@ -293,6 +299,8 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               </div>
             )}
           </div>
+
+          {/* Edit Room Button */}
           <button
             onClick={() => onEditRoom(room.tempId)}
             className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition-colors duration-200 hover:bg-blue-700"
@@ -300,6 +308,19 @@ export const RoomCard: React.FC<RoomCardProps> = ({
             <Edit className="h-5 w-5" />
             Edit Room
           </button>
+
+          {/* Room Price */}
+          <section className="rounded-lg bg-blue-600 p-3 shadow-lg">
+            <div className="flex flex-col items-center">
+              <span className="text-xs font-medium tracking-wider text-emerald-50 uppercase">
+                Start from
+              </span>
+              <span className="text-lg font-semibold text-white">
+                {formatPrice(Number(room.base_price))}
+                <sub className="self-end text-xs text-emerald-50">/ night</sub>
+              </span>
+            </div>
+          </section>
         </div>
       </div>
     </div>

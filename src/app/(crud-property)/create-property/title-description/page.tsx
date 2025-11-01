@@ -23,8 +23,6 @@ export default function Page() {
   const DESCRIPTION_MAX_LENGTH = 1000;
 
   const router = useRouter();
-  const scrolled = useScrolled();
-  const isMobile = useIsMobile();
   const { property, setPropertyData } = usePropertyStore();
 
   const handleSubmit = useCallback((values: any) => {
@@ -72,11 +70,7 @@ export default function Page() {
 
             <section>
               <div
-                className={`fixed bottom-0 w-full space-y-2 p-4 lg:fixed lg:bottom-0 ${
-                  scrolled || isMobile
-                    ? "border-t-2 bg-white/85 backdrop-blur-md"
-                    : ""
-                }`}
+                className={`fixed bottom-0 w-full space-y-2 border-t-2 bg-white/40 p-4 backdrop-blur-md lg:fixed lg:bottom-0`}
               >
                 <PropertyProgressBar />
 

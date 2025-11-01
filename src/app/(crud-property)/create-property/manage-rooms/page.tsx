@@ -14,8 +14,6 @@ import PropertyRoomTypes from "./_components/room-types";
 
 export default function Page() {
   const router = useRouter();
-  const scrolled = useScrolled();
-  const isMobile = useIsMobile();
 
   const { rooms, addRoom } = usePropertyStore();
 
@@ -106,17 +104,16 @@ export default function Page() {
       </section>
 
       <section>
-        <div
-          className={`fixed bottom-0 z-30 w-full space-y-2 border-t-2 bg-white/40 p-4 backdrop-blur-md lg:fixed lg:bottom-0`}
-        >
+        <div className="fixed bottom-0 z-30 w-full border-t-2 bg-white/40 p-3 backdrop-blur-md sm:p-4 lg:p-6">
           <PropertyProgressBar />
 
-          <div className="flex justify-between px-6">
+          {/* Desktop Layout (lg and up) */}
+          <div className="hidden lg:flex lg:justify-between lg:px-6 lg:pt-2">
             <Button
               className="p-6 shadow-lg"
               variant="outline"
               type="button"
-              onClick={() => router.push("/create-property/images")}
+              onClick={() => router.back()}
             >
               Back
             </Button>
@@ -149,6 +146,55 @@ export default function Page() {
               Go to Summary
               <LogOut className="ml-1 h-4 w-4 stroke-3" />
             </Button>
+          </div>
+
+          {/* Mobile & Tablet Layout (below lg) */}
+          <div className="space-y-3 pt-2 lg:hidden">
+            {/* Primary Actions Row */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              <Button
+                className="bg-red-700 px-3 py-4 text-xs shadow-lg hover:bg-red-600 disabled:cursor-not-allowed sm:px-4 sm:py-5 sm:text-sm"
+                disabled={roomCounter <= 0}
+                type="button"
+                onClick={() => router.push("/create-property/unavailabilities")}
+              >
+                <span className="hidden sm:inline">
+                  Add Room Unavailability
+                </span>
+                <span className="sm:hidden">Unavailability</span>
+              </Button>
+              <Button
+                className="bg-amber-600 px-3 py-4 text-xs shadow-lg hover:bg-amber-500 disabled:cursor-not-allowed sm:px-4 sm:py-5 sm:text-sm"
+                disabled={roomCounter <= 0}
+                type="button"
+                onClick={() => router.push("/create-property/peak-season-rate")}
+              >
+                <span className="hidden sm:inline">Add Peak Season Rates</span>
+                <span className="sm:hidden">Peak Rates</span>
+              </Button>
+            </div>
+
+            {/* Navigation Row */}
+            <div className="flex justify-between gap-2">
+              <Button
+                className="px-4 py-4 shadow-lg sm:px-6 sm:py-5"
+                variant="outline"
+                type="button"
+                onClick={() => router.back()}
+              >
+                <span className="text-sm sm:text-base">Back</span>
+              </Button>
+
+              <Button
+                className="flex-1 px-4 py-4 shadow-lg hover:bg-blue-700 disabled:cursor-not-allowed sm:px-6 sm:py-5"
+                disabled={roomCounter <= 0}
+                type="submit"
+                onClick={() => router.push("/create-property/summary")}
+              >
+                <span className="text-sm sm:text-base">Go to Summary</span>
+                <LogOut className="ml-1 h-3 w-3 stroke-3 sm:h-4 sm:w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </section>

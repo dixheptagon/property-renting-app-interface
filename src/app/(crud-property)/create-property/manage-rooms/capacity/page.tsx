@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CreatePropertyHeader from "../../_components/create.property.header";
 import { CounterRow } from "./_components/counter.row";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -18,8 +18,6 @@ export default function Page() {
   const [bathrooms, setBathrooms] = useState(1);
 
   const router = useRouter();
-  const scrolled = useScrolled();
-  const isMobile = useIsMobile();
 
   // 1. Get roomId from URL query param
   const searchParams = useSearchParams();
@@ -30,6 +28,27 @@ export default function Page() {
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );
+
+  // 3. reinitialize value if current room has capacity
+  useEffect(() => {
+    if (currentRoom?.max_guest) {
+      setGuests(currentRoom.max_guest);
+    }
+    if (currentRoom?.bedrooms) {
+      setBedrooms(currentRoom.bedrooms);
+    }
+    if (currentRoom?.beds) {
+      setBeds(currentRoom.beds);
+    }
+    if (currentRoom?.bathrooms) {
+      setBathrooms(currentRoom.bathrooms);
+    } else {
+      setBathrooms(1);
+      setBeds(1);
+      setBedrooms(1);
+      setGuests(4);
+    }
+  }, [currentRoom]);
 
   const handleSubmit = useCallback(
     (values: any) => {
@@ -61,7 +80,7 @@ export default function Page() {
     <main>
       <CreatePropertyHeader />
 
-      <section className="mb-20 space-y-6 px-4 py-16 lg:mb-0">
+      <section className="mb-30 space-y-6 px-4 py-16">
         <div className="space-y-3">
           <h1 className="text-center text-2xl font-bold md:text-3xl">
             Set Room Capacity
@@ -74,7 +93,7 @@ export default function Page() {
         </div>
 
         <div className="mx-auto max-w-4xl rounded-lg shadow-xl">
-          <div className="rounded-lg bg-white p-6 shadow-sm">
+          <div className="divide-y divide-gray-300 rounded-lg bg-white p-6 shadow-sm">
             <CounterRow
               label="Guests"
               value={guests}
@@ -99,11 +118,7 @@ export default function Page() {
 
       <section>
         <div
-          className={`fixed bottom-0 w-full space-y-2 p-4 lg:fixed lg:bottom-0 ${
-            scrolled || isMobile
-              ? "border-t-2 bg-white/85 backdrop-blur-md"
-              : ""
-          }`}
+          className={`fixed bottom-0 w-full space-y-2 border-t-2 bg-white/40 p-4 backdrop-blur-md lg:fixed lg:bottom-0`}
         >
           <RoomProgressBar />
 

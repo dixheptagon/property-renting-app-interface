@@ -1,29 +1,13 @@
-import React from "react";
-import {
-  Check,
-  Users,
-  Bed,
-  Bath,
-  Maximize2,
-  Eye,
-  Edit,
-  CheckCheck,
-  Trash2,
-} from "lucide-react";
+"use client";
+
+import React, { useState } from "react";
+import { Users, Bed, Bath, Maximize2, Eye, CheckCheck } from "lucide-react";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import { Button } from "@/components/ui/button";
 import { RoomData } from "@/app/(crud-property)/_types/property.type";
 import { SpecItem } from "./spec.item";
@@ -40,6 +24,14 @@ interface RoomCardProps {
  * Individual room card component displaying room details, specs, and edit button.
  */
 export const RoomCard: React.FC<RoomCardProps> = ({ room, onViewImages }) => {
+  // State for show full description
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const truncateDescription = (text: string, maxLength = 100) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+
   // Create a flat map of all highlight items for easy lookup
   const highlightMap = React.useMemo(() => {
     const map = new Map<
@@ -83,7 +75,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onViewImages }) => {
    * Renders the room highlights section with visible highlights and a popover for additional ones.
    */
   const renderHighlights = () => (
-    <div className="pt-4">
+    <div className="">
       <div className="flex flex-wrap gap-2">
         {visibleHighlights.map((highlight, index) => {
           const IconComponent = highlight.icon;
@@ -150,9 +142,19 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onViewImages }) => {
                   {room.name}
                 </h3>
               </div>
-              <p className="leading-relaxed text-gray-600">
-                {room.description}
+              <p className="leading-relaxed whitespace-pre-line text-gray-600">
+                {showFullDescription
+                  ? room.description
+                  : truncateDescription(room.description)}
               </p>
+              {room.description.length > 200 && (
+                <button
+                  onClick={() => setShowFullDescription(!showFullDescription)}
+                  className="font-medium text-blue-500 transition-colors hover:text-blue-700"
+                >
+                  {showFullDescription ? "Show less" : "Read more"}
+                </button>
+              )}
             </div>
           </div>
 

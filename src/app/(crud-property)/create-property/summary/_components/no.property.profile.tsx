@@ -10,10 +10,20 @@ export default function NoPropertyProfile() {
     CREATE_PROPERTY_STEPS.find((step) => step.label === "Title & Description")
       ?.value || "/create-property/title-description";
 
+  const categoryPath =
+    CREATE_PROPERTY_STEPS.find((step) => step.label === "Select Category")
+      ?.value || "/create-property/select-category";
+
   return (
     <div className="relative flex min-h-72 w-full items-center justify-center overflow-hidden rounded-lg border border-red-200 bg-red-50 p-4 shadow-md">
       {/* Button Edit Section */}
-      <div className="absolute -top-3 -right-3">
+      <div className="absolute top-3 right-3 flex gap-2">
+        <ButtonEditSection
+          path={categoryPath}
+          label="Property Category"
+          className="ml-2"
+        />
+
         <ButtonEditSection
           path={titleDescriptionPath}
           label="Property Category"

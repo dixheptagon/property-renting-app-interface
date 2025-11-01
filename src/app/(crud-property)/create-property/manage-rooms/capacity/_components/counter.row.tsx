@@ -13,7 +13,7 @@ export const CounterRow = ({
   min?: number;
   max?: number;
 }) => (
-  <div className="flex items-center justify-between border-b border-gray-300 py-6">
+  <div className="flex items-center justify-between py-6">
     <span className="text-lg font-medium text-gray-700">{label}</span>
     <div className="flex items-center gap-4">
       <button

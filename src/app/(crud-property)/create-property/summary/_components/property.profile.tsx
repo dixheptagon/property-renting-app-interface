@@ -145,7 +145,7 @@ export default function PropertyProfile({}: PropertyProfileProps) {
         </div>
 
         <h2 className="mb-4 text-xl font-bold text-gray-900">Description</h2>
-        <p className="leading-relaxed text-gray-700">
+        <p className="leading-relaxed whitespace-pre-line text-gray-700">
           {showFullDescription ? description : truncateDescription(description)}
         </p>
         {description.length > 200 && (

@@ -13,7 +13,7 @@ export default function NoPropertyRoomTypes() {
   return (
     <div className="relative flex min-h-72 w-full items-center justify-center overflow-hidden rounded-lg border border-red-200 bg-red-50 p-4 shadow-md">
       {/* Button Edit Section */}
-      <div className="absolute -top-3 -right-3 z-10">
+      <div className="absolute top-3 right-3 z-10">
         <ButtonEditSection path={manageRoomsPath} label="Property Room Types" />
       </div>
 

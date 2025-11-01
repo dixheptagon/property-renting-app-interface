@@ -24,8 +24,6 @@ export default function Page() {
   const DESCRIPTION_MAX_LENGTH = 1000;
 
   const router = useRouter();
-  const scrolled = useScrolled();
-  const isMobile = useIsMobile();
 
   // 1. Get roomId from URL query param
   const searchParams = useSearchParams();
@@ -76,7 +74,7 @@ export default function Page() {
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <section className="mb-20 min-h-screen space-y-12 px-4 py-16 lg:mb-0">
+            <section className="mb-30 min-h-screen space-y-12 px-4 py-16">
               <div className="space-y-2">
                 <h1 className="text-center text-3xl font-bold">
                   Now, describe your room title and description
@@ -101,11 +99,7 @@ export default function Page() {
 
             <section>
               <div
-                className={`fixed bottom-0 w-full space-y-2 p-4 lg:fixed lg:bottom-0 ${
-                  scrolled || isMobile
-                    ? "border-t-2 bg-white/85 backdrop-blur-md"
-                    : ""
-                }`}
+                className={`fixed bottom-0 w-full space-y-2 border-t-2 bg-white/40 p-4 backdrop-blur-md lg:fixed lg:bottom-0`}
               >
                 <RoomProgressBar />
 

@@ -1,21 +1,17 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Minus, Plus, DoorOpen } from "lucide-react";
 import CreatePropertyHeader from "../../_components/create.property.header";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useScrolled } from "@/hooks/use.scrolled";
-import { useIsMobile } from "@/hooks/use-mobile";
 import RoomProgressBar from "../../_components/room.progress.bar";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import { toast } from "sonner";
 
 export default function Page() {
   const router = useRouter();
-  const scrolled = useScrolled();
-  const isMobile = useIsMobile();
+
   const [totalUnits, setTotalUnits] = useState(1);
 
   // 1. Get roomId from URL query param
@@ -27,6 +23,15 @@ export default function Page() {
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );
+
+  // set reinitial total units if current room has total units
+  useEffect(() => {
+    if (currentRoom?.total_units) {
+      setTotalUnits(currentRoom.total_units);
+    } else {
+      setTotalUnits(1);
+    }
+  }, [currentRoom]);
 
   const handleDecrement = () => {
     if (totalUnits > 1) setTotalUnits(totalUnits - 1);
@@ -63,7 +68,7 @@ export default function Page() {
     <main>
       <CreatePropertyHeader />
 
-      <section className="mb-20 space-y-6 px-4 py-16 lg:mb-0">
+      <section className="mb-30 space-y-6 px-4 py-16">
         <div className="space-y-3">
           <h1 className="text-center text-2xl font-bold md:text-3xl">
             Set Total Units of {currentRoom?.name}
@@ -134,11 +139,7 @@ export default function Page() {
 
       <section>
         <div
-          className={`fixed bottom-0 w-full space-y-2 p-4 lg:fixed lg:bottom-0 ${
-            scrolled || isMobile
-              ? "border-t-2 bg-white/85 backdrop-blur-md"
-              : ""
-          }`}
+          className={`fixed bottom-0 w-full space-y-2 border-t-2 bg-white/40 p-4 backdrop-blur-md lg:fixed lg:bottom-0`}
         >
           <RoomProgressBar />
 
