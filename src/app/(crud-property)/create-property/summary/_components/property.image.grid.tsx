@@ -6,6 +6,7 @@ import { BaseImage } from "@/app/(crud-property)/_types/property.type";
 import ButtonEditSection from "./button.edit.section";
 import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { all } from "axios";
 
 interface PropertyImageGridProps {
   images: BaseImage[];
@@ -16,18 +17,25 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const isMobile = useIsMobile();
 
-  // Map BaseImage to string URLs for compatibility
-  const imageUrls = images.map((img) => img.secureUrl);
+  // find not main images
+  const notMainImages = images.filter((img) => !img.isMain);
+  const imageUrls = notMainImages.map((img) => img.secureUrl);
+
+  // Find main image
+  const mainImage = images.find((img) => img.isMain);
+
+  // Get All Images
+  const allImages = images.map((img) => img.secureUrl);
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === 0 ? imageUrls.length - 1 : prev - 1
+      prev === 0 ? allImages.length - 1 : prev - 1
     );
   };
 
   const handleNextImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === imageUrls.length - 1 ? 0 : prev + 1
+      prev === allImages.length - 1 ? 0 : prev + 1
     );
   };
 
@@ -58,7 +66,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
               onClick={() => handleImageClick(0)}
             >
               <img
-                src={imageUrls[0]}
+                src={mainImage?.secureUrl}
                 alt="Main property view"
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
@@ -66,7 +74,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
             </div>
 
             {/* Grid Images - Right Side */}
-            {imageUrls.slice(1, 5).map((imageUrl, index) => (
+            {imageUrls.slice(0, 4).map((imageUrl, index) => (
               <div
                 key={index}
                 className={`group relative cursor-pointer overflow-hidden`}
@@ -117,7 +125,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
 
           {/* Image Counter */}
           <div className="absolute top-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-2 text-lg font-medium text-white">
-            {currentImageIndex + 1} / {imageUrls.length}
+            {currentImageIndex + 1} / {allImages.length}
           </div>
 
           {/* Previous Button */}
@@ -131,7 +139,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
           {/* Current Image */}
           <div className="mx-4 max-h-[80vh] max-w-5xl">
             <img
-              src={imageUrls[currentImageIndex]}
+              src={allImages[currentImageIndex]}
               alt={`Property view ${currentImageIndex + 1}`}
               className="max-h-[80vh] max-w-full rounded-lg object-contain"
             />
@@ -147,7 +155,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
 
           {/* Thumbnail Strip */}
           <div className="absolute bottom-4 left-1/2 flex max-w-[90vw] -translate-x-1/2 gap-2 overflow-x-auto px-4">
-            {imageUrls.map((imageUrl, index) => (
+            {allImages.map((imageUrl, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}

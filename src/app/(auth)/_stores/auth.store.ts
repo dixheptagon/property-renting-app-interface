@@ -23,7 +23,7 @@ type AuthState = {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       email: "",
       first_name: "",
       last_name: "",
@@ -35,7 +35,24 @@ export const useAuthStore = create<AuthState>()(
       storeEmail: (email) => set({ email }),
       clearEmail: () => set({ email: "" }),
 
-      storeToken: (access_token) => set({ access_token }),
+      storeToken: (access_token) => {
+        const currentEmail = get().email;
+        const currentFirstName = get().first_name;
+        const currentLastName = get().last_name;
+        const currentDisplayName = get().display_name;
+        const currentRole = get().role;
+        const currentImage = get().image;
+
+        set({
+          email: currentEmail,
+          first_name: currentFirstName,
+          last_name: currentLastName,
+          display_name: currentDisplayName,
+          role: currentRole,
+          image: currentImage,
+          access_token,
+        });
+      },
       clearToken: () => set({ access_token: "" }),
 
       storeAuthRegister: (data) =>

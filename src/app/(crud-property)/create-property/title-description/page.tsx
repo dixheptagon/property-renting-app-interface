@@ -45,7 +45,7 @@ export default function Page() {
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <section className="mb-20 min-h-screen space-y-12 px-4 py-16 lg:mb-0">
+            <section className="mb-30 min-h-screen space-y-12 px-4 py-16">
               <div className="space-y-2">
                 <h1 className="text-center text-3xl font-bold">
                   Now, describe your property title and description

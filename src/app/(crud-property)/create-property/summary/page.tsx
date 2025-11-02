@@ -31,17 +31,6 @@ export default function Page() {
 
   const isMobile = useIsMobile();
 
-  const disabledUpload =
-    !propertyImages?.length ||
-    !property?.category ||
-    !property?.title ||
-    !property?.description ||
-    !property?.base_price ||
-    !property?.address ||
-    !property?.map_url ||
-    !(property?.amenities?.length > 0) ||
-    !(property?.rules?.length > 0);
-
   return (
     <main>
       <CreatePropertyHeader />
@@ -130,11 +119,6 @@ export default function Page() {
             ) : (
               <NoPropertyUnavailabilities />
             )}
-
-            {/* <PropertySummary
-              room_unavailabilities={property.room_unavailabilities}
-              peak_season_price={property.peak_season_rates}
-            /> */}
           </div>
         </div>
 
@@ -164,7 +148,7 @@ export default function Page() {
               </Button>
             </Link>
 
-            <UploadProperty disabledUpload={disabledUpload} />
+            <UploadProperty />
           </div>
         </div>
       </section>

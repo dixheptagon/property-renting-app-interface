@@ -22,8 +22,6 @@ export default function PropertyProfile({}: PropertyProfileProps) {
   const { property } = usePropertyStore();
   const { first_name, last_name } = useAuthStore();
 
-  console.log(property);
-
   const title = property.title;
   const description = property.description;
   const category = property.category || "";

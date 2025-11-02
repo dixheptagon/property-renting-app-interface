@@ -23,7 +23,7 @@ export default function PropertyPeakRate() {
       <div className="relative rounded-xl border-2 bg-white p-6 shadow-md">
         {/* Button Edit Section */}
         <div className="absolute -top-3 -right-3">
-          <ButtonEditSection path={peakRatePath} label="Create Peak Rate" />
+          <ButtonEditSection path={peakRatePath} label="Peak Season Rates" />
         </div>
 
         <div className="mb-6 flex items-center justify-between">

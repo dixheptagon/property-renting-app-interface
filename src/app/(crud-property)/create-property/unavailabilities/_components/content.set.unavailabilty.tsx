@@ -262,8 +262,9 @@ export default function ContentSetUnavailabilty() {
                           {matchedRoom.name}
                         </h3>
                         <p className="text-sm text-gray-600">
-                          {formatDate(values.dateRange.from)} -{" "}
-                          {formatDate(values.dateRange.to)}
+                          {values.dateRange
+                            ? `${values.dateRange.from?.toLocaleDateString()} - ${values.dateRange.to?.toLocaleDateString()}`
+                            : "Pick a date range"}
                         </p>
                       </div>
                     </div>
