@@ -43,7 +43,7 @@ const accountItems = [
   {
     icon: Home,
     label: "Became a Host",
-    href: "/logout",
+    href: "/create-property",
     description: "Start hosting",
   },
 ];

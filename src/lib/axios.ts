@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import axios from "axios";
+import { toast } from "sonner";
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -40,16 +41,21 @@ axiosInstance.interceptors.response.use(
 
       try {
         const refreshRes = await axiosInstance.post("/api/auth/refresh-token");
-        // Belajar tentant axios interceptor dan refresh token
         console.log(refreshRes.data);
-        const newToken = refreshRes.data.access_token;
+        const newToken = refreshRes.data.data.access_token;
+
+        console.log(newToken);
 
         useAuthStore.getState().storeToken(newToken);
 
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return axiosInstance(originalRequest); // ulang request
       } catch (err) {
+        console.error("Refresh token failed:", err);
         useAuthStore.getState().clearToken();
+        toast.error(
+          "Your session has expired. Please verify your email to continue."
+        );
         window.location.href = "/check-email";
       }
     }
