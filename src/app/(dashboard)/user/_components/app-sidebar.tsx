@@ -2,16 +2,23 @@
 
 import * as React from "react";
 import {
-  Settings,
-  PieChart,
   ReceiptText,
   BaggageClaim,
+  Settings,
   CirclePower,
+  House,
+  UsersRound,
+  FileChartColumn,
+  HousePlus,
+  ShoppingBag,
+  UserRoundCog,
+  ShieldUser,
+  HatGlasses,
 } from "lucide-react";
 
 import { NavMain } from "@/app/(dashboard)/user/_components/nav-main";
-import { NavProjects } from "@/app/(dashboard)/user/_components/nav-projects";
-import { UserProfile } from "@/app/(dashboard)/user/_components/user.profile";
+import { NavAccounts } from "@/app/(dashboard)/user/_components/nav-account";
+import { UserAvatar } from "@/app/(dashboard)/user/_components/user.avatar";
 import {
   Sidebar,
   SidebarContent,
@@ -19,15 +26,12 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { NavTenant } from "./nav-tenant";
+import { useRoleContext } from "@/components/providers/role.provider";
 
 // This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
+  profiles: [
     {
       name: "[Username]",
       logo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
@@ -42,16 +46,49 @@ const data = {
       isActive: true,
     },
     {
-      title: "Order List",
-      url: "/user/order-list",
-      icon: BaggageClaim,
+      title: "Purchase List",
+      url: "/user/purchase-list",
+      icon: ShoppingBag,
     },
   ],
-  projects: [
+  navTenant: [
+    {
+      title: "My Accomodation",
+      url: "/user/tenant/my-accomodation",
+      icon: House,
+      isActive: true,
+    },
+    {
+      title: "Order List",
+      url: "/user/tenant/order-list",
+      icon: BaggageClaim,
+    },
+    {
+      title: "Review",
+      url: "/user/tenant/reviews",
+      icon: UsersRound,
+    },
+    {
+      title: "Report",
+      url: "/user/tenant/reports",
+      icon: FileChartColumn,
+    },
+    {
+      title: "Create Accomodation",
+      url: "/create-property",
+      icon: HousePlus,
+    },
+  ],
+  navAccount: [
     {
       name: "My Account",
-      url: "#",
-      icon: Settings,
+      url: "/user",
+      icon: UserRoundCog,
+    },
+    {
+      name: "Become a Host",
+      url: "/user/tenant-profile",
+      icon: HatGlasses,
     },
     {
       name: "Log Out",
@@ -62,14 +99,17 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { canAccessMenu } = useRoleContext();
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <UserProfile teams={data.teams} />
+        <UserAvatar profiles={data.profiles} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {canAccessMenu("general") && <NavMain items={data.navMain} />}
+        {canAccessMenu("property") && <NavTenant items={data.navTenant} />}
+        {canAccessMenu("account") && <NavAccounts projects={data.navAccount} />}
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

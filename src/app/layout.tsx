@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { QueryClientProviders } from "../components/providers/query.client.providers";
+import RoleProvider from "../components/providers/role.provider";
 import "../styles/globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -28,7 +29,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Toaster />
-        <QueryClientProviders>{children}</QueryClientProviders>
+        <QueryClientProviders>
+          <RoleProvider>{children}</RoleProvider>
+        </QueryClientProviders>
       </body>
     </html>
   );

@@ -1,12 +1,17 @@
-import { Building2, Calendar, Home, Phone } from "lucide-react";
+import { Building2, Calendar, Home, Phone, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 
-const navLinks = [
+const publicNavLinks = [
   { name: "Home", href: "/#home", icon: Home },
   { name: "Property List", href: "/#property-list", icon: Building2 },
-  { name: "Contact Us", href: "/contact", icon: Phone },
-  { name: "My Bookings", href: "/bookings", icon: Calendar },
+  { name: "Contact Us", href: "/#home", icon: Phone },
+];
+
+const authenticatedNavLinks = [
+  { name: "My Account", href: "/user", icon: UserCircle },
+  { name: "My Bookings", href: "/user/my-booking", icon: Calendar },
 ];
 
 const scrollToSection = (href: string) => {
@@ -21,6 +26,7 @@ const scrollToSection = (href: string) => {
 
 export function NavigationLink({ scrolled }: { scrolled: boolean }) {
   const router = useRouter();
+  const { access_token } = useAuthStore();
 
   const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -32,9 +38,14 @@ export function NavigationLink({ scrolled }: { scrolled: boolean }) {
     }
   };
 
+  // Combine public and authenticated links based on auth status
+  const allNavLinks = access_token
+    ? [...publicNavLinks, ...authenticatedNavLinks]
+    : publicNavLinks;
+
   return (
     <div className="hidden items-center gap-8 lg:flex">
-      {navLinks.map((link) => (
+      {allNavLinks.map((link) => (
         <Link
           key={link.name}
           href={link.href}
@@ -59,6 +70,8 @@ export function MobileNavigationLink({
 }: {
   setMobileMenuOpen: (value: boolean) => void;
 }) {
+  const { access_token } = useAuthStore();
+
   const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
@@ -72,10 +85,15 @@ export function MobileNavigationLink({
     }
   };
 
+  // Combine public and authenticated links based on auth status
+  const allNavLinks = access_token
+    ? [...publicNavLinks, ...authenticatedNavLinks]
+    : publicNavLinks;
+
   return (
     <div className="px-4">
       <div className="space-y-1">
-        {navLinks.map((link) => (
+        {allNavLinks.map((link) => (
           <Link
             key={link.name}
             href={link.href}

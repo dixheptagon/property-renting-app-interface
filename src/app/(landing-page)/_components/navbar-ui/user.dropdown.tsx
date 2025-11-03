@@ -22,13 +22,13 @@ const menuItems = [
   {
     icon: ShoppingBag,
     label: "Purchase List",
-    href: "/profile",
+    href: "/user",
     description: "View your orders",
   },
   {
     icon: Calendar,
     label: "My Booking",
-    href: "/profile",
+    href: "/user/my-booking",
     description: "Manage reservations",
   },
 ];
@@ -37,13 +37,13 @@ const accountItems = [
   {
     icon: UserCircle,
     label: "My Account",
-    href: "/logout",
+    href: "/user",
     description: "Account settings",
   },
   {
     icon: Home,
     label: "Became a Host",
-    href: "/create-property",
+    href: "/user/tenant-profile",
     description: "Start hosting",
   },
 ];

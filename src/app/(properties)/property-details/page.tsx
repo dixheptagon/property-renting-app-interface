@@ -17,13 +17,15 @@ import axios from "axios";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
 
 interface PropertyDetailsPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function PropertyDetails({ params }: PropertyDetailsPageProps) {
-  const { id } = params;
+export default async function PropertyDetails({
+  params,
+}: PropertyDetailsPageProps) {
+  const { id } = await params;
 
   // set Global State Propety Being Chosen
   const { setProperty } = useBookingStore();

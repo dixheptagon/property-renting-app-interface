@@ -2,8 +2,9 @@
 
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import LoadingOverlay from "../ui/loading.overlay";
 
 export default function ProtectedPageProvider({
   children,
@@ -11,14 +12,18 @@ export default function ProtectedPageProvider({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { access_token } = useAuthStore();
+  const { access_token, isHydrated } = useAuthStore();
 
   useEffect(() => {
-    if (!access_token) {
+    if (isHydrated && !access_token) {
       toast.error("You are not logged in.");
-      router.push("/auth/check-email");
+      router.push("/check-email");
     }
   }, [access_token, router]);
+
+  if (!isHydrated) {
+    return <LoadingOverlay />;
+  }
 
   return access_token ? children : null;
 }
