@@ -6,7 +6,7 @@ const navLinks = [
   { name: "Home", href: "/#home", icon: Home },
   { name: "Property List", href: "/#property-list", icon: Building2 },
   { name: "Contact Us", href: "/contact", icon: Phone },
-  { name: "My Bookings", href: "/bookings", icon: Calendar },
+  { name: "My Bookings", href: "/user/my-booking", icon: Calendar },
 ];
 
 const scrollToSection = (href: string) => {

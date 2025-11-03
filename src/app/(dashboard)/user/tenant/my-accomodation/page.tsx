@@ -3,7 +3,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { AppSidebar } from "../_components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +24,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import AccomodationCard from "./_components/accomodation.card";
+import { AppSidebar } from "../../_components/app-sidebar";
 
 export default function MyAccomodation() {
   return (

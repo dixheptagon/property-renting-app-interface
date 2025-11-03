@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { ChevronLeft, User } from "lucide-react";
-import staysia_logo from "../../../../../../public/logo/staysia-logo.png";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
@@ -19,7 +18,7 @@ export default function HandleOrderNavbar() {
             {/* Back Button - Hidden on mobile */}
             <Button
               className="group hidden h-10 w-10 items-center justify-center rounded-lg bg-gray-200 transition-colors hover:bg-gray-300 sm:flex"
-              onClick={() => router.push("/tenant/order-list")}
+              onClick={() => router.back()}
             >
               <ChevronLeft className="h-5 w-5 text-gray-600 transition-transform group-hover:-translate-x-0.5" />
             </Button>
@@ -27,7 +26,7 @@ export default function HandleOrderNavbar() {
             {/* Logo */}
             <div className="relative">
               <Image
-                src={staysia_logo}
+                src="/logo/staysia-logo.png"
                 alt="Staysia Logo"
                 width={100}
                 height={100}

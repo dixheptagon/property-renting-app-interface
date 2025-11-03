@@ -16,7 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export function NavMain({
+export function NavTenant({
   items,
 }: {
   items: {

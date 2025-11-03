@@ -3,37 +3,13 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { AppSidebar } from "../_components/app-sidebar";
+
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowDownNarrowWide,
-  Bed,
-  CheckCircle,
-  DollarSign,
-  House,
-  HousePlus,
-  ShoppingCart,
-  SlidersHorizontal,
-  XCircle,
-} from "lucide-react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { ReportDateRangePicker } from "./_components/ui/date.range.picker";
-import { formatPrice } from "./_utils/format.price";
-import { OrdersChart } from "./_components/orders.chart";
+import { HousePlus } from "lucide-react";
 import { SalesReport } from "./_components/sales.report";
 import PropertyReport from "./_components/property.report";
+import { AppSidebar } from "../../_components/app-sidebar";
 
 export default function MyAccomodation() {
   return (

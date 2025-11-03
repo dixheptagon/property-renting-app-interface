@@ -1,4 +1,4 @@
-import { set } from "date-fns";
+import { toast } from "sonner";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -10,6 +10,9 @@ type AuthState = {
   role: string;
   image: string | null;
   access_token: string;
+
+  isHydrated: boolean;
+  setHydrated: (state: boolean) => void;
 
   storeEmail: (email: string) => void;
   clearEmail: () => void;
@@ -31,6 +34,9 @@ export const useAuthStore = create<AuthState>()(
       role: "",
       image: null,
       access_token: "",
+
+      isHydrated: false,
+      setHydrated: (state) => set({ isHydrated: state }),
 
       storeEmail: (email) => set({ email }),
       clearEmail: () => set({ email: "" }),
@@ -70,6 +76,7 @@ export const useAuthStore = create<AuthState>()(
           last_name: data.user.last_name,
           display_name: data.user.display_name,
           access_token: data.access_token,
+          email: data.user.email,
         }),
     }),
     {
@@ -81,6 +88,16 @@ export const useAuthStore = create<AuthState>()(
         display_name: state.display_name,
         access_token: state.access_token,
       }),
+      onRehydrateStorage: () => (state, error) => {
+        if (error) {
+          console.error(error);
+          toast.error("Something went wrong, please try again later.");
+          window.location.href = "/";
+        } else {
+          // Mark hydrated after rehydration is done
+          state?.setHydrated(true);
+        }
+      },
     }
   )
 );

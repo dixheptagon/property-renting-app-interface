@@ -3,7 +3,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { AppSidebar } from "../_components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,10 +30,11 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { DateRangePicker } from "@/app/(dashboard)/tenant/_components/ui/date.range.picker";
+import { DateRangePicker } from "@/app/(dashboard)/user/_components/ui/date.range.picker";
 import OrdersCard from "./_components/orders.card";
 import { orderStats } from "./constant/order.stats";
 import Link from "next/link";
+import { AppSidebar } from "../../_components/app-sidebar";
 
 export default function OrderList() {
   const orders = [
@@ -214,7 +214,7 @@ export default function OrderList() {
 
                     {/* Action */}
                     <div className="flex justify-center">
-                      <Link href={`/tenant/handle-order`}>
+                      <Link href={`/user/tenant/handle-order`}>
                         {/* /tenant/handle-order/${order.id} */}
                         <Button className="group/btn relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-md transition-all hover:from-blue-700 hover:to-blue-800 hover:shadow-lg">
                           <ExternalLink className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-12" />

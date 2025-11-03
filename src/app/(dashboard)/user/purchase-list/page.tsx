@@ -33,7 +33,7 @@ export default function Page() {
               className="mr-2 data-[orientation=vertical]:h-4"
             />
             <span className="text-sm font-semibold sm:text-base">
-              Order List
+              Purchase List
             </span>
           </div>
         </header>

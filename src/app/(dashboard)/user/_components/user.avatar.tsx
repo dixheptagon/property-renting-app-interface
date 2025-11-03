@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 
-export function TenantProfile({
-  teams,
+export function UserAvatar({
+  profiles,
 }: {
-  teams: {
+  profiles: {
     name: string;
     logo: React.ElementType | string | any;
     plan: string;
@@ -50,7 +50,7 @@ export function TenantProfile({
   };
 
   const { isMobile } = useSidebar();
-  const [activeTeam, setActiveTeam] = React.useState(teams[0]);
+  const [activeTeam, setActiveTeam] = React.useState(profiles[0]);
 
   if (!activeTeam) {
     return null;

@@ -3,19 +3,9 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { AppSidebar } from "../_components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowDownNarrowWide,
-  Circle,
-  Home,
-  HousePlus,
-  OctagonMinus,
-  Pencil,
-  SlidersHorizontal,
-  Star,
-} from "lucide-react";
+import { ArrowDownNarrowWide, Home, SlidersHorizontal } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -29,9 +19,9 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ReviewDateRangePicker } from "./_components/ui/date.range.picker";
-import { ReviewsChart } from "./_components/review.chart";
 import ReviewStats from "./_components/review.stats";
 import ReviewComments from "./_components/review.comment";
+import { AppSidebar } from "../../_components/app-sidebar";
 
 export default function Reviews() {
   return (
