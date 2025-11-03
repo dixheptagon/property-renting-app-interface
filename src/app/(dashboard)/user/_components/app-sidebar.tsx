@@ -27,6 +27,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavTenant } from "./nav-tenant";
+import { useRoleContext } from "@/components/providers/role.provider";
 
 // This is sample data.
 const data = {
@@ -98,15 +99,17 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { canAccessMenu } = useRoleContext();
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <UserAvatar profiles={data.profiles} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavTenant items={data.navTenant} />
-        <NavAccounts projects={data.navAccount} />
+        {canAccessMenu("general") && <NavMain items={data.navMain} />}
+        {canAccessMenu("property") && <NavTenant items={data.navTenant} />}
+        {canAccessMenu("account") && <NavAccounts projects={data.navAccount} />}
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

@@ -77,6 +77,7 @@ export const useAuthStore = create<AuthState>()(
           display_name: data.user.display_name,
           access_token: data.access_token,
           email: data.user.email,
+          role: data.user.role,
         }),
     }),
     {
@@ -86,6 +87,7 @@ export const useAuthStore = create<AuthState>()(
         first_name: state.first_name,
         last_name: state.last_name,
         display_name: state.display_name,
+        role: state.role,
         access_token: state.access_token,
       }),
       onRehydrateStorage: () => (state, error) => {
