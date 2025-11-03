@@ -37,7 +37,7 @@ const accountItems = [
   {
     icon: UserCircle,
     label: "My Account",
-    href: "/dashboard",
+    href: "/user",
     description: "Account settings",
   },
   {

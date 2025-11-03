@@ -7,7 +7,7 @@ export function useTenantProfile() {
     queryKey: ["tenant-profile"],
     queryFn: async () => {
       const response = await axiosInstance.get<TenantProfileResponse>(
-        "/api/tenant-profile"
+        "/api/auth/tenant-profile"
       );
       return response.data;
     },

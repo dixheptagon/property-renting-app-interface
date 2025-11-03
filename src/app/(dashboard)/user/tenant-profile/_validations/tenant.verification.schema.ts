@@ -1,11 +1,13 @@
 import * as Yup from "yup";
 
+const phoneRegex = /^\+?[1-9]\d{1,14}$/; // International phone number regex
+
 export const TenantVerificationSchema = Yup.object({
   contact: Yup.string()
     .required("Contact number is required")
-    .matches(/^[0-9+\-\s()]+$/, "Invalid contact number format")
-    .min(7, "Contact number must be at least 7 characters")
-    .max(20, "Contact number must not exceed 20 characters"),
+    .matches(phoneRegex, "Invalid phone number format")
+    .min(7, "Phone number must be at least 7 characters")
+    .max(20, "Phone number must be at most 20 characters"),
   address: Yup.string()
     .required("Address is required")
     .min(5, "Address must be at least 5 characters")
@@ -30,12 +32,20 @@ export const TenantVerificationSchema = Yup.object({
       "fileSize",
       "File size must be maximum 1MB",
       (value) =>
-        !value || (value instanceof File && value.size <= 1 * 1024 * 1024) //1 MB
+        !value || (value instanceof File && value.size <= 1 * 1024 * 1024) // 1MB
     )
     .test(
       "fileType",
-      "File format must be PDF",
+      "File format must be JPEG, PNG, JPG, AVIF, or WebP",
       (value) =>
-        !value || (value instanceof File && value.type === "application/pdf")
+        !value ||
+        (value instanceof File &&
+          [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/avif",
+            "image/webp",
+          ].includes(value.type))
     ),
 });

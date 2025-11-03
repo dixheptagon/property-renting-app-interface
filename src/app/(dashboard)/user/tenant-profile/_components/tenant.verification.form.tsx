@@ -218,7 +218,7 @@ export default function TenantVerificationForm({
 
             <div className="space-y-2">
               <Label htmlFor="government_id_file">
-                Government ID Document (PDF) *
+                Government ID Document (Image) *
               </Label>
               {!filePreview ? (
                 <div className="relative">
@@ -226,7 +226,7 @@ export default function TenantVerificationForm({
                     id="government_id_file"
                     name="government_id_file"
                     type="file"
-                    accept=".pdf"
+                    accept="image/jpeg,image/jpg,image/png,image/avif,image/webp"
                     onChange={handleFileChange}
                     className="hidden"
                   />
@@ -238,7 +238,9 @@ export default function TenantVerificationForm({
                     <p className="mb-2 text-sm text-gray-500">
                       <span className="font-semibold">Click to upload</span>
                     </p>
-                    <p className="text-xs text-gray-500">PDF (MAX. 10MB)</p>
+                    <p className="text-xs text-gray-500">
+                      JPEG, PNG, JPG, AVIF, WebP (MAX. 1MB)
+                    </p>
                   </Label>
                 </div>
               ) : (
@@ -249,7 +251,7 @@ export default function TenantVerificationForm({
                       <p className="text-sm font-medium text-gray-700">
                         {filePreview}
                       </p>
-                      <p className="text-xs text-gray-500">PDF Document</p>
+                      <p className="text-xs text-gray-500">Image Document</p>
                     </div>
                   </div>
                   <Button

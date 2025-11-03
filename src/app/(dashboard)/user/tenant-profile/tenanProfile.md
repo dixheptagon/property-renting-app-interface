@@ -140,7 +140,7 @@ TenantVerificationSchema = {
 ### File Upload Validation
 
 - **Format**: PDF only
-- **Size Limit**: 10MB maximum
+- **Size Limit**: 1MB maximum
 - **Preview**: File name display with remove option
 
 ## User Experience Features
@@ -303,7 +303,7 @@ FormData:
 - city: string
 - country: string
 - government_id_type: string ("KTP" | "Passport" | "Driver's License")
-- government_id_file: File (PDF only, max 10MB)
+- government_id_file: File (PDF only, max 1MB)
 ```
 
 **Response (Success)**:
@@ -367,7 +367,7 @@ model TenantProfile {
 ### Storage Configuration
 
 - **File Format**: Accept only PDF files
-- **Size Limit**: Maximum 10MB per file
+- **Size Limit**: Maximum 1MB per file
 - **Storage**: Cloud storage (AWS S3, Google Cloud Storage, etc.) or local filesystem
 - **Naming**: Unique file names to prevent conflicts
 - **Security**: Proper file validation server-side
@@ -453,7 +453,7 @@ AWS_SECRET_ACCESS_KEY=your-secret-key
 JWT_SECRET=your-jwt-secret
 
 # File Upload Limits
-MAX_FILE_SIZE=10485760  # 10MB in bytes
+MAX_FILE_SIZE=10485760  # 1MB in bytes
 ALLOWED_FILE_TYPES=application/pdf
 ```
 
