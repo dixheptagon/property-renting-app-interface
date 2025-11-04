@@ -1,5 +1,5 @@
 export interface PropertyListResponse {
-  data: import("./property").Property[];
+  data: any;
   pagination: {
     total: number;
     page: number;
@@ -10,26 +10,12 @@ export interface PropertyListResponse {
   };
   filters: {
     applied: {
-      category?: string;
-      amenities?: string[];
-      rules?: string[];
-      location?: string;
-      checkin?: string;
-      checkout?: string;
-      sortBy?: string;
+      location: string;
     };
     available: {
       categories: string[];
-      amenities: Array<{
-        value: string;
-        label: string;
-        icon?: string;
-      }>;
-      rules: Array<{
-        value: string;
-        label: string;
-        icon?: string;
-      }>;
+      amenities: string[];
+      rules: string[];
     };
   };
 }

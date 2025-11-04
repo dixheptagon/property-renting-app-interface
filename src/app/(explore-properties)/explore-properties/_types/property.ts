@@ -1,78 +1,31 @@
 export interface Property {
-  id: number;
-  uid: string;
-  user_id: number;
-  category: string;
+  uid: string; // UUID string seperti "2ef56ac1-33e4-4f15-bbbd-3ddaaf59a1ff"
+  category: string; // "apartment", "hotel", "villa", "house", "room", dll
   title: string;
   description: string;
   address: string;
   city: string;
   country: string;
-  postal_code: string;
-  latitude: number;
-  longitude: number;
-  place_id: string;
+  latitude: number | string | null; // null atau string numeric
+  longitude: number | string | null;
+  place_id: string | null;
   map_url: string;
-  amenities: Record<string, boolean>;
-  rules: Record<string, boolean>;
-  rating_avg: number;
-  rating_count: number;
-  base_price: number;
-  status: string;
-  created_at: string;
-  updated_at: string;
-  tenant: {
-    id: number;
-    display_name: string;
-    image: string;
-  };
-  images: Array<{
-    id: number;
+  amenities: string[]; // array of string (contoh: ["wifi", "garden"])
+  custom_amenities: string[] | null; // kadang array kosong, kadang null
+  rules: string[]; // array of string (contoh: ["no_smoking"])
+  custom_rules: string[] | null;
+  rating_avg: number | null;
+  rating_count: number | null;
+  base_price: string; // di JSON dikirim sebagai string ("1000000")
+  images: {
     url: string;
     is_main: boolean;
     order_index: number;
-    created_at: string;
-  }>;
-  rooms: Array<{
-    id: number;
-    uid: string;
-    property_id: number;
-    name: string;
-    description: string;
-    base_price: number;
-    max_guest: number;
-    bedrooms: number;
-    bathrooms: number;
-    beds: number;
-    highlight: Record<string, any>;
-    total_units: number;
-    created_at: string;
-    images: Array<{
-      id: number;
-      url: string;
-      is_main: boolean;
-      order_index: number;
-      created_at: string;
-    }>;
-  }>;
-  peak_season_rates: Array<{
-    id: number;
-    property_id: number;
-    room_id: number | null;
-    start_date: string;
-    end_date: string;
-    adjustment_type: "percentage" | "nominal";
-    adjustment_value: number;
-    created_at: string;
-  }>;
-  room_unavailabilities: Array<{
-    id: number;
-    property_id: number;
-    room_id: number;
-    booking_id: number | null;
-    start_date: string;
-    end_date: string;
-    reason: string;
-    created_at: string;
-  }>;
+  }[];
+  tenant: {
+    first_name: string;
+    last_name: string;
+  };
+  review_count: number;
+  updated_at: string;
 }

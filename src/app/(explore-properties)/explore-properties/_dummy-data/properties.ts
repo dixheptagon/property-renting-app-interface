@@ -1,6 +1,6 @@
 // Types
-export interface Property {
-  id: string;
+interface Property {
+  uid: string;
   name: string;
   location: string;
   price: number;
@@ -9,7 +9,7 @@ export interface Property {
   image: string;
 }
 
-export const dummyProperties: Property[] = [
+export const dummyProperties: any[] = [
   {
     id: "1",
     name: "Cozy Mountain Cabin",

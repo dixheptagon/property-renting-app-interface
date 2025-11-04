@@ -4,11 +4,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { axiosInstance } from "@/lib/axios";
-import type {
-  Property,
-  PropertyListResponse,
-  PropertyListParams,
-} from "../_types";
+import { PropertyListParams, PropertyListResponse } from "../_types";
 
 export const usePropertyList = () => {
   const searchParams = useSearchParams();
@@ -45,7 +41,7 @@ export const usePropertyList = () => {
       queryKey,
       queryFn: async () => {
         const response = await axiosInstance.get<PropertyListResponse>(
-          "/api/properties",
+          "/api/properties/explore-properties",
           {
             params: queryParams,
           }
@@ -85,10 +81,10 @@ export const usePropertyList = () => {
     refetch,
     isFetching,
     // Computed values for convenience
-    totalItems: data?.pagination.total || 0,
-    currentPage: data?.pagination.page || 1,
-    totalPages: data?.pagination.totalPages || 0,
-    hasNextPage: data?.pagination.hasNext || false,
-    hasPrevPage: data?.pagination.hasPrev || false,
+    totalItems: data?.pagination?.total || 0,
+    currentPage: data?.pagination?.page || 1,
+    totalPages: data?.pagination?.totalPages || 0,
+    hasNextPage: data?.pagination?.hasNext || false,
+    hasPrevPage: data?.pagination?.hasPrev || false,
   };
 };

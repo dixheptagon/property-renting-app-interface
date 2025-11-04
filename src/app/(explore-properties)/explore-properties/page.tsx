@@ -4,11 +4,10 @@ import { useSearchParams } from "next/navigation";
 import FilteringBox from "./_components/filtering.box";
 import { SortBy } from "./_components/filtering-box-component/sort.by";
 import { LimitShows } from "./_components/filtering-box-component/limit.shows";
-import { PaginationComponent } from "./_components/filtering-box-component/pagination";
 import PropertyList from "./_components/product.list";
 import { usePropertyList } from "./_hooks/use.property.list";
-import LoadingOverlay from "@/components/ui/loading.overlay";
 import LoadingData from "@/components/ui/loading.data";
+import { PaginationComponent } from "./_components/filtering-box-component/pagination";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -29,7 +28,7 @@ export default function Page() {
     error,
   } = usePropertyList();
 
-  console.log(properties);
+  const propertiesData = properties?.data || [];
 
   return (
     <main className="mx-10 mt-25 grid grid-cols-4 gap-4">
@@ -76,59 +75,7 @@ export default function Page() {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
-              {properties.map((property) => (
-                <div
-                  key={property.id}
-                  className="overflow-hidden rounded-lg border bg-white shadow-md transition-shadow hover:shadow-lg"
-                >
-                  {/* Property Image */}
-                  <div className="relative h-48 bg-gray-200">
-                    {property.images && property.images.length > 0 ? (
-                      <img
-                        src={
-                          property.images.find((img) => img.is_main)?.url ||
-                          property.images[0].url
-                        }
-                        alt={property.title}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-gray-300">
-                        <span className="text-gray-500">No image</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Property Details */}
-                  <div className="p-4">
-                    <h3 className="mb-2 line-clamp-2 text-lg font-semibold">
-                      {property.title}
-                    </h3>
-                    <p className="mb-2 line-clamp-2 text-sm text-gray-600">
-                      {property.address}, {property.city}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1">
-                        <span className="text-yellow-500">★</span>
-                        <span className="text-sm font-medium">
-                          {property.rating_avg.toFixed(1)}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                          ({property.rating_count})
-                        </span>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-lg font-bold">
-                          ${property.base_price.toLocaleString()}
-                        </p>
-                        <p className="text-sm text-gray-500">per night</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <PropertyList properties={propertiesData} />
           )}
         </div>
 
