@@ -25,9 +25,12 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { NavTenant } from "./nav-tenant";
 import { useRoleContext } from "@/components/providers/role.provider";
+import Link from "next/link";
+import Image from "next/image";
 
 // This is sample data.
 const data = {
@@ -100,6 +103,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { canAccessMenu } = useRoleContext();
+  const { open } = useSidebar();
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -112,6 +116,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {canAccessMenu("account") && <NavAccounts projects={data.navAccount} />}
       </SidebarContent>
       <SidebarRail />
+      <SidebarFooter>
+        <Link href="/">
+          <Image
+            src={open ? "/logo/staysia-logo.png" : "/logo/staysia.icon.png"}
+            alt="Staysia Logo"
+            width={100}
+            height={100}
+            className={`mx-auto w-24 transition-transform hover:scale-105 sm:w-28 md:w-30`}
+          />
+        </Link>
+      </SidebarFooter>
     </Sidebar>
   );
 }

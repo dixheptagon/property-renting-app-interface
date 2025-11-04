@@ -16,7 +16,7 @@ import { ActionButtons } from "./ui/action.buttons";
 
 export default function HandleOrderForm() {
   const booking = {
-    status: "completed",
+    status: "processing",
   };
 
   return (

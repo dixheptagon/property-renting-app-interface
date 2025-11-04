@@ -128,7 +128,9 @@ export default function Page() {
               variant="outline"
               type="button"
               onClick={() =>
-                router.push("/create-property/manage-rooms/total-units")
+                router.push(
+                  `/create-property/manage-rooms/total-units?roomId=${roomId}`
+                )
               }
             >
               Back

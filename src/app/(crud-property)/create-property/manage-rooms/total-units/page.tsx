@@ -149,7 +149,9 @@ export default function Page() {
               variant="outline"
               type="button"
               onClick={() =>
-                router.push("/create-property/manage-rooms/title-description")
+                router.push(
+                  `/create-property/manage-rooms/title-description?roomId=${roomId}`
+                )
               }
             >
               Back
