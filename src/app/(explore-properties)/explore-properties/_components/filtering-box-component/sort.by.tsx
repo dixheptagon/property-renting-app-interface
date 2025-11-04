@@ -42,7 +42,7 @@ export function SortBy({ value, onValueChange }: SortByProps) {
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="updated_at">Newest</SelectItem>
+          <SelectItem value="updated_at">Latest</SelectItem>
           <SelectItem value="price_asc">Lowest Price</SelectItem>
           <SelectItem value="price_desc">Highest Price</SelectItem>
           <SelectItem value="rating_desc">Rating</SelectItem>

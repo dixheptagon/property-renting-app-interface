@@ -9,7 +9,7 @@ import { PropertyListParams, PropertyListResponse } from "../_types";
 export const usePropertyList = () => {
   const searchParams = useSearchParams();
 
-  // Build query parameters from URL search params
+  // Build query parameters from URL search params (exclude client-side handled params)
   const queryParams: PropertyListParams = {
     location: searchParams.get("location") || undefined,
     checkin: searchParams.get("checkin") || undefined,
@@ -17,9 +17,10 @@ export const usePropertyList = () => {
     category: searchParams.get("category") || undefined,
     amenities: searchParams.get("amenities") || undefined,
     rules: searchParams.get("rules") || undefined,
-    sortBy: searchParams.get("sortBy") || "updated_at",
-    page: searchParams.get("page") || "1",
-    limit: searchParams.get("limit") || "12",
+    sortBy: searchParams.get("sortBy") || undefined,
+    page: searchParams.get("page") || undefined,
+    limit: searchParams.get("limit") || undefined,
+    // sortBy, page, limit handled client-side
   };
 
   // Create query key that includes all parameters for proper caching
@@ -34,6 +35,7 @@ export const usePropertyList = () => {
     queryParams.sortBy,
     queryParams.page,
     queryParams.limit,
+    // sortBy, page, limit handled client-side
   ];
 
   const { data, isLoading, isError, error, refetch, isFetching } =

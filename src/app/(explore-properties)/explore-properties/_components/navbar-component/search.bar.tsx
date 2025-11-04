@@ -13,17 +13,19 @@ export default function SearchBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [location, setLocation] = useState(searchParams.get("location") || "");
-  const [category, setCategory] = useState(searchParams.get("category") || "");
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());
     if (location) params.set("location", location);
-    if (category) params.set("category", category);
     if (dateRange?.from)
       params.set("checkin", dateRange.from.toISOString().split("T")[0]);
     if (dateRange?.to)
       params.set("checkout", dateRange.to.toISOString().split("T")[0]);
+
+    if (!location) params.delete("location");
+    if (!dateRange?.from) params.delete("checkin");
+    if (!dateRange?.to) params.delete("checkout");
 
     startTransition(() => {
       router.push(`/explore-properties?${params.toString()}`);
@@ -45,7 +47,7 @@ export default function SearchBar() {
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSearch();
             }}
-            className="h-10 w-full"
+            className="h-10 w-full bg-white"
           />
         </div>
         {/* Input Date Range */}
@@ -57,7 +59,7 @@ export default function SearchBar() {
         <div className="flex md:col-span-1">
           <Button onClick={handleSearch} className="h-10 w-full">
             <Search className="h-4 w-4 stroke-2" />
-            Search
+            <h2 className="hidden lg:block">Search</h2>
           </Button>
         </div>
       </div>

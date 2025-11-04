@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import FilteringBox from "./_components/filtering.box";
 import { SortBy } from "./_components/filtering-box-component/sort.by";
 import { LimitShows } from "./_components/filtering-box-component/limit.shows";
@@ -11,6 +11,7 @@ import { PaginationComponent } from "./_components/filtering-box-component/pagin
 
 export default function Page() {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const category = searchParams.get("category") || "";
   const amenities = searchParams.get("amenities")?.split(",") || [];
@@ -20,33 +21,44 @@ export default function Page() {
   const page = parseInt(searchParams.get("page") || "1");
 
   // Use TanStack Query for data fetching
-  const {
-    data: properties,
-    pagination,
-    isLoading,
-    isError,
-    error,
-  } = usePropertyList();
+  const { data: properties, isLoading, isError, error } = usePropertyList();
+
+  console.log(properties);
 
   const propertiesData = properties?.data || [];
+  const paginationData = properties?.pagination || {};
+
+  const handleClearFilters = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("category");
+    params.delete("amenities");
+    params.delete("rules");
+
+    router.push("/explore-properties");
+  };
 
   return (
-    <main className="mx-10 mt-25 grid grid-cols-4 gap-4">
+    <main className="mx-10 mt-25 grid grid-cols-4 gap-6">
       <div className="col-span-1">
-        <FilteringBox category={category} amenities={amenities} rules={rules} />
+        <FilteringBox
+          category={category}
+          amenities={amenities}
+          rules={rules}
+          onClearFilters={handleClearFilters}
+        />
       </div>
 
       <div className="col-span-3 mb-6">
         {/* Controls Section */}
-        <div className="flex flex-col items-start justify-between gap-4 rounded-lg bg-white p-4 shadow-sm sm:flex-row sm:items-center">
+        <div className="flex flex-col items-start justify-between gap-4 rounded-xl border border-gray-200 bg-white p-6 shadow-lg sm:flex-row sm:items-center">
           <div className="flex items-center gap-4">
             <SortBy value={sortBy} />
             <LimitShows value={limit} />
           </div>
           <div className="text-muted-foreground hidden text-sm lg:block">
-            Showing {Math.min((page - 1) * limit + 1, pagination.total)} -{" "}
-            {Math.min(page * limit, pagination.total)} of {pagination.total}{" "}
-            results
+            Showing {Math.min((page - 1) * limit + 1, paginationData.total)} -{" "}
+            {Math.min(page * limit, paginationData.total)} of{" "}
+            {paginationData.total} results
           </div>
         </div>
 
@@ -65,7 +77,7 @@ export default function Page() {
                 </p>
               </div>
             </div>
-          ) : properties.length === 0 ? (
+          ) : propertiesData.length === 0 ? (
             <div className="flex h-64 items-center justify-center">
               <div className="text-center">
                 <p className="text-gray-600">No properties found</p>
@@ -82,8 +94,8 @@ export default function Page() {
         {/* Pagination */}
         <div className="mt-6 flex justify-center">
           <PaginationComponent
-            totalItemCount={pagination.total}
-            limit={limit}
+            totalItemCount={paginationData.total}
+            limit={paginationData.limit}
             currentPage={page}
           />
         </div>
