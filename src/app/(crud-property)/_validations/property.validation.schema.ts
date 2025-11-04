@@ -10,7 +10,7 @@ export const PropertyValidationSchema = Yup.object().shape({
   description: Yup.string()
     .required("Please enter a description")
     .min(3, "Description must be at least 3 characters")
-    .max(1000, "Description must not exceed 1000 characters"),
+    .max(1500, "Description must not exceed 1500 characters"),
 
   address: Yup.string()
     .required("Please enter an address")

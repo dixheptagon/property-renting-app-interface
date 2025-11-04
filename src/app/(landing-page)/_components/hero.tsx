@@ -25,7 +25,7 @@ export default function Hero() {
       params.set("checkin", dateRange.from.toISOString().split("T")[0]);
     if (dateRange?.to)
       params.set("checkout", dateRange.to.toISOString().split("T")[0]);
-    router.push(`/?${params.toString()}`);
+    router.push(`/explore-properties?${params.toString()}`);
     console.log(params.toString());
   };
 
@@ -71,6 +71,9 @@ export default function Hero() {
                     placeholder="Where are you going?"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleSearch();
+                    }}
                   />
                 </div>
               </div>

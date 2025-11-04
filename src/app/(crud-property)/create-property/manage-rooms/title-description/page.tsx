@@ -21,7 +21,7 @@ export default function Page() {
   ]);
 
   const TITLE_MAX_LENGTH = 50;
-  const DESCRIPTION_MAX_LENGTH = 1000;
+  const DESCRIPTION_MAX_LENGTH = 1500;
 
   const router = useRouter();
 

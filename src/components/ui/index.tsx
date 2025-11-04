@@ -14,6 +14,7 @@ export * as dropdownMenu from "./dropdown-menu";
 export * as field from "./field";
 export * as input from "./input";
 export * as label from "./label";
+export * as loadingData from "./loading.data";
 export * as loadingOverlay from "./loading.overlay";
 export * as mapEmbed from "./maps.embed";
 export * as multiSelect from "./multi-select";

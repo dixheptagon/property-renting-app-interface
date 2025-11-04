@@ -22,10 +22,8 @@ interface PropertyDetailsPageProps {
   }>;
 }
 
-export default async function PropertyDetails({
-  params,
-}: PropertyDetailsPageProps) {
-  const { id } = await params;
+export default function PropertyDetails({ params }: PropertyDetailsPageProps) {
+  // const { id } = await params;
 
   // set Global State Propety Being Chosen
   const { setProperty } = useBookingStore();
@@ -42,13 +40,13 @@ export default async function PropertyDetails({
     },
   });
 
-  useEffect(() => {
-    if (property) {
-      setProperty(property);
-    }
-  }, [property]);
+  // useEffect(() => {
+  //   if (property) {
+  //     setProperty(property);
+  //   }
+  // }, [property]);
 
-  console.log("property", property);
+  // console.log("property", property);
 
   if (isLoading) {
     return (
