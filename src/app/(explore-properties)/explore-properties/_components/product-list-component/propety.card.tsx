@@ -11,9 +11,9 @@ import {
   TentTree,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { Property } from "../../_types";
 import { formatPrice } from "../../_utils/format.price";
-import Link from "next/link";
 
 const getCategoryIcon = (category: string) => {
   const iconClass = "h-4 w-4";
@@ -38,9 +38,9 @@ export const PropertyCard = ({ property }: { property: Property }) => {
 
   return (
     <Link href={`/${property.uid}/property-details`}>
-      <article className="group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:shadow-2xl">
+      <article className="group relative overflow-hidden transition-all duration-300">
         {/* Image Container */}
-        <div className="relative h-64 overflow-hidden sm:h-42">
+        <div className="relative h-64 overflow-hidden rounded-2xl sm:h-42">
           {property.images && property.images.length > 0 ? (
             <Image
               src={property.images[0].url}
@@ -97,9 +97,6 @@ export const PropertyCard = ({ property }: { property: Property }) => {
             </div>
           </div>
         </div>
-
-        {/* Hover Effect Border */}
-        <div className="absolute inset-0 rounded-2xl border-2 border-transparent transition-colors duration-300 group-hover:border-blue-500/50" />
       </article>
     </Link>
   );

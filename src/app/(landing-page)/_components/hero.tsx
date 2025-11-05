@@ -2,8 +2,8 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import { LandingPageDatePicker } from "./ui/date.picker";
-import { SelectCategory } from "./ui/select.category";
+import { LandingPageDatePicker } from "./hero-component/date.picker";
+import { SelectCategory } from "./hero-component/select.category";
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";

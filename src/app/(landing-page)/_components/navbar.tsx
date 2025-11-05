@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import {
   MobileNavigationLink,
   NavigationLink,
-} from "./navbar-ui/navigation.link";
-import { AuthButtons, MobileAuthButton } from "./navbar-ui/auth.button";
-import { Logo, MobileLogo } from "./navbar-ui/logo";
+} from "./navbar-component/navigation.link";
+import { AuthButtons, MobileAuthButton } from "./navbar-component/auth.button";
+import { Logo, MobileLogo } from "./navbar-component/logo";
 
 export default function Navbar() {
   const router = useRouter();

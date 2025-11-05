@@ -1,11 +1,15 @@
 import Link from "next/link";
-import { dummyProperties, Property } from "../_data/properties";
+import { Property } from "../_types";
 import { PropertyCard } from "./propety.card";
 
-export default function PropertyList() {
+export default function PropertyList({
+  properties,
+}: {
+  properties: Property[];
+}) {
   return (
     <main
-      id="property-list"
+      id="property-list "
       className="mx-auto max-w-7xl scroll-mt-16 px-4 py-12 sm:px-6 lg:px-8"
     >
       {/* Section Header */}
@@ -20,8 +24,8 @@ export default function PropertyList() {
 
       {/* Property Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {dummyProperties.map((property: Property) => (
-          <PropertyCard key={property.id} property={property} />
+        {properties.map((property: Property) => (
+          <PropertyCard key={property.uid} property={property} />
         ))}
       </div>
 
