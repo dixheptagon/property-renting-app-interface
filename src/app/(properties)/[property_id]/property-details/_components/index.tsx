@@ -1,0 +1,9 @@
+export { default as PropertyAmenities } from "./property.amenities";
+export { default as PropertyImageGrid } from "./property.image.grid";
+export { default as PropertyLocation } from "./property.location";
+export { default as PropertyNavbar } from "./property.navbar";
+export { default as PropertyProfile } from "./property.profile";
+export { default as PropertyReviews } from "./reviews";
+export { default as PropertyRoomTypes } from "./room-types";
+export { default as PropertyRules } from "./property.rules";
+export { default as PropertySummary } from "./summary";
