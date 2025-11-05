@@ -11,7 +11,7 @@ export interface Section {
 }
 
 export default function Navbar() {
-  const scrolled = useScrolled({ navbarHeight: 80 });
+  const scrolled = useScrolled();
   const [activeSection, setActiveSection] = useState<string>("photos");
   const headerRef = useRef<HTMLElement>(null);
 
@@ -28,12 +28,24 @@ export default function Navbar() {
 
   // Scroll to specific section with navbar offset
   const scrollToSection = useCallback((sectionId: string) => {
+    if (sectionId === "photos") {
+      // Special case: scroll to top for photos
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      setActiveSection(sectionId);
+      return;
+    }
+
     const element = document.getElementById(sectionId);
     if (element && headerRef.current) {
       const headerHeight = headerRef.current.offsetHeight;
       const elementPosition =
         element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - headerHeight;
+
+      const extraMargin = 20;
+      const offsetPosition = elementPosition - headerHeight - 20;
 
       window.scrollTo({
         top: offsetPosition,

@@ -15,9 +15,9 @@ export default function ScrolledNavbar({
         <button
           key={section.id}
           onClick={() => scrollToSection(section.id)}
-          className={`relative pb-7 transition-all duration-300 hover:border-b-3 hover:border-black/30 hover:text-black ${
+          className={`relative pb-7 transition-all duration-300 hover:border-b-3 hover:border-blue-800/30 hover:text-blue-800 ${
             activeSection === section.id
-              ? "border-b-3 border-black text-black"
+              ? "border-b-3 border-blue-800 text-blue-800"
               : "border-b-3 border-transparent"
           }`}
         >
