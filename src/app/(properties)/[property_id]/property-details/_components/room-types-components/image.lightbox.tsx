@@ -1,9 +1,9 @@
 import React from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { Room } from "@/app/(properties)/property-details/_types/property";
+import { RoomData } from "../../_types/property";
 
 interface ImageLightboxProps {
-  room: Room | null;
+  room: RoomData | null;
   isOpen: boolean;
   currentImageIndex: number;
   onClose: () => void;
@@ -80,7 +80,7 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
             <button
               key={index}
               onClick={() => onSelectImage(index)}
-              className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
+              className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                 currentImageIndex === index
                   ? "opacity-100 ring-2 ring-white"
                   : "opacity-50 hover:opacity-75"

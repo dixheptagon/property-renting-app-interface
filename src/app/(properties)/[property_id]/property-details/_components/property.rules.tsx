@@ -1,42 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  Ban,
-  PawPrint,
-  Clock,
-  Users,
-  Music,
-  Home,
-  OctagonX,
-} from "lucide-react";
-import { Rules } from "@/app/(properties)/property-details/_types/property";
+import { useState } from "react";
+import { propertyRules } from "../_const/propety.rules";
 
 interface PropertyRulesProps {
-  rules: Rules;
+  rules: string[];
+  custom_rules: string[];
 }
 
-export default function PropertyRules({ rules }: PropertyRulesProps) {
+export default function PropertyRules({
+  rules,
+  custom_rules,
+}: PropertyRulesProps) {
   const [showRules, setShowRules] = useState(false);
 
-  // Map rules object to array with icons
+  // Flatten all rules from the constant
+  const allRules = propertyRules.flatMap((category) => category.items);
+
+  // Map selected rules to display objects
   const rulesList: { icon: React.ComponentType<any>; label: string }[] = [];
-  if (rules.no_smoking) rulesList.push({ icon: Ban, label: "No Smoking" });
-  if (rules.no_pets) rulesList.push({ icon: PawPrint, label: "No Pets" });
-  if (rules.check_in_after)
-    rulesList.push({
-      icon: Clock,
-      label: `Check-in after ${rules.check_in_after}`,
+
+  // Handle rules array (selected values)
+  if (rules && Array.isArray(rules)) {
+    rules.forEach((ruleValue: string) => {
+      const ruleData = allRules.find((item) => item.value === ruleValue);
+      if (ruleData) {
+        rulesList.push({
+          icon: ruleData.icon,
+          label: ruleData.label,
+        });
+      }
     });
-  if (rules.check_out_before)
-    rulesList.push({
-      icon: Clock,
-      label: `Check-out before ${rules.check_out_before}`,
+  }
+
+  // Handle custom rules
+  if (custom_rules && Array.isArray(custom_rules)) {
+    custom_rules.forEach((customRule: string) => {
+      rulesList.push({
+        icon: propertyRules[0].items[0].icon, // Using the first icon as a placeholder for custom rules
+        label: customRule,
+      });
     });
-  if (rules.others)
-    rules.others.forEach((other) => {
-      rulesList.push({ icon: OctagonX, label: other });
-    });
+  }
 
   // Show only 6 rules by default
   const displayedRules = showRules ? rulesList : rulesList.slice(0, 6);
@@ -52,7 +57,7 @@ export default function PropertyRules({ rules }: PropertyRulesProps) {
             return (
               <div
                 key={index}
-                className="flex items-center gap-3 rounded-lg border border-gray-200 p-3 transition-all hover:border-blue-300 hover:bg-blue-50"
+                className="flex items-center gap-3 rounded-lg border border-gray-200 p-3 transition-all"
               >
                 <Icon className="h-5 w-5 text-black" />
                 <span className="font-medium text-gray-700">{rule.label}</span>

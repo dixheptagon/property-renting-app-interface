@@ -1,11 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Property } from "@/app/(properties)/property-details/_types/property";
-import axios from "axios";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
-import { useParams } from "next/navigation";
 import {
   PropertyAmenities,
   PropertyImageGrid,
@@ -17,6 +12,9 @@ import {
   PropertySummary,
 } from "./_components";
 import { usePropertyDetail } from "./_hooks/use.property.detail";
+import { formatDate } from "./_utils/format.date";
+import LoadingData from "@/components/ui/loading.data";
+import { useEffect } from "react";
 
 export default function PropertyDetails() {
   // set Global State Propety Being Chosen
@@ -29,13 +27,20 @@ export default function PropertyDetails() {
 
   console.log("Property Details Data:", property);
 
+  useEffect(() => {
+    if (property) {
+      setProperty(property);
+    }
+  }, [property]);
+
+  console.log("property", property);
+
   if (isLoading) {
     return (
       <div className="mx-auto mt-20 mb-10 min-h-full max-w-7xl">
         <div className="flex items-center justify-center py-20">
           <div className="text-center">
-            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
-            <p className="text-gray-600">Loading property details...</p>
+            <LoadingData message="Loading property details..." />
           </div>
         </div>
       </div>
@@ -92,19 +97,25 @@ export default function PropertyDetails() {
             image={property.tenant.image}
           />
 
-          <PropertyAmenities amenities={property.amenities} />
-          <PropertyRules rules={property.rules} />
+          <PropertyAmenities
+            amenities={property.amenities}
+            custom_amenities={property.custom_amenities}
+          />
+          <PropertyRules
+            rules={property.rules}
+            custom_rules={property.custom_rules}
+          />
 
           <PropertyRoomTypes
             rooms={property.rooms.map((room) => ({
               ...room,
-              id: 0,
-              property_id: 0,
+              id: room.id,
+              property_id: room.property_id,
               created_at: "",
               highlight: room.highlight || {},
               images: room.images.map((img) => ({
                 ...img,
-                id: 0,
+                id: img.id,
                 created_at: "",
               })),
             }))}
@@ -119,8 +130,8 @@ export default function PropertyDetails() {
                 property_id: 0,
                 booking_id: null,
                 created_at: "",
-                start_date: unavail.start_date.toISOString().split("T")[0],
-                end_date: unavail.end_date.toISOString().split("T")[0],
+                start_date: formatDate(unavail.start_date),
+                end_date: formatDate(unavail.end_date),
                 reason: unavail.reason || "",
               })
             )}
@@ -128,8 +139,8 @@ export default function PropertyDetails() {
               ...rate,
               property_id: 0,
               created_at: "",
-              start_date: rate.start_date.toISOString().split("T")[0],
-              end_date: rate.end_date.toISOString().split("T")[0],
+              start_date: formatDate(rate.start_date),
+              end_date: formatDate(rate.end_date),
               adjustment_type: rate.adjustment_type as "percentage" | "nominal",
             }))}
           />

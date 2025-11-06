@@ -1,44 +1,49 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Wifi,
-  Tv,
-  Wind,
-  Car,
-  UtensilsCrossed,
-  Waves,
-  BadgeCheck,
-} from "lucide-react";
+import { BadgeCheck } from "lucide-react";
+import { propertyAmenities } from "../_const/property.amenities";
 import { Amenities } from "@/app/(properties)/property-details/_types/property";
 
 interface PropertyAmenitiesProps {
   amenities: Amenities;
+  custom_amenities: string[];
 }
 
 export default function PropertyAmenities({
   amenities,
+  custom_amenities,
 }: PropertyAmenitiesProps) {
   const [showAmenities, setShowAmenities] = useState(false);
 
-  // Map amenities object to array with icons
+  // Flatten all amenities from the constant
+  const allAmenities = propertyAmenities.flatMap((category) => category.items);
+
+  // Map selected amenities to display objects
   const amenitiesList: { icon: React.ComponentType<any>; label: string }[] = [];
-  if (amenities.wifi) amenitiesList.push({ icon: Wifi, label: "Free WiFi" });
-  if (amenities.air_conditioning)
-    amenitiesList.push({ icon: Wind, label: "Air Conditioning" });
-  if (amenities.parking)
-    amenitiesList.push({ icon: Car, label: "Free Parking" });
-  if (amenities.kitchen)
-    amenitiesList.push({ icon: UtensilsCrossed, label: "Kitchen" });
-  if (amenities.pool)
-    amenitiesList.push({ icon: Waves, label: "Swimming Pool" });
-  if (amenities.gym) amenitiesList.push({ icon: Tv, label: "Gym" });
-  if (amenities.laundry) amenitiesList.push({ icon: Tv, label: "Laundry" });
-  if (amenities.pet_friendly)
-    amenitiesList.push({ icon: Tv, label: "Pet Friendly" });
-  if (amenities.others) {
-    amenities.others.forEach((other) => {
-      amenitiesList.push({ icon: BadgeCheck, label: other });
+
+  // Handle amenities array (selected values)
+  if (amenities && Array.isArray(amenities)) {
+    amenities.forEach((amenityValue: string) => {
+      const amenityData = allAmenities.find(
+        (item) => item.value === amenityValue
+      );
+      if (amenityData) {
+        amenitiesList.push({
+          icon: amenityData.icon,
+          label: amenityData.label,
+        });
+      }
+    });
+  }
+
+  // Handle custom amenities
+  if (custom_amenities && Array.isArray(custom_amenities)) {
+    custom_amenities.forEach((customAmenity: string) => {
+      amenitiesList.push({
+        icon: BadgeCheck,
+        label: customAmenity,
+      });
     });
   }
 
@@ -58,7 +63,7 @@ export default function PropertyAmenities({
             return (
               <div
                 key={index}
-                className="flex items-center gap-3 rounded-lg border border-gray-200 p-3 transition-all hover:border-blue-300 hover:bg-blue-50"
+                className="flex items-center gap-3 rounded-lg border border-gray-200 p-3 transition-all"
               >
                 <Icon className="h-5 w-5 text-black" />
                 <span className="font-medium text-gray-700">

@@ -1,17 +1,17 @@
-import {
-  Property,
-  Room,
-} from "@/app/(properties)/property-details/_types/property";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type DateRange } from "react-day-picker";
 import { differenceInCalendarDays, eachDayOfInterval, format } from "date-fns";
+import {
+  Property,
+  RoomData,
+} from "../[property_id]/property-details/_types/property";
 
 interface BookingState {
   property: Property | null;
   propertyId: string | null;
   propertyName: string | null;
-  selectedRoom: Room | null;
+  selectedRoom: RoomData | null;
   dateRange: DateRange | undefined;
   guests: number;
   totalNights: number;
@@ -24,7 +24,7 @@ interface BookingState {
 
   // Actions
   setProperty: (property: Property) => void;
-  setRoom: (room: Room) => void;
+  setRoom: (room: RoomData) => void;
   setDateRange: (dateRange: DateRange | undefined) => void;
   setGuests: (count: number) => void;
   calculateTotal: () => void;

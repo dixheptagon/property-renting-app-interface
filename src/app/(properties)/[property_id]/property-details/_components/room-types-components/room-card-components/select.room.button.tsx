@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { formatIDR } from "../utils";
+import { formatPrice } from "../../../_utils/format.price";
 
 /**
  * Button component for selecting a room, displaying price and selection state.
@@ -30,7 +31,7 @@ export const SelectRoomButton: React.FC<SelectRoomButtonProps> = ({
         {isSelected ? "Selected" : "Select"}
       </div>
       <div className="text-lg">
-        Rp{formatIDR(price)} <sub className="text-xs">/night</sub>
+        {formatPrice(price)} <sub className="text-xs">/night</sub>
       </div>
     </div>
   </button>

@@ -1,20 +1,16 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Check, Users, Bed, Bath, Maximize2, Eye } from "lucide-react";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-import { Room } from "@/app/(properties)/property-details/_types/property";
-import { formatIDR, processHighlights, formatHighlightLabel } from "../utils";
-import { SpecItem } from "./spec.item";
-import { SelectRoomButton } from "./select.room.button";
+import { SpecItem } from "./room-card-components/spec.item";
+import { SelectRoomButton } from "./room-card-components/select.room.button";
+import { RoomData } from "../../_types/property";
+import { roomHighlights } from "../../_const/room.higlights";
+import renderHighlights from "./room-card-components/render.highlight";
 
 interface RoomCardProps {
-  room: Room;
+  room: RoomData;
   isSelected: boolean;
-  onSelectRoom: (roomId: number) => void;
-  onViewImages: (room: Room) => void;
+  onSelectRoom: (roomUid: number | string) => void;
+  onViewImages: (room: RoomData) => void;
 }
 
 /**
@@ -26,56 +22,58 @@ export const RoomCard: React.FC<RoomCardProps> = ({
   onSelectRoom,
   onViewImages,
 }) => {
-  // Process highlights to separate visible ones from additional ones for popover display
-  const { visible: visibleHighlights, others: otherHighlights } =
-    processHighlights(room.highlight);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
-  /**
-   * Renders the room highlights section with visible highlights and a popover for additional ones.
-   */
-  const renderHighlights = () => (
-    <div className="pt-4">
-      <div className="flex flex-wrap gap-2">
-        {visibleHighlights.map((key, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1 text-sm"
-          >
-            <span>{formatHighlightLabel(key)}</span>
-          </div>
-        ))}
-        {otherHighlights.length > 0 && (
-          <Popover>
-            <PopoverTrigger asChild>
-              <button className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1 text-sm transition-colors hover:bg-gray-200">
-                <span>+{otherHighlights.length} more</span>
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80">
-              <div className="space-y-2">
-                <h4 className="text-md font-semibold">Other Highlights</h4>
-                <div className="flex flex-wrap gap-2">
-                  {otherHighlights.map((key, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1 text-sm"
-                    >
-                      <span>{formatHighlightLabel(key)}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-        )}
-      </div>
-    </div>
-  );
+  const truncateDescription = (text: string, maxLength = 100) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+
+  // Create a flat map of all highlight items for easy lookup
+  const highlightMap = useMemo(() => {
+    const map = new Map<
+      string,
+      { icon: React.ComponentType<any>; label: string }
+    >();
+
+    // Populate the map with highlight items
+    roomHighlights.forEach((category) => {
+      category.items.forEach((item) => {
+        map.set(item.value, { icon: item.icon, label: item.label });
+      });
+    });
+
+    return map;
+  }, []);
+
+  // Combine and process highlights from both arrays
+  const allHighlights = useMemo(() => {
+    const combined = [...room.highlight, ...room.custom_highlight];
+    return combined.map((highlight) => {
+      const mapped = highlightMap.get(highlight);
+      return mapped
+        ? {
+            value: highlight,
+            icon: mapped.icon,
+            label: mapped.label,
+            isCustom: false,
+          }
+        : {
+            value: highlight,
+            icon: Check,
+            label: highlight,
+            isCustom: true,
+          };
+    });
+  }, [room.highlight, room.custom_highlight, highlightMap]);
+
+  // Process highlights to separate visible ones from additional ones for popover display
+  const visibleHighlights = allHighlights.slice(0, 6);
+  const otherHighlights = allHighlights.slice(6);
 
   return (
     <div
-      // Dynamic className based on selection state for visual feedback
-      className={`overflow-hidden rounded-xl border-2 bg-white shadow-md transition-all duration-300 ${
+      className={`relative overflow-hidden rounded-xl border-2 bg-white shadow-md transition-all duration-300 ${
         isSelected
           ? "border-green-500 shadow-lg shadow-green-100"
           : "border-gray-200 hover:border-blue-300 hover:shadow-md"
@@ -85,12 +83,14 @@ export const RoomCard: React.FC<RoomCardProps> = ({
         {/* Room Details Section */}
         <div className="space-y-4 lg:col-span-2">
           {/* Room Header */}
-          <div className="flex items-start justify-between">
+          <div className="relative flex items-start justify-between">
             <div>
               <div className="mb-2 flex items-center gap-3">
                 <h3 className="text-2xl font-bold text-gray-900">
                   {room.name}
                 </h3>
+
+                {/* Selected Room Badge */}
                 {isSelected && (
                   <span className="flex items-center gap-1 rounded-full bg-green-500 px-3 py-1 text-sm font-medium text-white">
                     <Check className="h-4 w-4 stroke-3" />
@@ -98,9 +98,20 @@ export const RoomCard: React.FC<RoomCardProps> = ({
                   </span>
                 )}
               </div>
-              <p className="leading-relaxed text-gray-600">
-                {room.description}
+
+              <p className="leading-relaxed whitespace-pre-line text-gray-600">
+                {showFullDescription
+                  ? room.description
+                  : truncateDescription(room.description)}
               </p>
+              {room.description.length > 200 && (
+                <button
+                  onClick={() => setShowFullDescription(!showFullDescription)}
+                  className="font-medium text-blue-500 transition-colors hover:text-blue-700"
+                >
+                  {showFullDescription ? "Show less" : "Read more"}
+                </button>
+              )}
             </div>
           </div>
 
@@ -129,7 +140,10 @@ export const RoomCard: React.FC<RoomCardProps> = ({
           </div>
 
           {/* Room Highlights */}
-          {renderHighlights()}
+          {renderHighlights({
+            visibleHighlights,
+            otherHighlights,
+          })}
         </div>
 
         {/* Room Images and Selection Section */}
@@ -138,11 +152,16 @@ export const RoomCard: React.FC<RoomCardProps> = ({
             className="group relative h-48 cursor-pointer overflow-hidden rounded-lg lg:h-48"
             onClick={() => onViewImages(room)}
           >
-            <img
-              src={room.images[0].url}
-              alt={room.name}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-            />
+            {room.images.length > 0 && (
+              <img
+                src={
+                  room.images.find((img) => img.is_main)?.url ||
+                  room.images[0]?.url
+                }
+                alt={room.name}
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+            )}
             {/* Overlay that appears on hover to indicate image viewing capability */}
             <div className="bg-opacity-0 group-hover:bg-opacity-30 absolute inset-0 flex items-center justify-center object-cover transition-all duration-300">
               <div className="text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -158,10 +177,12 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               </div>
             )}
           </div>
+
+          {/* Room Price */}
           <SelectRoomButton
             isSelected={isSelected}
             price={room.base_price}
-            onSelect={() => onSelectRoom(room.id)}
+            onSelect={() => onSelectRoom(room.uid)}
           />
         </div>
       </div>

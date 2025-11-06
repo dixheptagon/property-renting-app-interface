@@ -27,12 +27,15 @@ export interface PropertyDetailsResponse {
       image: string;
     };
     images: Array<{
+      id: number;
       url: string;
       is_main: boolean;
       order_index: number;
     }>;
     rooms: Array<{
+      id: number;
       uid: string;
+      property_id: string;
       name: string;
       description: string;
       base_price: number;
@@ -44,6 +47,7 @@ export interface PropertyDetailsResponse {
       custom_highlight: any;
       total_units: number;
       images: Array<{
+        id: number;
         url: string;
         is_main: boolean;
         order_index: number;
@@ -51,6 +55,8 @@ export interface PropertyDetailsResponse {
     }>;
     room_unavailabilities: Array<{
       id: number;
+      property_id: string;
+      booking_id: number | null;
       room_id: number;
       start_date: Date;
       end_date: Date;
@@ -59,9 +65,10 @@ export interface PropertyDetailsResponse {
     peak_season_rates: Array<{
       id: number;
       room_id: number | null;
+      property_id: string;
       start_date: Date;
       end_date: Date;
-      adjustment_type: string;
+      adjustment_type: "percentage" | "nominal";
       adjustment_value: number;
     }>;
     id: number;

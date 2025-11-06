@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { Room } from "@/app/(properties)/property-details/_types/property";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
-import { RoomCard } from "./room-card";
-import { ImageLightbox } from "./image.lightbox";
+import { useState } from "react";
+import { ImageLightbox } from "./room-types-components/image.lightbox";
+import { RoomCard } from "./room-types-components/room.card";
+import { RoomData } from "../_types/property";
 
 interface PropertyRoomTypesProps {
-  rooms: Room[];
+  rooms: RoomData[];
 }
 
 /**
@@ -18,7 +18,7 @@ export default function PropertyRoomTypes({ rooms }: PropertyRoomTypesProps) {
   const { selectedRoom, setRoom } = useBookingStore();
 
   // Lightbox state for image viewing
-  const [lightboxRoom, setLightboxRoom] = useState<Room | null>(null);
+  const [lightboxRoom, setLightboxRoom] = useState<RoomData | null>(null);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -26,7 +26,7 @@ export default function PropertyRoomTypes({ rooms }: PropertyRoomTypesProps) {
    * Opens the image lightbox for a specific room.
    * @param room - The room whose images to display.
    */
-  const handleViewImages = (room: Room) => {
+  const handleViewImages = (room: RoomData) => {
     setLightboxRoom(room);
     setCurrentImageIndex(0);
     setIsLightboxOpen(true);
@@ -56,8 +56,10 @@ export default function PropertyRoomTypes({ rooms }: PropertyRoomTypesProps) {
    * Selects a room and updates the booking store.
    * @param roomId - The ID of the room to select.
    */
-  const handleSelectRoom = (roomId: number) => {
-    const room = rooms.find((r) => r.id === roomId);
+  const handleSelectRoom = (roomUid: number | string) => {
+    const room = rooms.find((r) => r.uid === roomUid);
+
+    console.log("Selected Room ID:", roomUid);
     if (room) {
       setRoom(room);
     }
@@ -73,9 +75,9 @@ export default function PropertyRoomTypes({ rooms }: PropertyRoomTypesProps) {
       <div className="space-y-6">
         {rooms.map((room) => (
           <RoomCard
-            key={room.id}
+            key={room.uid}
             room={room}
-            isSelected={selectedRoom?.id === room.id}
+            isSelected={selectedRoom?.uid === room.uid}
             onSelectRoom={handleSelectRoom}
             onViewImages={handleViewImages}
           />

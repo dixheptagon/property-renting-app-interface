@@ -3,7 +3,6 @@ export interface PropertyImage {
   url: string;
   is_main: boolean;
   order_index: number;
-  created_at: string;
 }
 
 export interface RoomImage {
@@ -11,7 +10,6 @@ export interface RoomImage {
   url: string;
   is_main: boolean;
   order_index: number;
-  created_at: string;
 }
 
 export interface RoomHighlight {
@@ -23,27 +21,37 @@ export interface RoomHighlight {
   others?: [string];
 }
 
-export interface Room {
+export interface RoomData {
+  // Kita tambahkan ID sementara untuk front-end agar bisa di-track di state (misal: "temp-room-1")
+  // Ini penting untuk menghubungkan PeakSeasonRates dan RoomUnavailabilities
   id: number;
   uid: string;
-  property_id: number;
+  property_id: string;
+
+  // Model Room fields
   name: string;
   description: string;
-  base_price: number;
+
+  base_price: number; // Biarkan string/number untuk fleksibilitas input
+
   max_guest: number;
+  total_units: number;
   bedrooms: number;
   bathrooms: number;
   beds: number;
-  highlight: RoomHighlight;
-  total_units: number;
-  created_at: string;
+
+  highlight: string[]; // Sesuaikan dengan tipe JSON yang kamu harapkan
+  custom_highlight: string[];
+
+  // Relasi: Image
   images: RoomImage[];
 }
 
 export interface Tenant {
   id: number;
-  display_name: string;
-  image: string;
+  name: string;
+  display_name?: string | null;
+  image?: string | null;
 }
 
 export interface Amenities {
@@ -68,30 +76,27 @@ export interface Rules {
 
 export interface PeakSeasonRate {
   id: number;
-  property_id: number;
+  property_id: string;
   room_id: number | null;
-  start_date: string;
-  end_date: string;
+  start_date: Date;
+  end_date: Date;
   adjustment_type: "percentage" | "nominal";
   adjustment_value: number;
-  created_at: string;
 }
 
 export interface RoomUnavailability {
   id: number;
-  property_id: number;
+  property_id: string;
   room_id: number;
   booking_id: number | null;
-  start_date: string;
-  end_date: string;
-  reason: string;
-  created_at: string;
+  start_date: Date;
+  end_date: Date;
+  reason: string | null;
 }
 
 export interface Property {
-  id: number;
+  id?: number;
   uid: string;
-  user_id: number;
   category: string;
   title: string;
   description: string;
@@ -99,21 +104,21 @@ export interface Property {
   city: string;
   country: string;
   postal_code: string;
-  latitude: number;
-  longitude: number;
-  place_id: string;
-  map_url: string;
+  latitude: number | null;
+  longitude: number | null;
+  place_id: string | null;
+  map_url: string | null;
   amenities: Amenities;
   rules: Rules;
-  rating_avg: number;
-  rating_count: number;
+  rating_avg: number | null;
+  rating_count: number | null;
   base_price: number;
   status: string;
-  created_at: string;
-  updated_at: string;
+
   tenant: Tenant;
+
   images: PropertyImage[];
-  rooms: Room[];
+  rooms: RoomData[];
   peak_season_rates: PeakSeasonRate[];
   room_unavailabilities: RoomUnavailability[];
 }

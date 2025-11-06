@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Star } from "lucide-react";
+import { Building, Star } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -14,6 +14,7 @@ import {
   truncateDescription,
   truncateTitle,
 } from "../_utils/truncate.data";
+import { PROPERTY_CATEGORIES } from "../_const/property.category";
 
 export default function PropertyProfile({
   title,
@@ -29,6 +30,14 @@ export default function PropertyProfile({
   const [showFullAddress, setShowFullAddress] = useState(false);
 
   const completeAddress = address;
+
+  // Get category data
+  const categoryData = PROPERTY_CATEGORIES.find(
+    (cat) => cat.value === category
+  );
+
+  const CategoryIcon = categoryData?.icon || Building;
+  const categoryLabel = categoryData?.label || category;
 
   return (
     <div className="space-y-8" id="profile">
@@ -67,9 +76,12 @@ export default function PropertyProfile({
 
           {/* Property Category*/}
           <div className="flex flex-col items-center gap-2">
-            <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
-              {category}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700 capitalize">
+                <CategoryIcon className="h-4 w-4" />
+                {categoryLabel}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -86,7 +98,7 @@ export default function PropertyProfile({
                 height={48}
               />
             ) : (
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-lg font-semibold text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-600 text-lg font-semibold text-white">
                 {host.display_name.charAt(0)}
               </div>
             )}
@@ -99,20 +111,30 @@ export default function PropertyProfile({
 
           {/* Rating Average */}
 
-          <div className="flex flex-col items-center gap-2 rounded-lg bg-yellow-50 px-3 py-2 md:flex-row">
-            <div className="flex items-center gap-2">
-              <Star className="h-5 w-5 fill-current text-yellow-500" />
-              <span className="font-semibold text-gray-900">{rating}</span>
+          {rating ? (
+            <div className="flex flex-col items-center gap-2 rounded-lg bg-yellow-50 px-3 py-2 md:flex-row">
+              <div className="flex items-center gap-2">
+                <Star className="h-5 w-5 fill-current text-yellow-500" />
+                <span className="font-semibold text-gray-900">{rating}</span>
+              </div>
+              <span className="text-gray-600">({reviews} reviews)</span>
             </div>
-            <span className="text-gray-600">({reviews} reviews)</span>
-          </div>
+          ) : (
+            <div className="flex flex-col items-center gap-2 rounded-lg bg-yellow-50 px-3 py-2 md:flex-row">
+              <div className="flex items-center gap-2">
+                <Star className="h-5 w-5 fill-current text-yellow-500" />
+                <span className="font-semibold text-gray-900">N/A</span>
+              </div>
+              <span className="text-gray-600">(N/A reviews)</span>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Description Section */}
       <div className="rounded-xl border-2 bg-white p-6 shadow-md">
         <h2 className="mb-4 text-xl font-bold text-gray-900">Description</h2>
-        <p className="leading-relaxed text-gray-700">
+        <p className="leading-relaxed whitespace-pre-line text-gray-700">
           {showFullDescription ? description : truncateDescription(description)}
         </p>
         {description.length > 200 && (

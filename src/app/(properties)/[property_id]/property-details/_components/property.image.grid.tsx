@@ -135,7 +135,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
-                className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
+                className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                   currentImageIndex === index
                     ? "opacity-100 ring-2 ring-white"
                     : "opacity-50 hover:opacity-75"

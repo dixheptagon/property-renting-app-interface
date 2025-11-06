@@ -5,9 +5,10 @@ import { Room } from "@/app/(properties)/property-details/_types/property";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
 import { RoomCard } from "./room-card";
 import { ImageLightbox } from "./image.lightbox";
+import { RoomData } from "@/app/(properties)/[property_id]/property-details/_types/property";
 
 interface PropertyRoomTypesProps {
-  rooms: Room[];
+  rooms: RoomData[];
 }
 
 /**
