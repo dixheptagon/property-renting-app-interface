@@ -36,7 +36,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
     <>
       {/* Main Grid Layout */}
       <div className="" id="photos">
-        <div className="grid h-[400px] grid-cols-4 gap-2 overflow-hidden rounded-xl">
+        <div className="grid h-[400px] grid-cols-2 gap-2 overflow-hidden rounded-xl md:grid-cols-4">
           {/* Main Image - Left Side */}
           <div
             className="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden"

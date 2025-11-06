@@ -35,9 +35,9 @@ export default function SearchBar() {
 
   return (
     <section className="mx-6 w-full">
-      <div className="grid grid-cols-1 items-center gap-2 md:grid-cols-8">
+      <div className="grid grid-cols-4 items-center gap-2 md:grid-cols-8">
         {/* Input Location and Destination */}
-        <div className="md:col-span-5">
+        <div className="col-span-3 md:col-span-5">
           <Input
             type="text"
             placeholder="Search location or destination"
@@ -50,12 +50,12 @@ export default function SearchBar() {
           />
         </div>
         {/* Input Date Range */}
-        <div className="md:col-span-2">
+        <div className="hidden md:col-span-2 lg:block">
           <LandingPageDatePicker onDateRangeChange={setDateRange} />
         </div>
 
         {/* Button Search  */}
-        <div className="flex md:col-span-1">
+        <div className="col-span-1 flex md:col-span-1">
           <Button onClick={handleSearch} className="h-10 w-full">
             <Search className="h-4 w-4 stroke-2" />
             <h2 className="hidden lg:block">Search</h2>

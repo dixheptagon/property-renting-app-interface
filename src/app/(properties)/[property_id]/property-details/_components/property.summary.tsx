@@ -7,7 +7,7 @@ import {
   RoomUnavailability,
 } from "@/app/(properties)/property-details/_types/property";
 import { CircleX } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { DatePickerRange, GuestDropdown } from "./summary-components";
 import BookingDateRangePicker from "./summary-components/booking.date.range.picker";
 
@@ -18,8 +18,11 @@ export default function PropertySummary({
   room_unavailabilities: RoomUnavailability[];
   peak_season_price: PeakSeasonRate[];
 }) {
-  const Router = useRouter();
+  const router = useRouter();
+  const params = useParams();
   const bookingState = useBookingStore();
+
+  const propertyId = params.property_id as string;
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -31,7 +34,7 @@ export default function PropertySummary({
 
   const handleBookNow = () => {
     // Navigate to payment page or show confirmation
-    Router.push("/booking");
+    router.push(`/${propertyId}/booking`);
   };
 
   if (!bookingState.selectedRoom) {
@@ -48,10 +51,10 @@ export default function PropertySummary({
     <div className="" id="booked">
       <div className="rounded-xl border-2 border-gray-200 bg-white shadow-md">
         {/* Room Type Header */}
-        <div className="rounded-t-xl bg-linear-to-b from-blue-500 to-blue-800 p-4">
+        <div className="relative rounded-t-xl bg-linear-to-b from-blue-500 to-blue-800 p-4">
           <p className="mb-1 text-sm font-medium text-white">Selected Room</p>
           <CircleX
-            className="absolute top-3 right-5 h-8 w-8 text-white hover:text-gray-300"
+            className="absolute top-3 right-5 h-8 w-8 text-white hover:text-red-500"
             onClick={bookingState.clearBooking}
           />
           <h3 className="text-xl font-bold text-white">
@@ -145,7 +148,7 @@ export default function PropertySummary({
             disabled={
               !(bookingState.dateRange?.from && bookingState.dateRange?.to)
             }
-            className="w-full rounded-lg bg-blue-600 bg-linear-to-r py-4 font-bold text-white shadow-lg transition-all duration-200 hover:bg-blue-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg bg-blue-600 py-4 font-bold text-white shadow-lg transition-all duration-200 hover:bg-blue-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
           >
             Book Now
           </button>

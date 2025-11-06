@@ -46,7 +46,7 @@ export function LandingPageDatePicker({
                 ? `${formatDate(dateRange?.from)} - ${formatDate(dateRange?.to)}`
                 : "Pick dates"}
             </span>
-            <ChevronDownIcon className="ml-2 h-4 w-4 flex-shrink-0" />
+            <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0" />
           </Button>
         </PopoverTrigger>
         <PopoverContent

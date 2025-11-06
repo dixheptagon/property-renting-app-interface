@@ -20,18 +20,14 @@ export function AuthButtons({
           <Button
             variant="outline"
             onClick={handleAuth}
-            className={`group relative overflow-hidden transition-all ${
-              scrolled
-                ? "border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-                : "border-2 border-white bg-transparent text-white hover:bg-white hover:text-blue-600"
-            }`}
+            className={`group relative overflow-hidden border border-blue-600 p-5 text-blue-600 transition-all`}
           >
             <User className="mr-2 h-4 w-4" />
             Log in
           </Button>
           <Button
             onClick={handleAuth}
-            className="bg-blue-600 font-semibold shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
+            className="bg-blue-600 p-5 font-semibold shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl"
           >
             Register
           </Button>

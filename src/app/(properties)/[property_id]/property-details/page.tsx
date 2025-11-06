@@ -15,6 +15,7 @@ import { usePropertyDetail } from "./_hooks/use.property.detail";
 import { formatDate } from "./_utils/format.date";
 import LoadingData from "@/components/ui/loading.data";
 import { useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function PropertyDetails() {
   // set Global State Propety Being Chosen
@@ -75,7 +76,7 @@ export default function PropertyDetails() {
   }
 
   return (
-    <div className="mx-auto mt-25 mb-10 min-h-full max-w-7xl">
+    <div className="mx-3 mt-25 mb-10 min-h-full max-w-7xl lg:mx-auto">
       <div>
         <PropertyImageGrid
           images={property.images.map((img) => ({
@@ -122,9 +123,35 @@ export default function PropertyDetails() {
               })),
             }))}
           />
+
+          <div className="block lg:hidden">
+            <PropertySummary
+              room_unavailabilities={property.room_unavailabilities.map(
+                (unavail) => ({
+                  ...unavail,
+                  property_id: 0,
+                  booking_id: null,
+                  created_at: "",
+                  start_date: formatDate(unavail.start_date),
+                  end_date: formatDate(unavail.end_date),
+                  reason: unavail.reason || "",
+                })
+              )}
+              peak_season_price={property.peak_season_rates.map((rate) => ({
+                ...rate,
+                property_id: 0,
+                created_at: "",
+                start_date: formatDate(rate.start_date),
+                end_date: formatDate(rate.end_date),
+                adjustment_type: rate.adjustment_type as
+                  | "percentage"
+                  | "nominal",
+              }))}
+            />
+          </div>
         </div>
 
-        <div className="col-span-1 self-start lg:sticky lg:top-20">
+        <div className="col-span-1 hidden self-start lg:sticky lg:top-20 lg:block">
           <PropertySummary
             room_unavailabilities={property.room_unavailabilities.map(
               (unavail) => ({
