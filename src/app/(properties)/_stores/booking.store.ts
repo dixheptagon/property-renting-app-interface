@@ -76,54 +76,65 @@ export const useBookingStore = create<BookingState>()(
           end: dateRange.to,
         });
 
+        const nights = days.length - 1; // total nights
+        if (nights <= 0) return;
+
         let total = 0;
         let normalNights = 0;
         let peakSeasonNights = 0;
+        const basePrice = Number(selectedRoom.base_price);
 
-        days.forEach((day) => {
+        // Helper to convert date to date-only number for comparison
+        const toDateOnly = (date: Date): number => {
+          return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+        };
+
+        // Hanya loop sebanyak malam (bukan termasuk check-out)
+        for (let i = 0; i < nights; i++) {
+          const day = days[i]; // hari menginap
+          const dayOnly = toDateOnly(day);
+
           const peak = property.peak_season_rates.find((rate) => {
-            const start = new Date(rate.start_date);
-            const end = new Date(rate.end_date);
-            return (
-              (!rate.room_id || rate.room_id === selectedRoom.id) &&
-              day >= start &&
-              day <= end
-            );
+            const start = toDateOnly(new Date(rate.start_date));
+            const end = toDateOnly(new Date(rate.end_date));
+            const roomMatch = !rate.room_id || rate.room_id === selectedRoom.id;
+            const dateMatch = dayOnly >= start && dayOnly <= end;
+            return roomMatch && dateMatch;
           });
 
+          let nightPrice: number;
           if (peak) {
             peakSeasonNights++;
-            const peakPrice =
+            nightPrice =
               peak.adjustment_type === "percentage"
-                ? selectedRoom.base_price * (1 + peak.adjustment_value / 100)
-                : selectedRoom.base_price + peak.adjustment_value;
-            total += peakPrice;
+                ? basePrice * (1 + peak.adjustment_value / 100)
+                : basePrice + peak.adjustment_value;
           } else {
             normalNights++;
-            total += selectedRoom.base_price;
+            nightPrice = basePrice;
           }
-        });
+
+          total += nightPrice;
+        }
+
+        // Optional: hitung peak price rata-rata atau contoh
+        const peakRateDates = property.peak_season_rates.find(
+          (rate) => !rate.room_id || rate.room_id === selectedRoom.id
+        );
+
+        const peakSeasonPrice = peakRateDates
+          ? peakRateDates.adjustment_type === "percentage"
+            ? basePrice * (1 + peakRateDates.adjustment_value / 100)
+            : basePrice + peakRateDates.adjustment_value
+          : basePrice;
 
         set({
-          totalNights: days.length - 1,
+          totalNights: nights,
           total,
-          basePrice: selectedRoom.base_price,
+          basePrice,
           normalNights,
-          peakSeasonPrice:
-            selectedRoom.base_price +
-              (property.peak_season_rates.find(
-                (rate) => !rate.room_id || rate.room_id === selectedRoom.id
-              )?.adjustment_type === "percentage"
-                ? (selectedRoom.base_price *
-                    (property.peak_season_rates.find(
-                      (rate) =>
-                        !rate.room_id || rate.room_id === selectedRoom.id
-                    )?.adjustment_value || 0)) /
-                  100
-                : property.peak_season_rates.find(
-                    (rate) => !rate.room_id || rate.room_id === selectedRoom.id
-                  )?.adjustment_value || 0) || selectedRoom.base_price,
           peakSeasonNights,
+          peakSeasonPrice,
         });
       },
 

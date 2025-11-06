@@ -25,15 +25,11 @@ export default function PropertyDetails() {
 
   const property = data?.data;
 
-  console.log("Property Details Data:", property);
-
   useEffect(() => {
     if (property) {
       setProperty(property);
     }
   }, [property]);
-
-  console.log("property", property);
 
   if (isLoading) {
     return (
@@ -54,6 +50,12 @@ export default function PropertyDetails() {
           <div className="text-center">
             <p className="mb-4 text-red-600">Failed to load property details</p>
             <p className="text-gray-600">Please try again later</p>
+            <button
+              className="mt-6 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+              onClick={() => refetch()}
+            >
+              Retry
+            </button>
           </div>
         </div>
       </div>

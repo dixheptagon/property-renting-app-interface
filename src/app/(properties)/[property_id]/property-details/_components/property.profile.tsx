@@ -92,14 +92,14 @@ export default function PropertyProfile({
             {image ? (
               <Image
                 src={image}
-                alt={host.display_name}
+                alt={host.display_name || "Host Image"}
                 className="h-12 w-12 rounded-full"
                 width={48}
                 height={48}
               />
             ) : (
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-600 text-lg font-semibold text-white">
-                {host.display_name.charAt(0)}
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-blue-800 text-lg font-semibold text-white">
+                {host.display_name?.charAt(0)}
               </div>
             )}
 

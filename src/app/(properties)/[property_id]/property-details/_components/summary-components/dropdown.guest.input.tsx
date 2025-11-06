@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
 
-export function GuestDropdown({ max_guest }: { max_guest: number }) {
+export default function GuestDropdown({ max_guest }: { max_guest: number }) {
   const { guests, setGuests } = useBookingStore();
   const [open, setOpen] = useState(false);
 

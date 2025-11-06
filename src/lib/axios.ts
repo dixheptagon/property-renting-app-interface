@@ -41,10 +41,8 @@ axiosInstance.interceptors.response.use(
 
       try {
         const refreshRes = await axiosInstance.post("/api/auth/refresh-token");
-        console.log(refreshRes.data);
-        const newToken = refreshRes.data.data.access_token;
 
-        console.log(newToken);
+        const newToken = refreshRes.data.data.access_token;
 
         useAuthStore.getState().storeToken(newToken);
 

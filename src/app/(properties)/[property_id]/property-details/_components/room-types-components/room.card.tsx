@@ -5,6 +5,11 @@ import { SelectRoomButton } from "./room-card-components/select.room.button";
 import { RoomData } from "../../_types/property";
 import { roomHighlights } from "../../_const/room.higlights";
 import renderHighlights from "./room-card-components/render.highlight";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface RoomCardProps {
   room: RoomData;
@@ -24,7 +29,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
 }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
-  const truncateDescription = (text: string, maxLength = 100) => {
+  const truncateDescription = (text: string, maxLength = 80) => {
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + "...";
   };
@@ -86,8 +91,15 @@ export const RoomCard: React.FC<RoomCardProps> = ({
           <div className="relative flex items-start justify-between">
             <div>
               <div className="mb-2 flex items-center gap-3">
-                <h3 className="text-2xl font-bold text-gray-900">
-                  {room.name}
+                <h3 className="">
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <span className="line-clamp-1 max-w-86 truncate text-2xl font-bold text-gray-900">
+                        {room.name}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>{room.name}</TooltipContent>
+                  </Tooltip>
                 </h3>
 
                 {/* Selected Room Badge */}

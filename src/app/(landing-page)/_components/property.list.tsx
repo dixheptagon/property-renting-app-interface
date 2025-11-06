@@ -9,7 +9,7 @@ export default function PropertyList({
 }) {
   return (
     <main
-      id="property-list "
+      id="property-list"
       className="mx-auto max-w-7xl scroll-mt-16 px-4 py-12 sm:px-6 lg:px-8"
     >
       {/* Section Header */}
