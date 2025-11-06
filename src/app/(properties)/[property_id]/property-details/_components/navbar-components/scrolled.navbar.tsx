@@ -1,4 +1,4 @@
-import { Section } from "../property.navbar";
+import { Section } from "../../_types/property.navbar";
 
 export default function ScrolledNavbar({
   scrollToSection,

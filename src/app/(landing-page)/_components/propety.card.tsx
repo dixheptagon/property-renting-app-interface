@@ -34,8 +34,6 @@ const getCategoryIcon = (category: string) => {
 };
 
 export const PropertyCard = ({ property }: { property: Property }) => {
-  console.log(property);
-
   return (
     <Link href={`/${property.uid}/property-details`}>
       <article className="group relative overflow-hidden transition-all duration-300">

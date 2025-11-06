@@ -2,40 +2,32 @@
 
 import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Property } from "@/app/(properties)/property-details/_types/property";
+import axios from "axios";
+import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
+import { useParams } from "next/navigation";
 import {
   PropertyAmenities,
   PropertyImageGrid,
   PropertyLocation,
   PropertyProfile,
-  PropertyRoomTypes,
   PropertyReviews,
+  PropertyRoomTypes,
   PropertyRules,
   PropertySummary,
-} from "@/app/(properties)/property-details/_components/index";
-import { Property } from "@/app/(properties)/property-details/_types/property";
-import axios from "axios";
-import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
-import { useParams } from "next/navigation";
+} from "./_components";
+import { usePropertyDetail } from "./_hooks/use.property.detail";
 
 export default function PropertyDetails() {
-  const params = useParams();
-  console.log(params);
-  const id = params.property_id; // <--- ambil ID dari URL
-
   // set Global State Propety Being Chosen
   const { setProperty } = useBookingStore();
 
-  const {
-    data: property,
-    isLoading,
-    error,
-  } = useQuery<Property>({
-    queryKey: ["property", 1],
-    queryFn: async () => {
-      const response = await axios.get<Property>(`/api/properties/${1}`);
-      return response.data;
-    },
-  });
+  const { data, isLoading, isError, error, refetch, isFetching } =
+    usePropertyDetail();
+
+  const property = data?.data;
+
+  console.log("Property Details Data:", property);
 
   if (isLoading) {
     return (
@@ -78,18 +70,24 @@ export default function PropertyDetails() {
   return (
     <div className="mx-auto mt-25 mb-10 min-h-full max-w-7xl">
       <div>
-        <PropertyImageGrid images={property.images} />
+        <PropertyImageGrid
+          images={property.images.map((img) => ({
+            ...img,
+            id: 0,
+            created_at: "",
+          }))}
+        />
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="col-span-2 space-y-8">
           <PropertyProfile
             title={property.title}
-            rating={property.rating_avg}
+            rating={property.rating_avg ?? 0}
             description={property.description}
-            host={property.tenant}
+            host={{ ...property.tenant, display_name: property.tenant.name }}
             category={property.category}
-            reviews={property.rating_count}
+            reviews={property.rating_count ?? 0}
             address={`${property.address}, ${property.city}, ${property.country} ${property.postal_code}`}
             image={property.tenant.image}
           />
@@ -97,13 +95,43 @@ export default function PropertyDetails() {
           <PropertyAmenities amenities={property.amenities} />
           <PropertyRules rules={property.rules} />
 
-          <PropertyRoomTypes rooms={property.rooms} />
+          <PropertyRoomTypes
+            rooms={property.rooms.map((room) => ({
+              ...room,
+              id: 0,
+              property_id: 0,
+              created_at: "",
+              highlight: room.highlight || {},
+              images: room.images.map((img) => ({
+                ...img,
+                id: 0,
+                created_at: "",
+              })),
+            }))}
+          />
         </div>
 
         <div className="col-span-1 self-start lg:sticky lg:top-20">
           <PropertySummary
-            room_unavailabilities={property.room_unavailabilities}
-            peak_season_price={property.peak_season_rates}
+            room_unavailabilities={property.room_unavailabilities.map(
+              (unavail) => ({
+                ...unavail,
+                property_id: 0,
+                booking_id: null,
+                created_at: "",
+                start_date: unavail.start_date.toISOString().split("T")[0],
+                end_date: unavail.end_date.toISOString().split("T")[0],
+                reason: unavail.reason || "",
+              })
+            )}
+            peak_season_price={property.peak_season_rates.map((rate) => ({
+              ...rate,
+              property_id: 0,
+              created_at: "",
+              start_date: rate.start_date.toISOString().split("T")[0],
+              end_date: rate.end_date.toISOString().split("T")[0],
+              adjustment_type: rate.adjustment_type as "percentage" | "nominal",
+            }))}
           />
         </div>
       </div>
@@ -114,9 +142,9 @@ export default function PropertyDetails() {
           city={property.city}
           country={property.country}
           postal_code={property.postal_code}
-          latitude={property.latitude}
-          longitude={property.longitude}
-          map_url={property.map_url}
+          latitude={property.latitude ?? 0}
+          longitude={property.longitude ?? 0}
+          map_url={property.map_url ?? ""}
         />
         <PropertyReviews propertyId={property.id} />
       </div>

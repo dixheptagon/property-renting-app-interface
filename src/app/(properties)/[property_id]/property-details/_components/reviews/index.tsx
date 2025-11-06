@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Star, ChevronDown } from "lucide-react";
 import {
   Dialog,
@@ -10,31 +9,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import axios from "axios";
-import { ApiReview, PropertyReviewsProps, Review } from "./type";
+import { PropertyReviewsProps, Review } from "./type";
 import { getRandomJoinYear, MAX_VISIBLE_REVIEWS } from "./utils";
 import { ErrorState, LoadingState } from "./loding.and.error";
 import { ReviewCard } from "./review.card";
+import { usePropertyReviews } from "./_hooks/use.property.reviews";
 
 /**
  * PropertyReviews component displays ratings and reviews for a property.
  * Handles loading, error states, and pagination of reviews.
  */
 export default function PropertyReviews({ propertyId }: PropertyReviewsProps) {
-  // Fetch reviews from API with proper error handling
-  const {
-    data: apiReviews,
-    isLoading,
-    error,
-  } = useQuery<ApiReview[]>({
-    queryKey: ["reviews", propertyId],
-    queryFn: async () => {
-      const response = await axios.get<ApiReview[]>(
-        `/api/reviews/${propertyId}`
-      );
-      return response.data;
-    },
-  });
+  // Fetch reviews using custom hook with TanStack Query and axiosInstance
+  const { data: apiReviews, isLoading, error } = usePropertyReviews(propertyId);
 
   // Transform API reviews to component format with memoization for performance
   const reviews: Review[] = React.useMemo(

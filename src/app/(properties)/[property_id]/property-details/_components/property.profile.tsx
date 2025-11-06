@@ -7,19 +7,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Tenant } from "@/app/(properties)/property-details/_types/property";
 import Image from "next/image";
-
-interface PropertyProfileProps {
-  title: string;
-  rating: number;
-  description: string;
-  host: Tenant;
-  category: string;
-  reviews: number;
-  address: string;
-  image?: string;
-}
+import { PropertyProfileProps } from "../_types/property.profile";
+import {
+  truncateAddress,
+  truncateDescription,
+  truncateTitle,
+} from "../_utils/truncate.data";
 
 export default function PropertyProfile({
   title,
@@ -35,21 +29,6 @@ export default function PropertyProfile({
   const [showFullAddress, setShowFullAddress] = useState(false);
 
   const completeAddress = address;
-
-  const truncateTitle = (text: string, maxLength = 35) => {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + "...";
-  };
-
-  const truncateAddress = (text: string, maxLength = 85) => {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + "...";
-  };
-
-  const truncateDescription = (text: string, maxLength = 200) => {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + "...";
-  };
 
   return (
     <div className="space-y-8" id="profile">
@@ -85,14 +64,9 @@ export default function PropertyProfile({
               </button>
             )}
           </div>
+
+          {/* Property Category*/}
           <div className="flex flex-col items-center gap-2">
-            <div className="flex flex-col items-center gap-2 rounded-lg bg-yellow-50 px-3 py-2 md:flex-row">
-              <div className="flex items-center gap-2">
-                <Star className="h-5 w-5 fill-current text-yellow-500" />
-                <span className="font-semibold text-gray-900">{rating}</span>
-              </div>
-              <span className="text-gray-600">({reviews} reviews)</span>
-            </div>
             <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
               {category}
             </span>
@@ -100,25 +74,37 @@ export default function PropertyProfile({
         </div>
 
         {/* Host Info */}
-        <div className="flex items-center gap-3 border-t pt-4">
-          {/* Tenant Image */}
-          {image ? (
-            <Image
-              src={image}
-              alt={host.display_name}
-              className="h-12 w-12 rounded-full"
-              width={48}
-              height={48}
-            />
-          ) : (
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-lg font-semibold text-white">
-              {host.display_name.charAt(0)}
-            </div>
-          )}
+        <div className="flex justify-between border-t pt-4">
+          <div className="flex items-center gap-3">
+            {/* Tenant Image */}
+            {image ? (
+              <Image
+                src={image}
+                alt={host.display_name}
+                className="h-12 w-12 rounded-full"
+                width={48}
+                height={48}
+              />
+            ) : (
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-lg font-semibold text-white">
+                {host.display_name.charAt(0)}
+              </div>
+            )}
 
-          <div>
-            <p className="font-medium text-gray-900">{host.display_name}</p>
-            <p className="text-sm text-gray-600">Host</p>
+            <div>
+              <p className="font-medium text-gray-900">{host.display_name}</p>
+              <p className="text-sm text-gray-600">Host</p>
+            </div>
+          </div>
+
+          {/* Rating Average */}
+
+          <div className="flex flex-col items-center gap-2 rounded-lg bg-yellow-50 px-3 py-2 md:flex-row">
+            <div className="flex items-center gap-2">
+              <Star className="h-5 w-5 fill-current text-yellow-500" />
+              <span className="font-semibold text-gray-900">{rating}</span>
+            </div>
+            <span className="text-gray-600">({reviews} reviews)</span>
           </div>
         </div>
       </div>

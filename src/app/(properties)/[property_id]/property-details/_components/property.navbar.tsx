@@ -4,11 +4,7 @@ import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import ScrolledNavbar from "./navbar-components/scrolled.navbar";
 import InitialNavbar from "./navbar-components/initial.navbar";
 import { useScrolled } from "@/hooks/use.scrolled";
-
-export interface Section {
-  id: string;
-  label: string;
-}
+import { Section } from "../_types/property.navbar";
 
 export default function Navbar() {
   const scrolled = useScrolled();
