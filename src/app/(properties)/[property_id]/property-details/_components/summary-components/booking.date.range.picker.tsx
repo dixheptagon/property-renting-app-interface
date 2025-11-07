@@ -31,7 +31,8 @@ export default function BookingDateRangePicker() {
   const isMobile = useIsMobile();
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [hasSelected, setHasSelected] = useState(false);
-  const setDateRangeStore = useBookingStore((state) => state.setDateRange);
+  const { dateRange: storedDateRange, setDateRange: setStoredDateRange } =
+    useBookingStore();
 
   const { property } = useBookingStore();
 
@@ -111,7 +112,7 @@ export default function BookingDateRangePicker() {
   const handleDateSelect = (range: DateRange | undefined) => {
     if (range?.from) setHasSelected(true);
     setDateRange(range);
-    setDateRangeStore(range);
+    setStoredDateRange(range);
   };
 
   return (
@@ -128,8 +129,8 @@ export default function BookingDateRangePicker() {
           }}
         >
           <CalendarIcon />
-          {dateRange?.from && dateRange?.to ? (
-            `${formatDate(dateRange.from)} - ${formatDate(dateRange.to)}`
+          {storedDateRange?.from && storedDateRange?.to ? (
+            `${formatDate(storedDateRange.from)} - ${formatDate(storedDateRange.to)}`
           ) : (
             <span>Pick a date</span>
           )}

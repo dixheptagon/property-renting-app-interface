@@ -178,6 +178,7 @@ export default function PropertyDetails() {
 
       <div className="mt-8 space-y-8">
         <PropertyLocation
+          title={property.title}
           address={property.address}
           city={property.city}
           country={property.country}
