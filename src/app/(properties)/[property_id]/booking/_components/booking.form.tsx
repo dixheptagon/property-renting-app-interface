@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
+import { usePaymentStore } from "@/app/(properties)/_stores/payment.store";
 import { Formik, Form, Field, ErrorMessage, FormikValues } from "formik";
 import { BookingFormValidationSchema } from "../_validations/booking.form";
 import { formatPrice } from "../_utils/format.price";
@@ -14,6 +15,7 @@ import { Loader } from "lucide-react";
 
 export default function BookingForm() {
   const bookingState = useBookingStore();
+  const paymentStore = usePaymentStore();
   const router = useRouter();
   const { email: userEmail } = useAuthStore();
   const createBookingMutation = useCreateBooking();
@@ -21,7 +23,6 @@ export default function BookingForm() {
   // Get Property_Id
   const params = useParams();
   const property_id = params.property_id;
-  console.log(property_id);
 
   const handleSubmit = (values: FormikValues) => {
     if (
@@ -31,6 +32,7 @@ export default function BookingForm() {
       !bookingState.dateRange?.to
     ) {
       toast.error("Missing required booking data");
+      router.push(`/${property_id}/property-details`);
       return;
     }
 
@@ -46,6 +48,10 @@ export default function BookingForm() {
 
     createBookingMutation.mutate(payload, {
       onSuccess: (data) => {
+        // Store order response in payment store
+        paymentStore.setOrderResponse(data);
+        // Remove booking data from store
+        bookingState.clearBooking();
         // Redirect to payment page on success
         router.push(`/${property_id}/payment`);
       },

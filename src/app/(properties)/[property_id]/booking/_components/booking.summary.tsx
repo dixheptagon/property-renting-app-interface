@@ -10,7 +10,7 @@ export default function BookingSummary() {
     <div className="mx-auto max-w-2xl space-y-6">
       {/* Property Card */}
       <div className="relative overflow-hidden rounded-xl bg-linear-to-br from-blue-50 to-indigo-100 p-6 shadow-lg transition-all duration-300 hover:shadow-xl">
-        <div className="absolute top-0 right-0 h-20 w-20 rounded-bl-full bg-linear-to-br from-blue-200 to-indigo-300 opacity-40 blur-md"></div>
+        <div className="absolute top-0 right-0 h-40 w-40 rounded-bl-full bg-linear-to-br from-blue-200 to-indigo-300 opacity-40 blur-md"></div>
         <div className="relative z-10">
           <h1 className="mb-2 text-2xl font-bold text-gray-800">
             {bookingState?.propertyName}

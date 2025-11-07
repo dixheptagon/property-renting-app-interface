@@ -1,48 +1,98 @@
+"use client";
+
 import Image from "next/image";
-import staysia_logo from "../../../../../public/logo/staysia-logo.png";
+import { useScrolled } from "@/hooks/use.scrolled";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Logo, MobileLogo } from "./navbar-components/logo";
+import { ReservationStep } from "./navbar-components/reservation.step";
+import { AuthButtons, MobileAuthButton } from "./navbar-components/auth.button";
+import { Menu, X } from "lucide-react";
+
 export default function PaymentNavbar() {
+  const router = useRouter();
+  const scrolled = useScrolled();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleAuth = () => {
+    router.push("/check-email");
+  };
+
   return (
     <>
       <nav className="fixed top-0 left-0 z-50 h-16 w-full bg-white shadow-sm transition-all duration-300">
-        <div className="mx-auto flex max-w-7xl justify-between">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
           {/* Logo */}
-          <div className="p-4">
-            <Image
-              src={staysia_logo}
-              alt="Staysia Logo"
-              width={120}
-              height={120}
+          <div className="shrink-0">
+            <Logo />
+          </div>
+
+          {/* Steps - Hidden on mobile, visible on md+ */}
+          <div className="hidden md:flex">
+            <ReservationStep currentStep={2} />
+          </div>
+
+          {/* Auth Button */}
+          <div className="shrink-0">
+            <AuthButtons scrolled={false} handleAuth={handleAuth} />
+          </div>
+        </div>
+
+        {/* Mobile Steps - Visible only on mobile */}
+        <div className="flex justify-between md:hidden">
+          {/* Mobile Logo */}
+          <MobileLogo />
+
+          <ReservationStep currentStep={2} />
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className={`mr-3 text-blue-800 lg:hidden ${scrolled ? "" : "z-60"}`}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Menu Overlay */}
+        <div
+          className={`fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity lg:hidden ${
+            mobileMenuOpen
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0"
+          }`}
+          onClick={() => setMobileMenuOpen(false)}
+        />
+
+        {/* Mobile Menu Sidebar */}
+        <div
+          className={`fixed top-0 right-0 z-60 h-full w-[280px] transform bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${
+            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex h-full flex-col">
+            {/* Mobile Menu Header */}
+            <div className="flex items-center justify-between border-b p-4">
+              <MobileLogo />
+
+              <button
+                className="rounded-md stroke-2 p-2 text-blue-800 transition hover:bg-gray-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <X />
+              </button>
+            </div>
+
+            {/* Mobile Auth Buttons */}
+            <MobileAuthButton
+              handleAuth={handleAuth}
+              setMobileMenuOpen={setMobileMenuOpen}
             />
-          </div>
-
-          {/* Steps */}
-          <div className="flex items-center gap-4 p-4 text-sm font-medium text-gray-500">
-            <div className="flex items-center justify-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 text-sm text-white">
-                1
-              </span>
-              <span>Booking</span>
-              <hr className="w-8 rounded-2xl border-2 border-gray-500" />
-            </div>
-            <div className="flex items-center justify-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-sm text-white">
-                2
-              </span>
-              <span className="text-blue-600">Pay</span>
-              <hr className="w-8 rounded-2xl border-2 border-blue-600" />
-            </div>
-            <div className="flex items-center justify-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-500 text-sm text-white">
-                3
-              </span>
-              <span>Confirmed</span>
-            </div>
-          </div>
-
-          {/* Profile Icon */}
-          <div className="flex items-center justify-center gap-3 p-4">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-sm text-white"></span>
-            <span className="text-blue-600">username</span>
           </div>
         </div>
       </nav>
