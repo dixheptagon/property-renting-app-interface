@@ -2,14 +2,11 @@
 
 import { Label } from "@/components/ui/label";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
-import {
-  PeakSeasonRate,
-  RoomUnavailability,
-} from "@/app/(properties)/property-details/_types/property";
+
 import { CircleX } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { DatePickerRange, GuestDropdown } from "./summary-components";
-import BookingDateRangePicker from "./summary-components/booking.date.range.picker";
+import { BookingDateRangePicker, GuestDropdown } from "./summary-components";
+import { PeakSeasonRate, RoomUnavailability } from "../_types/property";
 
 export default function PropertySummary({
   room_unavailabilities,
@@ -22,7 +19,7 @@ export default function PropertySummary({
   const params = useParams();
   const bookingState = useBookingStore();
 
-  const propertyId = params.property_id as string;
+  const propertyId = params.property_id;
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("id-ID", {

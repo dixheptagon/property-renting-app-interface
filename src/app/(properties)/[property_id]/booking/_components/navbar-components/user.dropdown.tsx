@@ -81,7 +81,7 @@ export function UserDropdown() {
         <div className="p-1">
           {menuItems.map((item, index) => (
             <Link key={index} href={item.href}>
-              <div className="group flex cursor-pointer items-start gap-3 rounded-lg px-3 py-3 transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50">
+              <div className="group flex cursor-pointer items-start gap-3 rounded-lg px-3 py-3 transition-all duration-200 hover:bg-linear-to-r hover:from-blue-50 hover:to-purple-50">
                 <div className="mt-0.5 rounded-md bg-blue-100 p-2 transition-colors group-hover:bg-blue-200">
                   <item.icon className="h-4 w-4 text-blue-600" />
                 </div>
@@ -101,7 +101,7 @@ export function UserDropdown() {
         <div className="p-1">
           {accountItems.map((item, index) => (
             <Link key={index} href={item.href}>
-              <div className="group flex cursor-pointer items-start gap-3 rounded-lg px-3 py-3 transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50">
+              <div className="group flex cursor-pointer items-start gap-3 rounded-lg px-3 py-3 transition-all duration-200 hover:bg-linear-to-r hover:from-blue-50 hover:to-purple-50">
                 <div className="mt-0.5 rounded-md bg-purple-100 p-2 transition-colors group-hover:bg-purple-200">
                   <item.icon className="h-4 w-4 text-purple-600" />
                 </div>

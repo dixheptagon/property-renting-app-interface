@@ -71,7 +71,16 @@ export default function InitialNavbar() {
       >
         <div className="flex h-full flex-col">
           {/* Mobile Menu Header */}
-          <MobileLogo />
+          <div className="flex items-center justify-between border-b p-4">
+            <MobileLogo />
+
+            <button
+              className="rounded-md stroke-2 p-2 text-blue-800 transition hover:bg-gray-200"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <X />
+            </button>
+          </div>
 
           {/* Mobile Auth Buttons */}
           <MobileAuthButton
