@@ -2,19 +2,54 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikValues } from "formik";
 import { BookingFormValidationSchema } from "../_validations/booking.form";
 import { formatPrice } from "../_utils/format.price";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useCreateBooking } from "../_hooks/use.create.booking";
+import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
+import { format } from "date-fns";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 export default function BookingForm() {
   const bookingState = useBookingStore();
   const router = useRouter();
+  const { email: userEmail } = useAuthStore();
+  const createBookingMutation = useCreateBooking();
 
-  const handleSubmit = (values: any) => {
-    console.log("Form submitted with values:", values);
-    // Handle form submission here
-    router.push("/payment");
+  // Get Property_Id
+  const params = useParams();
+  const property_id = params.property_id;
+  console.log(property_id);
+
+  const handleSubmit = (values: FormikValues) => {
+    if (
+      !bookingState.propertyId ||
+      !bookingState.selectedRoom?.id ||
+      !bookingState.dateRange?.from ||
+      !bookingState.dateRange?.to
+    ) {
+      toast.error("Missing required booking data");
+      return;
+    }
+
+    const payload = {
+      room_id: bookingState.selectedRoom.id.toString(),
+      property_id: bookingState.propertyId,
+      check_in_date: format(bookingState.dateRange.from, "yyyy-MM-dd"),
+      check_out_date: format(bookingState.dateRange.to, "yyyy-MM-dd"),
+      fullname: values.fullName,
+      email: values.email,
+      phone_number: `${values.countryCode}${values.mobileNumber}`,
+    };
+
+    createBookingMutation.mutate(payload, {
+      onSuccess: (data) => {
+        // Redirect to payment page on success
+        router.push(`/${property_id}/payment`);
+      },
+    });
   };
 
   return (
@@ -175,10 +210,15 @@ export default function BookingForm() {
 
             <Button
               type="submit"
-              disabled={isSubmitting}
+              disabled={createBookingMutation.isPending}
               className="mt-6 w-full py-4 text-base shadow-md md:py-6 md:text-lg"
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {createBookingMutation.isPending && (
+                <Loader className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              {createBookingMutation.isPending
+                ? "Creating Booking..."
+                : "Submit"}
             </Button>
           </Form>
         )}

@@ -21,10 +21,7 @@ import { useLoginAccount } from "../../_hooks/use.login.account";
 import { useRouter } from "next/navigation";
 import GoogleLoginButton from "./google.login.button";
 
-export function CheckEmail({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function Login({ className, ...props }: React.ComponentProps<"div">) {
   const { email, storeAuth, storeEmail } = useAuthStore();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState<boolean>(false);

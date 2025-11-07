@@ -1,8 +1,7 @@
 import Image from "next/image";
-import StaysiaLogo from "../../../../public/logo/staysia-logo.png";
 import { CheckEmail } from "./_components/check.email";
 
-export default function LoginPage() {
+export default function CheckEmailPage() {
   return (
     <div className="bg-muted auth-background flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
       <Image
@@ -14,13 +13,6 @@ export default function LoginPage() {
       />
       <div className="absolute inset-0 bg-black/50"></div>
       <div className="w-full max-w-sm md:max-w-4xl">
-        <Image
-          src={StaysiaLogo}
-          alt="logo"
-          width={400}
-          height={400}
-          className="absolute bottom-4 left-1/2 w-36 -translate-x-1/2"
-        />
         <CheckEmail />
       </div>
     </div>
