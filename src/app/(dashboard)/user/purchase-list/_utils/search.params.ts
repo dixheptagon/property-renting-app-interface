@@ -17,10 +17,10 @@ export const usePurchaseSearchParams = () => {
         newSearchParams.delete(key);
       } else if (Array.isArray(value)) {
         // Remove existing array params
-        newSearchParams.delete(`${key}[]`);
+        newSearchParams.delete(`${key}`);
         // Add new array values
         value.forEach((item) => {
-          newSearchParams.append(`${key}[]`, item);
+          newSearchParams.append(`${key}`, item);
         });
       } else {
         newSearchParams.set(key, value.toString());
@@ -80,8 +80,8 @@ export const usePurchaseSearchParams = () => {
       date_to: null,
       sort_by: null,
       sort_dir: null,
-      page: 1,
-      limit: null,
+      page: null, // Keep page 1 but reset limit to default
+      limit: null, // Reset to default limit
     });
   };
 

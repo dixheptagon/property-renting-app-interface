@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, CalendarOff } from "lucide-react";
 import { type DateRange } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
@@ -15,15 +15,17 @@ import {
 } from "@/components/ui/popover";
 
 interface DateRangePickerProps {
+  dateRange: DateRange | undefined;
+  setDateRange: (range: DateRange | undefined) => void;
   onDateRangeChange?: (dateFrom: string, dateTo: string) => void;
 }
 
-export function DateRangePicker({ onDateRangeChange }: DateRangePickerProps) {
+export function DateRangePicker({
+  dateRange,
+  setDateRange,
+  onDateRangeChange,
+}: DateRangePickerProps) {
   const today = new Date();
-  const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
-    from: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3), // 3 days ago
-    to: today,
-  });
 
   const handleDateRangeChange = (range: DateRange | undefined) => {
     setDateRange(range);

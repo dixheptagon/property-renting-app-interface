@@ -7,7 +7,7 @@ interface EmptyStateProps {
 
 export default function EmptyState({ onClearFilters }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg bg-white p-12 text-center shadow-sm">
+    <div className="mt-4 flex flex-col items-center justify-center rounded-lg border bg-white p-12 text-center shadow-md">
       <div className="mb-4 rounded-full bg-gray-100 p-6">
         <SlidersHorizontal className="h-12 w-12 text-gray-400" />
       </div>

@@ -4,6 +4,7 @@ import { Purchase, PurchaseStatus } from "../_types/purchase.status";
 import statusOptions from "../_const/status.option";
 import { formatDate } from "../_utils/format.date";
 import { formatPrice } from "../_utils/format.price";
+import Link from "next/link";
 
 interface PurchaseCardProps {
   purchase: Purchase;
@@ -21,7 +22,7 @@ export default function PurchaseCard({ purchase }: PurchaseCardProps) {
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md">
+    <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md md:mt-4">
       <div className="mb-3 flex items-start justify-between">
         <div>
           <p className="text-sm font-semibold text-blue-600">
@@ -60,10 +61,12 @@ export default function PurchaseCard({ purchase }: PurchaseCardProps) {
         </div>
       </div>
 
-      <Button className="mt-4 w-full bg-blue-600 hover:bg-blue-700">
-        <ExternalLink className="mr-2 h-4 w-4" />
-        View Details
-      </Button>
+      <Link href={`/confirmed/${purchase.order_id}`}>
+        <Button className="mt-4 w-full bg-blue-600 hover:bg-blue-700">
+          <ExternalLink className="mr-2 h-4 w-4" />
+          View Details
+        </Button>
+      </Link>
     </div>
   );
 }

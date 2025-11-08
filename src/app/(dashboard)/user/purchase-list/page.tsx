@@ -26,10 +26,8 @@ export default function Page() {
     filters,
   } = usePurchaseList();
 
-  console.log("totalItems", totalItems);
-  console.log("totalPages", totalPages);
-  console.log("currentPage", currentPage);
-  console.log("limit", limit);
+  console.log("purchases", purchases);
+  console.log("filters", filters);
 
   const {
     setPage,
@@ -40,6 +38,8 @@ export default function Page() {
     setDateRange,
     clearAllFilters,
   } = usePurchaseSearchParams();
+
+  console.log("error", error);
 
   return (
     <SidebarProvider>
@@ -52,7 +52,7 @@ export default function Page() {
             <div className="flex items-center justify-center py-12">
               <LoadingData message="Loading Purchase List..." />
             </div>
-          ) : error ? (
+          ) : error && error?.status !== 404 ? (
             <div className="flex flex-col items-center justify-center">
               <span className="rounded-full bg-red-100 p-6">
                 <TriangleAlert className="h-8 w-8 text-red-500" />
@@ -60,7 +60,7 @@ export default function Page() {
               <h3 className="mb-2 text-xl font-semibold text-gray-700">
                 Error Loading Purchases
               </h3>
-              <p className="mb-4 text-gray-500">{error}</p>
+              <p className="mb-4 text-gray-500">{error?.message}</p>
               <button
                 onClick={() => window.location.reload()}
                 className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"

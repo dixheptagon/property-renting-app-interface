@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
+import { AxiosError } from "axios";
 import { axiosInstance } from "@/lib/axios";
 import type {
   Purchase,
@@ -19,7 +20,7 @@ const fetchPurchaseList = async (
   if (params.page) queryParams.append("page", params.page.toString());
   if (params.limit) queryParams.append("limit", params.limit.toString());
   if (params.status && params.status.length > 0) {
-    params.status.forEach((status) => queryParams.append("status[]", status));
+    params.status.forEach((status) => queryParams.append("status", status));
   }
   if (params.sort_by) queryParams.append("sort_by", params.sort_by);
   if (params.sort_dir) queryParams.append("sort_dir", params.sort_dir);
@@ -39,7 +40,7 @@ export const usePurchaseList = () => {
   // Parse search params
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const status = searchParams.getAll("status[]") as PurchaseStatus[];
+  const status = searchParams.getAll("status") as PurchaseStatus[];
   const sort_by =
     (searchParams.get("sort_by") as
       | "created_at"
@@ -84,7 +85,7 @@ export const usePurchaseList = () => {
     currentPage: page,
     limit,
     loading,
-    error: error ? (error as Error).message : null,
+    error: error ? (error as AxiosError) : null,
     refetch,
     // Current filter values for components
     filters: {
