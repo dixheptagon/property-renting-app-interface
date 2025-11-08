@@ -11,13 +11,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePurchaseSearchParams } from "../../_utils/search.params";
 
 interface PaginationComponentProps {
   totalItemCount: number;
   limit: number;
-  currentPage?: number;
-  onPageChange?: (page: number) => void;
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }
 
 export function PaginationComponent({
@@ -26,32 +26,22 @@ export function PaginationComponent({
   currentPage,
   onPageChange,
 }: PaginationComponentProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const [page, setPage] = React.useState<number>(
-    currentPage || parseInt(searchParams.get("page") || "1")
-  );
+  const { setPage } = usePurchaseSearchParams();
 
   const totalPages = Math.ceil(totalItemCount / limit);
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
 
+    onPageChange?.(newPage);
     setPage(newPage);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", newPage.toString());
-    router.push(`/explore-properties?${params.toString()}`, { scroll: false });
-
-    if (onPageChange) {
-      onPageChange(newPage);
-    }
   };
 
   // Generate page numbers to display
   const getPageNumbers = () => {
     const pages: (number | string)[] = [];
     const maxVisiblePages = 5;
+    const activePage = currentPage || 1;
 
     if (totalPages <= maxVisiblePages) {
       // Show all pages if total is small
@@ -60,10 +50,10 @@ export function PaginationComponent({
       }
     } else {
       // Show pages with ellipsis
-      if (page <= 3) {
+      if (currentPage <= 3) {
         // Near the start
         pages.push(1, 2, 3, 4, "...", totalPages);
-      } else if (page >= totalPages - 2) {
+      } else if (currentPage >= totalPages - 2) {
         // Near the end
         pages.push(
           1,
@@ -75,7 +65,15 @@ export function PaginationComponent({
         );
       } else {
         // In the middle
-        pages.push(1, "...", page - 1, page, page + 1, "...", totalPages);
+        pages.push(
+          1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages
+        );
       }
     }
 
@@ -91,9 +89,11 @@ export function PaginationComponent({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            onClick={() => handlePageChange(page - 1)}
+            onClick={() => handlePageChange((currentPage || 1) - 1)}
             className={
-              page <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"
+              (currentPage || 1) <= 1
+                ? "pointer-events-none opacity-50"
+                : "cursor-pointer"
             }
           />
         </PaginationItem>
@@ -105,7 +105,7 @@ export function PaginationComponent({
             ) : (
               <PaginationLink
                 onClick={() => handlePageChange(pageNum as number)}
-                isActive={pageNum === page}
+                isActive={pageNum === (currentPage || 1)}
                 className="cursor-pointer"
               >
                 {pageNum}
@@ -116,9 +116,9 @@ export function PaginationComponent({
 
         <PaginationItem>
           <PaginationNext
-            onClick={() => handlePageChange(page + 1)}
+            onClick={() => handlePageChange((currentPage || 1) + 1)}
             className={
-              page >= totalPages
+              (currentPage || 1) >= totalPages
                 ? "pointer-events-none opacity-50"
                 : "cursor-pointer"
             }

@@ -14,12 +14,25 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function DateRangePicker() {
+interface DateRangePickerProps {
+  onDateRangeChange?: (dateFrom: string, dateTo: string) => void;
+}
+
+export function DateRangePicker({ onDateRangeChange }: DateRangePickerProps) {
   const today = new Date();
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
     from: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3), // 3 days ago
     to: today,
   });
+
+  const handleDateRangeChange = (range: DateRange | undefined) => {
+    setDateRange(range);
+    if (range?.from && range?.to && onDateRangeChange) {
+      const dateFrom = format(range.from, "yyyy-MM-dd");
+      const dateTo = format(range.to, "yyyy-MM-dd");
+      onDateRangeChange(dateFrom, dateTo);
+    }
+  };
 
   return (
     <Popover>
@@ -47,7 +60,7 @@ export function DateRangePicker() {
             dateRange?.from && dateRange.to ? dateRange.from : new Date()
           }
           selected={dateRange}
-          onSelect={setDateRange}
+          onSelect={handleDateRangeChange}
           numberOfMonths={2}
           min={3}
           disabled={{

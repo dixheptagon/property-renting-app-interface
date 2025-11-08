@@ -17,12 +17,18 @@ interface FilterSectionProps {
   selectedStatus: PurchaseStatus[];
   onToggleStatus: (status: PurchaseStatus) => void;
   onClearFilters: () => void;
+  onSortBy?: (sortBy: string, sortDir?: "asc" | "desc") => void;
+  currentSortBy?: string;
+  currentSortDir?: "asc" | "desc";
 }
 
 export default function FilterSection({
   selectedStatus,
   onToggleStatus,
   onClearFilters,
+  onSortBy,
+  currentSortBy = "created_at",
+  currentSortDir = "desc",
 }: FilterSectionProps) {
   return (
     <section className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -45,7 +51,16 @@ export default function FilterSection({
         )}
       </div>
 
-      <Select defaultValue="newest">
+      <Select
+        value={`${currentSortBy}-${currentSortDir}`}
+        onValueChange={(value) => {
+          const [sortBy, sortDir] = value.split("-") as [
+            string,
+            "asc" | "desc",
+          ];
+          onSortBy?.(sortBy, sortDir);
+        }}
+      >
         <SelectTrigger className="font-semibold text-black">
           <ArrowDownNarrowWide className="mr-2 h-4 w-4 text-black" />
           <h2>Sort By:</h2>
@@ -55,9 +70,14 @@ export default function FilterSection({
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Sort By</SelectLabel>
-            <SelectItem value="newest">Newest</SelectItem>
-            <SelectItem value="oldest">Oldest</SelectItem>
-            {/* …other items */}
+            <SelectItem value="created_at-desc">Newest</SelectItem>
+            <SelectItem value="created_at-asc">Oldest</SelectItem>
+            <SelectItem value="check_in-asc">Check-in (Earliest)</SelectItem>
+            <SelectItem value="check_in-desc">Check-in (Latest)</SelectItem>
+            <SelectItem value="price-asc">Price (Low to High)</SelectItem>
+            <SelectItem value="price-desc">Price (High to Low)</SelectItem>
+            <SelectItem value="property-asc">Property (A-Z)</SelectItem>
+            <SelectItem value="property-desc">Property (Z-A)</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
