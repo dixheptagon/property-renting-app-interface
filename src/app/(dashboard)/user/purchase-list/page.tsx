@@ -1,111 +1,119 @@
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+"use client";
+
+import { useState } from "react";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "../_components/app-sidebar";
-import { Separator } from "@/components/ui/separator";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { ArrowDownNarrowWide, SlidersHorizontal } from "lucide-react";
+import { Purchase, PurchaseStatus } from "./_types/purchase.status";
+import PageHeader from "./_components/page.header";
+import FilterSection from "./_components/filter.section";
+import ActiveFilters from "./_components/filter-components/active.filters";
+import PurchaseTable from "./_components/purchase.table";
+import PurchaseCard from "./_components/purchase.card";
+import PaginationSection from "./_components/pagination.section";
+import EmptyState from "./_components/empty.state";
 
 export default function Page() {
+  const [selectedStatus, setSelectedStatus] = useState<PurchaseStatus[]>([]);
+
+  // Sample data
+  const purchases: Purchase[] = [
+    {
+      id: "#2024-001",
+      property: "Villa Sunrise Bali",
+      checkIn: "15 Nov 2024",
+      checkOut: "20 Nov 2024",
+      price: "Rp5.500.000,00",
+      status: "confirmed",
+    },
+    {
+      id: "#2024-002",
+      property: "Beach House Lombok",
+      checkIn: "22 Nov 2024",
+      checkOut: "25 Nov 2024",
+      price: "Rp3.200.000,00",
+      status: "pending_payment",
+    },
+    {
+      id: "#2024-003",
+      property: "Mountain Cabin Bandung",
+      checkIn: "01 Dec 2024",
+      checkOut: "03 Dec 2024",
+      price: "Rp2.100.000,00",
+      status: "processing",
+    },
+    {
+      id: "#2024-004",
+      property: "Urban Loft Jakarta",
+      checkIn: "10 Dec 2024",
+      checkOut: "12 Dec 2024",
+      price: "Rp1.800.000,00",
+      status: "cancelled",
+    },
+    {
+      id: "#2024-005",
+      property: "Seaside Resort Bali",
+      checkIn: "05 Nov 2024",
+      checkOut: "08 Nov 2024",
+      price: "Rp4.500.000,00",
+      status: "completed",
+    },
+  ];
+
+  const toggleStatus = (status: PurchaseStatus): void => {
+    setSelectedStatus((prev) =>
+      prev.includes(status)
+        ? prev.filter((s) => s !== status)
+        : [...prev, status]
+    );
+  };
+
+  const clearFilters = (): void => {
+    setSelectedStatus([]);
+  };
+
+  const filteredPurchases: Purchase[] =
+    selectedStatus.length > 0
+      ? purchases.filter((p) => selectedStatus.includes(p.status))
+      : purchases;
+
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-white transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator
-              orientation="vertical"
-              className="mr-2 data-[orientation=vertical]:h-4"
-            />
-            <span className="text-sm font-semibold sm:text-base">
-              Purchase List
-            </span>
-          </div>
-        </header>
+        <PageHeader />
 
-        <div className="min-h-screen bg-white px-4 py-4">
-          <section className="flex w-full justify-between gap-4">
-            <div className="flex gap-4">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>
-                    <SlidersHorizontal />
-                    Filters
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Share link</DialogTitle>
-                    <DialogDescription>
-                      Anyone who has this link will be able to view this.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex items-center gap-2">
-                    <div className="grid flex-1 gap-2">
-                      <Label htmlFor="link" className="sr-only">
-                        Link
-                      </Label>
-                      <Input
-                        id="link"
-                        defaultValue="https://ui.shadcn.com/docs/installation"
-                        readOnly
-                      />
-                    </div>
-                  </div>
-                  <DialogFooter className="sm:justify-start">
-                    <DialogClose asChild>
-                      <Button type="button" variant="secondary">
-                        Close
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+        <div className="min-h-screen bg-white px-4 py-6">
+          <FilterSection
+            selectedStatus={selectedStatus}
+            onToggleStatus={toggleStatus}
+            onClearFilters={clearFilters}
+          />
 
-              <Button className="bg-white text-blue-600 hover:bg-gray-200 hover:text-blue-700">
-                Clear All
-              </Button>
-            </div>
-            <Button>
-              <ArrowDownNarrowWide />
-              Sort By
-            </Button>
+          <ActiveFilters
+            selectedStatus={selectedStatus}
+            onToggleStatus={toggleStatus}
+          />
+
+          <PurchaseTable purchases={filteredPurchases} />
+
+          <PaginationSection
+            totalItemCount={12}
+            limit={5}
+            currentPage={1}
+            onPageChange={() => console.log("test")}
+          />
+
+          {/* Mobile Card View */}
+          <section className="space-y-4 lg:hidden">
+            {filteredPurchases.map((purchase, index) => (
+              <PurchaseCard key={index} purchase={purchase} />
+            ))}
           </section>
 
-          <section className="my-4">
-            <div className="mb-6 flex justify-between rounded-lg border-2 bg-white p-4 font-semibold text-gray-600 shadow-lg">
-              <span>Id</span>
-              <span>Property Name</span>
-              <span>Check In/Check Out</span>
-              <span>Price</span>
-              <span>Status</span>
-              <span>Action</span>
-            </div>
-
-            <div className="flex justify-between rounded-lg border-2 bg-white p-4 font-semibold text-gray-600 shadow-lg">
-              <span>#XXXX</span>
-              <span>[Property_Name]</span>
-              <span>[Check_in_date - Check out date]</span>
-              <span>RpXXX.XXX,XX</span>
-              <span>pending</span>
-              <span>Action</span>
-            </div>
-          </section>
+          {/* Empty State */}
+          {filteredPurchases.length === 0 && (
+            <EmptyState onClearFilters={clearFilters} />
+          )}
         </div>
       </SidebarInset>
     </SidebarProvider>
