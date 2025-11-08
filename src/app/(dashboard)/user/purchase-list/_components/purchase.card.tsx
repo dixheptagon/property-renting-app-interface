@@ -61,7 +61,7 @@ export default function PurchaseCard({ purchase }: PurchaseCardProps) {
         </div>
       </div>
 
-      <Link href={`/confirmed/${purchase.order_id}`}>
+      <Link href={`my-bookings/${purchase.order_id}/order-details`}>
         <Button className="mt-4 w-full bg-blue-600 hover:bg-blue-700">
           <ExternalLink className="mr-2 h-4 w-4" />
           View Details

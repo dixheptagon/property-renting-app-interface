@@ -67,7 +67,7 @@ export default function PurchaseTable({ purchases }: PurchaseTableProps) {
             <div className="w-24 text-center">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Link href={`/confirmed/${purchase.order_id}`}>
+                  <Link href={`my-bookings/${purchase.order_id}/order-details`}>
                     <Button
                       size="sm"
                       variant="ghost"
