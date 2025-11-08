@@ -38,7 +38,7 @@ export default function ReviewStats() {
           >
             {/* Icon Badge */}
             <div
-              className={`mb-4 rounded-full bg-gradient-to-br ${stat.color} p-4 shadow-md`}
+              className={`mb-4 rounded-full bg-linear-to-br ${stat.color} p-4 shadow-md`}
             >
               <Icon className="h-8 w-8 text-white" />
             </div>
@@ -63,15 +63,15 @@ export default function ReviewStats() {
 
             {/* Decorative corner accent */}
             <div
-              className={`absolute top-0 right-0 h-20 w-20 bg-gradient-to-br ${stat.color} opacity-20 blur-3xl`}
+              className={`absolute top-0 right-0 h-20 w-20 bg-linear-to-br ${stat.color} opacity-20 blur-3xl`}
             ></div>
           </div>
         );
       })}
 
       {/* Chart Card */}
-      <div className="group relative col-span-2 overflow-hidden rounded-xl border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 shadow-lg md:col-span-1">
-        <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-indigo-500 to-purple-600 opacity-10 blur-3xl"></div>
+      <div className="group relative col-span-2 overflow-hidden rounded-xl border-2 border-indigo-200 bg-linear-to-br from-indigo-50 to-purple-50 shadow-lg md:col-span-1">
+        <div className="absolute top-0 right-0 h-32 w-32 bg-linear-to-br from-indigo-500 to-purple-600 opacity-10 blur-3xl"></div>
         <div className="relative flex h-full flex-col p-6">
           {/* Chart Header */}
           <div className="mb-4 flex items-center gap-2">

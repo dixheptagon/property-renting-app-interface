@@ -78,7 +78,7 @@ export function SalesReport() {
               className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-white shadow-lg"
             >
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${stat.bgGradient} opacity-40`}
+                className={`absolute inset-0 bg-linear-to-br ${stat.bgGradient} opacity-40`}
               />
 
               <div className="relative space-y-4 p-5">
@@ -90,7 +90,7 @@ export function SalesReport() {
                     </h2>
                   </div>
                   <div
-                    className={`rounded-xl bg-gradient-to-br ${stat.gradient} p-2.5 text-white shadow-lg`}
+                    className={`rounded-xl bg-linear-to-br ${stat.gradient} p-2.5 text-white shadow-lg`}
                   >
                     {stat.icon}
                   </div>

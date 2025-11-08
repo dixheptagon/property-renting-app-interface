@@ -35,7 +35,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             height={48}
           />
         ) : (
-          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 font-semibold text-white">
+          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-600 font-semibold text-white">
             {getInitials(review.username)}
           </div>
         )}

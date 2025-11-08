@@ -25,7 +25,7 @@ export default function QuickStats({
       {stats.map((stat, index) => (
         <div
           key={index}
-          className={`rounded-xl bg-gradient-to-br ${stat.gradient} p-6 text-white shadow-lg`}
+          className={`rounded-xl bg-linear-to-br ${stat.gradient} p-6 text-white shadow-lg`}
         >
           <div className="flex items-center justify-between">
             <div>

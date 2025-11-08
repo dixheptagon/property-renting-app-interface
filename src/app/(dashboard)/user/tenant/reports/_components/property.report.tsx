@@ -121,7 +121,7 @@ export default function PropertyReport() {
                       </p>
                     </div>
                     <div
-                      className={`rounded-xl bg-gradient-to-br ${stat.color} p-3 shadow-md`}
+                      className={`rounded-xl bg-linear-to-br ${stat.color} p-3 shadow-md`}
                     >
                       <Icon className="h-6 w-6 text-white" />
                     </div>
@@ -136,7 +136,7 @@ export default function PropertyReport() {
 
           {/* Selected Date Info */}
           {date && (
-            <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 p-6 shadow-md">
+            <div className="rounded-xl border border-gray-200 bg-linear-to-br from-gray-50 to-gray-100 p-6 shadow-md">
               <h3 className="mb-2 text-sm font-medium text-gray-600">
                 Selected Date
               </h3>

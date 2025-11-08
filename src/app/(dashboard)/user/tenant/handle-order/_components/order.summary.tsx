@@ -173,7 +173,7 @@ export default function OrderSummary() {
           <Separator />
 
           {/* Total */}
-          <div className="space-y-2 rounded-xl border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
+          <div className="space-y-2 rounded-xl border-2 border-blue-200 bg-linear-to-br from-blue-50 to-indigo-50 p-4">
             <div className="flex items-center justify-between">
               <span className="text-lg font-bold text-gray-900">Total</span>
               <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-2xl font-bold text-transparent">

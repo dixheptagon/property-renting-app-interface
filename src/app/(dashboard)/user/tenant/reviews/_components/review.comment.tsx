@@ -61,7 +61,7 @@ export default function ReviewComments() {
       {reviewsData.map((review) => (
         <div
           key={review.id}
-          className="group overflow-hidden rounded-xl border-2 border-gray-200 bg-gradient-to-br from-white to-gray-50 p-4 shadow-md"
+          className="group overflow-hidden rounded-xl border-2 border-gray-200 bg-linear-to-br from-white to-gray-50 p-4 shadow-md"
         >
           <div className="space-y-4">
             {/* Header - User Info & Rating */}
@@ -69,7 +69,7 @@ export default function ReviewComments() {
               {/* User Info */}
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md ring-2 ring-blue-200 ring-offset-2">
+                  <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-blue-500 to-indigo-600 shadow-md ring-2 ring-blue-200 ring-offset-2">
                     <User className="h-7 w-7 text-white" />
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export default function ReviewComments() {
           </div>
 
           {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-blue-500 to-indigo-600 opacity-5 blur-3xl"></div>
+          <div className="absolute top-0 right-0 h-32 w-32 bg-linear-to-br from-blue-500 to-indigo-600 opacity-5 blur-3xl"></div>
         </div>
       ))}
     </section>

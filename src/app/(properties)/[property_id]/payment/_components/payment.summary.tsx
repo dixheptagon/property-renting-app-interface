@@ -118,7 +118,7 @@ export default function PaymentSummary() {
           </h3>
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-1">
-              <div className="rounded-lg border border-slate-200 bg-gradient-to-br from-slate-50 to-gray-50 p-4">
+              <div className="rounded-lg border border-slate-200 bg-linear-to-br from-slate-50 to-gray-50 p-4">
                 <div className="mb-2 flex items-center text-sm text-slate-700">
                   <FileText className="mr-2 h-4 w-4" />
                   <span className="font-medium">Order ID:</span>
@@ -128,7 +128,7 @@ export default function PaymentSummary() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-4">
+              <div className="rounded-lg border border-amber-200 bg-linear-to-br from-amber-50 to-orange-50 p-4">
                 <div className="mb-2 flex items-center text-sm text-amber-700">
                   <Clock className="mr-2 h-4 w-4" />
                   <span className="font-medium">Payment Deadline</span>
@@ -140,7 +140,7 @@ export default function PaymentSummary() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div className="rounded-lg border border-emerald-200 bg-gradient-to-br from-emerald-50 to-green-50 p-4">
+              <div className="rounded-lg border border-emerald-200 bg-linear-to-br from-emerald-50 to-green-50 p-4">
                 <div className="mb-2 flex items-center text-sm text-emerald-700">
                   <CreditCard className="mr-2 h-4 w-4" />
                   <span className="font-medium">Total Price</span>
@@ -150,7 +150,7 @@ export default function PaymentSummary() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
+              <div className="rounded-lg border border-blue-200 bg-linear-to-br from-blue-50 to-indigo-50 p-4">
                 <div className="mb-2 flex items-center text-sm text-blue-700">
                   <CreditCard className="mr-2 h-4 w-4" />
                   <span className="font-medium">Status</span>

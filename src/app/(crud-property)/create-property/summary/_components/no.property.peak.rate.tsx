@@ -23,7 +23,7 @@ export default function NoPropertPeakRates() {
 
       {/* Content */}
       <div className="relative z-10 flex items-center gap-4">
-        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400 to-orange-700 shadow-lg">
+        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-linear-to-br from-orange-400 to-orange-700 shadow-lg">
           <Flame className="h-7 w-7 text-white" strokeWidth={2} />
         </div>
 

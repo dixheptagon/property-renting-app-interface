@@ -41,7 +41,7 @@ export default function HandleOrderForm() {
             <User className="h-5 w-5 text-blue-500" />
             Guest Information
           </h3>
-          <div className="space-y-3 rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-6 shadow-sm">
+          <div className="space-y-3 rounded-xl border border-gray-200 bg-linear-to-br from-gray-50 to-white p-6 shadow-sm">
             <div className="flex items-center gap-3 rounded-lg bg-white p-3 transition-all">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
                 <User className="h-5 w-5 text-blue-600" />
@@ -77,7 +77,7 @@ export default function HandleOrderForm() {
             <ReceiptText className="text-blue-500" />
             Payment Information
           </h3>
-          <div className="relative space-y-3 rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-6 shadow-sm">
+          <div className="relative space-y-3 rounded-xl border border-gray-200 bg-linear-to-br from-gray-50 to-white p-6 shadow-sm">
             {/* Payment Method */}
             <div className="flex items-center gap-3 rounded-lg bg-white p-3 transition-all">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100">

@@ -42,7 +42,7 @@ export default function ConfirmedForm() {
         <div className="grid gap-6 md:grid-cols-2">
           {/* QR Code Section */}
           <div className="flex flex-col items-center space-y-4">
-            <div className="relative flex h-64 w-full items-center justify-center rounded-2xl bg-blue-500 bg-gradient-to-br p-6 shadow-lg transition-transform hover:scale-105">
+            <div className="relative flex h-64 w-full items-center justify-center rounded-2xl bg-blue-500 bg-linear-to-br p-6 shadow-lg transition-transform hover:scale-105">
               <QrCode className="h-32 w-32 text-white" />
               <div className="absolute inset-0 rounded-2xl bg-white opacity-10"></div>
             </div>
@@ -52,7 +52,7 @@ export default function ConfirmedForm() {
           </div>
 
           {/* Instructions Section */}
-          <div className="flex flex-col justify-center space-y-4 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
+          <div className="flex flex-col justify-center space-y-4 rounded-xl bg-linear-to-br from-blue-50 to-indigo-50 p-6">
             <h3 className="flex items-center gap-2 text-lg font-bold text-gray-900">
               Important Instructions
             </h3>
@@ -84,7 +84,7 @@ export default function ConfirmedForm() {
             <User className="h-5 w-5 text-blue-500" />
             Guest Information
           </h3>
-          <div className="space-y-3 rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-6 shadow-sm">
+          <div className="space-y-3 rounded-xl border border-gray-200 bg-linear-to-br from-gray-50 to-white p-6 shadow-sm">
             <div className="flex items-center gap-3 rounded-lg bg-white p-3 transition-all">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
                 <User className="h-5 w-5 text-blue-600" />

@@ -74,7 +74,7 @@ export default function BookingCard({ booking }: BookingCardProps) {
             {/* Property Details */}
             <div className="space-y-2">
               <div className="flex items-start gap-2">
-                <MapPin className="mt-1 h-5 w-5 flex-shrink-0 text-blue-600" />
+                <MapPin className="mt-1 h-5 w-5 shrink-0 text-blue-600" />
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 sm:text-xl">
                     {booking.room.property.name}

@@ -4,7 +4,7 @@ import { Clock, ArrowRight } from "lucide-react";
 export default function OrderHistoryCard() {
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:border-purple-400 hover:shadow-xl">
-      <div className="absolute top-0 right-0 h-24 w-24 bg-gradient-to-br from-purple-500/10 to-pink-500/10 blur-2xl"></div>
+      <div className="absolute top-0 right-0 h-24 w-24 bg-linear-to-br from-purple-500/10 to-pink-500/10 blur-2xl"></div>
 
       <div className="relative flex items-center justify-between p-6">
         <div className="flex items-center gap-4">
