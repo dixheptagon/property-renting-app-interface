@@ -27,8 +27,8 @@ const menuItems = [
   },
   {
     icon: Calendar,
-    label: "My Booking",
-    href: "/user/my-booking",
+    label: "My Bookings",
+    href: "/user/my-bookings",
     description: "Manage reservations",
   },
 ];

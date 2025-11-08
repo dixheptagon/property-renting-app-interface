@@ -22,13 +22,13 @@ const menuItems = [
   {
     icon: ShoppingBag,
     label: "Purchase List",
-    href: "/user",
+    href: "/user/purchase-list",
     description: "View your orders",
   },
   {
     icon: Calendar,
-    label: "My Booking",
-    href: "/user/my-booking",
+    label: "My Bookings",
+    href: "/user/my-bookings",
     description: "Manage reservations",
   },
 ];
