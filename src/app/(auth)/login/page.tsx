@@ -1,6 +1,5 @@
 import Image from "next/image";
-import StaysiaLogo from "../../../../public/logo/staysia-logo.png";
-import { CheckEmail } from "./_components/login";
+import { Login } from "./_components/login";
 
 export default function LoginPage() {
   return (
@@ -14,14 +13,7 @@ export default function LoginPage() {
       />
       <div className="absolute inset-0 bg-black/50"></div>
       <div className="w-full max-w-sm md:max-w-4xl">
-        <Image
-          src={StaysiaLogo}
-          alt="logo"
-          width={400}
-          height={400}
-          className="absolute bottom-4 left-1/2 w-36 -translate-x-1/2"
-        />
-        <CheckEmail />
+        <Login />
       </div>
     </div>
   );

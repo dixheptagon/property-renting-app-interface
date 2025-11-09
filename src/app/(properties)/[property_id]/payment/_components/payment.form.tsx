@@ -1,0 +1,130 @@
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { usePaymentStore } from "../../../_stores/payment.store";
+import { useEffect, useRef, useState } from "react";
+import { useSnap } from "../_hooks/use.snap";
+
+declare global {
+  interface Window {
+    snap: any;
+  }
+}
+
+export default function PaymentForm() {
+  const paymentState = usePaymentStore();
+  const snapToken = paymentState.orderResponse?.data.transaction_token.token;
+  const orderId = paymentState.orderResponse?.data.order.uid;
+
+  console.log("PaymentForm - paymentState:", paymentState);
+  console.log("PaymentForm - snapToken:", snapToken);
+  console.log("PaymentForm - orderId:", orderId);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [hasEmbedded, setHasEmbedded] = useState(false);
+
+  const { snapEmbed } = useSnap();
+
+  useEffect(() => {
+    console.log(
+      "PaymentForm - useEffect triggered, snapToken:",
+      snapToken,
+      "hasEmbedded:",
+      hasEmbedded
+    );
+    if (!snapToken || hasEmbedded) {
+      console.log(
+        "PaymentForm - No snapToken or already embedded, returning early"
+      );
+      return;
+    }
+    console.log("PaymentForm - Calling snapEmbed with token:", snapToken);
+    // Add a small delay to ensure snap is loaded
+    const timer = setTimeout(() => {
+      console.log("PaymentForm - Executing snapEmbed after delay");
+      snapEmbed(snapToken, "snap-container");
+      setHasEmbedded(true);
+    }, 2000); // Increased delay
+
+    return () => {
+      console.log("PaymentForm - Cleanup: clearing timer");
+      clearTimeout(timer);
+    };
+  }, [snapToken, snapEmbed, hasEmbedded]);
+
+  return (
+    <div>
+      {/* Snap Embed Midtrans */}
+      <div className="mx-auto max-w-4xl rounded-lg bg-white p-6 shadow">
+        <h1 className="mb-4 text-2xl font-bold">Complete Your Payment</h1>
+        <p className="mb-6">
+          Order ID: <strong>{orderId || "Loading..."}</strong>
+        </p>
+
+        {/* Loading indicator removed - now handled in the container */}
+
+        {/* Tempat embed Snap */}
+        <div
+          id="snap-container"
+          ref={containerRef}
+          className="relative w-full overflow-hidden rounded-lg border-2 border-dashed border-gray-300 bg-gray-50"
+          style={{ height: "600px" }}
+        >
+          {snapToken ? null : (
+            <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+              <div className="text-center">
+                <p>No payment token available</p>
+                <p className="text-sm">
+                  Please complete the booking process first
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button className="mt-4 w-full bg-red-600 p-6 text-lg font-semibold hover:bg-red-500">
+            Cancel Booking
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-semibold">
+              Order Cancellation
+            </DialogTitle>
+            <DialogDescription className="text-md flex justify-center font-semibold text-black">
+              Are you sure want to Cancel this order?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex w-full items-center justify-center gap-4">
+            <Button className="bg-green-600 p-6 hover:bg-green-500">
+              Yes, Cancel
+            </Button>
+            <DialogClose asChild>
+              <Button className="bg-red-600 p-6 hover:bg-red-500">
+                No, Keep
+              </Button>
+            </DialogClose>
+          </div>
+          <DialogFooter className="sm:justify-start">
+            <DialogClose asChild>
+              <Button type="button" variant="secondary">
+                Close
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}

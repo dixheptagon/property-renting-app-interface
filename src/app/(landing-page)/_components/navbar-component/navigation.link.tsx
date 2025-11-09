@@ -11,7 +11,7 @@ const publicNavLinks = [
 
 const authenticatedNavLinks = [
   { name: "My Account", href: "/user", icon: UserCircle },
-  { name: "My Bookings", href: "/user/my-booking", icon: Calendar },
+  { name: "My Bookings", href: "/user/my-bookings", icon: Calendar },
 ];
 
 const scrollToSection = (href: string) => {

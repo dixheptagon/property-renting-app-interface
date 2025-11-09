@@ -43,8 +43,8 @@ const data = {
   ],
   navMain: [
     {
-      title: "My Booking",
-      url: "/user/my-booking",
+      title: "My Bookings",
+      url: "/user/my-bookings",
       icon: ReceiptText,
       isActive: true,
     },

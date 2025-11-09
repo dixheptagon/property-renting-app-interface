@@ -65,7 +65,7 @@ export default function Page() {
         )}
 
         <div className="mx-auto max-w-5xl">
-          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-8 shadow-xl md:p-12">
+          <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 p-8 shadow-xl md:p-12">
             <div className="relative flex flex-col items-center justify-center space-y-4">
               {/* Icon container */}
               <div className="relative">

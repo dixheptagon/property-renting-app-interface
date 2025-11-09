@@ -23,7 +23,7 @@ export default function NoPropertyImages() {
 
       {/* Content */}
       <div className="relative z-10 space-y-4 text-center">
-        <div className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-red-400 to-red-700 shadow-lg">
+        <div className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-br from-red-400 to-red-700 shadow-lg">
           <ImageOff className="h-12 w-12 text-white" strokeWidth={1.5} />
         </div>
 

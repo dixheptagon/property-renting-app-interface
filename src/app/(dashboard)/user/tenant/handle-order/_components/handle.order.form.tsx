@@ -41,7 +41,7 @@ export default function HandleOrderForm() {
             <User className="h-5 w-5 text-blue-500" />
             Guest Information
           </h3>
-          <div className="space-y-3 rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-6 shadow-sm">
+          <div className="space-y-3 rounded-xl border border-gray-200 bg-linear-to-br from-gray-50 to-white p-6 shadow-sm">
             <div className="flex items-center gap-3 rounded-lg bg-white p-3 transition-all">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
                 <User className="h-5 w-5 text-blue-600" />
@@ -77,7 +77,7 @@ export default function HandleOrderForm() {
             <ReceiptText className="text-blue-500" />
             Payment Information
           </h3>
-          <div className="relative space-y-3 rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-6 shadow-sm">
+          <div className="relative space-y-3 rounded-xl border border-gray-200 bg-linear-to-br from-gray-50 to-white p-6 shadow-sm">
             {/* Payment Method */}
             <div className="flex items-center gap-3 rounded-lg bg-white p-3 transition-all">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100">
@@ -167,114 +167,6 @@ export default function HandleOrderForm() {
             <ActionButtons status={booking.status} />
           </div>
         </section>
-
-        {/* <section className="rounded-xl bg-gradient-to-r p-6">
-          <div className="text-center">
-            <h3 className="mb-2 text-lg font-bold text-gray-900">
-              Make sure to review everything carefully before proceeding order!
-            </h3>
-            <p className="mb-6 text-sm text-gray-600">
-              Verify everything — changes may not be possible later.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="flex min-w-35 items-center gap-2 bg-green-600 p-6 transition-all hover:bg-green-700 hover:shadow-lg">
-                    <CircleCheckBig className="h-5 w-5" />
-                    Confirmed Order
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Confirm Order</DialogTitle>
-                    <DialogDescription>
-                      Are you sure you want to confirm this order?
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex items-center justify-center gap-3">
-                    <Button className="flex min-w-35 items-center gap-2 bg-green-600 p-6 transition-all hover:bg-green-700 hover:shadow-lg">
-                      <CircleCheckBig className="h-5 w-5" />
-                      Confirmed Order
-                    </Button>
-                    <DialogClose asChild>
-                      <Button variant="outline" className="p-6">
-                        Cancel
-                      </Button>
-                    </DialogClose>
-                  </div>
-                </DialogContent>
-              </Dialog>
-
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="flex min-w-35 items-center gap-2 bg-yellow-600 p-6 transition-all hover:bg-yellow-700 hover:shadow-lg">
-                    <TriangleAlert className="h-5 w-5" />
-                    Reject Order
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Reject Order</DialogTitle>
-                    <DialogDescription>
-                      Are you sure you want to reject this order?
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex items-center justify-center gap-3">
-                    <Button className="flex min-w-35 items-center gap-2 bg-yellow-600 p-6 transition-all hover:bg-yellow-700 hover:shadow-lg">
-                      <TriangleAlert className="h-5 w-5" />
-                      Reject Order
-                    </Button>
-                    <DialogClose asChild>
-                      <Button variant="outline" className="p-6">
-                        Cancel
-                      </Button>
-                    </DialogClose>
-                  </div>
-                </DialogContent>
-              </Dialog>
-
-              <Dialog>
-                <form>
-                  <DialogTrigger asChild>
-                    <Button className="flex items-center gap-2 bg-red-600 p-6 transition-all hover:bg-red-700 hover:shadow-lg">
-                      <CircleX className="h-5 w-5" />
-                      Cancel Order
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Cancel Order</DialogTitle>
-                      <DialogDescription>
-                        Are you sure you want to cancel this order?
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-3">
-                      <Label htmlFor="name-1">Cancellation Reason</Label>
-                      <Input
-                        id="cancellation-reason"
-                        name="cancellation-reason"
-                        type="text"
-                        placeholder="Enter cancellation reason"
-                        className="py-6"
-                      />
-                    </div>
-                    <div className="flex items-center justify-center gap-3">
-                      <Button className="flex items-center gap-2 bg-red-600 p-6 transition-all hover:bg-red-700 hover:shadow-lg">
-                        <CircleX className="h-5 w-5" />
-                        Cancel Order
-                      </Button>
-                      <DialogClose asChild>
-                        <Button variant="outline" className="p-6">
-                          No
-                        </Button>
-                      </DialogClose>
-                    </div>
-                  </DialogContent>
-                </form>
-              </Dialog>
-            </div>
-          </div>
-        </section> */}
       </div>
     </div>
   );

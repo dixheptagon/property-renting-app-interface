@@ -198,7 +198,7 @@ export default function OrderList() {
 
                     {/* Customer */}
                     <div className="flex items-center gap-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-purple-500 text-xs font-semibold text-white shadow-md">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br from-blue-400 to-purple-500 text-xs font-semibold text-white shadow-md">
                         {order.customer.charAt(0)}
                       </div>
                       <span className="text-sm font-medium text-gray-700">

@@ -34,8 +34,6 @@ const getCategoryIcon = (category: string) => {
 };
 
 export const PropertyCard = ({ property }: { property: Property }) => {
-  console.log(property);
-
   return (
     <Link href={`/${property.uid}/property-details`}>
       <article className="group relative overflow-hidden transition-all duration-300">
@@ -56,7 +54,7 @@ export const PropertyCard = ({ property }: { property: Property }) => {
           )}
 
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
           {/* Category Badge */}
           <div className="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-gray-800 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:scale-105">

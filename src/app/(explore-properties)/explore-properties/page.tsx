@@ -21,7 +21,13 @@ export default function Page() {
   const page = parseInt(searchParams.get("page") || "1");
 
   // Use TanStack Query for data fetching
-  const { data: properties, isLoading, isError, error } = usePropertyList();
+  const {
+    data: properties,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = usePropertyList();
 
   console.log(properties);
 
@@ -75,6 +81,12 @@ export default function Page() {
                 <p className="text-sm text-gray-600">
                   {error?.message || "Something went wrong"}
                 </p>
+                <button
+                  onClick={() => refetch()}
+                  className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                >
+                  Retry
+                </button>
               </div>
             </div>
           ) : propertiesData.length === 0 ? (

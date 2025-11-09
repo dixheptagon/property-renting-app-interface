@@ -15,10 +15,10 @@ export default function ButtonSummaryNavigation() {
         <div className="fixed right-8 bottom-35 z-50">
           <Link
             href="/create-property/summary"
-            className="group relative block rounded-full bg-gradient-to-br from-blue-400 to-blue-800 p-3 shadow-2xl transition-all duration-300 hover:scale-110 hover:shadow-blue-500/25"
+            className="group relative block rounded-full bg-linear-to-br from-blue-400 to-blue-800 p-3 shadow-2xl transition-all duration-300 hover:scale-110 hover:shadow-blue-500/25"
           >
             {/* Ping animation background */}
-            <div className="absolute inset-0 animate-ping rounded-full bg-gradient-to-br from-blue-400 to-blue-800 opacity-25"></div>
+            <div className="absolute inset-0 animate-ping rounded-full bg-linear-to-br from-blue-400 to-blue-800 opacity-25"></div>
 
             {/* Main button */}
             <div className="relative flex items-center justify-center">

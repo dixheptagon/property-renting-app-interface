@@ -7,7 +7,7 @@ export default function ButtonPeakPrice() {
     >
       {/* Decorative background gradient on hover */}
       <div
-        className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 opacity-0 transition-opacity duration-300 group-hover:opacity-10`}
+        className={`absolute inset-0 rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 opacity-0 transition-opacity duration-300 group-hover:opacity-10`}
       ></div>
 
       {/* Icon container */}

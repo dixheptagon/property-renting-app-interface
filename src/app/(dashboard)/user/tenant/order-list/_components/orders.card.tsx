@@ -18,7 +18,7 @@ export default function OrdersCard({
       className={cn("group relative overflow-hidden rounded-xl p-5", className)}
     >
       {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="absolute inset-0 bg-linear-to-br from-white/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       <div className="relative flex flex-col gap-4">
         {/* Header with icon */}

@@ -80,7 +80,7 @@ export default function Page() {
         </div>
 
         <div className="mx-auto max-w-4xl">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-8 shadow-xl">
+          <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 p-8 shadow-xl">
             <div className="relative space-y-4">
               {/* Icon header */}
               <div className="flex justify-center">
