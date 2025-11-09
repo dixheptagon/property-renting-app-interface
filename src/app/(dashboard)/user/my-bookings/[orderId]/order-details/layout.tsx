@@ -1,3 +1,5 @@
+import OrderDetailsNavbar from "./_components/order.details.navbar";
+
 export default function RootLayout({
   children,
 }: {
@@ -5,7 +7,10 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-gray-100">{children}</div>
+      <div className="flex min-h-screen flex-col bg-gray-100">
+        <OrderDetailsNavbar />
+        {children}
+      </div>
     </>
   );
 }

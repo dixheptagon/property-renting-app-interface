@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { QRCodeCanvas } from "qrcode.react";
 import {
   CheckCircle,
   Mail,
@@ -8,43 +9,77 @@ import {
   MessageCircle,
   Headphones,
 } from "lucide-react";
+import StatusBanner from "./form-components/status.banner";
+import StatusLabel from "./form-components/status.label";
+import { OrderDetailsFormProps } from "../_types/order.details.type";
+import Link from "next/link";
 
-export default function ConfirmedForm() {
+export default function OrderDetailsForm({
+  bookingData,
+}: OrderDetailsFormProps) {
+  const booking = bookingData || {
+    status: "pending_payment",
+    uid: "[ORDER-1XXXX]",
+    fullname: "[GUEST NAME]",
+    email: "[GUEST EMAIL]",
+    phone_number: "[GUEST PHONE]",
+  };
+
+  const enableQrCode =
+    booking.status === "processing" || booking.status === "completed";
+
   return (
     <div className="relative mx-auto max-w-4xl">
       {/* Success Banner */}
-      <div className="mb-6 hidden items-center gap-3 rounded-xl bg-green-500 bg-gradient-to-r p-4 text-white shadow-lg md:flex">
-        <CheckCircle className="h-8 w-8 flex-shrink-0" />
-        <div>
-          <h1 className="text-2xl font-bold">Booking Confirmed!</h1>
-          <p className="text-sm text-green-50">
-            Your reservation has been successfully processed
-          </p>
-        </div>
-      </div>
+      <StatusBanner status={booking.status} />
 
       {/* Main Card */}
-      <div className="space-y-6 rounded-2xl border border-gray-200 bg-white p-8 shadow-lg">
+      <div className="space-y-6 rounded-2xl border border-gray-200 bg-white p-8 shadow-lg lg:pb-15">
         {/* Order ID */}
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div>
             <p className="text-sm text-gray-500">Booking ID</p>
-            <h2 className="text-2xl font-bold text-gray-900">[ORDER-1XXXX]</h2>
+            <h2 className="text-2xl font-bold text-gray-900">{booking.uid}</h2>
           </div>
-          <div className="rounded-full bg-green-100 px-4 py-2">
-            <span className="text-sm font-semibold text-green-700">
-              Confirmed
-            </span>
-          </div>
+          <StatusLabel status={booking.status} />
         </div>
 
         {/* QR Code and Instructions */}
         <div className="grid gap-6 md:grid-cols-2">
           {/* QR Code Section */}
           <div className="flex flex-col items-center space-y-4">
-            <div className="relative flex h-64 w-full items-center justify-center rounded-2xl bg-blue-500 bg-linear-to-br p-6 shadow-lg transition-transform hover:scale-105">
-              <QrCode className="h-32 w-32 text-white" />
-              <div className="absolute inset-0 rounded-2xl bg-white opacity-10"></div>
+            <div className="relative flex h-64 w-full items-center rounded-2xl bg-blue-600 bg-linear-to-br p-6 shadow-lg transition-transform hover:scale-105">
+              {/* QR Code */}
+
+              {bookingData?.uid && enableQrCode ? (
+                <div className="mx-auto rounded-md bg-white p-2">
+                  <QRCodeCanvas
+                    value={bookingData.uid}
+                    size={200}
+                    title={bookingData.uid}
+                    bgColor="#ffffff"
+                    fgColor="#000000"
+                    level="H"
+                    includeMargin={true}
+                    imageSettings={{
+                      src: "/logo/staysia.icon.png",
+                      x: undefined,
+                      y: undefined,
+                      height: 24,
+                      width: 24,
+                      opacity: 1,
+                      excavate: true,
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="flex w-full flex-col items-center justify-center text-white">
+                  <QrCode className="h-32 w-32" />
+                  <p className="max-w-50 text-center text-sm font-semibold">
+                    You'll receive your QR code right after payment!
+                  </p>
+                </div>
+              )}
             </div>
             <p className="text-center text-sm text-gray-600">
               Save or screenshot this QR code for check-in
@@ -58,7 +93,7 @@ export default function ConfirmedForm() {
             </h3>
             <ol className="space-y-3 text-sm text-gray-700">
               <li className="flex gap-3">
-                <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-500 text-xs font-bold text-white">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500 text-xs font-bold text-white">
                   1
                 </span>
                 <span className="leading-relaxed">
@@ -67,7 +102,7 @@ export default function ConfirmedForm() {
                 </span>
               </li>
               <li className="flex gap-3">
-                <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-500 text-xs font-bold text-white">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500 text-xs font-bold text-white">
                   2
                 </span>
                 <span className="leading-relaxed">
@@ -91,7 +126,9 @@ export default function ConfirmedForm() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Full Name</p>
-                <p className="font-semibold text-gray-900">[GUEST NAME]</p>
+                <p className="font-semibold text-gray-900">
+                  {booking.fullname}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-lg bg-white p-3 transition-all">
@@ -100,7 +137,7 @@ export default function ConfirmedForm() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Email Address</p>
-                <p className="font-semibold text-gray-900">[GUEST EMAIL]</p>
+                <p className="font-semibold text-gray-900">{booking.email}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-lg bg-white p-3 transition-all">
@@ -109,14 +146,16 @@ export default function ConfirmedForm() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Phone Number</p>
-                <p className="font-semibold text-gray-900">[GUEST PHONE]</p>
+                <p className="font-semibold text-gray-900">
+                  {booking.phone_number}
+                </p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Support Section */}
-        <div className="rounded-xl bg-gradient-to-r p-6">
+        <div className="rounded-xl bg-linear-to-r p-6">
           <div className="text-center">
             <h3 className="mb-2 text-lg font-bold text-gray-900">
               Have questions? We're here to help!
@@ -125,14 +164,19 @@ export default function ConfirmedForm() {
               Our support team is available 24/7 to assist you
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button className="flex items-center gap-2 bg-blue-600 px-6 py-6 transition-all hover:bg-blue-700 hover:shadow-lg">
+              <Button
+                disabled
+                className="flex items-center gap-2 bg-blue-600 px-6 py-6 transition-all hover:bg-blue-700 hover:shadow-lg"
+              >
                 <Headphones className="h-5 w-5" />
                 Contact Customer Service
               </Button>
-              <Button className="flex items-center gap-2 bg-purple-600 px-6 py-6 transition-all hover:bg-purple-700 hover:shadow-lg">
-                <MessageCircle className="h-5 w-5" />
-                Contact Tenant
-              </Button>
+              <Link href={`mailto:${bookingData?.room.property.tenant_email}`}>
+                <Button className="flex items-center gap-2 bg-purple-600 px-6 py-6 transition-all hover:bg-purple-700 hover:shadow-lg">
+                  <MessageCircle className="h-5 w-5" />
+                  Contact Tenant
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

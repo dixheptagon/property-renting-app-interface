@@ -15,7 +15,7 @@ export const ReservationStep: React.FC<ReservationStepProps> = ({
   const steps: ReservationStepData[] = [
     { id: 1, label: "Booking" },
     { id: 2, label: "Pay" },
-    { id: 3, label: "Confirmed" },
+    { id: 3, label: "View order" },
   ];
 
   // Find the current active step
