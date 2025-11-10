@@ -7,6 +7,7 @@ import {
   OrderListResponse,
   OrderListParams,
   OrderStatus,
+  OrderCategory,
 } from "../_types/order.status";
 
 export const useOrderList = () => {
@@ -16,6 +17,7 @@ export const useOrderList = () => {
   const page = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 20;
   const status = searchParams.getAll("status") as OrderStatus[];
+  const category = searchParams.getAll("category") as OrderCategory[];
   const sort_by = searchParams.get("sort_by") || "created_at";
   const sort_dir = (searchParams.get("sort_dir") as "asc" | "desc") || "desc";
   const date_from = searchParams.get("date_from") || undefined;
@@ -25,6 +27,7 @@ export const useOrderList = () => {
     page,
     limit,
     status: status.length > 0 ? status : undefined,
+    category: category.length > 0 ? category : undefined,
     sort_by,
     sort_dir,
     date_from,
@@ -38,6 +41,7 @@ export const useOrderList = () => {
         page,
         limit,
         status: status.length > 0 ? status : undefined,
+        category: category.length > 0 ? category : undefined,
         sort_by: sort_by as OrderListParams["sort_by"],
         sort_dir,
         date_from,
@@ -45,7 +49,7 @@ export const useOrderList = () => {
       };
 
       const response = await axiosInstance.get<OrderListResponse>(
-        "/tenant/get-order-list", // Update this endpoint when available
+        "/api/tenant/get-order-list", // Update this endpoint when available
         { params }
       );
       return response.data;

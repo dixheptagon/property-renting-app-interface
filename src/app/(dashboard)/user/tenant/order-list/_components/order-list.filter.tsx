@@ -13,9 +13,12 @@ import {
 } from "@/components/ui/select";
 import { ArrowDownNarrowWide } from "lucide-react";
 import { OrderStatus } from "../_types/order.status";
-import FilterButton from "./filter-components/filter.button";
-import { useState } from "react";
+import FilterButton, {
+  FilterButtonRef,
+} from "./filter-components/filter.button";
+import { useState, useRef } from "react";
 import ActiveFilters from "./filter-components/active.filter";
+import { useOrderSearchParams } from "../_utils/search.params";
 
 interface OrderListFiltersProps {
   selectedStatus: OrderStatus[];
@@ -27,33 +30,49 @@ interface OrderListFiltersProps {
 }
 
 export default function OrderListFilters({
+  selectedStatus,
   onToggleStatus,
   onClearFilters,
   onSortBy,
   currentSortBy = "created_at",
   currentSortDir = "desc",
 }: OrderListFiltersProps) {
-  const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
+  const { setCategoryFilter } = useOrderSearchParams();
+
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+
+  const filterButtonRef = useRef<FilterButtonRef>(null);
 
   return (
     <>
       <section className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-3">
           <FilterButton
+            ref={filterButtonRef}
             selectedStatus={selectedStatus}
-            setSelectedStatus={setSelectedStatus}
+            setSelectedStatus={(statuses) => {
+              // Status is handled by parent component via props
+            }}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={(categories) => {
+              setSelectedCategory(categories);
+              setCategoryFilter(categories as any);
+            }}
           />
 
-          {/* {selectedStatuses.length > 0 && (
+          {(selectedStatus.length > 0 || selectedCategory.length > 0) && (
             <Button
-              onClick={onClearFilters}
+              onClick={() => {
+                filterButtonRef.current?.clearAll();
+                onClearFilters();
+              }}
               variant="outline"
               className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
             >
               <X className="mr-2 h-4 w-4" />
               Clear All
             </Button>
-          )} */}
+          )}
         </div>
 
         <Select
@@ -91,7 +110,9 @@ export default function OrderListFilters({
       {/* Filters  Shows when there is at least one filter */}
       <ActiveFilters
         selectedStatus={selectedStatus}
-        setSelectedStatus={setSelectedStatus}
+        setSelectedStatus={() => {}}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
       />
     </>
   );

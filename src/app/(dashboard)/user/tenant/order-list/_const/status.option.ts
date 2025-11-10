@@ -1,35 +1,41 @@
+import { CheckCheck, CheckCircle, Clock, Package, XCircle } from "lucide-react";
 import { StatusOption } from "../_types/order.status";
 
 const statusOptions: StatusOption[] = [
   {
     value: "pending_payment",
     label: "Pending",
-    style: { badgeColor: "rgb(251, 191, 36)" }, // Amber-500
-    bg: "bg-amber-300",
+    icon: Clock,
+    style: { badgeColor: "oklch(79.5% 0.184 86.047)" }, // Yellow-500
+    bg: "bg-yellow-300",
   },
   {
     value: "processing",
     label: "Processing",
-    style: { badgeColor: "rgb(59, 130, 246)" }, // Blue-500
-    bg: "bg-blue-300",
+    icon: Package,
+    style: { badgeColor: "oklch(66.6% 0.179 58.318)" }, // Amber-500
+    bg: "bg-amber-400",
   },
   {
     value: "confirmed",
     label: "Confirmed",
-    style: { badgeColor: "rgb(147, 51, 234)" }, // Purple-500
-    bg: "bg-purple-300",
+    icon: CheckCircle,
+    style: { badgeColor: "oklch(87.1% 0.15 154.449)" }, // Green-500
+    bg: "bg-green-300",
   },
   {
     value: "cancelled",
     label: "Cancelled",
-    style: { badgeColor: "rgb(239, 68, 68)" }, // Red-500
-    bg: "bg-red-300",
+    icon: XCircle,
+    style: { badgeColor: "oklch(80.8% 0.114 19.571)" }, // Red-500
+    bg: "bg-red-500",
   },
   {
     value: "completed",
     label: "Completed",
-    style: { badgeColor: "rgb(34, 197, 94)" }, // Green-500
-    bg: "bg-green-300",
+    icon: CheckCheck,
+    style: { badgeColor: "oklch(80.9% 0.105 251.813)" }, // Blue-500
+    bg: "bg-blue-300",
   },
 ];
 

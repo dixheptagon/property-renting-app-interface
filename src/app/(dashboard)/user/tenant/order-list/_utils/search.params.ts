@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { OrderStatus } from "../_types/order.status";
+import { OrderCategory, OrderStatus } from "../_types/order.status";
 
 export const useOrderSearchParams = () => {
   const router = useRouter();
@@ -53,6 +53,10 @@ export const useOrderSearchParams = () => {
     setStatusFilter(newStatuses);
   };
 
+  const setCategoryFilter = (categories: OrderCategory[]) => {
+    updateSearchParams({ category: categories, page: 1 });
+  };
+
   const clearStatusFilters = () => {
     updateSearchParams({ status: null, page: 1 });
   };
@@ -76,6 +80,7 @@ export const useOrderSearchParams = () => {
   const clearAllFilters = () => {
     updateSearchParams({
       status: null,
+      category: null,
       date_from: null,
       date_to: null,
       sort_by: null,
@@ -91,6 +96,7 @@ export const useOrderSearchParams = () => {
     setLimit,
     setStatusFilter,
     toggleStatus,
+    setCategoryFilter,
     clearStatusFilters,
     setSortBy,
     setDateRange,

@@ -1,22 +1,35 @@
-"use client";
-
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { DateRangePicker } from "@/app/(dashboard)/user/_components/ui/date.range.picker";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { CalendarOff } from "lucide-react";
+import { DateRangePicker } from "./filter-components/date.range.picker";
 import { useOrderSearchParams } from "../_utils/search.params";
+import { useState } from "react";
+import { DateRange } from "react-day-picker";
 
-interface OrderListHeaderProps {
+interface PageHeaderProps {
+  title?: string;
   onDateRangeChange?: (dateFrom: string, dateTo: string) => void;
 }
 
-export default function OrderListHeader({
+export default function PageHeader({
+  title = "Purchase List",
   onDateRangeChange,
-}: OrderListHeaderProps) {
-  const { setDateRange } = useOrderSearchParams();
+}: PageHeaderProps) {
+  const { setDateRange: setSearchDateRange } = useOrderSearchParams();
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
 
   const handleDateRangeChange = (dateFrom: string, dateTo: string) => {
-    setDateRange(dateFrom, dateTo);
-    onDateRangeChange?.(dateFrom, dateTo);
+    if (onDateRangeChange) {
+      onDateRangeChange(dateFrom, dateTo);
+    } else {
+      setSearchDateRange(dateFrom, dateTo);
+    }
+  };
+
+  const handleClearDateRange = () => {
+    setSearchDateRange("", "");
+    setDateRange(undefined);
   };
 
   return (
@@ -27,9 +40,29 @@ export default function OrderListHeader({
           orientation="vertical"
           className="mr-2 data-[orientation=vertical]:h-4"
         />
+
         <div className="flex w-full items-center justify-between">
-          <span className="text-sm font-semibold sm:text-base">Order List</span>
-          <DateRangePicker />
+          <span className="text-sm font-semibold sm:text-base">{title}</span>
+
+          <div className="flex items-center gap-3">
+            {/* Clear Date Range */}
+            {dateRange && (
+              <Button
+                variant="outline"
+                className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                onClick={handleClearDateRange}
+              >
+                <CalendarOff />
+                Clear Date Range
+              </Button>
+            )}
+
+            <DateRangePicker
+              dateRange={dateRange}
+              setDateRange={setDateRange}
+              onDateRangeChange={handleDateRangeChange}
+            />
+          </div>
         </div>
       </div>
     </header>

@@ -6,11 +6,14 @@ export type OrderStatus =
   | "cancelled"
   | "completed";
 
+export type OrderCategory = "apartment" | "house" | "hotel" | "room" | "villa";
+
 export type SortOrder = "asc" | "desc";
 
 export interface StatusOption {
   value: OrderStatus;
   label: string;
+  icon?: React.ComponentType<{ className?: string }>;
   style?: {
     badgeColor: string;
   };
@@ -18,13 +21,24 @@ export interface StatusOption {
 }
 
 export interface Order {
-  id: string;
-  propertyName: string;
-  roomType: string;
+  orderId: string;
   status: OrderStatus;
-  customer: string;
-  expiredAt: string;
-  statusColor: string;
+  check_in_date: string;
+  check_out_date: string;
+  total_price: number;
+  property: {
+    name: string;
+    address: string;
+    city: string;
+  };
+  room: {
+    name: string;
+    description: string;
+  };
+  user: {
+    name: string;
+    email: string;
+  };
 }
 
 // API Response Types
@@ -47,7 +61,8 @@ export interface OrderListParams {
   page?: number;
   limit?: number;
   status?: OrderStatus[];
-  sort_by?: "created_at" | "expired_at" | "property" | "customer";
+  category?: OrderCategory[];
+  sort_by?: "created_at" | "check_in_date" | "total_price";
   sort_dir?: "asc" | "desc";
   date_from?: string;
   date_to?: string;

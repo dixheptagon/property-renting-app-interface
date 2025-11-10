@@ -13,16 +13,29 @@ import { SlidersHorizontal } from "lucide-react";
 import statusOptions from "../../_const/status.option";
 import { Label } from "@/components/ui/label";
 import { MultiSelect, MultiSelectRef } from "@/components/ui/multi-select";
-import { useRef, useState } from "react";
+import { useRef, useState, forwardRef, useImperativeHandle } from "react";
 import { IFilterButton } from "../../_types/filter.type";
-import PropertyCategoryOptions from "../../_const/property.category.option.dummy";
+import PropertyCategoryOptions from "../../_const/property.category.option";
 
-export default function FilterButton({
-  selectedStatus,
-  setSelectedStatus,
-}: IFilterButton) {
+export interface FilterButtonRef {
+  clearAll: () => void;
+}
+
+export default forwardRef<FilterButtonRef, IFilterButton>(function FilterButton(
+  { selectedStatus, setSelectedStatus, selectedCategory, setSelectedCategory },
+  ref
+) {
   const statusSelectRef = useRef<MultiSelectRef>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+  const categorySelectRef = useRef<MultiSelectRef>(null);
+
+  useImperativeHandle(ref, () => ({
+    clearAll: () => {
+      statusSelectRef.current?.clear();
+      categorySelectRef.current?.clear();
+      setSelectedStatus([]);
+      setSelectedCategory([]);
+    },
+  }));
 
   return (
     <Dialog>
@@ -63,11 +76,12 @@ export default function FilterButton({
           <div>
             <Label className="text-md mb-2">Property Category</Label>
             <MultiSelect
+              ref={categorySelectRef}
               options={PropertyCategoryOptions}
               value={selectedCategory}
               onValueChange={setSelectedCategory}
               defaultValue={[]} // atau bisa langsung ["pending_payment"] kalau mau default
-              placeholder="Select payment status"
+              placeholder="Select property category"
               className="w-full"
               variant={"secondary"}
               maxCount={5}
@@ -79,7 +93,12 @@ export default function FilterButton({
             type="button"
             variant="outline"
             className="w-full sm:w-auto"
-            onClick={() => setSelectedStatus([])}
+            onClick={() => {
+              statusSelectRef.current?.clear();
+              categorySelectRef.current?.clear();
+              setSelectedStatus([]);
+              setSelectedCategory([]);
+            }}
           >
             Clear All
           </Button>
@@ -95,4 +114,4 @@ export default function FilterButton({
       </DialogContent>
     </Dialog>
   );
-}
+});

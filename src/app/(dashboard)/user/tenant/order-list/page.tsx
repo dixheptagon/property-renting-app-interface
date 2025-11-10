@@ -1,6 +1,7 @@
 "use client";
 
 import { useOrderSearchParams } from "./_utils/search.params";
+import { useOrderList } from "./_hooks/use.order.list";
 import OrderListHeader from "./_components/page.header";
 import OrderListFilters from "./_components/order-list.filter";
 import OrderListStats from "./_components/stats.section";
@@ -15,49 +16,16 @@ export default function OrderList() {
     setPage,
     setLimit,
     toggleStatus,
+    setCategoryFilter,
     clearStatusFilters,
     setSortBy,
     setDateRange,
     clearAllFilters,
   } = useOrderSearchParams();
 
-  // Mock data - in real implementation this would come from a hook
-  const orders = [
-    {
-      id: "#10001",
-      propertyName: "Sunset Beach Villa",
-      roomType: "Deluxe Ocean View",
-      status: "confirmed" as const,
-      customer: "John Doe",
-      expiredAt: "2025-10-25 14:30",
-      statusColor: "bg-green-500",
-    },
-    {
-      id: "#10002",
-      propertyName: "Mountain Paradise Resort",
-      roomType: "Family Suite",
-      status: "pending" as const,
-      customer: "Jane Smith",
-      expiredAt: "Nov 20, 2025 / Nov 22, 2025",
-      statusColor: "bg-yellow-500",
-    },
-    {
-      id: "#10003",
-      propertyName: "Urban Loft Apartment",
-      roomType: "Studio Premium",
-      status: "processing" as const,
-      customer: "Mike Johnson",
-      expiredAt: "2025-10-22 16:45",
-      statusColor: "bg-blue-500",
-    },
-  ];
+  const { orders, loading, filters } = useOrderList();
 
-  // Mock filters - in real implementation this would come from URL params
-  const filters = {
-    status: [] as any[],
-    sort_by: "created_at",
-    sort_dir: "desc" as const,
-  };
+  console.log(orders);
 
   return (
     <SidebarProvider>
@@ -66,9 +34,11 @@ export default function OrderList() {
         <OrderListHeader />
         <div className="min-h-screen bg-white px-4 py-4">
           <OrderListFilters
-            selectedStatus={filters.status}
-            onToggleStatus={(status) => toggleStatus(status, filters.status)}
-            onClearFilters={clearStatusFilters}
+            selectedStatus={filters.status || []}
+            onToggleStatus={(status) =>
+              toggleStatus(status, filters.status || [])
+            }
+            onClearFilters={clearAllFilters}
             onSortBy={setSortBy}
             currentSortBy={filters.sort_by}
             currentSortDir={filters.sort_dir}

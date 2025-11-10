@@ -66,7 +66,7 @@ export function DateRangePicker({
           numberOfMonths={2}
           min={3}
           disabled={{
-            after: today,
+            before: today,
           }}
         />
         <div className="text-muted-foreground text-center text-xs">
