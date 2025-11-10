@@ -30,15 +30,15 @@ interface OrderListFiltersProps {
 }
 
 export default function OrderListFilters({
-  selectedStatus,
   onToggleStatus,
   onClearFilters,
   onSortBy,
   currentSortBy = "created_at",
   currentSortDir = "desc",
 }: OrderListFiltersProps) {
-  const { setCategoryFilter } = useOrderSearchParams();
+  const { setCategoryFilter, setStatusFilter } = useOrderSearchParams();
 
+  const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
 
   const filterButtonRef = useRef<FilterButtonRef>(null);
@@ -50,8 +50,9 @@ export default function OrderListFilters({
           <FilterButton
             ref={filterButtonRef}
             selectedStatus={selectedStatus}
-            setSelectedStatus={(statuses) => {
-              // Status is handled by parent component via props
+            setSelectedStatus={(status) => {
+              setSelectedStatus(status);
+              setStatusFilter(status as any);
             }}
             selectedCategory={selectedCategory}
             setSelectedCategory={(categories) => {

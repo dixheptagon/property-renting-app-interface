@@ -9,13 +9,14 @@ import {
   OrderStatus,
   OrderCategory,
 } from "../_types/order.status";
+import { AxiosError } from "axios";
 
 export const useOrderList = () => {
   const searchParams = useSearchParams();
 
   // Parse URL parameters
   const page = Number(searchParams.get("page")) || 1;
-  const limit = Number(searchParams.get("limit")) || 20;
+  const limit = Number(searchParams.get("limit")) || 10;
   const status = searchParams.getAll("status") as OrderStatus[];
   const category = searchParams.getAll("category") as OrderCategory[];
   const sort_by = searchParams.get("sort_by") || "created_at";
@@ -52,6 +53,8 @@ export const useOrderList = () => {
         "/api/tenant/get-order-list", // Update this endpoint when available
         { params }
       );
+
+      console.log("response", response.data);
       return response.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -65,7 +68,8 @@ export const useOrderList = () => {
     currentPage: page,
     limit,
     loading: query.isLoading,
-    error: query.error,
+    error: query.error as AxiosError,
     filters,
+    refetch: query.refetch,
   };
 };
