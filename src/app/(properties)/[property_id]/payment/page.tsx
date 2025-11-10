@@ -22,10 +22,7 @@ export default function Page() {
           </Suspense>
           <div className="mt-4">
             <PaymentProofUpload
-              bookingId={
-                paymentState.orderResponse?.data.order.uid ||
-                "ORDER-21e2edwaw221"
-              }
+              bookingId={paymentState.orderResponse?.data.order.uid || "N/A"}
               onUploadSuccess={() => {
                 // Redirect atau action setelah sukses
                 router.push("/payment-success");

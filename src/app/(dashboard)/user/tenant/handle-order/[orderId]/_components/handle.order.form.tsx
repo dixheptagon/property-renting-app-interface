@@ -1,3 +1,4 @@
+"use client";
 import {
   Mail,
   Phone,
@@ -8,16 +9,43 @@ import {
   ScanBarcode,
   Clock,
   ClockAlert,
+  ImageOff,
+  XCircle,
 } from "lucide-react";
 import Image from "next/image";
 import StatusBanner from "./form-components/status.banner";
 import StatusLabel from "./form-components/status.label";
 import { ActionButtons } from "./form-components/action.buttons";
+import { useGetBooking } from "../_hooks/use.order.details";
+import LoadingData from "@/components/ui/loading.data";
+import { formatDate } from "../_utils/format.date";
+import { formatDateTime } from "../_utils/format.date.time";
 
-export default function HandleOrderForm() {
-  const booking = {
-    status: "processing",
-  };
+interface HandleOrderFormProps {
+  orderId: string;
+}
+
+export default function HandleOrderForm({ orderId }: HandleOrderFormProps) {
+  const { data: bookingResponse, isLoading, error } = useGetBooking(orderId);
+
+  console.log(bookingResponse);
+
+  if (isLoading) {
+    return <LoadingData message="Loading order details..." />;
+  }
+
+  if (error || !bookingResponse?.data) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-center">
+          <p className="text-red-500">Failed to load booking details</p>
+          <p className="text-sm text-gray-500">{error?.message}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const booking = bookingResponse.data;
 
   return (
     <div className="relative mx-auto max-w-4xl">
@@ -30,10 +58,29 @@ export default function HandleOrderForm() {
         <div className="flex items-center justify-between border-b border-gray-100 pb-4">
           <div>
             <p className="text-sm text-gray-500">Booking ID</p>
-            <h2 className="text-2xl font-bold text-gray-900">[ORDER-1XXXX]</h2>
+            <h2 className="text-2xl font-bold text-gray-900">{booking.uid}</h2>
           </div>
           <StatusLabel status={booking.status} />
         </div>
+
+        {/* Rejection / Cancellation Reason */}
+        {booking?.cancellation_reason && (
+          <div className="flex flex-col gap-2 rounded-lg border border-red-200 bg-red-50 p-4">
+            <div className="flex items-center gap-2">
+              <XCircle className="h-4 w-4 text-red-600" />
+              <p className="text-xs font-medium tracking-wider text-red-700 uppercase">
+                {booking.status === "cancelled"
+                  ? "Cancellation Reason"
+                  : "Rejection Reason"}
+              </p>
+            </div>
+            <div className="flex-1">
+              <p className="mt-0.5 text-sm font-medium text-red-900">
+                {booking.cancellation_reason}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Guest Information */}
         <div className="space-y-4">
@@ -48,7 +95,9 @@ export default function HandleOrderForm() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Full Name</p>
-                <p className="font-semibold text-gray-900">[GUEST NAME]</p>
+                <p className="font-semibold text-gray-900">
+                  {booking.fullname}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-lg bg-white p-3 transition-all">
@@ -57,7 +106,7 @@ export default function HandleOrderForm() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Email Address</p>
-                <p className="font-semibold text-gray-900">[GUEST EMAIL]</p>
+                <p className="font-semibold text-gray-900">{booking.email}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-lg bg-white p-3 transition-all">
@@ -66,7 +115,9 @@ export default function HandleOrderForm() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Phone Number</p>
-                <p className="font-semibold text-gray-900">[GUEST PHONE]</p>
+                <p className="font-semibold text-gray-900">
+                  {booking.phone_number}
+                </p>
               </div>
             </div>
           </div>
@@ -85,7 +136,9 @@ export default function HandleOrderForm() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Payment Method</p>
-                <p className="font-semibold text-gray-900">[PAYMENT METHOD]</p>
+                <p className="font-semibold text-gray-900">
+                  {booking.payment_method || "Not specified"}
+                </p>
               </div>
             </div>
 
@@ -96,7 +149,9 @@ export default function HandleOrderForm() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Payment Proof</p>
-                <p className="font-semibold text-gray-900">[PAYMENT PROOF]</p>
+                <p className="font-semibold text-gray-900">
+                  {booking.transaction_id ? "Available" : "Not available"}
+                </p>
               </div>
             </div>
 
@@ -107,7 +162,9 @@ export default function HandleOrderForm() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Transaction ID</p>
-                <p className="font-semibold text-gray-900">[TRANSACTION ID]</p>
+                <p className="font-semibold text-gray-900">
+                  {booking.transaction_id || "Not available"}
+                </p>
               </div>
             </div>
 
@@ -119,7 +176,11 @@ export default function HandleOrderForm() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500">Paid At</p>
-                  <p className="font-semibold text-gray-900">[PAID AT]</p>
+                  <p className="font-semibold text-gray-900">
+                    {booking.paid_at
+                      ? formatDateTime(booking.paid_at)
+                      : "Not paid"}
+                  </p>
                 </div>
               </div>
 
@@ -132,27 +193,35 @@ export default function HandleOrderForm() {
                   <p className="text-xs font-semibold text-red-500">
                     Process this order before :
                   </p>
-                  <p className="font-semibold text-red-900">[CHECK IN DATE]</p>
+                  <p className="font-semibold text-red-900">
+                    {formatDate(new Date(booking.check_in_date))}
+                  </p>
+                  <span className="flex items-center gap-2 text-xs text-red-900">
+                    <Clock className="h-3 w-3" />
+                    12.00
+                  </span>
                 </div>
               </div>
             </div>
 
             {/* Payment Proof */}
-            <div className="absolute top-3 right-6">
-              <Image
-                src="https://res.cloudinary.com/dzpcr6tzh/image/upload/v1759570664/staysia_property_renting_app/payment_receipt/qdwi4rstjxrnc5rhcerj.jpg"
-                alt="payment-proof"
-                width={500}
-                height={500}
-                className="h-auto w-32 rounded-lg border-2 object-cover"
-              />
-            </div>
+            {booking.payment_proof ? (
+              <div className="absolute top-3 right-6">
+                <Image
+                  src={booking.payment_proof}
+                  alt="payment-proof"
+                  width={500}
+                  height={500}
+                  className="h-auto w-32 rounded-lg border-2 object-cover"
+                />
+              </div>
+            ) : null}
           </div>
         </div>
 
         {/* Handle Orded Form Section */}
 
-        <section className="rounded-xl bg-gradient-to-r p-6">
+        <section className="rounded-xl bg-linear-to-r p-6">
           <div className="text-center">
             <h3 className="mb-2 text-lg font-bold text-gray-900">
               Make sure to review everything carefully before proceeding order!
@@ -161,8 +230,7 @@ export default function HandleOrderForm() {
               Verify everything — changes may not be possible later.
             </p>
 
-            {/* 💥 Cukup panggil 1 baris ini */}
-            <ActionButtons status={booking.status} />
+            <ActionButtons status={booking.status} orderId={orderId} />
           </div>
         </section>
       </div>

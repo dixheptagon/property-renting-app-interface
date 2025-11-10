@@ -1,8 +1,8 @@
 import { CheckCheck, CheckCircle, Clock, Package, XCircle } from "lucide-react";
 
 const ProcessingBanner = () => (
-  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-amber-500 bg-gradient-to-r p-4 text-white shadow-lg md:flex">
-    <Package className="h-8 w-8 flex-shrink-0" />
+  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-amber-500 bg-linear-to-r p-4 text-white shadow-lg md:flex">
+    <Package className="h-8 w-8 shrink-0" />
     <div>
       <h1 className="text-2xl font-bold">Reservation in Progress!</h1>
       <p className="text-sm text-white">
@@ -14,8 +14,8 @@ const ProcessingBanner = () => (
 );
 
 const PendingBanner = () => (
-  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-yellow-500 bg-gradient-to-r p-4 text-white shadow-lg md:flex">
-    <Clock className="h-8 w-8 flex-shrink-0" />
+  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-yellow-500 bg-linear-to-r p-4 text-white shadow-lg md:flex">
+    <Clock className="h-8 w-8 shrink-0" />
     <div>
       <h1 className="text-2xl font-bold">Awaiting Payment!</h1>
       <p className="text-sm text-white">
@@ -27,8 +27,8 @@ const PendingBanner = () => (
 );
 
 const ConfirmedBanner = () => (
-  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-green-500 bg-gradient-to-r p-4 text-white shadow-lg md:flex">
-    <CheckCircle className="h-8 w-8 flex-shrink-0" />
+  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-green-500 bg-linear-to-r p-4 text-white shadow-lg md:flex">
+    <CheckCircle className="h-8 w-8 shrink-0" />
     <div>
       <h1 className="text-2xl font-bold">Booking Confirmed!</h1>
       <p className="text-sm text-white">
@@ -40,8 +40,8 @@ const ConfirmedBanner = () => (
 );
 
 const CancelledBanner = () => (
-  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-red-500 bg-gradient-to-r p-4 text-white shadow-lg md:flex">
-    <XCircle className="h-8 w-8 flex-shrink-0" />
+  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-red-500 bg-linear-to-r p-4 text-white shadow-lg md:flex">
+    <XCircle className="h-8 w-8 shrink-0" />
     <div>
       <h1 className="text-2xl font-bold">Booking Cancelled!</h1>
       <p className="text-sm text-white">
@@ -53,8 +53,8 @@ const CancelledBanner = () => (
 );
 
 const CompletedBanner = () => (
-  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-blue-500 bg-gradient-to-r p-4 text-white shadow-lg md:flex">
-    <CheckCheck className="h-8 w-8 flex-shrink-0" />
+  <div className="mb-6 hidden items-center gap-3 rounded-xl bg-blue-500 bg-linear-to-r p-4 text-white shadow-lg md:flex">
+    <CheckCheck className="h-8 w-8 shrink-0" />
     <div>
       <h1 className="text-2xl font-bold">Stay Completed!</h1>
       <p className="text-sm text-white">

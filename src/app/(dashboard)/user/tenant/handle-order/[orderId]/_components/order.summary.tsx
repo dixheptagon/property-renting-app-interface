@@ -1,5 +1,4 @@
 "use client";
-import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
 import Image from "next/image";
 import { formatDate } from "../_utils/format.date";
 import { formatPrice } from "../_utils/format.price";
@@ -10,13 +9,37 @@ import {
   Clock,
   ImageOff,
   Moon,
-  Sparkles,
   TrendingUp,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useGetBooking } from "../_hooks/use.order.details";
+import LoadingData from "@/components/ui/loading.data";
+import { BookingData } from "../_types/order.details.type";
 
-export default function OrderSummary() {
-  const bookingState = useBookingStore();
+interface OrderSummaryProps {
+  orderId: string;
+}
+
+export default function OrderSummary({ orderId }: OrderSummaryProps) {
+  const { data: bookingResponse, isLoading, error } = useGetBooking(orderId);
+  // const bookingState = useBookingStore();
+
+  if (isLoading) {
+    return <LoadingData />;
+  }
+
+  if (error || !bookingResponse?.data) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-center">
+          <p className="text-red-500">Failed to load booking details</p>
+          <p className="text-sm text-gray-500">{error?.message}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const bookingData: BookingData = bookingResponse.data;
 
   return (
     <div className="mx-auto mt-4 max-w-2xl space-y-5">
@@ -26,13 +49,13 @@ export default function OrderSummary() {
         <div className="absolute top-0 right-0 h-40 w-40 rounded-bl-full bg-linear-to-br from-blue-200 to-indigo-300 opacity-40 blur-md"></div>
         <div className="relative z-10">
           <h1 className="mb-2 text-2xl font-bold text-gray-800">
-            Property Name Not Available
+            {bookingData.room.property.title}
           </h1>
           <h2 className="mb-4 flex items-center text-lg text-gray-600">
             <span className="mr-2 inline-block h-2 w-2 rounded-full bg-indigo-500"></span>
-            Room Name Not Available
+            {bookingData.room.name}
           </h2>
-          {/* {bookingData?.room.property.main_image ? (
+          {bookingData.room.property.main_image ? (
             <div className="relative">
               <Image
                 src={bookingData.room.property.main_image}
@@ -43,14 +66,14 @@ export default function OrderSummary() {
               />
               <div className="absolute inset-0 rounded-lg bg-linear-to-t from-black/20 to-transparent"></div>
             </div>
-          ) : ( */}
-          <div className="relative flex h-48 w-full items-center justify-center rounded-lg bg-gray-100">
-            <div className="text-center">
-              <ImageOff className="mx-auto h-12 w-12 text-gray-400" />
-              <p className="mt-2 text-sm text-gray-500">No Image Available</p>
+          ) : (
+            <div className="relative flex h-48 w-full items-center justify-center rounded-lg bg-gray-100">
+              <div className="text-center">
+                <ImageOff className="mx-auto h-12 w-12 text-gray-400" />
+                <p className="mt-2 text-sm text-gray-500">No Image Available</p>
+              </div>
             </div>
-          </div>
-          {/* )} */}
+          )}
         </div>
       </div>
 
@@ -78,7 +101,7 @@ export default function OrderSummary() {
                   Check-In
                 </span>
                 <p className="mt-0.5 text-base font-bold text-gray-900">
-                  {formatDate(bookingState?.dateRange?.from)}
+                  {formatDate(new Date(bookingData.check_in_date))}
                 </p>
                 <div className="mt-1 flex items-center gap-1">
                   <Clock className="h-3 w-3 text-gray-400" />
@@ -97,7 +120,7 @@ export default function OrderSummary() {
                   Check-Out
                 </span>
                 <p className="mt-0.5 text-base font-bold text-gray-900">
-                  {formatDate(bookingState?.dateRange?.to)}
+                  {formatDate(new Date(bookingData.check_out_date))}
                 </p>
                 <div className="mt-1 flex items-center gap-1">
                   <Clock className="h-3 w-3 text-gray-400" />
@@ -113,10 +136,20 @@ export default function OrderSummary() {
               <Moon className="mx-auto h-8 w-8 text-blue-600" />
               <div>
                 <p className="text-3xl font-bold text-gray-900">
-                  {bookingState?.totalNights}
+                  {Math.ceil(
+                    (new Date(bookingData.check_out_date).getTime() -
+                      new Date(bookingData.check_in_date).getTime()) /
+                      (1000 * 60 * 60 * 24)
+                  )}
                 </p>
                 <p className="text-sm font-medium text-gray-600">
-                  {bookingState?.totalNights > 1 ? "nights" : "night"}
+                  {Math.ceil(
+                    (new Date(bookingData.check_out_date).getTime() -
+                      new Date(bookingData.check_in_date).getTime()) /
+                      (1000 * 60 * 60 * 24)
+                  ) > 1
+                    ? "nights"
+                    : "night"}
                 </p>
               </div>
             </div>
@@ -136,40 +169,13 @@ export default function OrderSummary() {
         <div className="space-y-4 p-5">
           {/* Price Breakdown */}
           <div className="space-y-3">
-            {/* Normal Nights */}
+            {/* Total Price */}
             <div className="flex items-center justify-between rounded-lg bg-gray-50 p-3">
-              <span className="text-sm text-gray-700">
-                {formatPrice(bookingState?.basePrice)} ×{" "}
-                {bookingState?.normalNights} nights
-              </span>
+              <span className="text-sm text-gray-700">Total Price</span>
               <span className="text-sm font-semibold text-gray-900">
-                {formatPrice(
-                  bookingState?.basePrice * bookingState?.normalNights
-                )}
+                {formatPrice(bookingData.total_price)}
               </span>
             </div>
-
-            {/* Peak Season Nights */}
-            {bookingState?.peakSeasonNights > 0 && (
-              <div className="flex items-center justify-between rounded-lg border border-orange-200 bg-gradient-to-r from-orange-50 to-amber-50 p-3">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-orange-600" />
-                  <span className="text-sm text-gray-700">
-                    {formatPrice(bookingState?.peakSeasonPrice)} ×{" "}
-                    {bookingState?.peakSeasonNights} nights
-                  </span>
-                  <span className="rounded-full bg-orange-100 px-2 py-0.5 text-xs font-semibold text-orange-600">
-                    Peak Season
-                  </span>
-                </div>
-                <span className="text-sm font-semibold text-gray-900">
-                  {formatPrice(
-                    bookingState?.peakSeasonPrice *
-                      bookingState?.peakSeasonNights
-                  )}
-                </span>
-              </div>
-            )}
           </div>
 
           {/* Divider */}
@@ -179,14 +185,25 @@ export default function OrderSummary() {
           <div className="space-y-2 rounded-xl border-2 border-blue-200 bg-linear-to-br from-blue-50 to-indigo-50 p-4">
             <div className="flex items-center justify-between">
               <span className="text-lg font-bold text-gray-900">Total</span>
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-2xl font-bold text-transparent">
-                {formatPrice(bookingState?.total)}
+              <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-2xl font-bold text-transparent">
+                {formatPrice(bookingData.total_price)}
               </span>
             </div>
             <div className="flex justify-end">
               <span className="text-xs font-medium text-gray-600">
-                for {bookingState?.totalNights}{" "}
-                {bookingState?.totalNights > 1 ? "nights" : "night"}
+                for{" "}
+                {Math.ceil(
+                  (new Date(bookingData.check_out_date).getTime() -
+                    new Date(bookingData.check_in_date).getTime()) /
+                    (1000 * 60 * 60 * 24)
+                )}{" "}
+                {Math.ceil(
+                  (new Date(bookingData.check_out_date).getTime() -
+                    new Date(bookingData.check_in_date).getTime()) /
+                    (1000 * 60 * 60 * 24)
+                ) > 1
+                  ? "nights"
+                  : "night"}
               </span>
             </div>
           </div>
