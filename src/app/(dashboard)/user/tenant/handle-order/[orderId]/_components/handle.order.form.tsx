@@ -10,9 +10,9 @@ import {
   ClockAlert,
 } from "lucide-react";
 import Image from "next/image";
-import StatusBanner from "./ui/status.banner";
-import StatusLabel from "./ui/status.label";
-import { ActionButtons } from "./ui/action.buttons";
+import StatusBanner from "./form-components/status.banner";
+import StatusLabel from "./form-components/status.label";
+import { ActionButtons } from "./form-components/action.buttons";
 
 export default function HandleOrderForm() {
   const booking = {
@@ -130,11 +130,9 @@ export default function HandleOrderForm() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-red-500">
-                    Expired At
+                    Process this order before :
                   </p>
-                  <p className="font-semibold text-red-900">
-                    12 November 2025, 12.000 AM
-                  </p>
+                  <p className="font-semibold text-red-900">[CHECK IN DATE]</p>
                 </div>
               </div>
             </div>

@@ -80,8 +80,7 @@ export default function OrderListTableBody({
 
             {/* Action */}
             <div className="flex justify-center">
-              <Link href={`/user/tenant/handle-order`}>
-                {/* /tenant/handle-order/${order.id} */}
+              <Link href={`/user/tenant/handle-order/${order.orderId}`}>
                 <Button className="group/btn relative overflow-hidden rounded-lg bg-linear-to-r from-blue-600 to-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-md transition-all hover:from-blue-700 hover:to-blue-800 hover:shadow-lg">
                   <ExternalLink className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-12" />
                   Handle Order

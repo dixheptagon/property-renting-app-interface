@@ -16,10 +16,6 @@ export default function PaginationSection({
   onPageChange,
   onLimitChange = () => null,
 }: PaginationSectionProps) {
-  console.log("totalItemCount", totalItemCount);
-  console.log("limit", limit);
-  console.log("currentPage", currentPage);
-
   return (
     <div className="mt-4">
       <div className="flex w-full items-center justify-between rounded-lg border border-gray-200 bg-white p-4 shadow-sm">

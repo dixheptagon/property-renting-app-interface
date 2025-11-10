@@ -16,7 +16,7 @@ export default function OrderDetailsNavbar() {
   return (
     <>
       <nav className="fixed top-0 left-0 z-50 h-16 w-full bg-white shadow-sm transition-all duration-300">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
+        <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4">
           {/* Logo */}
           <div className="flex shrink-0 items-center gap-4">
             <Button
@@ -29,9 +29,14 @@ export default function OrderDetailsNavbar() {
             <Logo />
           </div>
 
-          {/* Steps - Hidden on mobile, visible on md+ */}
-          <div className="hidden md:flex">
-            <ReservationStep currentStep={3} />
+          {/* Center: Title with Badge */}
+          <div className="hidden items-center gap-3 md:flex">
+            <div className="flex items-center gap-2 rounded-lg border border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2">
+              <div className="h-2 w-2 rounded-full bg-blue-500" />
+              <h1 className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-lg font-semibold text-transparent">
+                Handle Order
+              </h1>
+            </div>
           </div>
 
           {/* Auth Button */}
@@ -41,7 +46,7 @@ export default function OrderDetailsNavbar() {
         </div>
 
         {/* Mobile Steps - Visible only on mobile */}
-        <div className="grid grid-cols-3 gap-2 md:hidden">
+        <div className="grid h-16 grid-cols-3 justify-between gap-2 md:hidden">
           {/* Mobile Logo */}
           <div className="mx-4 flex items-center gap-2">
             <Button
@@ -54,7 +59,15 @@ export default function OrderDetailsNavbar() {
             <MobileLogo />
           </div>
 
-          <ReservationStep currentStep={3} />
+          {/* Center: Title with Badge */}
+          <div className="mx-auto flex items-center gap-3 md:hidden">
+            <div className="flex items-center gap-2 rounded-lg border border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2">
+              <div className="h-2 w-2 rounded-full bg-blue-500" />
+              <h1 className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-lg font-semibold text-transparent">
+                Handle Order
+              </h1>
+            </div>
+          </div>
 
           {/* Mobile Menu Button */}
           <button

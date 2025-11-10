@@ -8,6 +8,7 @@ import {
   CalendarArrowDown,
   CalendarArrowUp,
   Clock,
+  ImageOff,
   Moon,
   Sparkles,
   TrendingUp,
@@ -20,34 +21,36 @@ export default function OrderSummary() {
   return (
     <div className="mx-auto mt-4 max-w-2xl space-y-5">
       {/* Property Card */}
-      <div className="group relative overflow-hidden rounded-2xl bg-white shadow-lg">
-        <div className="relative space-y-4 p-5">
-          <div className="space-y-1">
-            <div className="flex items-start justify-between gap-2">
-              <h1 className="text-xl leading-tight font-bold text-gray-900">
-                {bookingState?.propertyName}
-              </h1>
-              <span className="inline-flex items-center rounded-full bg-blue-500 px-3 py-1 text-xs font-semibold text-white shadow-md">
-                <Sparkles className="mr-1 h-3 w-3" />
-                Featured
-              </span>
-            </div>
-            <h2 className="text-sm font-medium text-gray-600">
-              {bookingState?.selectedRoom?.name}
-            </h2>
-          </div>
-
-          {bookingState?.property?.images.length ? (
-            <div className="relative overflow-hidden rounded-xl shadow-md">
+      {/* Property Card */}
+      <div className="relative overflow-hidden rounded-xl bg-linear-to-br from-blue-50 to-indigo-100 p-6 shadow-lg transition-all duration-300 hover:shadow-xl">
+        <div className="absolute top-0 right-0 h-40 w-40 rounded-bl-full bg-linear-to-br from-blue-200 to-indigo-300 opacity-40 blur-md"></div>
+        <div className="relative z-10">
+          <h1 className="mb-2 text-2xl font-bold text-gray-800">
+            Property Name Not Available
+          </h1>
+          <h2 className="mb-4 flex items-center text-lg text-gray-600">
+            <span className="mr-2 inline-block h-2 w-2 rounded-full bg-indigo-500"></span>
+            Room Name Not Available
+          </h2>
+          {/* {bookingData?.room.property.main_image ? (
+            <div className="relative">
               <Image
-                src={bookingState?.property?.images[0].url || ""}
+                src={bookingData.room.property.main_image}
                 alt="Property Image"
                 width={400}
-                height={400}
-                className="h-56 w-full object-cover"
+                height={300}
+                className="h-48 w-full rounded-lg object-cover shadow-md"
               />
+              <div className="absolute inset-0 rounded-lg bg-linear-to-t from-black/20 to-transparent"></div>
             </div>
-          ) : null}
+          ) : ( */}
+          <div className="relative flex h-48 w-full items-center justify-center rounded-lg bg-gray-100">
+            <div className="text-center">
+              <ImageOff className="mx-auto h-12 w-12 text-gray-400" />
+              <p className="mt-2 text-sm text-gray-500">No Image Available</p>
+            </div>
+          </div>
+          {/* )} */}
         </div>
       </div>
 

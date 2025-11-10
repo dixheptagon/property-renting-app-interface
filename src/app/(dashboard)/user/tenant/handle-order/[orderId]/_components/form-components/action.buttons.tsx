@@ -15,6 +15,7 @@ import {
   CircleCheckBig,
   CircleX,
   TriangleAlert,
+  X,
 } from "lucide-react";
 
 interface ActionButtonsProps {
@@ -77,9 +78,20 @@ export function ActionButtons({ status }: ActionButtonsProps) {
             <DialogHeader>
               <DialogTitle>Reject Order</DialogTitle>
               <DialogDescription>
-                Are you sure you want to reject this order?
+                If the order is rejected, the payment status will be reverted to
+                Pending Payment. Are you still sure?
               </DialogDescription>
             </DialogHeader>
+            <div className="grid gap-3">
+              <Label htmlFor="name-1">Enter Rejection Reason</Label>
+              <Input
+                id="rejection-reason"
+                name="rejection-reason"
+                type="text"
+                placeholder="Enter rejection reason"
+                className="py-6"
+              />
+            </div>
             <div className="flex items-center justify-center gap-3">
               <Button className="flex min-w-35 items-center gap-2 bg-yellow-600 p-6 transition-all hover:bg-yellow-700 hover:shadow-lg">
                 <TriangleAlert className="h-5 w-5" />
@@ -140,7 +152,8 @@ export function ActionButtons({ status }: ActionButtonsProps) {
               <DialogHeader>
                 <DialogTitle>Cancel Order</DialogTitle>
                 <DialogDescription>
-                  Are you sure you want to cancel this order?
+                  If the order is canceled, it cannot be restored. Are you still
+                  want to cancel this order?
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-3">
@@ -158,11 +171,6 @@ export function ActionButtons({ status }: ActionButtonsProps) {
                   <CircleX className="h-5 w-5" />
                   Cancel Order
                 </Button>
-                <DialogClose asChild>
-                  <Button variant="outline" className="p-6">
-                    No
-                  </Button>
-                </DialogClose>
               </div>
             </DialogContent>
           </form>
