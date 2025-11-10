@@ -7,7 +7,7 @@ type OrdersCardProps = {
   icon?: React.ReactNode;
 };
 
-export default function OrdersCard({
+export default function statsCard({
   label,
   value,
   className,
@@ -18,7 +18,7 @@ export default function OrdersCard({
       className={cn("group relative overflow-hidden rounded-xl p-5", className)}
     >
       {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-linear-to-br from-white/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="absolute inset-0 bg-linear-to-br from-white/40 to-transparent opacity-0" />
 
       <div className="relative flex flex-col gap-4">
         {/* Header with icon */}
@@ -39,7 +39,7 @@ export default function OrdersCard({
         {/* Value */}
         <div className="flex items-end gap-1">
           {/* <Plus className="stroke-4" /> */}
-          <p className="text-4xl leading-none font-bold text-gray-900 transition-transform duration-300 group-hover:scale-105">
+          <p className="text-4xl leading-none font-bold text-gray-900">
             {value}
           </p>
         </div>
