@@ -66,6 +66,7 @@ export const useOrderList = () => {
     totalItems: query.data?.data.pagination.total || 0,
     totalPages: query.data?.data.pagination.total_pages || 0,
     currentPage: page,
+    statictics: query.data?.data.statistics || {},
     limit,
     loading: query.isLoading,
     error: query.error as AxiosError,

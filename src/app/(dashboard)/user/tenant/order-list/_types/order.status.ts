@@ -53,6 +53,14 @@ export interface OrderListResponse {
       total: number;
       total_pages: number;
     };
+    statistics: {
+      total_order: number;
+      total_completed: number;
+      total_cancelled: number;
+      total_pending: number;
+      total_processing: number;
+      total_confirmed: number;
+    };
   };
 }
 

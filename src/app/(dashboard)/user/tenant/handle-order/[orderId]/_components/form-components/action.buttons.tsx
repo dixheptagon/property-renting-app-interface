@@ -22,8 +22,11 @@ import {
   cancelReasonValidationSchema,
 } from "../../_validations/reject.cancel.reason.validation";
 import { useRejectOrder } from "../../_hooks/use.reject.order";
+import { useConfirmOrder } from "../../_hooks/use.confirm.order";
+import { useCompleteOrder } from "../../_hooks/use.complete.order";
 import { toast } from "sonner";
 import { useCancelOrder } from "../../_hooks/use.cancel.order";
+import { AxiosError } from "axios";
 
 interface ActionButtonsProps {
   status: string;
@@ -32,6 +35,8 @@ interface ActionButtonsProps {
 
 export function ActionButtons({ status, orderId }: ActionButtonsProps) {
   const rejectOrderMutation = useRejectOrder();
+  const confirmOrderMutation = useConfirmOrder();
+  const completeOrderMutation = useCompleteOrder();
   const cancelOrderMutation = useCancelOrder();
 
   // Mapping status → buttons that should be visible
@@ -65,6 +70,7 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
         orderId,
         cancellationReason: values.reason,
       });
+      toast.success("Order cancelled successfully");
       // Close dialog would be handled by DialogClose
     } catch (error) {
       toast.error(
@@ -73,6 +79,34 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           : "An error occurred during cancellation"
       );
       console.error("Cancel order error:", error);
+    }
+  };
+
+  const handleConfirmOrder = async () => {
+    try {
+      await confirmOrderMutation.mutateAsync(orderId);
+      toast.success("Order confirmed successfully");
+      // Close dialog would be handled by DialogClose
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to confirm order"
+      );
+      console.error("Confirm order error:", error);
+    }
+  };
+
+  const handleCompleteOrder = async () => {
+    try {
+      await completeOrderMutation.mutateAsync(orderId);
+      toast.success("Order completed successfully");
+      // Close dialog would be handled by DialogClose
+    } catch (error) {
+      toast.error(
+        error instanceof AxiosError
+          ? error.response?.data.error
+          : "Failed to complete order"
+      );
+      console.error("Complete order error:", error);
     }
   };
 
@@ -95,9 +129,15 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
               </DialogDescription>
             </DialogHeader>
             <div className="flex items-center justify-center gap-3">
-              <Button className="flex min-w-35 items-center gap-2 bg-green-600 p-6 transition-all hover:bg-green-700 hover:shadow-lg">
+              <Button
+                onClick={handleConfirmOrder}
+                disabled={confirmOrderMutation.isPending}
+                className="flex min-w-35 items-center gap-2 bg-green-600 p-6 transition-all hover:bg-green-700 hover:shadow-lg disabled:opacity-50"
+              >
                 <CircleCheckBig className="h-5 w-5" />
-                Confirmed Order
+                {confirmOrderMutation.isPending
+                  ? "Confirming..."
+                  : "Confirmed Order"}
               </Button>
               <DialogClose asChild>
                 <Button variant="outline" className="p-6">
@@ -178,20 +218,26 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           <DialogTrigger asChild>
             <Button className="flex items-center gap-2 bg-blue-600 p-6 transition-all hover:bg-blue-700 hover:shadow-lg">
               <CheckCheck className="h-5 w-5" />
-              Completed Order
+              Complete Order
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent>
             <DialogHeader>
-              <DialogTitle>Completed Order</DialogTitle>
+              <DialogTitle>Complete Order</DialogTitle>
               <DialogDescription>
                 Are you sure you want to complete this order?
               </DialogDescription>
             </DialogHeader>
             <div className="flex items-center justify-center gap-3">
-              <Button className="flex items-center gap-2 bg-blue-600 p-6 transition-all hover:bg-blue-700 hover:shadow-lg">
+              <Button
+                onClick={handleCompleteOrder}
+                disabled={completeOrderMutation.isPending}
+                className="flex items-center gap-2 bg-blue-600 p-6 transition-all hover:bg-blue-700 hover:shadow-lg disabled:opacity-50"
+              >
                 <CheckCheck className="h-5 w-5" />
-                Completed Order
+                {completeOrderMutation.isPending
+                  ? "Completing..."
+                  : "Complete Order"}
               </Button>
               <DialogClose asChild>
                 <Button variant="outline" className="p-6">

@@ -7,21 +7,21 @@ const statusOptions: StatusOption[] = [
     label: "Pending",
     icon: Clock,
     style: { badgeColor: "oklch(79.5% 0.184 86.047)" }, // Yellow-500
-    bg: "bg-yellow-300",
+    bg: "bg-yellow-500",
   },
   {
     value: "processing",
     label: "Processing",
     icon: Package,
     style: { badgeColor: "oklch(66.6% 0.179 58.318)" }, // Amber-500
-    bg: "bg-amber-400",
+    bg: "bg-amber-500",
   },
   {
     value: "confirmed",
     label: "Confirmed",
     icon: CheckCircle,
     style: { badgeColor: "oklch(87.1% 0.15 154.449)" }, // Green-500
-    bg: "bg-green-300",
+    bg: "bg-green-500",
   },
   {
     value: "cancelled",
@@ -35,7 +35,7 @@ const statusOptions: StatusOption[] = [
     label: "Completed",
     icon: CheckCheck,
     style: { badgeColor: "oklch(80.9% 0.105 251.813)" }, // Blue-500
-    bg: "bg-blue-300",
+    bg: "bg-blue-500",
   },
 ];
 

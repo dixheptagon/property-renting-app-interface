@@ -1,14 +1,15 @@
+"use client";
+import { useSearchParams } from "next/navigation";
 import { X } from "lucide-react";
 import statusOptions from "../../_const/status.option";
 import PropertyCategoryOptions from "../../_const/property.category.option";
-import { IActiveFilters } from "../../_types/filter.type";
+import { OrderStatus, OrderCategory } from "../../_types/order.status";
 
-export default function ActiveFilters({
-  selectedStatus,
-  setSelectedStatus,
-  selectedCategory,
-  setSelectedCategory,
-}: IActiveFilters) {
+export default function ActiveFilters() {
+  const searchParams = useSearchParams();
+  const selectedStatus = searchParams.getAll("status") as OrderStatus[];
+  const selectedCategory = searchParams.getAll("category") as OrderCategory[];
+
   if (selectedStatus.length === 0 && selectedCategory.length === 0) return null;
 
   return (

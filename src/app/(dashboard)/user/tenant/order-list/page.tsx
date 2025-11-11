@@ -29,6 +29,7 @@ export default function OrderList() {
     totalPages,
     currentPage,
     limit,
+    statictics,
   } = useOrderList();
 
   return (
@@ -70,7 +71,7 @@ export default function OrderList() {
                 currentSortDir={filters.sort_dir}
               />
 
-              <OrderListStats />
+              <OrderListStats statictics={statictics} />
 
               <section className="mt-4 hidden space-y-4 lg:block">
                 <OrderListTableHeader />

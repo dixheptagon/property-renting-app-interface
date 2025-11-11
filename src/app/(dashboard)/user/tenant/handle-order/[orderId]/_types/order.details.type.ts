@@ -77,6 +77,28 @@ interface RejectCancelReasonFormData {
   reason: string;
 }
 
+interface ConfirmOrderResponse {
+  success: boolean;
+  message: string;
+  data: {
+    booking_id: number;
+    order_uid: string;
+    status: string;
+    confirmed_at: string;
+  } | null;
+}
+
+interface CompleteOrderResponse {
+  success: boolean;
+  message: string;
+  data: {
+    booking_id: number;
+    order_uid: string;
+    status: string;
+    completed_at: string;
+  } | null;
+}
+
 export type {
   BookingData,
   BookingResponse,
@@ -87,4 +109,6 @@ export type {
   RejectOrderParams,
   RejectOrderResponse,
   RejectCancelReasonFormData,
+  ConfirmOrderResponse,
+  CompleteOrderResponse,
 };

@@ -12,13 +12,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ArrowDownNarrowWide } from "lucide-react";
-import { OrderStatus } from "../_types/order.status";
+import { OrderCategory, OrderStatus } from "../_types/order.status";
 import FilterButton, {
   FilterButtonRef,
 } from "./filter-components/filter.button";
 import { useState, useRef } from "react";
 import ActiveFilters from "./filter-components/active.filter";
 import { useOrderSearchParams } from "../_utils/search.params";
+import { useSearchParams } from "next/navigation";
 
 interface OrderListFiltersProps {
   selectedStatus: OrderStatus[];
@@ -38,10 +39,11 @@ export default function OrderListFilters({
 }: OrderListFiltersProps) {
   const { setCategoryFilter, setStatusFilter } = useOrderSearchParams();
 
-  const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
-
   const filterButtonRef = useRef<FilterButtonRef>(null);
+
+  const searchParams = useSearchParams();
+  const selectedStatus = searchParams.getAll("status") as OrderStatus[];
+  const selectedCategory = searchParams.getAll("category") as OrderCategory[];
 
   return (
     <>
@@ -51,12 +53,10 @@ export default function OrderListFilters({
             ref={filterButtonRef}
             selectedStatus={selectedStatus}
             setSelectedStatus={(status) => {
-              setSelectedStatus(status);
               setStatusFilter(status as any);
             }}
             selectedCategory={selectedCategory}
             setSelectedCategory={(categories) => {
-              setSelectedCategory(categories);
               setCategoryFilter(categories as any);
             }}
           />
@@ -109,12 +109,7 @@ export default function OrderListFilters({
       </section>
 
       {/* Filters  Shows when there is at least one filter */}
-      <ActiveFilters
-        selectedStatus={selectedStatus}
-        setSelectedStatus={() => {}}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
+      <ActiveFilters />
     </>
   );
 }
