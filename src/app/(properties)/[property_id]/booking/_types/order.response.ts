@@ -13,8 +13,8 @@ export interface Order {
   user_id: number;
   room_id: number;
   property_id: number;
-  check_in_date: string;
-  check_out_date: string;
+  check_in_date: Date;
+  check_out_date: Date;
   fullname: string;
   email: string;
   phone_number: string;

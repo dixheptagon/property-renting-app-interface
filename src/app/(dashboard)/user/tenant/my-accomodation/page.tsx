@@ -1,3 +1,5 @@
+"use client";
+
 import {
   SidebarInset,
   SidebarProvider,
@@ -5,28 +7,17 @@ import {
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowDownNarrowWide,
-  Home,
-  HousePlus,
-  SlidersHorizontal,
-} from "lucide-react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Home, HousePlus } from "lucide-react";
+
 import AccomodationCard from "./_components/accomodation.card";
 import { AppSidebar } from "../../_components/app-sidebar";
+import Link from "next/link";
+import { usePropertyList } from "./_hooks/use.property.list";
+import LoadingData from "@/components/ui/loading.data";
 
 export default function MyAccomodation() {
+  const { data, isLoading, error, refetch } = usePropertyList();
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -42,69 +33,61 @@ export default function MyAccomodation() {
               <span className="text-sm font-semibold sm:text-base">
                 My Accomodation
               </span>
-              <Button className="group/btn transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
-                <HousePlus className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-15" />
-                Add New Accomodation
-              </Button>
+
+              {/* Button Create New Accomodation */}
+              <Link href="/create-property">
+                <Button className="group/btn transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
+                  <HousePlus className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-15" />
+                  Add New Accomodation
+                </Button>
+              </Link>
             </div>
           </div>
         </header>
 
         <div className="min-h-screen bg-white px-4 py-4">
-          <section className="flex w-full justify-between gap-4">
-            <div className="flex gap-4">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="group/btn w-full transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
-                    <SlidersHorizontal />
-                    Filters
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Share link</DialogTitle>
-                    <DialogDescription>
-                      Anyone who has this link will be able to view this.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex items-center gap-2">
-                    <div className="grid flex-1 gap-2">
-                      <Label htmlFor="link" className="sr-only">
-                        Link
-                      </Label>
-                      <Input
-                        id="link"
-                        defaultValue="https://ui.shadcn.com/docs/installation"
-                        readOnly
-                      />
-                    </div>
-                  </div>
-                  <DialogFooter className="sm:justify-start">
-                    <DialogClose asChild>
-                      <Button type="button" variant="secondary">
-                        Close
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-
-              <Button className="bg-white text-blue-600 hover:bg-gray-200 hover:text-blue-700">
-                Clear All
-              </Button>
+          {isLoading && (
+            <div className="flex justify-center py-8">
+              <LoadingData message="Loading your properties..." />
             </div>
-            <Button className="group/btn w-full transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
-              <ArrowDownNarrowWide />
-              Sort By
-            </Button>
-          </section>
+          )}
 
-          <section className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-4">
-            <AccomodationCard />
-            <AccomodationCard />
-            <AccomodationCard />
-            <AccomodationCard />
-          </section>
+          {error && (
+            <div className="flex justify-center py-8">
+              <div className="text-center">
+                <p className="mb-2 text-red-600">Failed to load properties</p>
+                <p className="text-sm text-gray-600">
+                  {error.message || "Please try again later"}
+                </p>
+
+                {/* Button Refresh */}
+                <Button
+                  onClick={() => refetch()}
+                  className="mt-4 flex items-center gap-2 bg-blue-600 px-6 py-3 text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg"
+                >
+                  <HousePlus className="h-4 w-4" />
+                  Refresh
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {data && (
+            <section className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-4">
+              {data.data.data.length === 0 ? (
+                <div className="col-span-full flex flex-col items-center justify-center py-12">
+                  <Home className="mb-4 h-12 w-12 text-gray-400" />
+                  <p className="text-center text-gray-600">
+                    No properties found. Create your first accommodation!
+                  </p>
+                </div>
+              ) : (
+                data.data.data.map((property) => (
+                  <AccomodationCard key={property.uid} property={property} />
+                ))
+              )}
+            </section>
+          )}
         </div>
       </SidebarInset>
     </SidebarProvider>

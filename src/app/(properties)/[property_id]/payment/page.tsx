@@ -2,7 +2,6 @@
 import { Suspense } from "react";
 import PaymentSummary from "./_components/payment.summary";
 import { LoadingState } from "./_components/loading.and.error";
-import PaymentProofUpload from "./_components/upload.payment.proof";
 import { useRouter } from "next/navigation";
 import PaymentForm from "./_components/payment.form";
 import { usePaymentStore } from "../../_stores/payment.store";
@@ -20,18 +19,6 @@ export default function Page() {
           <Suspense fallback={<LoadingState />}>
             <PaymentSummary />
           </Suspense>
-          <div className="mt-4">
-            <PaymentProofUpload
-              bookingId={
-                paymentState.orderResponse?.data.order.uid ||
-                "ORDER-21e2edwaw221"
-              }
-              onUploadSuccess={() => {
-                // Redirect atau action setelah sukses
-                router.push("/payment-success");
-              }}
-            />
-          </div>
         </div>
       </div>
     </div>

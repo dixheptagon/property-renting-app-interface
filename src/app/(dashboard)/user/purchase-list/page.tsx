@@ -24,6 +24,7 @@ export default function Page() {
     loading,
     error,
     filters,
+    refetch,
   } = usePurchaseList();
 
   console.log("purchases", purchases);
@@ -62,7 +63,7 @@ export default function Page() {
               </h3>
               <p className="mb-4 text-gray-500">{error?.message}</p>
               <button
-                onClick={() => window.location.reload()}
+                onClick={() => refetch()}
                 className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
               >
                 Try Again

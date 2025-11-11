@@ -11,6 +11,8 @@ import {
 import { formatDate } from "../_utils/format.date";
 import { formatPrice } from "../_utils/format.price";
 import { OrderDetailsSummaryProps } from "../_types/order.details.type";
+import { formatDateTime } from "../_utils/format.date.time";
+import PaymentProofUpload from "./form-components/upload.payment.proof";
 
 export default function OrderDetailsSummary({
   bookingData,
@@ -44,6 +46,7 @@ export default function OrderDetailsSummary({
             <span className="mr-2 inline-block h-2 w-2 rounded-full bg-indigo-500"></span>
             {bookingData?.room.name || "Room Name Not Available"}
           </h2>
+
           {bookingData?.room.property.main_image ? (
             <div className="relative">
               <Image
@@ -65,6 +68,17 @@ export default function OrderDetailsSummary({
           )}
         </div>
       </div>
+
+      {/* Payment Proof Upload */}
+      {bookingData?.cancellation_reason &&
+        bookingData.status === "pending_payment" && (
+          <PaymentProofUpload
+            bookingId={bookingData.uid}
+            onUploadSuccess={() => {
+              window.location.reload();
+            }}
+          />
+        )}
 
       {/* Booking Details Card */}
       <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
@@ -138,7 +152,7 @@ export default function OrderDetailsSummary({
                   <span className="font-medium">Paid At</span>
                 </div>
                 <p className="text-md font-bold text-gray-800">
-                  {formatDate(bookingData.paid_at) || "N/A"}
+                  {formatDateTime(bookingData.paid_at) || "N/A"}
                 </p>
               </div>
             </div>

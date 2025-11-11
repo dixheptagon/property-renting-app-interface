@@ -20,7 +20,7 @@ export default function OrderDetailsNavbar() {
           {/* Logo */}
           <div className="flex shrink-0 items-center gap-4">
             <Button
-              className="group hidden h-10 w-10 items-center justify-center rounded-lg bg-gray-200 transition-colors hover:bg-gray-300 sm:flex"
+              className="group hidden h-10 w-10 items-center justify-center rounded-lg bg-gray-200 transition-colors hover:bg-gray-300 md:flex"
               onClick={() => router.back()}
             >
               <ChevronLeft className="h-5 w-5 text-gray-600 transition-transform group-hover:-translate-x-0.5" />
@@ -41,16 +41,25 @@ export default function OrderDetailsNavbar() {
         </div>
 
         {/* Mobile Steps - Visible only on mobile */}
-        <div className="flex justify-between md:hidden">
+        <div className="grid grid-cols-3 gap-2 md:hidden">
           {/* Mobile Logo */}
-          <MobileLogo />
+          <div className="mx-4 flex items-center gap-2">
+            <Button
+              className="group flex h-8 w-8 items-center justify-center rounded-lg bg-gray-200 transition-colors hover:bg-gray-300 md:hidden"
+              onClick={() => router.back()}
+            >
+              <ChevronLeft className="h-4 w-4 text-gray-600 transition-transform group-hover:-translate-x-0.5" />
+            </Button>
+
+            <MobileLogo />
+          </div>
 
           <ReservationStep currentStep={3} />
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`mr-3 text-blue-800 lg:hidden ${scrolled ? "" : "z-60"}`}
+            className={`mr-3 flex items-center justify-end text-blue-800 lg:hidden ${scrolled ? "" : "z-60"}`}
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (

@@ -8,11 +8,14 @@ import {
   QrCode,
   MessageCircle,
   Headphones,
+  XCircle,
 } from "lucide-react";
 import StatusBanner from "./form-components/status.banner";
 import StatusLabel from "./form-components/status.label";
 import { OrderDetailsFormProps } from "../_types/order.details.type";
 import Link from "next/link";
+import CancelOrderButton from "./form-components/cancel.order.button";
+import { Label } from "@/components/ui/label";
 
 export default function OrderDetailsForm({
   bookingData,
@@ -27,6 +30,8 @@ export default function OrderDetailsForm({
 
   const enableQrCode =
     booking.status === "processing" || booking.status === "completed";
+
+  console.log("Booking Data:", bookingData);
 
   return (
     <div className="relative mx-auto max-w-4xl">
@@ -44,6 +49,39 @@ export default function OrderDetailsForm({
           <StatusLabel status={booking.status} />
         </div>
 
+        {/* Rejection / Cancellation Reason */}
+        {bookingData?.cancellation_reason && (
+          <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+            {/* Header */}
+            <div className="flex items-center gap-2">
+              <XCircle className="h-4 w-4 text-red-600" />
+              <p className="text-xs font-medium tracking-wider text-red-700 uppercase">
+                {bookingData.status === "cancelled"
+                  ? "Cancellation Reason"
+                  : "Rejection Reason"}
+              </p>
+            </div>
+
+            {/* Reason */}
+            <p className="mt-2 text-sm font-medium text-red-900">
+              {bookingData.cancellation_reason}
+            </p>
+
+            {bookingData.status === "pending_payment" && (
+              <p className="mt-3 text-sm text-red-800 italic">
+                <span className="font-semibold">Note:</span> Please upload your
+                payment proof here.
+              </p>
+            )}
+
+            {bookingData.status === "cancelled" && (
+              <p className="mt-3 text-sm text-red-800 italic">
+                <span className="font-semibold">Note:</span> If you have any
+                questions, please contact us.
+              </p>
+            )}
+          </div>
+        )}
         {/* QR Code and Instructions */}
         <div className="grid gap-6 md:grid-cols-2">
           {/* QR Code Section */}
@@ -112,7 +150,6 @@ export default function OrderDetailsForm({
             </ol>
           </div>
         </div>
-
         {/* Guest Information */}
         <div className="space-y-4">
           <h3 className="flex items-center gap-2 text-xl font-bold text-gray-900">
@@ -153,7 +190,6 @@ export default function OrderDetailsForm({
             </div>
           </div>
         </div>
-
         {/* Support Section */}
         <div className="rounded-xl bg-linear-to-r p-6">
           <div className="text-center">
@@ -177,6 +213,11 @@ export default function OrderDetailsForm({
                   Contact Tenant
                 </Button>
               </Link>
+
+              {/* Cancel Order Button */}
+              {bookingData?.status === "pending_payment" && (
+                <CancelOrderButton orderId={bookingData.uid} />
+              )}
             </div>
           </div>
         </div>

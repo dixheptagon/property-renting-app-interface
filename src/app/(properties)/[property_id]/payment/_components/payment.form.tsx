@@ -12,6 +12,7 @@ import {
 import { usePaymentStore } from "../../../_stores/payment.store";
 import { useEffect, useRef, useState } from "react";
 import { useSnap } from "../_hooks/use.snap";
+import CancelOrderButton from "./form-components/cancel.order.button";
 
 declare global {
   interface Window {
@@ -91,40 +92,10 @@ export default function PaymentForm() {
         </div>
       </div>
 
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button className="mt-4 w-full bg-red-600 p-6 text-lg font-semibold hover:bg-red-500">
-            Cancel Booking
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-lg font-semibold">
-              Order Cancellation
-            </DialogTitle>
-            <DialogDescription className="text-md flex justify-center font-semibold text-black">
-              Are you sure want to Cancel this order?
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex w-full items-center justify-center gap-4">
-            <Button className="bg-green-600 p-6 hover:bg-green-500">
-              Yes, Cancel
-            </Button>
-            <DialogClose asChild>
-              <Button className="bg-red-600 p-6 hover:bg-red-500">
-                No, Keep
-              </Button>
-            </DialogClose>
-          </div>
-          <DialogFooter className="sm:justify-start">
-            <DialogClose asChild>
-              <Button type="button" variant="secondary">
-                Close
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Cancel Booking Button */}
+      <div className="mt-4 w-full">
+        <CancelOrderButton orderId={orderId || ""} />
+      </div>
     </div>
   );
 }

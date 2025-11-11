@@ -9,6 +9,8 @@ interface BookingData {
   email: string;
   phone_number: string;
   payment_method: string | null;
+  payment_proof: string | null;
+  cancellation_reason: string | null;
   transaction_id: string | null;
   paid_at: Date | undefined;
   room: {
