@@ -16,23 +16,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, FileText } from "lucide-react";
 import { useTenantVerification } from "../_hooks/use.tenant.verification";
 import { TenantVerificationSchema } from "../_validations/tenant.verification.schema";
+import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 
-interface TenantVerificationFormProps {
-  onSuccess?: () => void;
-}
-
-export default function TenantVerificationForm({
-  onSuccess,
-}: TenantVerificationFormProps) {
+export default function TenantVerificationForm() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const { setTenantRole } = useAuthStore();
 
   const tenantVerificationMutation = useTenantVerification({
     onSuccess: () => {
+      setTenantRole();
+
       formik.resetForm();
       setSelectedFile(null);
       setFilePreview(null);
-      onSuccess?.();
     },
   });
 

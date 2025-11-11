@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { axiosInstance } from "@/lib/axios";
-import { TenantVerificationResponse } from "../_types/tenant.profile.type";
+import { TenantVerificationResponse } from "../_types/tenant.verification.type";
 
 export function useTenantVerification({
   onSuccess,
@@ -24,6 +24,7 @@ export function useTenantVerification({
           },
         }
       );
+      console.log("Verification response:", response.data);
       return response.data;
     },
     onSuccess: (data) => {

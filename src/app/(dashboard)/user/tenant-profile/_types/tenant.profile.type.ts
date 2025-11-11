@@ -1,25 +1,31 @@
+export interface User {
+  id: number;
+  role: string;
+}
+
 export interface TenantProfile {
   id: number;
   user_id: number;
-  balance: number;
   contact: string;
-  government_id_type: string;
-  government_id_path: string | null;
   address: string;
   city: string;
   country: string;
+  government_id_type: string;
+  government_id_path: string;
   verified: boolean;
-  verified_at: string | null;
-  banned: boolean;
   created_at: string;
-  updated_at: string | null;
-  deleted_at: string | null;
+  updated_at: string;
+}
+
+export interface TenantProfileData {
+  tenantProfile: TenantProfile;
+  user: User;
 }
 
 export interface TenantProfileResponse {
   success: boolean;
-  data: TenantProfile | null;
-  message?: string;
+  message: string;
+  data: TenantProfileData;
 }
 
 export interface TenantVerificationRequest {

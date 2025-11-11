@@ -129,7 +129,7 @@ export default function PropertyDetails() {
               room_unavailabilities={property.room_unavailabilities.map(
                 (unavail) => ({
                   ...unavail,
-                  property_id: 0,
+                  property_id: property.id,
                   booking_id: null,
                   created_at: "",
                   start_date: formatDate(unavail.start_date),
@@ -139,7 +139,7 @@ export default function PropertyDetails() {
               )}
               peak_season_price={property.peak_season_rates.map((rate) => ({
                 ...rate,
-                property_id: 0,
+                property_id: property.id,
                 created_at: "",
                 start_date: formatDate(rate.start_date),
                 end_date: formatDate(rate.end_date),

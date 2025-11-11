@@ -22,6 +22,7 @@ type AuthState = {
 
   storeAuthRegister: (data: any) => void;
   storeAuth: (data: any) => void;
+  setTenantRole: () => void;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -79,6 +80,25 @@ export const useAuthStore = create<AuthState>()(
           email: data.user.email,
           role: data.user.role,
         }),
+
+      setTenantRole: () => {
+        const currentEmail = get().email;
+        const currentFirstName = get().first_name;
+        const currentLastName = get().last_name;
+        const currentDisplayName = get().display_name;
+        const currentImage = get().image;
+        const currentAccessToken = get().access_token;
+
+        set({
+          email: currentEmail,
+          first_name: currentFirstName,
+          last_name: currentLastName,
+          display_name: currentDisplayName,
+          image: currentImage,
+          access_token: currentAccessToken,
+          role: "tenant",
+        });
+      },
     }),
     {
       name: "auth-storage",
