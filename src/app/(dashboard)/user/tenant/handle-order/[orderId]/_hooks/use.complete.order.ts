@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import { CompleteOrderResponse } from "../_types/order.details.type";
+import { useRouter } from "next/navigation";
 
 export const useCompleteOrder = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation<CompleteOrderResponse, Error, string>({
@@ -23,6 +25,8 @@ export const useCompleteOrder = () => {
       queryClient.invalidateQueries({
         queryKey: ["bookings"],
       });
+
+      router.push("/user/tenant/order-list");
     },
   });
 };

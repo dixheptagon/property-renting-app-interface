@@ -13,9 +13,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCancelOrder } from "../../_hooks/use.cancel.order";
-import { toast } from "sonner";
 import { cancelReasonValidationSchema } from "../../_validations/reject.cancel.reason.validation";
-import { AxiosError } from "axios";
 
 interface CancelOrderButtonProps {
   orderId: string;
@@ -25,27 +23,16 @@ export default function CancelOrderButton({ orderId }: CancelOrderButtonProps) {
   const cancelOrderMutation = useCancelOrder();
 
   const handleCancelOrder = async (values: { reason: string }) => {
-    try {
-      // TODO: Implement cancel order API call
-      await cancelOrderMutation.mutateAsync({
-        orderId,
-        cancellationReason: values.reason,
-      });
-      // Close dialog would be handled by DialogClose
-    } catch (error) {
-      toast.error(
-        error instanceof AxiosError && error.response?.data?.error
-          ? error.response?.data?.error
-          : "An error occurred during cancellation"
-      );
-      console.error("Cancel order error:", error);
-    }
+    await cancelOrderMutation.mutateAsync({
+      orderId,
+      cancellationReason: values.reason,
+    });
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-2 bg-red-600 p-6 transition-all hover:bg-red-700 hover:shadow-lg">
+        <Button className="flex w-full items-center gap-2 bg-red-600 p-6 transition-all hover:bg-red-700 hover:shadow-lg">
           <CircleX className="h-5 w-5" />
           Cancel Order
         </Button>

@@ -31,6 +31,8 @@ export default function OrderDetailsForm({
   const enableQrCode =
     booking.status === "processing" || booking.status === "completed";
 
+  console.log("Booking Data:", bookingData);
+
   return (
     <div className="relative mx-auto max-w-4xl">
       {/* Success Banner */}
@@ -46,6 +48,7 @@ export default function OrderDetailsForm({
           </div>
           <StatusLabel status={booking.status} />
         </div>
+
         {/* Rejection / Cancellation Reason */}
         {bookingData?.cancellation_reason && (
           <div className="rounded-lg border border-red-200 bg-red-50 p-4">

@@ -2,9 +2,14 @@
 import Image from "next/image";
 import { useBookingStore } from "../../_stores/booking.store";
 import { formatDate } from "../_utils/format.date";
+import { usePaymentStore } from "../../_stores/payment.store";
 
 export default function PaymentSummary() {
   const bookingState = useBookingStore();
+  const paymentState = usePaymentStore();
+
+  const paymentData = paymentState.orderResponse?.data?.order;
+
   return (
     <div className="mx-auto space-y-4">
       <div className="mx-auto rounded-lg bg-white p-4 shadow-md">
@@ -25,18 +30,16 @@ export default function PaymentSummary() {
           <div className="flex flex-col">
             <span className="text-sm">Check-In</span>
             <span className="font-semibold text-black">
-              {formatDate(bookingState?.dateRange?.from)}
+              {formatDate(paymentData?.check_in_date) || "N/A"}
             </span>
             <span className="text-xs">14.00</span>
           </div>
 
-          <hr className="border-1 border-gray-200" />
+          <hr className="border border-gray-200" />
 
           <div className="flex flex-col">
             <span className="text-sm">Check-Out</span>
-            <span className="font-semibold text-black">
-              {formatDate(bookingState?.dateRange?.to)}
-            </span>
+            <span className="font-semibold text-black">{}</span>
             <span className="text-xs">12.00</span>
           </div>
         </div>

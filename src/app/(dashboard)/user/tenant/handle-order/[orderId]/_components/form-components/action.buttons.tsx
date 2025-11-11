@@ -58,7 +58,11 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
       window.location.reload();
       // Close dialog would be handled by DialogClose
     } catch (error) {
-      toast.error("Failed to reject order");
+      toast.error(
+        error instanceof AxiosError && error.response?.data.error
+          ? error.response?.data.error
+          : "Failed to reject order"
+      );
       console.error("Reject order error:", error);
     }
   };
@@ -74,8 +78,8 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
       // Close dialog would be handled by DialogClose
     } catch (error) {
       toast.error(
-        error instanceof Error
-          ? error.message
+        error instanceof AxiosError && error.response?.data.error
+          ? error.response?.data.error
           : "An error occurred during cancellation"
       );
       console.error("Cancel order error:", error);
@@ -89,7 +93,9 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
       // Close dialog would be handled by DialogClose
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to confirm order"
+        error instanceof AxiosError && error.response?.data.error
+          ? error.response?.data.error
+          : "Failed to confirm order"
       );
       console.error("Confirm order error:", error);
     }
@@ -102,7 +108,7 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
       // Close dialog would be handled by DialogClose
     } catch (error) {
       toast.error(
-        error instanceof AxiosError
+        error instanceof AxiosError && error.response?.data.error
           ? error.response?.data.error
           : "Failed to complete order"
       );

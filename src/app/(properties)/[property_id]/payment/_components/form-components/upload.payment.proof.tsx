@@ -1,17 +1,19 @@
 "use client";
 import { useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import Image from "next/image";
-import { PaymentProofUploadProps } from "../_types/upload.payment.proof";
-import { UploadPaymentProofValidationSchema } from "../_validations/upload.payment.proof";
+import { PaymentProofUploadProps } from "../../_types/upload.payment.proof";
+import { useUploadPaymentProof } from "../../_hooks/use.upload.payment.proof";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import { UploadPaymentProofValidationSchema } from "../../_validations/upload.payment.proof";
 
 export default function PaymentProofUpload({
   bookingId,
   onUploadSuccess,
 }: PaymentProofUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const uploadPaymentProofMutation = useUploadPaymentProof();
 
   const formik = useFormik({
     initialValues: {
@@ -21,29 +23,17 @@ export default function PaymentProofUpload({
     },
     validationSchema: UploadPaymentProofValidationSchema,
     onSubmit: async (values) => {
-      setIsSubmitting(true);
-      try {
-        const formData = new FormData();
-        if (values.paymentProof) {
-          formData.append("paymentProof", values.paymentProof);
-        }
-        formData.append("accountName", values.accountName);
-        formData.append("notes", values.notes);
-        if (bookingId) {
-          formData.append("bookingId", bookingId);
-        }
+      if (!values.paymentProof) return;
 
-        const response = await fetch("/api/payment/upload", {
-          method: "POST",
-          body: formData,
+      try {
+        await uploadPaymentProofMutation.mutateAsync({
+          paymentProof: values.paymentProof,
+          accountName: values.accountName,
+          notes: values.notes,
+          orderId: bookingId || "",
         });
 
-        if (!response.ok) {
-          throw new Error("Upload failed");
-        }
-
-        const result = await response.json();
-        alert("Payment proof uploaded successfully!");
+        toast.success("Payment proof uploaded successfully!");
 
         formik.resetForm();
         setPreview(null);
@@ -52,13 +42,11 @@ export default function PaymentProofUpload({
           onUploadSuccess();
         }
       } catch (error) {
-        alert(
+        toast.error(
           error instanceof Error
             ? error.message
             : "An error occurred during upload"
         );
-      } finally {
-        setIsSubmitting(false);
       }
     },
   });
@@ -176,10 +164,17 @@ export default function PaymentProofUpload({
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={isSubmitting || !formik.isValid}
+          disabled={uploadPaymentProofMutation.isPending || !formik.isValid}
           className="w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
         >
-          {isSubmitting ? "Uploading..." : "Upload Payment Proof"}
+          {uploadPaymentProofMutation.isPending ? (
+            <div className="flex w-full items-center justify-center gap-2">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Uploading...
+            </div>
+          ) : (
+            "Upload Payment Proof"
+          )}
         </button>
       </form>
     </div>
