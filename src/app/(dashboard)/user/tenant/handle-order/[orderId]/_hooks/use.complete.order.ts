@@ -25,8 +25,6 @@ export const useCompleteOrder = () => {
       queryClient.invalidateQueries({
         queryKey: ["bookings"],
       });
-
-      router.push("/user/tenant/order-list");
     },
   });
 };
