@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import {
   Calendar,
   MapPin,
@@ -13,10 +11,10 @@ import {
   ExternalLink,
   CheckCheck,
 } from "lucide-react";
-import { AwaitingReview } from "../_types/my.reviews.type";
-import { formatPrice } from "../_utils/format.price";
-import { formatDate } from "../_utils/format.date";
-import { CreateReviewButton } from "./card-components/create.review.button";
+import { AwaitingReview } from "../../_types/my.reviews.type";
+import { formatDate } from "../../_utils/format.date";
+import { formatPrice } from "../../_utils/format.price";
+import { CreateReviewButton } from "../awaiting-review-components/create.review.button";
 
 interface AwaitingReviewCardProps {
   review: AwaitingReview;
@@ -129,6 +127,7 @@ export default function AwaitingReviewCard({
 
             {/* Action Button */}
             <CreateReviewButton
+              booking_uid={review.booking_uid}
               property_name={review.property.name}
               room_type={review.property.room_types.join(", ")}
             />

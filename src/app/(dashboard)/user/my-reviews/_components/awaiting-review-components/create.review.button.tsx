@@ -12,22 +12,48 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ExternalLink, Star } from "lucide-react";
+import { ExternalLink, Loader, Star } from "lucide-react";
 import { useFormik } from "formik";
 import reviewSchema from "../../_validations/review.schema";
-import { handleWriteReviewValues } from "../../_types/write.review.type";
+import { handleWriteReviewValues } from "../../_types/awating.reviews.type";
 import StarRating from "./star.rating";
+import { useWriteReview } from "../../_hooks/use.write.reviews";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 interface CreateReviewButtonProps {
   property_name: string;
   room_type: string;
+  booking_uid: string;
 }
 
 export function CreateReviewButton({
+  booking_uid,
   property_name,
   room_type,
 }: CreateReviewButtonProps) {
   const [open, setOpen] = useState(false);
+
+  const {
+    mutate: writeReview,
+    isPending,
+    isSuccess,
+  } = useWriteReview({
+    onSuccess: (data) => {
+      toast.success("Review saved successfully!");
+      console.log("Write Review Data:", data);
+
+      setOpen(false);
+    },
+    onError: (error) => {
+      console.log("Error:", error);
+      if (error instanceof AxiosError && error.response?.data?.error) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Failed to write review!, please try again later.");
+      }
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -37,8 +63,7 @@ export function CreateReviewButton({
     validationSchema: reviewSchema,
     onSubmit: (values, { resetForm }) => {
       handleSaveReview(values);
-      resetForm();
-      setOpen(false);
+      isSuccess && resetForm();
     },
   });
 
@@ -46,6 +71,14 @@ export function CreateReviewButton({
     console.log("Review Data:", {
       rating: values.rating,
       review: values.review,
+    });
+
+    writeReview({
+      bookingUid: booking_uid,
+      reviewData: {
+        rating: values.rating,
+        comment: values.review,
+      },
     });
   };
 
@@ -116,15 +149,20 @@ export function CreateReviewButton({
               type="button"
               variant="outline"
               onClick={() => formik.resetForm()}
+              disabled={isPending}
             >
               Cancel
             </Button>
           </DialogClose>
-          <Button
-            onClick={() => formik.handleSubmit()}
-            disabled={formik.isSubmitting}
-          >
-            Save Review
+          <Button onClick={() => formik.handleSubmit()} disabled={isPending}>
+            {isPending ? (
+              <div className="flex items-center gap-2">
+                <Loader className="h-4 w-4 animate-spin" />
+                <span>Saving...</span>
+              </div>
+            ) : (
+              "Save Review"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -4,44 +4,44 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { axiosInstance } from "@/lib/axios";
 import {
-  AwaitingReviewsResponse,
-  AwaitingReviewsParams,
-} from "../_types/my.reviews.type";
+  CompletedReviewsResponse,
+  CompletedReviewsParams,
+} from "../_types/completed.reviews.type";
 
-export const useAwaitingReviews = () => {
+export const useCompletedReviews = () => {
   const searchParams = useSearchParams();
 
   // Parse query parameters from URL
   const page = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 10;
   const orderBy =
-    (searchParams.get("orderBy") as "createdAt" | "check_in_date") ||
-    "createdAt";
+    (searchParams.get("orderBy") as "reviewCreatedAt") || "reviewCreatedAt";
   const order = (searchParams.get("order") as "asc" | "desc") || "desc";
 
-  const params: AwaitingReviewsParams = {
+  const params: CompletedReviewsParams = {
     page,
     limit,
     orderBy,
     order,
   };
 
-  const query = useQuery<AwaitingReviewsResponse>({
-    queryKey: ["awaiting-reviews", page, limit, orderBy, order],
+  const query = useQuery<CompletedReviewsResponse>({
+    queryKey: ["completed-reviews", params],
     queryFn: async () => {
-      const response = await axiosInstance.get<AwaitingReviewsResponse>(
-        "/api/review/awaiting-reviews",
+      const response = await axiosInstance.get<CompletedReviewsResponse>(
+        "/api/review/my-reviews",
         { params }
       );
       return response.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
-    retry: false,
+    // retry: 3,
+    // retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 
   return {
-    awaitingReviews: query.data?.data.awaiting_reviews || [],
+    completedReviews: query.data?.data.reviews || [],
     pagination: query.data?.data.pagination || {
       currentPage: 1,
       totalPages: 0,

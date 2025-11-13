@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 import { useState } from "react";
-import { StarRatingProps } from "../../_types/write.review.type";
+import { StarRatingProps } from "../../_types/awating.reviews.type";
 
 export default function StarRating({
   rating,
