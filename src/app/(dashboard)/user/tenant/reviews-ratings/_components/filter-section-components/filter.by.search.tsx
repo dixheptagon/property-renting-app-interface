@@ -20,7 +20,7 @@ export default function FilterBySearch() {
   return (
     <Input
       type="text"
-      placeholder="search guest name, property name, or review"
+      placeholder="search guest name or review"
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
       className="block w-full border-2 border-gray-200"

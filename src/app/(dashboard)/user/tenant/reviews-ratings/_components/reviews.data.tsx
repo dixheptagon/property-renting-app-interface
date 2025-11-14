@@ -22,9 +22,9 @@ const reviewsData: Review[] = [
     postedDate: "January 12, 2024",
     rating: 4,
     reviewText:
-      "Great experience overall. The apartment was spacious and comfortable. Only minor issue was the WiFi connection, but everything else was perfect.",
+      "Great experience overall. The apartment was spacious and comfortable. Only minor issue was the WiFi connection, but everything else was perfect. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
     ownerReply:
-      "We appreciate your feedback! We've already upgraded our WiFi to provide better service for future guests.",
+      "We appreciate your feedback! We've already upgraded our WiFi to provide better service for future guests. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
     status: "active",
   },
   {

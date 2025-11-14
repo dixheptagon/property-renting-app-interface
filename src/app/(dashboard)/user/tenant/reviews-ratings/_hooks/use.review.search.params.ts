@@ -1,4 +1,4 @@
-import { reviewSearchConfig } from "../_utils/search.params.config";
+import { reviewSearchConfig } from "../_utils/review.search.params.config";
 import { useSearchParamsManager } from "./use.manage.search.params";
 
 export const useReviewSearchParams = () => {
@@ -20,17 +20,6 @@ export const useReviewSearchParams = () => {
     setRatingFilter(newRatings);
   };
 
-  const setBrowserFilter = (browsers: string[]) =>
-    update({ browser: browsers, page: 1 }, { resetPage: true });
-
-  const toggleBrowser = (browser: string) => {
-    const currentBrowsers = current.browser || [];
-    const newBrowsers = currentBrowsers.includes(browser)
-      ? currentBrowsers.filter((b) => b !== browser)
-      : [...currentBrowsers, browser];
-    setBrowserFilter(newBrowsers);
-  };
-
   const setSearch = (search: string) =>
     update({ search: search || null, page: 1 }, { resetPage: true });
 
@@ -50,7 +39,6 @@ export const useReviewSearchParams = () => {
     update(
       {
         rating: [],
-        browser: [],
         date_from: null,
         date_to: null,
         search: null,
@@ -69,8 +57,6 @@ export const useReviewSearchParams = () => {
     setLimit,
     setRatingFilter,
     toggleRating,
-    setBrowserFilter,
-    toggleBrowser,
     setSearch,
     setDateRange,
     setSort,

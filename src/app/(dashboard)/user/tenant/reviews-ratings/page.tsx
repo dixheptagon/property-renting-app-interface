@@ -4,6 +4,7 @@ import { AppSidebar } from "../../_components/app-sidebar";
 import PageHeader from "./_components/page.header";
 import FilterSection from "./_components/filter.section";
 import ReviewsData from "./_components/reviews.data";
+import { PaginationSection } from "./_components/pagination.section";
 
 export default function Reviews() {
   return (
@@ -19,6 +20,8 @@ export default function Reviews() {
           <ReviewStats />
 
           <ReviewsData />
+
+          <PaginationSection />
         </div>
       </SidebarInset>
     </SidebarProvider>

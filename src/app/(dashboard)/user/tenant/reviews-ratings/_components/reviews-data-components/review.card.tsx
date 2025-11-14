@@ -1,5 +1,9 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Circle, Star, Pencil, ShieldAlert, User } from "lucide-react";
+import React from "react";
+import { truncateComment, truncateReply } from "../../_utils/truncate.data";
 
 export interface Review {
   id: number;
@@ -18,6 +22,8 @@ interface ReviewCardProps {
 
 export default function ReviewCard({ review }: ReviewCardProps) {
   const maxRating = 5;
+  const [showFullReply, setShowFullReply] = React.useState(false);
+  const [showFullComment, setShowFullComment] = React.useState(false);
 
   return (
     <div className="group overflow-hidden rounded-xl border-2 border-gray-200 bg-linear-to-br from-white to-gray-50 p-4 shadow-md">
@@ -27,7 +33,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           {/* User Info */}
           <div className="flex items-center gap-4">
             <div className="relative">
-              <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-blue-500 to-indigo-600 shadow-md ring-2 ring-blue-200 ring-offset-2">
+              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-blue-500 to-blue-800 shadow-md ring-2 ring-blue-200 ring-offset-2">
                 <User className="h-7 w-7 text-white" />
               </div>
             </div>
@@ -42,7 +48,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           </div>
 
           {/* Rating */}
-          <div className="flex items-center gap-3 rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 px-4 py-2 shadow-sm">
+          <div className="flex items-center gap-3 rounded-lg bg-linear-to-r from-amber-50 to-orange-50 px-4 py-2 shadow-sm">
             <span className="text-2xl font-bold text-amber-600">
               {review.rating}.0
             </span>
@@ -63,18 +69,42 @@ export default function ReviewCard({ review }: ReviewCardProps) {
 
         {/* Review Content */}
         <div className="space-y-3">
-          <p className="leading-relaxed text-gray-700">{review.reviewText}</p>
+          <p className="leading-relaxed whitespace-pre-line text-gray-700">
+            {showFullComment
+              ? review.reviewText
+              : truncateComment(review.reviewText)}
+          </p>
+          {review.reviewText.length > 200 && (
+            <button
+              onClick={() => setShowFullComment(!showFullComment)}
+              className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
+            >
+              {showFullComment ? "Show less" : "Read more"}
+            </button>
+          )}
 
           {/* Owner Reply */}
           {review.ownerReply && (
             <div className="rounded-lg border-l-4 border-green-500 bg-green-50 p-4 shadow-sm">
               <div className="mb-2 flex items-center gap-2">
                 <Circle className="h-3 w-3 fill-green-600 text-green-600" />
-                <span className="text-xs font-semibold tracking-wide text-green-700 uppercase">
+                <span className="text-xs leading-relaxed font-semibold tracking-wide whitespace-pre-line text-green-700 uppercase">
                   My Reply
                 </span>
               </div>
-              <p className="text-sm text-gray-700">{review.ownerReply}</p>
+              <p className="leading-relaxed whitespace-pre-line text-gray-700">
+                {showFullReply
+                  ? review.ownerReply
+                  : truncateReply(review.ownerReply)}
+              </p>
+              {review.ownerReply.length > 200 && (
+                <button
+                  onClick={() => setShowFullReply(!showFullReply)}
+                  className="mt-3 text-sm font-medium text-green-600 transition-colors hover:text-green-700"
+                >
+                  {showFullReply ? "Show less" : "Read more"}
+                </button>
+              )}
             </div>
           )}
         </div>

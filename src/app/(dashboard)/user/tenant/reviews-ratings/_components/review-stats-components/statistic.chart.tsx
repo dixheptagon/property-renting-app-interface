@@ -23,23 +23,23 @@ export default function ReviewsStatisticsChart() {
       label: "Reviews",
     },
     5: {
-      label: "5",
+      label: "5 ⭐",
       color: "var(--chart-1)",
     },
     4: {
-      label: "4",
+      label: "4 ⭐",
       color: "var(--chart-2)",
     },
     3: {
-      label: "3",
+      label: "3 ⭐",
       color: "var(--chart-3)",
     },
     2: {
-      label: "2",
+      label: "2 ⭐",
       color: "var(--chart-4)",
     },
     1: {
-      label: "1",
+      label: "1 ⭐",
       color: "var(--chart-5)",
     },
   } satisfies ChartConfig;

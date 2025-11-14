@@ -3,16 +3,15 @@
 import { SearchParamsConfig } from "../_hooks/use.manage.search.params";
 
 export type ReviewFilters = {
-  page: number;
-  limit: number;
+  page: number; //1
+  limit: number; //20
   rating: number[]; // [1,2,3] → rating 1,2,3
-  browser: string[]; // ['Chrome', 'Safari']
-  date_from: string | null;
-  date_to: string | null;
-  sort_by: string | null;
+  date_from: string | null; //2023-01-01
+  date_to: string | null; //2023-01-31
+  sort_by: string | null; //created_at
   sort_dir: "asc" | "desc" | null;
-  search: string | null;
-  propertyId: string | null;
+  search: string | null; //"john"
+  propertyId: string | null; //"123"
 };
 
 export const reviewSearchConfig: SearchParamsConfig<ReviewFilters> = {
@@ -20,7 +19,6 @@ export const reviewSearchConfig: SearchParamsConfig<ReviewFilters> = {
     page: 1,
     limit: 10,
     rating: [],
-    browser: [],
     date_from: null,
     date_to: null,
     sort_by: null,
@@ -36,7 +34,6 @@ export const reviewSearchConfig: SearchParamsConfig<ReviewFilters> = {
       .getAll("rating")
       .map(Number)
       .filter((n) => n >= 1 && n <= 5),
-    browser: params.getAll("browser"),
     date_from: params.get("date_from") || null,
     date_to: params.get("date_to") || null,
     sort_by: params.get("sort_by") || null,
