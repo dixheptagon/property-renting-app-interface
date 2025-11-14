@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { FileText, CheckCircle } from "lucide-react";
 import { TenantProfile } from "../_types/tenant.profile.type";
+import TenantProfileHeader from "./header";
 
 interface VerifiedProfileCardProps {
   profile: TenantProfile;
@@ -11,7 +12,9 @@ export default function VerifiedProfileCard({
   profile,
 }: VerifiedProfileCardProps) {
   return (
-    <div className="container mx-auto max-w-2xl px-4 py-8">
+    <div className="container mx-auto max-w-4xl px-4 py-8">
+      <TenantProfileHeader />
+
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-green-600">

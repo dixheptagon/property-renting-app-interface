@@ -112,7 +112,7 @@ export default function MyAccount() {
                   src={imagePreview || image || undefined}
                   alt={fullName}
                 />
-                <AvatarFallback className="text-lg">
+                <AvatarFallback className="bg-linear-to-br from-blue-600 to-blue-800 text-lg text-white">
                   {fullName
                     .split(" ")
                     .map((n) => n[0])
