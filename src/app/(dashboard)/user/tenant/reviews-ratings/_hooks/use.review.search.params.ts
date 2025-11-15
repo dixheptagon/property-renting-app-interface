@@ -41,13 +41,14 @@ export const useReviewSearchParams = () => {
         rating: [],
         date_from: null,
         date_to: null,
-        search: null,
         sort_by: null,
         sort_dir: "desc",
-        propertyId: null,
       },
       { resetPage: true }
     );
+
+  const clearSearch = () =>
+    update({ search: null, page: 1 }, { resetPage: true });
 
   const clearAll = () => reset();
 
@@ -62,6 +63,7 @@ export const useReviewSearchParams = () => {
     setSort,
     setPropertyId,
     clearFilters,
+    clearSearch,
     clearAll,
     rawParams: raw,
   };

@@ -17,23 +17,31 @@ import { useReviewSearchParams } from "../../_hooks/use.review.search.params";
 
 export function FilterByDate() {
   const isMobile = useIsMobile();
-
   const today = new Date();
-  const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
-    from: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30), // a month ago
-    to: today,
-  });
 
-  const { setDateRange: setReviewDateRange } = useReviewSearchParams();
+  const { setDateRange: setReviewDateRange, filters } = useReviewSearchParams();
 
-  React.useEffect(() => {
-    if (dateRange) {
-      setReviewDateRange(
-        dateRange.from ? dateRange.from.toISOString() : null,
-        dateRange.to ? dateRange.to.toISOString() : null
-      );
+  // Convert filters date strings to Date objects for the calendar
+  const dateRange: DateRange | undefined = React.useMemo(() => {
+    if (filters.date_from && filters.date_to) {
+      return {
+        from: new Date(filters.date_from),
+        to: new Date(filters.date_to),
+      };
     }
-  }, [dateRange]);
+    // Default to last 30 days if no filters set
+    return {
+      from: new Date(addDays(today, -30).getTime()),
+      to: today,
+    };
+  }, [filters.date_from, filters.date_to, today]);
+
+  const handleDateRangeChange = (newDateRange: DateRange | undefined) => {
+    setReviewDateRange(
+      newDateRange?.from ? newDateRange.from.toISOString() : null,
+      newDateRange?.to ? newDateRange.to.toISOString() : null
+    );
+  };
 
   return (
     <Popover>
@@ -61,7 +69,7 @@ export function FilterByDate() {
             dateRange?.from && dateRange.to ? dateRange.from : new Date()
           }
           selected={dateRange}
-          onSelect={setDateRange}
+          onSelect={handleDateRangeChange}
           numberOfMonths={isMobile ? 1 : 2}
           disabled={{ after: today }}
         />
@@ -84,7 +92,7 @@ export function FilterByDate() {
               className="flex-1"
               onClick={() => {
                 const newDate = addDays(new Date(), -preset.value);
-                setDateRange({ from: newDate, to: today });
+                handleDateRangeChange({ from: newDate, to: today });
               }}
             >
               {preset.label}

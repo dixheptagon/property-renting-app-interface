@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { SlidersHorizontal, Star } from "lucide-react";
+import { FunnelX, SlidersHorizontal, Star } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -17,15 +17,8 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useReviewSearchParams } from "../../_hooks/use.review.search.params";
 
-interface Rating {
-  value: string;
-  label: string;
-  stars: number;
-}
-
 export default function FilterByRating() {
-  const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
-  const { setRatingFilter, clearFilters } = useReviewSearchParams();
+  const { setRatingFilter, clearFilters, filters } = useReviewSearchParams();
 
   const ratings = [
     { value: 5, label: "5 Stars", stars: 5 },
@@ -36,23 +29,21 @@ export default function FilterByRating() {
   ];
 
   const handleRatingChange = (ratingValue: number) => {
-    setSelectedRatings((prev) => {
-      const newRatings = prev.includes(ratingValue)
-        ? prev.filter((r) => r !== ratingValue)
-        : [...prev, ratingValue];
+    const currentRatings = filters.rating || [];
+    const newRatings = currentRatings.includes(ratingValue)
+      ? currentRatings.filter((r) => r !== ratingValue)
+      : [...currentRatings, ratingValue];
 
-      console.log("Selected Ratings:", newRatings);
-      return newRatings;
-    });
+    console.log("Selected Ratings:", newRatings);
+    setRatingFilter(newRatings);
   };
 
   const handleApplyFilter = () => {
-    console.log("Applying filters with ratings:", selectedRatings);
-    setRatingFilter(selectedRatings.map((rating) => rating));
+    // Since we're updating in real-time, this could be used for additional logic
+    console.log("Applying filters with ratings:", filters.rating);
   };
 
   const handleClearAll = () => {
-    setSelectedRatings([]);
     clearFilters();
     console.log("Filters cleared");
   };
@@ -64,9 +55,9 @@ export default function FilterByRating() {
           <Button className="group/btn w-full bg-blue-600 text-white transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
             <SlidersHorizontal className="mr-2 h-4 w-4" />
             Filters
-            {selectedRatings.length > 0 && (
+            {(filters.rating?.length || 0) > 0 && (
               <span className="ml-2 rounded-full bg-white px-2 py-0.5 text-xs text-blue-600">
-                {selectedRatings.length}
+                {filters.rating?.length || 0}
               </span>
             )}
           </Button>
@@ -89,7 +80,7 @@ export default function FilterByRating() {
               >
                 <Checkbox
                   id={`rating-${rating.value}`}
-                  checked={selectedRatings.includes(rating.value)}
+                  checked={filters.rating?.includes(rating.value) || false}
                   onCheckedChange={() => handleRatingChange(rating.value)}
                   className="border-2 border-gray-300"
                 />
@@ -140,9 +131,10 @@ export default function FilterByRating() {
 
       <Button
         onClick={handleClearAll}
-        className="bg-white text-blue-600 hover:bg-gray-200 hover:text-blue-700"
+        className="bg-white text-gray-500 hover:bg-red-100 hover:text-red-700"
       >
-        Clear All
+        <FunnelX className="h-4 w-4" />
+        Clear Filters
       </Button>
     </div>
   );
