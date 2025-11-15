@@ -2,7 +2,7 @@
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "../_components/app-sidebar";
-import { Sparkles, FileText } from "lucide-react";
+import { Sparkles, FileText, CircleX } from "lucide-react";
 import PageHeader from "./_components/page.header";
 import BookingCard from "./_components/booking.card";
 import OrderHistoryCard from "./_components/order.history.card";
@@ -67,13 +67,14 @@ export default function MyBooking() {
               </span>
             </div>
 
-            {bookings ? (
+            {bookings && bookings.length > 0 ? (
               bookings.map((booking) => (
                 <BookingCard key={booking.order_id} booking={booking} />
               ))
             ) : (
-              <div className="py-12 text-center">
-                <p className="text-gray-500">No active bookings found</p>
+              <div className="flex flex-col items-center justify-center gap-4 py-12 text-gray-500">
+                <CircleX className="h-10 w-10 stroke-2 text-gray-400" />
+                <p className="text-lg">No active bookings found</p>
               </div>
             )}
           </div>

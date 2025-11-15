@@ -76,21 +76,21 @@ export interface Rules {
 
 export interface PeakSeasonRate {
   id: number;
-  property_id: string;
+  property_id: string | number;
   room_id: number | null;
-  start_date: Date;
-  end_date: Date;
+  start_date: Date | string;
+  end_date: Date | string;
   adjustment_type: "percentage" | "nominal";
   adjustment_value: number;
 }
 
 export interface RoomUnavailability {
   id: number;
-  property_id: string;
+  property_id: string | number;
   room_id: number;
   booking_id: number | null;
-  start_date: Date;
-  end_date: Date;
+  start_date: Date | string;
+  end_date: Date | string;
   reason: string | null;
 }
 

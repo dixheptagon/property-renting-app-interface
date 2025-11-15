@@ -63,7 +63,7 @@ export default function MyAccomodation() {
                 {/* Button Refresh */}
                 <Button
                   onClick={() => refetch()}
-                  className="mt-4 flex items-center gap-2 bg-blue-600 px-6 py-3 text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg"
+                  className="mt-4 flex w-full items-center gap-2 bg-blue-600 px-6 py-3 text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg"
                 >
                   <HousePlus className="h-4 w-4" />
                   Refresh

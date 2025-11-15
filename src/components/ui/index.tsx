@@ -27,5 +27,6 @@ export * as sidebar from "./sidebar";
 export * as skeleton from "./skeleton";
 export * as slider from "./slider";
 export * as sonner from "./sonner";
+export * as tabs from "./tabs";
 export * as textarea from "./textarea";
 export * as tooltip from "./tooltip";

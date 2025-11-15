@@ -9,7 +9,6 @@ import { Separator } from "@/components/ui/separator";
 import { useTenantProfile } from "./_hooks/use.tenant.profile";
 import LoadingSpinner from "./_components/loading.spinner";
 import ErrorAlert from "./_components/error.alert";
-import BannedAccountAlert from "./_components/banned.account.alert";
 import VerifiedProfileCard from "./_components/verified.profile.card";
 import PendingReviewAlert from "./_components/pending.review.alert";
 import TenantVerificationForm from "./_components/tenant.verification.form";
@@ -33,19 +32,14 @@ export default function TenantProfilePage() {
       return <ErrorAlert onRetry={() => refetch()} />;
     }
 
-    const profile = profileResponse?.data;
+    const profile = profileResponse?.data?.tenantProfile;
 
-    // Case 1: Banned account
-    if (profile?.banned) {
-      return <BannedAccountAlert />;
-    }
-
-    // Case 2: Verified account
+    // Case 1: Verified account
     if (profile?.verified) {
       return <VerifiedProfileCard profile={profile} />;
     }
 
-    // Case 3: Pending review (verified = false AND government_id_path exists)
+    // Case 2: Pending review (verified = false AND government_id_path exists)
     if (profile && !profile.verified && profile.government_id_path) {
       return <PendingReviewAlert />;
     }

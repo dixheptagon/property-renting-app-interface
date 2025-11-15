@@ -14,6 +14,7 @@ import {
   UserRoundCog,
   ShieldUser,
   HatGlasses,
+  Star,
 } from "lucide-react";
 
 import { NavMain } from "@/app/(dashboard)/user/_components/nav-main";
@@ -31,77 +32,87 @@ import { NavTenant } from "./nav-tenant";
 import { useRoleContext } from "@/components/providers/role.provider";
 import Link from "next/link";
 import Image from "next/image";
-
-// This is sample data.
-const data = {
-  profiles: [
-    {
-      name: "[Username]",
-      logo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
-      plan: "Guest",
-    },
-  ],
-  navMain: [
-    {
-      title: "My Bookings",
-      url: "/user/my-bookings",
-      icon: ReceiptText,
-      isActive: true,
-    },
-    {
-      title: "Purchase List",
-      url: "/user/purchase-list",
-      icon: ShoppingBag,
-    },
-  ],
-  navTenant: [
-    {
-      title: "My Accomodation",
-      url: "/user/tenant/my-accomodation",
-      icon: House,
-      isActive: true,
-    },
-    {
-      title: "Order List",
-      url: "/user/tenant/order-list",
-      icon: BaggageClaim,
-    },
-    {
-      title: "Review",
-      url: "/user/tenant/reviews",
-      icon: UsersRound,
-    },
-    {
-      title: "Report",
-      url: "/user/tenant/reports",
-      icon: FileChartColumn,
-    },
-    {
-      title: "Create Accomodation",
-      url: "/create-property",
-      icon: HousePlus,
-    },
-  ],
-  navAccount: [
-    {
-      name: "My Account",
-      url: "/user",
-      icon: UserRoundCog,
-    },
-    {
-      name: "Become a Host",
-      url: "/user/tenant-profile",
-      icon: HatGlasses,
-    },
-    {
-      name: "Log Out",
-      url: "#",
-      icon: CirclePower,
-    },
-  ],
-};
+import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
+import capitalize from "../my-reviews/_utils/capitalize.letter";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  // Get User Profile
+  const { first_name, last_name, image, role } = useAuthStore();
+
+  // This is sample data.
+  const data = {
+    profiles: [
+      {
+        name: `${first_name} ${last_name}`,
+        logo: image,
+        plan: capitalize(role),
+      },
+    ],
+    navMain: [
+      {
+        title: "My Bookings",
+        url: "/user/my-bookings",
+        icon: ReceiptText,
+        isActive: true,
+      },
+      {
+        title: "Purchase List",
+        url: "/user/purchase-list",
+        icon: ShoppingBag,
+      },
+      {
+        title: "My Reviews",
+        url: "/user/my-reviews",
+        icon: Star,
+      },
+    ],
+    navTenant: [
+      {
+        title: "My Accomodations",
+        url: "/user/tenant/my-accomodation",
+        icon: House,
+        isActive: true,
+      },
+      {
+        title: "Order List",
+        url: "/user/tenant/order-list",
+        icon: BaggageClaim,
+      },
+      {
+        title: "Reviews & Ratings",
+        url: "/user/tenant/reviews-ratings",
+        icon: UsersRound,
+      },
+      {
+        title: "Report",
+        url: "/user/tenant/reports",
+        icon: FileChartColumn,
+      },
+      {
+        title: "Create Accomodation",
+        url: "/create-property",
+        icon: HousePlus,
+      },
+    ],
+    navAccount: [
+      {
+        name: "My Account",
+        url: "/user",
+        icon: UserRoundCog,
+      },
+      {
+        name: "Become a Host",
+        url: "/user/tenant-profile",
+        icon: HatGlasses,
+      },
+      {
+        name: "Log Out",
+        url: "#",
+        icon: CirclePower,
+      },
+    ],
+  };
+
   const { canAccessMenu } = useRoleContext();
   const { open } = useSidebar();
 
