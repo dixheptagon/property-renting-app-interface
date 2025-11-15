@@ -10,8 +10,12 @@ import {
 import React from "react";
 import { useReviewSearchParams } from "../../_hooks/use.review.search.params";
 
-export function LimitShows() {
-  const [value, setValue] = React.useState<number | undefined>(10);
+interface LimitShowsProps {
+  currentLimit: number;
+}
+
+export function LimitShows({ currentLimit }: LimitShowsProps) {
+  const [value, setValue] = React.useState<number | undefined>(currentLimit);
 
   const { setLimit } = useReviewSearchParams();
 

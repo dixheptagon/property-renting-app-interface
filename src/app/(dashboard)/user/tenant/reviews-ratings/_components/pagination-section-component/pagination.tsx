@@ -1,6 +1,6 @@
 "use client";
 
-import { usePurchaseSearchParams } from "@/app/(dashboard)/user/purchase-list/_utils/search.params";
+import { useReviewSearchParams } from "../../_hooks/use.review.search.params";
 import {
   Pagination,
   PaginationContent,
@@ -12,20 +12,23 @@ import {
 } from "@/components/ui/pagination";
 import React from "react";
 
-export function PaginationComponent() {
-  // Generate page numbers to url seach params
-  const { setPage } = usePurchaseSearchParams();
+interface PaginationComponentProps {
+  currentPage: number;
+  totalPages: number;
+  totalCount: number;
+}
 
-  const totalItemCount = 100;
-  const limit = 10;
-  const totalPages = Math.ceil(totalItemCount / limit);
-
-  const [currentPage, setCurrentPage] = React.useState<number>(1);
+export function PaginationComponent({
+  currentPage,
+  totalPages,
+  totalCount,
+}: PaginationComponentProps) {
+  // Generate page numbers to url search params
+  const { setPage } = useReviewSearchParams();
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
 
-    setCurrentPage(newPage);
     setPage(newPage);
   };
 

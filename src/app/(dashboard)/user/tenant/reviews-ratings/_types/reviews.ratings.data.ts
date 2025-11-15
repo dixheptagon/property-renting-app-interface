@@ -19,11 +19,16 @@ export interface ReviewBooking {
 
 export interface TenantReview {
   id: number;
-  rating: number;
+  booking_id: number;
+  user_id: number;
+  property_id: number;
+  rating: string;
   comment: string;
   reply: string | null;
+  is_public: boolean;
   created_at: string;
   updated_at: string;
+  deleted_at: string | null;
   user: ReviewUser;
   booking: ReviewBooking;
 }

@@ -1,6 +1,10 @@
 import { Star } from "lucide-react";
 
-export default function AverageRating() {
+interface AverageRatingProps {
+  averageRating: number;
+}
+
+export default function AverageRating({ averageRating }: AverageRatingProps) {
   return (
     <div
       className={`group relative flex flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-amber-200 bg-amber-50 p-8 shadow-lg`}
@@ -18,7 +22,9 @@ export default function AverageRating() {
       </h2>
 
       {/* Value */}
-      <p className={`mb-1 text-5xl font-bold text-amber-600`}>4.5</p>
+      <p className={`mb-1 text-5xl font-bold text-amber-600`}>
+        {averageRating.toFixed(1)}
+      </p>
 
       {/* Subtitle */}
       <p className="text-sm text-gray-500">out of 5.0</p>

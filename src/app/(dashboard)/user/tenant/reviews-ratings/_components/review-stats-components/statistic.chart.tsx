@@ -8,14 +8,21 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { TrendingUp } from "lucide-react";
+import { RatingDistribution } from "../../_types/reviews.ratings.data";
 
-export default function ReviewsStatisticsChart() {
+interface ReviewsStatisticsChartProps {
+  ratingDistribution: RatingDistribution;
+}
+
+export default function ReviewsStatisticsChart({
+  ratingDistribution,
+}: ReviewsStatisticsChartProps) {
   const chartData = [
-    { rating: 5, reviews: 275, fill: "var(--color-1)" },
-    { rating: 4, reviews: 200, fill: "var(--color-2)" },
-    { rating: 3, reviews: 187, fill: "var(--color-3)" },
-    { rating: 2, reviews: 173, fill: "var(--color-4)" },
-    { rating: 1, reviews: 90, fill: "var(--color-5)" },
+    { rating: 5, reviews: ratingDistribution["5"], fill: "var(--color-1)" },
+    { rating: 4, reviews: ratingDistribution["4"], fill: "var(--color-2)" },
+    { rating: 3, reviews: ratingDistribution["3"], fill: "var(--color-3)" },
+    { rating: 2, reviews: ratingDistribution["2"], fill: "var(--color-4)" },
+    { rating: 1, reviews: ratingDistribution["1"], fill: "var(--color-5)" },
   ];
 
   const chartConfig = {

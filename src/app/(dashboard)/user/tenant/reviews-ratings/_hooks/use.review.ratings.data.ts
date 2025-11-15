@@ -22,16 +22,18 @@ export const useReviewRatingsData = () => {
   };
 
   const query = useQuery<ReviewsResponse>({
-    queryKey: ["review-ratings-data"],
+    queryKey: ["review-ratings-data", params],
     queryFn: async () => {
       const response = await axiosInstance.get<ReviewsResponse>(
         "/api/review/tenant",
         { params }
       );
+      console.log(response.data);
       return response.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
+    retry: false,
   });
 
   return {
@@ -45,16 +47,12 @@ export const useReviewRatingsData = () => {
       currentPage: 1,
       totalPages: 0,
       totalCount: 0,
-      limit: 20,
+      limit: 10,
     },
     isLoading: query.isLoading,
     isError: query.isError,
     error: query.error,
     refetch: query.refetch,
     isFetching: query.isFetching,
-    // Computed values
-    totalItems: query.data?.data.pagination.totalCount || 0,
-    currentPage: query.data?.data.pagination.currentPage || 1,
-    totalPages: query.data?.data.pagination.totalPages || 0,
   };
 };

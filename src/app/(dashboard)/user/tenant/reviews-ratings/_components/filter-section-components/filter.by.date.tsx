@@ -20,7 +20,7 @@ export function FilterByDate() {
 
   const today = new Date();
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
-    from: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7), // 7 days ago
+    from: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30), // a month ago
     to: today,
   });
 
