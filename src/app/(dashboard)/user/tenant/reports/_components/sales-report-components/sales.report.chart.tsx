@@ -40,7 +40,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function OrdersChart() {
+export function SalesReportChart() {
   return (
     <Card>
       <CardHeader>

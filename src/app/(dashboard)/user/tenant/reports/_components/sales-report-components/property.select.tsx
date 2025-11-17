@@ -1,0 +1,60 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Home } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useOwnedProperties } from "../../_hooks/use.owned.property";
+import { useSalesReportSearchParams } from "../../_hooks/use.sales.report.search.params";
+
+export default function PropertySelect() {
+  const { properties, isLoading, isError } = useOwnedProperties();
+
+  const [selectedProperty, setSelectedProperty] = useState("");
+  const { setPropertyId } = useSalesReportSearchParams();
+
+  useEffect(() => {
+    if (properties.length > 0 && !selectedProperty) {
+      setPropertyId(properties[0].uid);
+      setSelectedProperty(properties[0].uid);
+    }
+  }, [properties, selectedProperty]);
+
+  const handlePropertyChange = (propertyId: string) => {
+    setSelectedProperty(propertyId);
+    setPropertyId(propertyId);
+  };
+
+  return (
+    <Select value={selectedProperty} onValueChange={handlePropertyChange}>
+      <SelectTrigger
+        disabled={isLoading || isError}
+        className="focus-visible:border-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex w-fit items-center justify-between gap-2 rounded-md border-blue-500 bg-blue-600 px-3 py-2 text-sm font-semibold whitespace-nowrap text-white shadow-xs transition-[color,box-shadow] outline-none hover:bg-blue-700 focus-visible:ring-[3px] focus-visible:ring-blue-500/50 disabled:cursor-not-allowed disabled:opacity-50 data-placeholder:text-white data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-white"
+      >
+        <Home className={isLoading || isError ? "text-gray-400" : ""} />
+        <SelectValue placeholder="Select Property" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Available Properties</SelectLabel>
+          {properties.map((property) => (
+            <SelectItem
+              key={property.uid}
+              value={property.uid}
+              className="cursor-pointer"
+            >
+              <div className="flex items-center">{property.title}</div>
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+}
