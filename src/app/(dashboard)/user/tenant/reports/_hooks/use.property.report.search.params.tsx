@@ -7,20 +7,23 @@ export const usePropertyReportSearchParams = () => {
     propertyReportSearchConfig
   );
 
-  const setDate = (date: string | null) =>
-    update({ property_date: date }, { resetPage: true });
+  const setDate = (date: string | undefined) => update({ property_date: date });
 
-  const setPropertyId = (propertyId: string | null) =>
-    update({ property_propertyId: propertyId });
+  const setPropertyId = (propertyId: string | undefined) =>
+    update({
+      property_propertyId: propertyId,
+      property_roomId: undefined,
+      property_date: undefined,
+    });
 
-  const setRoomId = (roomId: string | null) =>
+  const setRoomId = (roomId: string | undefined) =>
     update({ property_roomId: roomId });
 
   const clearFilters = () =>
     update({
-      property_date: null,
-      property_propertyId: null,
-      property_roomId: null,
+      property_date: "",
+      property_propertyId: "",
+      property_roomId: "",
     });
 
   const clearAll = () => reset();

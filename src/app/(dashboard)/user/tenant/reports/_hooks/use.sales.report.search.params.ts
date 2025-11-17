@@ -9,7 +9,7 @@ export const useSalesReportSearchParams = () => {
   const setDateRange = (from: string | null, to: string | null) =>
     update({ sales_date_from: from, sales_date_to: to });
 
-  const setPropertyId = (propertyId: string | null) =>
+  const setPropertyId = (propertyId: string | undefined) =>
     update({ sales_propertyId: propertyId });
 
   const clearFilters = () =>

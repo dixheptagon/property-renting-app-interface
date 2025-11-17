@@ -2,20 +2,21 @@
 
 import { Calendar } from "@/components/ui/calendar";
 import { Calendar1 } from "lucide-react";
-import React from "react";
+import React, { useMemo } from "react";
 import { usePropertyReportSearchParams } from "../../_hooks/use.property.report.search.params";
 
 export function CalendarCard() {
   const today = new Date();
-  const [date, setDate] = React.useState<Date | undefined>(today);
 
-  const { setDate: setPropertyDate } = usePropertyReportSearchParams();
+  const { setDate: setPropertyDate, filters } = usePropertyReportSearchParams();
+
+  const date = useMemo(() => {
+    return filters.property_date ? new Date(filters.property_date) : undefined;
+  }, [filters.property_date]);
 
   const handleDateChange = (date: Date | undefined) => {
-    setDate(date);
-
     if (!date) return;
-    setPropertyDate(date.toISOString().split("T")[0]);
+    setPropertyDate(date.toISOString());
   };
 
   return (

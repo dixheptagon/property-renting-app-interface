@@ -1,11 +1,22 @@
+"use client";
+
 import { CheckCircle, DollarSign, ShoppingCart, XCircle } from "lucide-react";
 import { formatPrice } from "../../_utils/format.price";
 
-export function SalesReportData() {
+interface SalesReportDataProps {
+  salesReportData?: {
+    totalRevenue?: number;
+    totalOrders?: number;
+    completedOrders?: number;
+    cancelledOrders?: number;
+  };
+}
+
+export function SalesReportData({ salesReportData }: SalesReportDataProps) {
   const stats = [
     {
       title: "Total Revenue",
-      value: formatPrice(1500000),
+      value: formatPrice(salesReportData?.totalRevenue || 0),
       icon: <DollarSign className="h-6 w-6" />,
       gradient: "from-emerald-500 to-teal-600",
       bgGradient: "from-emerald-50 to-teal-50",
@@ -14,7 +25,7 @@ export function SalesReportData() {
     },
     {
       title: "Total Orders",
-      value: "120",
+      value: (salesReportData?.totalOrders || 0).toString(),
       icon: <ShoppingCart className="h-6 w-6" />,
       gradient: "from-blue-500 to-indigo-600",
       bgGradient: "from-blue-50 to-indigo-50",
@@ -23,7 +34,7 @@ export function SalesReportData() {
     },
     {
       title: "Completed Orders",
-      value: "107",
+      value: (salesReportData?.completedOrders || 0).toString(),
       icon: <CheckCircle className="h-6 w-6" />,
       gradient: "from-green-500 to-emerald-600",
       bgGradient: "from-green-50 to-emerald-50",
@@ -32,7 +43,7 @@ export function SalesReportData() {
     },
     {
       title: "Cancelled Orders",
-      value: "13",
+      value: (salesReportData?.cancelledOrders || 0).toString(),
       icon: <XCircle className="h-6 w-6" />,
       gradient: "from-red-500 to-rose-600",
       bgGradient: "from-red-50 to-rose-50",

@@ -1,10 +1,23 @@
 import { TrendingUp, Home, CheckCircle, XCircle } from "lucide-react";
+import { usePropertyReport } from "../../_hooks/use.property.report";
 
 export function PropertyReportData() {
+  const { propertyReportData, isLoading, isError } = usePropertyReport();
+
+  if (isError || !propertyReportData) {
+    return (
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="col-span-full py-8 text-center">
+          <p className="text-gray-500">Failed to load property report data</p>
+        </div>
+      </div>
+    );
+  }
+
   const stats = [
     {
       title: "Booked",
-      value: 10,
+      value: propertyReportData.booked_units || 0,
       icon: XCircle,
       color: "from-red-500 to-rose-600",
       bgLight: "bg-red-50",
@@ -13,7 +26,7 @@ export function PropertyReportData() {
     },
     {
       title: "Available",
-      value: 2,
+      value: propertyReportData.available_units || 0,
       icon: CheckCircle,
       color: "from-green-500 to-emerald-600",
       bgLight: "bg-green-50",
@@ -21,8 +34,8 @@ export function PropertyReportData() {
       borderColor: "border-green-200",
     },
     {
-      title: "Total Properties",
-      value: 12,
+      title: "Total Units",
+      value: propertyReportData.total_units || 0,
       icon: Home,
       color: "from-blue-500 to-indigo-600",
       bgLight: "bg-blue-50",
@@ -31,7 +44,7 @@ export function PropertyReportData() {
     },
     {
       title: "Occupancy Rate",
-      value: `${((10 / 12) * 100).toFixed(1)}%`,
+      value: `${propertyReportData.occupancy_rate || 0}%`,
       icon: TrendingUp,
       color: "from-purple-500 to-violet-600",
       bgLight: "bg-purple-50",

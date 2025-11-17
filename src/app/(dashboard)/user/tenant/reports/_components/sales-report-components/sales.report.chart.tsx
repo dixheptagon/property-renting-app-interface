@@ -17,67 +17,93 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { formatDate } from "../../_utils/format.date";
+import { SalesReportPeriod } from "../../_types/sales.report";
 
 export const description = "A multiple bar chart";
 
-const chartData = [
-  { month: "January", completted: 186, cancel: 80 },
-  { month: "February", completted: 305, cancel: 200 },
-  { month: "March", completted: 237, cancel: 120 },
-  { month: "April", completted: 73, cancel: 190 },
-  { month: "May", completted: 209, cancel: 130 },
-  { month: "June", completted: 214, cancel: 140 },
-];
+interface SalesReportChartProps {
+  salesReportPeriods?: {
+    startDate?: string;
+    endDate?: string;
+    periods?: Array<{
+      period: string;
+      completed: number;
+      cancelled: number;
+    }>;
+    totalOrders?: number;
+  };
+}
 
-const chartConfig = {
-  completted: {
-    label: "Completted",
-    color: "var(--chart-2)",
-  },
-  cancel: {
-    label: "cancel",
-    color: "var(--chart-5)",
-  },
-} satisfies ChartConfig;
+export function SalesReportChart({
+  salesReportPeriods,
+}: SalesReportChartProps) {
+  const chartData =
+    salesReportPeriods?.periods?.map((period: SalesReportPeriod) => ({
+      period: period.period,
+      completed: period.completed,
+      cancelled: period.cancelled,
+    })) || [];
 
-export function SalesReportChart() {
+  const chartConfig = {
+    completed: {
+      label: "completed",
+      color: "var(--chart-2)",
+    },
+    cancelled: {
+      label: "cancelled",
+      color: "var(--chart-5)",
+    },
+  } satisfies ChartConfig;
+
+  const totalCompleted =
+    salesReportPeriods?.periods?.reduce(
+      (sum: number, p: any) => sum + p.completed,
+      0
+    ) || 0;
+  const totalCancelled =
+    salesReportPeriods?.periods?.reduce(
+      (sum: number, p: any) => sum + p.cancelled,
+      0
+    ) || 0;
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Property Analysis</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>
+          {salesReportPeriods?.startDate && salesReportPeriods?.endDate
+            ? `${formatDate(new Date(salesReportPeriods.startDate))} - ${formatDate(new Date(salesReportPeriods.endDate))}`
+            : "Date range not available"}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="period"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value.slice(0, 15)} // Truncate long period names
             />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar
-              dataKey="completted"
-              fill="var(--color-completted)"
-              radius={4}
-            />
-            <Bar dataKey="cancel" fill="var(--color-cancel)" radius={4} />
+            <Bar dataKey="completed" fill="var(--color-completed)" radius={4} />
+            <Bar dataKey="cancelled" fill="var(--color-cancelled)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          You had 8,792 visitors for the month of June.
+          Total orders: {salesReportPeriods?.totalOrders}
           <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Showing total orders and cancelled
+          Showing completed and cancelled orders by period
         </div>
       </CardFooter>
     </Card>
