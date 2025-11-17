@@ -129,7 +129,7 @@ export function CreateReviewButton({
               id="review"
               name="review"
               placeholder="Tell us about your experience..."
-              className="min-h-[120px] resize-none"
+              className="min-h-[120px] break-all"
               value={formik.values.review}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

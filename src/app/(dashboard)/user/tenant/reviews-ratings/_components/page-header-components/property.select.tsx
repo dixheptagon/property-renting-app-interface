@@ -17,24 +17,21 @@ import { useReviewSearchParams } from "../../_hooks/use.review.search.params";
 export default function PropertySelect() {
   const { properties, isLoading, isError } = useOwnedProperties();
 
-  const [selectedProperty, setSelectedProperty] = useState("");
-  const { setPropertyId } = useReviewSearchParams();
+  const { setPropertyId, filters } = useReviewSearchParams();
 
   useEffect(() => {
-    if (properties.length > 0 && !selectedProperty) {
+    if (properties.length > 0 && !filters.propertyId) {
       setPropertyId(properties[0].uid);
-      setSelectedProperty(properties[0].uid);
     }
-  }, [properties, selectedProperty]);
+  }, [properties, filters.propertyId]);
 
   const handlePropertyChange = (propertyId: string) => {
-    setSelectedProperty(propertyId);
     setPropertyId(propertyId);
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <Select value={selectedProperty} onValueChange={handlePropertyChange}>
+    <div className="flex min-h-screen items-center justify-center">
+      <Select value={filters.propertyId} onValueChange={handlePropertyChange}>
         <SelectTrigger
           disabled={isLoading || isError}
           className="focus-visible:border-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex w-fit items-center justify-between gap-2 rounded-md border-blue-500 bg-blue-600 px-3 py-2 text-sm font-semibold whitespace-nowrap text-white shadow-xs transition-[color,box-shadow] outline-none hover:bg-blue-700 focus-visible:ring-[3px] focus-visible:ring-blue-500/50 disabled:cursor-not-allowed disabled:opacity-50 data-placeholder:text-white data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-white"

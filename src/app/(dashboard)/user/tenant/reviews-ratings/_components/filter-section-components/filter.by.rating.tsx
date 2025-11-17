@@ -39,7 +39,6 @@ export default function FilterByRating() {
   };
 
   const handleApplyFilter = () => {
-    // Since we're updating in real-time, this could be used for additional logic
     console.log("Applying filters with ratings:", filters.rating);
   };
 
@@ -49,10 +48,11 @@ export default function FilterByRating() {
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
+      {/* Filter Button */}
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="group/btn w-full bg-blue-600 text-white transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
+          <Button className="group/btn w-full justify-center bg-blue-600 text-white transition-all hover:bg-blue-700 hover:shadow-lg md:w-auto md:justify-start">
             <SlidersHorizontal className="mr-2 h-4 w-4" />
             Filters
             {(filters.rating?.length || 0) > 0 && (
@@ -113,7 +113,7 @@ export default function FilterByRating() {
               <Button
                 type="button"
                 variant="outline"
-                className="order-2 sm:order-1"
+                className="order-2 w-full sm:order-1 sm:w-auto"
               >
                 Cancel
               </Button>
@@ -121,7 +121,7 @@ export default function FilterByRating() {
             <Button
               type="button"
               onClick={handleApplyFilter}
-              className="order-1 bg-blue-600 text-white hover:bg-blue-700 sm:order-2"
+              className="order-1 w-full bg-blue-600 text-white hover:bg-blue-700 sm:order-2 sm:w-auto"
             >
               Apply Filter
             </Button>
@@ -129,11 +129,13 @@ export default function FilterByRating() {
         </DialogContent>
       </Dialog>
 
+      {/* Clear Filters Button */}
       <Button
         onClick={handleClearAll}
-        className="bg-white text-gray-500 hover:bg-red-100 hover:text-red-700"
+        variant="outline"
+        className="w-full justify-center border-gray-300 text-gray-600 hover:border-red-300 hover:bg-red-50 hover:text-red-600 md:w-auto md:justify-start"
       >
-        <FunnelX className="h-4 w-4" />
+        <FunnelX className="mr-2 h-4 w-4" />
         Clear Filters
       </Button>
     </div>

@@ -17,7 +17,7 @@ export default function TotalReviews({ totalReviews }: TotalReviewsProps) {
       </div>
 
       {/* Title */}
-      <h2 className="mb-2 text-sm font-medium tracking-wide text-gray-600 uppercase">
+      <h2 className="mb-2 text-center text-sm font-medium tracking-wide text-gray-600 uppercase">
         Total Reviews
       </h2>
 

@@ -17,7 +17,7 @@ export default function CompletedReviewCard({
   review: reviewData,
 }: CompletedReviewCardProps) {
   return (
-    <Card className="mt-4 w-full overflow-hidden transition-shadow hover:shadow-lg">
+    <Card className="mt-4 w-full overflow-hidden">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1 space-y-1">
@@ -87,7 +87,7 @@ export default function CompletedReviewCard({
                       {formatDate(new Date(reviewData.review.updatedAt))}
                     </span>
                   </div>
-                  <p className="text-sm leading-relaxed text-gray-700">
+                  <p className="text-sm leading-relaxed tracking-wide whitespace-pre-line text-gray-700">
                     {reviewData.review.reply}
                   </p>
                 </div>

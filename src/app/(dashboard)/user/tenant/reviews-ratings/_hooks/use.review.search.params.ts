@@ -32,7 +32,7 @@ export const useReviewSearchParams = () => {
       { resetPage: true }
     );
 
-  const setPropertyId = (propertyId: string | null) =>
+  const setPropertyId = (propertyId: string | undefined) =>
     update({ propertyId, page: 1 }, { resetPage: true });
 
   const clearFilters = () =>

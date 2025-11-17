@@ -29,8 +29,10 @@ export default function FilterBySort() {
     <section>
       <Select value={sortBy} onValueChange={handleValueChange}>
         <SelectTrigger className="w-full font-semibold text-black">
-          <ArrowDownNarrowWide className="mr-2 h-4 w-4 text-black" />
-          <h2>Sort By:</h2>
+          <div className="flex items-center gap-2">
+            <ArrowDownNarrowWide className="mr-2 h-4 w-4 text-black" />
+            <h2>Sort By:</h2>
+          </div>
           <SelectValue />
         </SelectTrigger>
 

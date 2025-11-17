@@ -49,7 +49,7 @@ export function FilterByDate() {
         <Button
           variant="outline"
           data-empty={!dateRange}
-          className="justify-start bg-blue-600 text-left font-semibold hover:bg-blue-700 data-[empty=false]:text-white data-[empty=true]:text-white data-[state=open]:bg-blue-700"
+          className="justify-center bg-blue-600 text-left font-semibold hover:bg-blue-700 data-[empty=false]:text-white data-[empty=true]:text-white data-[state=open]:bg-blue-700"
         >
           <CalendarIcon />
           {dateRange?.from && dateRange?.to ? (
