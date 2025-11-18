@@ -7,7 +7,6 @@ import { usePurchaseSearchParams } from "./_utils/search.params";
 import PageHeader from "./_components/page.header";
 import FilterSection from "./_components/filter.section";
 import ActiveFilters from "./_components/filter-components/active.filters";
-import PurchaseTable from "./_components/purchase.table";
 import PurchaseCard from "./_components/purchase.card";
 import PaginationSection from "./_components/pagination.section";
 import EmptyState from "./_components/empty.state";
@@ -26,9 +25,6 @@ export default function Page() {
     filters,
     refetch,
   } = usePurchaseList();
-
-  console.log("purchases", purchases);
-  console.log("filters", filters);
 
   const {
     setPage,
@@ -89,7 +85,11 @@ export default function Page() {
                 }
               />
 
-              <PurchaseTable purchases={purchases} />
+              <section className="space-y-4">
+                {purchases.map((purchase, index) => (
+                  <PurchaseCard key={index} purchase={purchase} />
+                ))}
+              </section>
 
               <PaginationSection
                 totalItemCount={totalItems}
@@ -98,13 +98,6 @@ export default function Page() {
                 onPageChange={setPage}
                 onLimitChange={setLimit}
               />
-
-              {/* Mobile Card View */}
-              <section className="space-y-4 lg:hidden">
-                {purchases.map((purchase, index) => (
-                  <PurchaseCard key={index} purchase={purchase} />
-                ))}
-              </section>
 
               {/* Empty State */}
               {purchases.length === 0 && (

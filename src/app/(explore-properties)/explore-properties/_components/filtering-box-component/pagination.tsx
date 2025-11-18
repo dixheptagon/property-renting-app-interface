@@ -108,7 +108,7 @@ export function PaginationComponent({
                 isActive={pageNum === page}
                 className="cursor-pointer"
               >
-                {pageNum}
+                {String(pageNum)}
               </PaginationLink>
             )}
           </PaginationItem>

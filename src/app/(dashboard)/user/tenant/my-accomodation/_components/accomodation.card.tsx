@@ -1,16 +1,15 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Star, MapPin, Edit3, ImageOff } from "lucide-react";
+import { Star, MapPin, Edit3, ImageOff, LandPlot } from "lucide-react";
 import { Property } from "../_hooks/use.property.list";
 import { getCategoryIcon } from "./get.category.icon";
+import Link from "next/link";
 
 interface AccomodationCardProps {
   property: Property;
 }
 
 export default function AccomodationCard({ property }: AccomodationCardProps) {
-  console.log(property);
-
   return (
     <div className="mx-auto w-full max-w-sm">
       <div className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
@@ -82,13 +81,12 @@ export default function AccomodationCard({ property }: AccomodationCardProps) {
           </div>
 
           {/* Edit Button */}
-          <Button
-            disabled
-            className="group/btn h-12 w-full rounded-xl bg-linear-to-r from-blue-600 to-blue-700 font-semibold text-white shadow-md transition-all duration-300 hover:from-blue-700 hover:to-blue-800 hover:shadow-lg"
-          >
-            <Edit3 className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-12" />
-            Edit Property
-          </Button>
+          <Link href={`/${property.uid}/property-details`}>
+            <Button className="group/btn h-12 w-full rounded-xl bg-linear-to-r from-blue-600 to-blue-700 font-semibold text-white shadow-md transition-all duration-300 hover:from-blue-700 hover:to-blue-800 hover:shadow-lg">
+              <LandPlot className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-12" />
+              See Details
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

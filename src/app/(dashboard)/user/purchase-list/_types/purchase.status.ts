@@ -23,6 +23,7 @@ export interface Purchase {
       name: string;
       address: string;
       city: string;
+      main_image: string;
     };
   };
   status: PurchaseStatus;
