@@ -13,7 +13,6 @@ export function UseVerifyEmail({
     mutationFn: async (data: { email: string; verification_code: string }) => {
       const res = await axiosInstance.post("/api/auth/verify-email", data);
 
-      console.log(res.data);
       return res.data;
     },
     onError,

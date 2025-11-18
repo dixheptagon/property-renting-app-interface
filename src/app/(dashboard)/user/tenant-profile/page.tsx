@@ -28,7 +28,6 @@ export default function TenantProfilePage() {
     }
 
     if (error) {
-      console.error("Failed to fetch tenant profile:", error);
       return <ErrorAlert onRetry={() => refetch()} />;
     }
 

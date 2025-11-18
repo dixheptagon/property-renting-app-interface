@@ -32,15 +32,12 @@ export function RegisterForm({
 
   const { mutate: registerAccount, isPending } = useRegisterAccount({
     onSuccess: (data) => {
-      console.log(data);
       storeAuth(data.data);
       toast.success(data?.message);
       router.push("/");
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        console.log(error);
-
         if (error.response?.status === 409) {
           toast.error(error.response?.data.error);
           router.push("/login");
@@ -49,9 +46,7 @@ export function RegisterForm({
           router.push("/verify-email");
         }
       } else {
-        console.log(error);
         toast.error(error?.message);
-        // router.push("/");
       }
     },
   });

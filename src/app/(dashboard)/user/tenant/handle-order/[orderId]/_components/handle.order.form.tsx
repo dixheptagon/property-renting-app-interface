@@ -28,8 +28,6 @@ interface HandleOrderFormProps {
 export default function HandleOrderForm({ orderId }: HandleOrderFormProps) {
   const { data: bookingResponse, isLoading, error } = useGetBooking(orderId);
 
-  console.log(bookingResponse);
-
   if (isLoading) {
     return <LoadingData message="Loading order details..." />;
   }

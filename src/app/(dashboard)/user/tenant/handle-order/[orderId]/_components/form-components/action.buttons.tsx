@@ -63,7 +63,6 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           ? error.response?.data.error
           : "Failed to reject order"
       );
-      console.error("Reject order error:", error);
     }
   };
 
@@ -82,7 +81,6 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           ? error.response?.data.error
           : "An error occurred during cancellation"
       );
-      console.error("Cancel order error:", error);
     }
   };
 
@@ -97,7 +95,6 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           ? error.response?.data.error
           : "Failed to confirm order"
       );
-      console.error("Confirm order error:", error);
     }
   };
 
@@ -113,7 +110,6 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           ? error.response?.data.error
           : "Failed to complete order"
       );
-      console.error("Complete order error:", error);
     }
   };
 

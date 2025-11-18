@@ -12,13 +12,11 @@ export default function GoogleLoginButton() {
 
   const { mutate: loginWithGoogle } = useGoogleLogin({
     onSuccess: (data) => {
-      console.log(data);
       toast.success(data?.message);
       storeAuth(data?.data);
       router.push("/");
     },
     onError: (error) => {
-      console.log(error);
       if (error?.response?.data?.error) {
         toast.error(error.response?.data.error);
       } else {

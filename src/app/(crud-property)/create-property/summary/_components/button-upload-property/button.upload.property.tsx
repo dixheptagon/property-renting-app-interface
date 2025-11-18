@@ -46,7 +46,6 @@ export default function UploadProperty() {
       }, 4000);
     },
     onError: (error) => {
-      console.log(error);
       if (error?.response?.data?.error) {
         toast.error(error.response?.data.error);
       } else {
@@ -57,14 +56,6 @@ export default function UploadProperty() {
   });
 
   const handleUploadProperty = () => {
-    console.log({
-      propertyImages,
-      property,
-      rooms,
-      peakSeasonRates,
-      unavailabilities,
-    });
-
     uploadProperty({
       propertyImages,
       property,

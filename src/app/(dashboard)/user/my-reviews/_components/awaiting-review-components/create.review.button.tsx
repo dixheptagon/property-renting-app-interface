@@ -41,12 +41,10 @@ export function CreateReviewButton({
   } = useWriteReview({
     onSuccess: (data) => {
       toast.success("Review saved successfully!");
-      console.log("Write Review Data:", data);
 
       setOpen(false);
     },
     onError: (error) => {
-      console.log("Error:", error);
       if (error instanceof AxiosError && error.response?.data?.error) {
         toast.error(error.response.data.error);
       } else {
@@ -68,11 +66,6 @@ export function CreateReviewButton({
   });
 
   const handleSaveReview = (values: handleWriteReviewValues) => {
-    console.log("Review Data:", {
-      rating: values.rating,
-      review: values.review,
-    });
-
     writeReview({
       bookingUid: booking_uid,
       reviewData: {

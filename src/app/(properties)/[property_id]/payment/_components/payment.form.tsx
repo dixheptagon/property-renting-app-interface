@@ -1,14 +1,3 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { usePaymentStore } from "../../../_stores/payment.store";
 import { useEffect, useRef, useState } from "react";
 import { useSnap } from "../_hooks/use.snap";
@@ -25,38 +14,23 @@ export default function PaymentForm() {
   const snapToken = paymentState.orderResponse?.data.transaction_token.token;
   const orderId = paymentState.orderResponse?.data.order.uid;
 
-  console.log("PaymentForm - paymentState:", paymentState);
-  console.log("PaymentForm - snapToken:", snapToken);
-  console.log("PaymentForm - orderId:", orderId);
-
   const containerRef = useRef<HTMLDivElement>(null);
   const [hasEmbedded, setHasEmbedded] = useState(false);
 
   const { snapEmbed } = useSnap();
 
   useEffect(() => {
-    console.log(
-      "PaymentForm - useEffect triggered, snapToken:",
-      snapToken,
-      "hasEmbedded:",
-      hasEmbedded
-    );
     if (!snapToken || hasEmbedded) {
-      console.log(
-        "PaymentForm - No snapToken or already embedded, returning early"
-      );
       return;
     }
-    console.log("PaymentForm - Calling snapEmbed with token:", snapToken);
+
     // Add a small delay to ensure snap is loaded
     const timer = setTimeout(() => {
-      console.log("PaymentForm - Executing snapEmbed after delay");
       snapEmbed(snapToken, "snap-container");
       setHasEmbedded(true);
     }, 2000); // Increased delay
 
     return () => {
-      console.log("PaymentForm - Cleanup: clearing timer");
       clearTimeout(timer);
     };
   }, [snapToken, snapEmbed, hasEmbedded]);

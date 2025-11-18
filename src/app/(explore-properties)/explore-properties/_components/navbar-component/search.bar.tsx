@@ -30,8 +30,6 @@ export default function SearchBar() {
     startTransition(() => {
       router.push(`/explore-properties?${params.toString()}`);
     });
-
-    console.log(params.toString());
   };
 
   return (

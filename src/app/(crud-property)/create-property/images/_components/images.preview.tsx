@@ -33,14 +33,11 @@ export default function ImagesPreview() {
 
   const { mutate: removeImage, isPending } = useDeletePropertyImage({
     onSuccess: (data) => {
-      console.log(data);
-
       toast.success(data?.data?.message || "Images deleted successfully!");
       setDeleteDialog({ open: false, photoId: null, tempGroupId: null });
       removePropertyImage(Number(deleteDialog.photoId));
     },
     onError: (error) => {
-      console.log(error);
       if (error?.response?.data?.error) {
         toast.error(error.response?.data.error);
       } else {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { FunnelX, SlidersHorizontal, Star } from "lucide-react";
 import {
@@ -19,6 +19,9 @@ import { useReviewSearchParams } from "../../_hooks/use.review.search.params";
 
 export default function FilterByRating() {
   const { setRatingFilter, clearFilters, filters } = useReviewSearchParams();
+  const [localRatings, setLocalRatings] = useState<number[]>(
+    filters.rating || []
+  );
 
   const ratings = [
     { value: 5, label: "5 Stars", stars: 5 },
@@ -29,22 +32,18 @@ export default function FilterByRating() {
   ];
 
   const handleRatingChange = (ratingValue: number) => {
-    const currentRatings = filters.rating || [];
-    const newRatings = currentRatings.includes(ratingValue)
-      ? currentRatings.filter((r) => r !== ratingValue)
-      : [...currentRatings, ratingValue];
-
-    console.log("Selected Ratings:", newRatings);
-    setRatingFilter(newRatings);
+    const newRatings = localRatings.includes(ratingValue)
+      ? localRatings.filter((r) => r !== ratingValue)
+      : [...localRatings, ratingValue];
+    setLocalRatings(newRatings);
   };
 
   const handleApplyFilter = () => {
-    console.log("Applying filters with ratings:", filters.rating);
+    setRatingFilter(localRatings);
   };
 
   const handleClearAll = () => {
     clearFilters();
-    console.log("Filters cleared");
   };
 
   return (
@@ -55,9 +54,9 @@ export default function FilterByRating() {
           <Button className="group/btn w-full justify-center bg-blue-600 text-white transition-all hover:bg-blue-700 hover:shadow-lg md:w-auto md:justify-start">
             <SlidersHorizontal className="mr-2 h-4 w-4" />
             Filters
-            {(filters.rating?.length || 0) > 0 && (
+            {localRatings.length > 0 && (
               <span className="ml-2 rounded-full bg-white px-2 py-0.5 text-xs text-blue-600">
-                {filters.rating?.length || 0}
+                {localRatings.length}
               </span>
             )}
           </Button>
@@ -80,7 +79,7 @@ export default function FilterByRating() {
               >
                 <Checkbox
                   id={`rating-${rating.value}`}
-                  checked={filters.rating?.includes(rating.value) || false}
+                  checked={localRatings.includes(rating.value)}
                   onCheckedChange={() => handleRatingChange(rating.value)}
                   className="border-2 border-gray-300"
                 />

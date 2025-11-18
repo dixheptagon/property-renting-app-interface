@@ -36,8 +36,6 @@ export default function Page() {
     clearAllFilters,
   } = usePurchaseSearchParams();
 
-  console.log("error", error);
-
   return (
     <SidebarProvider>
       <AppSidebar />

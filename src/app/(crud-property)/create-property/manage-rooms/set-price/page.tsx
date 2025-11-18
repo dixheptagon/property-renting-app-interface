@@ -46,8 +46,6 @@ export default function Page() {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-
       if (!roomId || !currentRoom) {
         toast.error(`Room id ${roomId} not found, You will be redirected`, {
           duration: 4000,

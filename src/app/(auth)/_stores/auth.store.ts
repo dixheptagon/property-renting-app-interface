@@ -112,7 +112,6 @@ export const useAuthStore = create<AuthState>()(
       }),
       onRehydrateStorage: () => (state, error) => {
         if (error) {
-          console.error(error);
           toast.error("Something went wrong, please try again later.");
           window.location.href = "/";
         } else {

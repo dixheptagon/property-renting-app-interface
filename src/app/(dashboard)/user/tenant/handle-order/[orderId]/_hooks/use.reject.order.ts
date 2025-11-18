@@ -18,7 +18,6 @@ export const useRejectOrder = () => {
         }
       );
 
-      console.log(response.data);
       return response.data;
     },
     onSuccess: (data, orderId) => {

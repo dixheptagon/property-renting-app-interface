@@ -110,7 +110,6 @@ export default function ContentSetUnavailabilty() {
         submit: "Failed to save unavailabilities. Please try again.",
       });
       setSubmitting(false);
-      console.error("Error saving unavailabilities:", error);
     }
   };
 

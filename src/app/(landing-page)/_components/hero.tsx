@@ -26,7 +26,6 @@ export default function Hero() {
     if (dateRange?.to)
       params.set("checkout", dateRange.to.toISOString().split("T")[0]);
     router.push(`/explore-properties?${params.toString()}`);
-    console.log(params.toString());
   };
 
   return (
@@ -38,7 +37,7 @@ export default function Hero() {
         height={1080}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>
+      <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/20 to-black/60"></div>
 
       <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col items-center justify-center px-4 text-white sm:px-6 lg:px-8">
         <div className="mb-8 text-center md:mb-12">

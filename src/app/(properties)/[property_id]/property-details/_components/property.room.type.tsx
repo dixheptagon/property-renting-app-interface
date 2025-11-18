@@ -59,7 +59,6 @@ export default function PropertyRoomTypes({ rooms }: PropertyRoomTypesProps) {
   const handleSelectRoom = (roomUid: number | string) => {
     const room = rooms.find((r) => r.uid === roomUid);
 
-    console.log("Selected Room ID:", roomUid);
     if (room) {
       setRoom(room);
     }

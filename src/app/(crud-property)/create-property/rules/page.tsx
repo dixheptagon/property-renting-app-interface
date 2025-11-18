@@ -32,7 +32,6 @@ export default function Page() {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       setPropertyData({
         rules: values.rules,
         custom_rules: values.custom_rules,

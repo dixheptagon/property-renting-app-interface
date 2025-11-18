@@ -19,7 +19,6 @@ export const useCancelOrder = () => {
         }
       );
 
-      console.log(response.data);
       return response.data;
     },
     onSuccess: (data, orderId) => {
@@ -42,8 +41,6 @@ export const useCancelOrder = () => {
           ? error.response?.data?.error
           : "An error occurred during cancellation"
       );
-
-      console.error("Cancel order error:", error);
     },
   });
 };

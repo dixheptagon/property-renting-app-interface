@@ -79,7 +79,6 @@ export function VerifyEmail({
     error: resendError,
   } = useResendVerification({
     onError: (error) => {
-      console.log(error);
       if (error?.response?.data?.error) {
         toast.error(error.response?.data.error);
       } else {
@@ -88,7 +87,6 @@ export function VerifyEmail({
       }
     },
     onSuccess: (data) => {
-      console.log(data);
       toast.success(data?.message);
     },
   });
@@ -100,7 +98,6 @@ export function VerifyEmail({
     validationSchema: OTPValidationSchema,
     onSubmit: (values) => {
       verifyEmail({ email, verification_code: values.otp });
-      console.log(error);
     },
   });
 

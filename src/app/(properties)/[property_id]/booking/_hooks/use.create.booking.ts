@@ -23,16 +23,13 @@ export const useCreateBooking = () => {
         payload
       );
 
-      console.log(response.data);
       return response.data;
     },
     onSuccess: (data) => {
       toast.success("Booking created successfully!");
       // Handle success - maybe redirect to payment page
-      console.log("Booking created:", data);
     },
     onError: (error: any) => {
-      console.error("Booking creation failed:", error);
       toast.error(
         error.response?.data?.error ||
           "Failed to create booking. Please try again."

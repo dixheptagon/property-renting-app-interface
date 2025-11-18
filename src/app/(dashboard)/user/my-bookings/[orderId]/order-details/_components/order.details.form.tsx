@@ -31,8 +31,6 @@ export default function OrderDetailsForm({
   const enableQrCode =
     booking.status === "processing" || booking.status === "completed";
 
-  console.log("Booking Data:", bookingData);
-
   return (
     <div className="relative mx-auto max-w-4xl">
       {/* Success Banner */}

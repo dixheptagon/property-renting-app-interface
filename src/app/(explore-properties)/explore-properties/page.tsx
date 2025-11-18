@@ -29,8 +29,6 @@ export default function Page() {
     refetch,
   } = usePropertyList();
 
-  console.log(properties);
-
   const propertiesData = properties?.data || [];
   const paginationData = properties?.pagination || {};
 

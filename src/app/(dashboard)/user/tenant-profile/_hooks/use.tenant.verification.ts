@@ -24,7 +24,7 @@ export function useTenantVerification({
           },
         }
       );
-      console.log("Verification response:", response.data);
+
       return response.data;
     },
     onSuccess: (data) => {
@@ -34,7 +34,6 @@ export function useTenantVerification({
       onSuccess?.(data);
     },
     onError: (error: any) => {
-      console.error("Verification submission error:", error);
       toast.error(
         error?.response?.data?.message || "Failed to submit verification"
       );

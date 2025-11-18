@@ -26,12 +26,9 @@ export function useReplyReview({
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Reply Review Data:", data);
-
       onSuccess && onSuccess();
     },
     onError: (error) => {
-      console.log("Error:", error);
       onError && onError();
     },
   });
