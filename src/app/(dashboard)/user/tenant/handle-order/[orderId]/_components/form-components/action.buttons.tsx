@@ -105,6 +105,7 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
     try {
       await completeOrderMutation.mutateAsync(orderId);
       toast.success("Order completed successfully");
+      window.location.reload();
       // Close dialog would be handled by DialogClose
     } catch (error) {
       toast.error(

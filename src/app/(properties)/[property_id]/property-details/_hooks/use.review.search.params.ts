@@ -6,11 +6,10 @@ export const useReviewSearchParams = () => {
     useSearchParamsManager(reviewSearchConfig);
 
   const setPage = (page: number) => update({ page });
-  const setLimit = (limit: number) =>
-    update({ limit, page: 1 }, { resetPage: true });
+  const setLimit = (limit: number) => update({ limit, page: 1 });
 
   const setRatingFilter = (ratings: number[]) =>
-    update({ rating: ratings, page: 1 }, { resetPage: true });
+    update({ rating: ratings, page: 1 });
 
   const toggleRating = (rating: number) => {
     const currentRatings = current.rating || [];
@@ -21,31 +20,24 @@ export const useReviewSearchParams = () => {
   };
 
   const setSearch = (search: string) =>
-    update({ search: search || null, page: 1 }, { resetPage: true });
+    update({ search: search || null, page: 1 });
 
   const setDateRange = (from: string | null, to: string | null) =>
-    update({ date_from: from, date_to: to, page: 1 }, { resetPage: true });
+    update({ date_from: from, date_to: to, page: 1 });
 
   const setSort = (sort_by: string, sort_dir?: "asc" | "desc") =>
-    update(
-      { sort_by, sort_dir: sort_dir || "desc", page: 1 },
-      { resetPage: true }
-    );
+    update({ sort_by, sort_dir: sort_dir || "desc", page: 1 });
 
   const clearFilters = () =>
-    update(
-      {
-        rating: [],
-        date_from: null,
-        date_to: null,
-        sort_by: null,
-        sort_dir: "desc",
-      },
-      { resetPage: true }
-    );
+    update({
+      rating: [],
+      date_from: null,
+      date_to: null,
+      sort_by: null,
+      sort_dir: "desc",
+    });
 
-  const clearSearch = () =>
-    update({ search: null, page: 1 }, { resetPage: true });
+  const clearSearch = () => update({ search: null, page: 1 });
 
   const clearAll = () => reset();
 

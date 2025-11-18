@@ -29,10 +29,10 @@ export function LimitShows({ currentLimit }: LimitShowsProps) {
     <div className="flex items-center gap-2">
       <span className="text-sm font-medium">Show:</span>
       <Select
-        value={value?.toString() || "10"}
+        value={value?.toString() || "5"}
         onValueChange={handleValueChange}
       >
-        <SelectTrigger className="w-[80px]">
+        <SelectTrigger className="w-20">
           <SelectValue placeholder="Show" />
         </SelectTrigger>
         <SelectContent>

@@ -18,12 +18,12 @@ export const useCompleteOrder = () => {
     onSuccess: (data, orderId) => {
       // Invalidate and refetch booking data after successful completion
       queryClient.invalidateQueries({
-        queryKey: ["booking", orderId],
+        queryKey: ["order-list", orderId],
       });
 
       // Optionally invalidate any booking lists
       queryClient.invalidateQueries({
-        queryKey: ["bookings"],
+        queryKey: ["order-list"],
       });
     },
   });

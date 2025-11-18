@@ -2,7 +2,6 @@
 
 import FilterByRating from "./filter-section-components/filter.by.rating";
 import FilterBySearch from "./filter-section-components/filter.by.search";
-import { FilterByDate } from "./filter-section-components/filter.by.date";
 import FilterBySort from "./filter-section-components/filter.by.sort";
 
 export default function FilterSection() {
@@ -15,7 +14,6 @@ export default function FilterSection() {
       </div>
 
       <div className="flex flex-col gap-4 md:flex-row md:gap-4">
-        <FilterByDate />
         <FilterBySort />
       </div>
     </section>

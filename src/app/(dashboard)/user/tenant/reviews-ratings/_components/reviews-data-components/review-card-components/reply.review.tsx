@@ -34,6 +34,7 @@ export function ReplyReview({ bookingUid, username, reply }: ReplyReviewProps) {
       setOpen(false);
       formik.resetForm();
       toast.success("Reply submitted successfully");
+      window.location.reload();
     },
     onError: () => {
       toast.error("Failed to submit reply");

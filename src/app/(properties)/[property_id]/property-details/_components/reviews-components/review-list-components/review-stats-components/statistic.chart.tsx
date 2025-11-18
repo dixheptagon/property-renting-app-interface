@@ -17,6 +17,8 @@ interface ReviewsStatisticsChartProps {
 export default function ReviewsStatisticsChart({
   ratingDistribution,
 }: ReviewsStatisticsChartProps) {
+  console.log(ratingDistribution);
+
   const chartData = [
     { rating: 5, reviews: ratingDistribution["5"], fill: "var(--color-1)" },
     { rating: 4, reviews: ratingDistribution["4"], fill: "var(--color-2)" },
