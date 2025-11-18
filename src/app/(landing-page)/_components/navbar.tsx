@@ -47,10 +47,10 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        className={`fixed top-0 z-50 w-full transition-all duration-500 ${
           scrolled
             ? "bg-white/85 shadow-lg backdrop-blur-md"
-            : "bg-gradient-to-b from-black/50 to-transparent"
+            : "bg-linear-to-b from-black/50 to-transparent"
         }`}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">

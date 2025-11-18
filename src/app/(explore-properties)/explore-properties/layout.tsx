@@ -7,7 +7,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <div className="relative flex min-h-screen flex-col bg-gray-100">
+      <div className="relative flex min-h-screen flex-col bg-gray-50">
         <Navbar />
         {children}
       </div>
