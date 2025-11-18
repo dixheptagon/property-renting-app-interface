@@ -14,8 +14,6 @@ export interface Property {
   custom_amenities: string[] | null; // kadang array kosong, kadang null
   rules: string[]; // array of string (contoh: ["no_smoking"])
   custom_rules: string[] | null;
-  rating_avg: number | null;
-  rating_count: number | null;
   base_price: string; // di JSON dikirim sebagai string ("1000000")
   images: {
     url: string;
@@ -26,6 +24,7 @@ export interface Property {
     first_name: string;
     last_name: string;
   };
+  rating_avg: number | null;
   review_count: number;
   updated_at: string;
 }

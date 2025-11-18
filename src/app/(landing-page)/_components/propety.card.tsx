@@ -34,6 +34,8 @@ const getCategoryIcon = (category: string) => {
 };
 
 export const PropertyCard = ({ property }: { property: Property }) => {
+  console.log(property);
+
   return (
     <Link href={`/${property.uid}/property-details`}>
       <article className="group relative overflow-hidden transition-all duration-300">
@@ -65,7 +67,10 @@ export const PropertyCard = ({ property }: { property: Property }) => {
           {/* Rating Badge */}
           <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-1.5 text-xs font-bold text-white shadow-lg transition-all duration-300 group-hover:scale-105">
             <Star className="h-3.5 w-3.5 fill-white" />
-            <span>{property.rating_avg || "N/A"}</span>
+            <span>
+              {`${property.rating_avg} • ${property.review_count} reviews` ||
+                "N/A"}
+            </span>
           </div>
         </div>
 

@@ -45,6 +45,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
   const username =
     review.user.display_name ||
     `${review.user.first_name} ${review.user.last_name}`;
+
   const [showFullReply, setShowFullReply] = React.useState(false);
   const [showFullComment, setShowFullComment] = React.useState(false);
 
@@ -93,7 +94,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           <p className="leading-relaxed whitespace-pre-line text-gray-700">
             {showFullComment ? review.comment : truncateComment(review.comment)}
           </p>
-          {review.comment.length > 200 && (
+          {review.comment.length > 100 && (
             <button
               onClick={() => setShowFullComment(!showFullComment)}
               className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
@@ -114,7 +115,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
               <p className="leading-relaxed whitespace-pre-line text-gray-700">
                 {showFullReply ? review.reply : truncateReply(review.reply)}
               </p>
-              {review.reply.length > 200 && (
+              {review.reply.length > 100 && (
                 <button
                   onClick={() => setShowFullReply(!showFullReply)}
                   className="mt-3 text-sm font-medium text-green-600 transition-colors hover:text-green-700"

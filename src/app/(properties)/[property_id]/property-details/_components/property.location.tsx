@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { ExternalLink, MapPin, Navigation } from "lucide-react";
 import MapEmbed from "@/components/ui/maps.embed";
-import { Property } from "@/app/(properties)/property-details/_types/property";
+import { Property } from "../_types/property";
 
 export default function PropertyLocation({
   title: propertiesName,
@@ -24,8 +24,6 @@ export default function PropertyLocation({
   | "longitude"
   | "map_url"
 >) {
-  const [mapLoaded, setMapLoaded] = useState(false);
-
   // Full address string
   const fullAddress = `${address}, ${city}, ${country} ${postalCode}`;
 

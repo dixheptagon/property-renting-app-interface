@@ -13,4 +13,20 @@ const truncateDescription = (text: string, maxLength = 200) => {
   return text.substring(0, maxLength) + "...";
 };
 
-export { truncateTitle, truncateAddress, truncateDescription };
+const truncateReply = (text: string, maxLength = 100) => {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength) + "...";
+};
+
+const truncateComment = (text: string, maxLength = 100) => {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength) + "...";
+};
+
+export {
+  truncateTitle,
+  truncateAddress,
+  truncateDescription,
+  truncateReply,
+  truncateComment,
+};

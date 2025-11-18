@@ -18,10 +18,7 @@ export default function AccomodationCard({ property }: AccomodationCardProps) {
         <div className="relative h-56 overflow-hidden sm:h-42">
           {property.main_image ? (
             <Image
-              src={
-                property.main_image ||
-                "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=765"
-              }
+              src={property.main_image}
               alt={property.title}
               width={400}
               height={300}

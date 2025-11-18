@@ -3,7 +3,7 @@ export { default as PropertyImageGrid } from "./property.image.grid";
 export { default as PropertyLocation } from "./property.location";
 export { default as PropertyNavbar } from "./property.navbar";
 export { default as PropertyProfile } from "./property.profile";
-export { default as PropertyReviews } from "./reviews";
+export { default as PropertyReviews } from "./property.reviews";
 export { default as PropertyRoomTypes } from "./property.room.type";
 export { default as PropertyRules } from "./property.rules";
 export { default as PropertySummary } from "./property.summary";

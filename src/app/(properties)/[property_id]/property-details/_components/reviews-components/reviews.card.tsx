@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Star, Building2, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -10,61 +9,64 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { formatDate } from "../../_utils/format.date";
-import { CompletedReviewItem } from "../../_types/completed.reviews.type";
+import React from "react";
 import { truncateComment, truncateReply } from "../../_utils/truncate.data";
 
-interface CompletedReviewCardProps {
-  review: CompletedReviewItem;
-}
-
-export default function CompletedReviewCard({
-  review: reviewData,
-}: CompletedReviewCardProps) {
+export default function ReviewCard({ reviewData }: { reviewData: any }) {
   const [showFullReply, setShowFullReply] = React.useState(false);
   const [showFullComment, setShowFullComment] = React.useState(false);
 
   return (
     <Card className="mt-4 w-full overflow-hidden">
       <CardHeader>
-        <div className="flex items-start justify-between">
-          <div className="flex-1 space-y-1">
+        <div className="flex justify-between">
+          {/* User Info */}
+          <div className="flex items-start justify-between">
             <CardTitle className="flex items-center gap-2 text-xl">
-              <Building2 className="h-5 w-5 text-blue-600" />
-              {reviewData.property.name} - {reviewData.property.room_type}
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-blue-800 text-sm font-semibold text-white">
+                {reviewData.review.guest.first_name.charAt(0)}
+              </div>
+              <div>
+                <div className="text-md">
+                  {`${reviewData.review.guest.first_name} ${reviewData.review.guest.last_name}`}
+                </div>
+                <div className="text-xs">{reviewData.review.room_type}</div>
+              </div>
             </CardTitle>
           </div>
-        </div>
 
-        {/* Rating Stars */}
-        <div className="flex items-center gap-1">
-          {[...Array(5)].map((_, index) => (
-            <Star
-              key={index}
-              className={`h-5 w-5 ${
-                index < reviewData.review.rating
-                  ? "fill-yellow-400 text-yellow-400"
-                  : "fill-gray-200 text-gray-200"
-              }`}
-            />
-          ))}
-          <span className="ml-2 text-sm font-semibold text-gray-700">
-            {reviewData.review.rating}.0
-          </span>
-        </div>
+          {/* Rating Stars */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-end gap-1">
+              {[...Array(5)].map((_, index) => (
+                <Star
+                  key={index}
+                  className={`h-5 w-5 ${
+                    index < reviewData.review.rating
+                      ? "fill-yellow-400 text-yellow-400"
+                      : "fill-gray-200 text-gray-200"
+                  }`}
+                />
+              ))}
+              <span className="ml-2 text-sm font-semibold text-gray-700">
+                {reviewData.review.rating}.0
+              </span>
+            </div>
 
-        {/* Created At */}
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <Calendar className="h-4 w-4" />
-          <span>
-            Reviewed on {formatDate(new Date(reviewData.review.createdAt))}
-          </span>
+            {/* Created At */}
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <Calendar className="h-4 w-4" />
+              <span>
+                Reviewed on {formatDate(new Date(reviewData.review.createdAt))}
+              </span>
+            </div>
+          </div>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-4">
         {/* Review Text */}
         <div className="space-y-2">
-          <h4 className="font-semibold text-gray-900">My Review</h4>
           <p className="leading-relaxed whitespace-pre-line text-gray-700">
             {showFullComment
               ? reviewData.review.comment
@@ -112,7 +114,7 @@ export default function CompletedReviewCard({
                   {reviewData.review.reply.length > 100 && (
                     <button
                       onClick={() => setShowFullReply(!showFullReply)}
-                      className="mt-3 text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
+                      className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
                     >
                       {showFullReply ? "Show less" : "Read more"}
                     </button>
