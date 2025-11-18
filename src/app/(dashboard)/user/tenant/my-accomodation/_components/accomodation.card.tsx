@@ -1,6 +1,13 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Star, MapPin, Edit3, ImageOff, LandPlot } from "lucide-react";
+import {
+  Star,
+  MapPin,
+  Edit3,
+  ImageOff,
+  LandPlot,
+  ShieldCheck,
+} from "lucide-react";
 import { Property } from "../_hooks/use.property.list";
 import { getCategoryIcon } from "./get.category.icon";
 import Link from "next/link";
@@ -36,7 +43,7 @@ export default function AccomodationCard({ property }: AccomodationCardProps) {
           {/* Status Badge */}
           <div className="absolute top-3 right-3">
             <span className="inline-flex items-center rounded-full bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur-sm">
-              <span className="mr-1.5 h-2 w-2 rounded-full bg-white" />
+              <ShieldCheck className="mr-1.5 h-4 w-4 stroke-3" />
               {property.status}
             </span>
           </div>

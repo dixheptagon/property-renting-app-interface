@@ -109,7 +109,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         name: "Log Out",
-        url: "#",
+        url: "/",
         icon: CirclePower,
       },
     ],
