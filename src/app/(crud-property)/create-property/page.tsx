@@ -2,12 +2,8 @@
 import { BadgePercent, Building2, Camera } from "lucide-react";
 import CreatePropertyHeader from "./_components/create.property.header";
 import PropertyProgressBar from "./_components/property.progress.bar";
-import { usePropertyStore } from "../_stores/property.store";
-import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { PROPERTY_CREATION_STEPS } from "./_constants/create.property.steps";
-import next from "next";
 import { useRouter } from "next/navigation";
 import { useScrolled } from "@/hooks/use.scrolled";
 
@@ -39,7 +35,6 @@ export default function Page() {
   const router = useRouter();
   const scrolled = useScrolled();
   const isMobile = useIsMobile();
-  const TOTAL_STEPS = PROPERTY_CREATION_STEPS.length;
 
   return (
     <main>
@@ -59,14 +54,14 @@ export default function Page() {
                   <p className="text-blue-600">ready for guests</p>
                 </h1>
                 <p className="text-xl text-gray-600">
-                  Join thousands of hosts earning on Staysia. It's quick, easy,
-                  and we'll guide you every step of the way.
+                  Join thousands of hosts earning on Staysia. It&apos;s quick,
+                  easy, and we&apos;ll guide you every step of the way.
                 </p>
               </div>
 
               {/* Right Side - Steps */}
               <div className="space-y-6">
-                {steps.map((step, index) => (
+                {steps.map((step) => (
                   <div
                     key={step.title}
                     className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-lg"

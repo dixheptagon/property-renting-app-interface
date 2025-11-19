@@ -40,7 +40,6 @@ export default function Navbar() {
       const elementPosition =
         element.getBoundingClientRect().top + window.pageYOffset;
 
-      const extraMargin = 20;
       const offsetPosition = elementPosition - headerHeight - 20;
 
       window.scrollTo({

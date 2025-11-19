@@ -7,7 +7,7 @@ import ButtonEditSection from "./button.edit.section";
 import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
 export default function PropertyPeakRate() {
-  const { peakSeasonRates, rooms } = usePropertyStore();
+  const { peakSeasonRates } = usePropertyStore();
 
   const uniqueTargetIds = Array.from(
     new Set(peakSeasonRates.map((item) => item.targetTempRoomId))

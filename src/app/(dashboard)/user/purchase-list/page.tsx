@@ -17,7 +17,6 @@ export default function Page() {
   const {
     purchases,
     totalItems,
-    totalPages,
     currentPage,
     limit,
     loading,
@@ -32,7 +31,6 @@ export default function Page() {
     toggleStatus,
     clearStatusFilters,
     setSortBy,
-    setDateRange,
     clearAllFilters,
   } = usePurchaseSearchParams();
 

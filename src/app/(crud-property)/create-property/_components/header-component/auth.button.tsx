@@ -1,7 +1,6 @@
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
-import { access } from "fs";
 import { MobileUserDropdown, UserDropdown } from "./user.dropdown";
 
 export function AuthButtons({ handleAuth }: { handleAuth: () => void }) {

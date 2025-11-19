@@ -1,6 +1,5 @@
 "use client";
 
-import { Home } from "lucide-react";
 import PropertySelect from "./property.select";
 import RoomTypeSelect from "./room.type.select";
 

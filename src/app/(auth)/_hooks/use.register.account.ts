@@ -1,12 +1,27 @@
 import { axiosInstance } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
+import { RegisterData } from "@/lib/types/auth";
+
+interface RegisterResponse {
+  data: RegisterData;
+  message: string;
+}
+
+interface RegisterError {
+  message?: string;
+  response?: {
+    data?: {
+      error: string;
+    };
+  };
+}
 
 export function useRegisterAccount({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: any) => void;
-  onError?: (error: any) => void;
+  onSuccess?: (data: RegisterResponse) => void;
+  onError?: (error: RegisterError) => void;
 }) {
   return useMutation({
     mutationKey: ["register-account"],

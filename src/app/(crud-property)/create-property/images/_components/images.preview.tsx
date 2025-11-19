@@ -17,8 +17,7 @@ interface Photo {
 }
 
 export default function ImagesPreview() {
-  const { propertyImages, addPropertyImage, removePropertyImage } =
-    usePropertyStore();
+  const { propertyImages, removePropertyImage } = usePropertyStore();
 
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [deleteDialog, setDeleteDialog] = useState<{
@@ -88,7 +87,7 @@ export default function ImagesPreview() {
             className="h-full w-full object-cover"
           />
           <div className="absolute top-4 left-4">
-            <span className="rounded-lg border-1 bg-white px-3 py-1.5 text-sm font-semibold text-gray-900 shadow-md">
+            <span className="rounded-lg border bg-white px-3 py-1.5 text-sm font-semibold text-gray-900 shadow-md">
               Main Image
             </span>
           </div>

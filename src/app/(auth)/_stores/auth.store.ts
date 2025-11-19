@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { AuthResponse, RegisterData } from "@/lib/types/auth";
 
 type AuthState = {
   email: string;
@@ -20,8 +21,8 @@ type AuthState = {
   storeToken: (access_token: string) => void;
   clearToken: () => void;
 
-  storeAuthRegister: (data: any) => void;
-  storeAuth: (data: any) => void;
+  storeAuthRegister: (data: RegisterData) => void;
+  storeAuth: (data: AuthResponse) => void;
   setTenantRole: () => void;
 };
 

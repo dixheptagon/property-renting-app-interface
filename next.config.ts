@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // productionBrowserSourceMaps: false,
+  // reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -23,6 +25,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // compiler: {
+  //   removeConsole: process.env.NODE_ENV === "production",
+  // },
 };
 
 export default nextConfig;

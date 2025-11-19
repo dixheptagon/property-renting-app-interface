@@ -8,7 +8,7 @@ import ButtonEditSection from "./button.edit.section";
 import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
 export default function PropertyUnavailabilities() {
-  const { unavailabilities, rooms } = usePropertyStore();
+  const { unavailabilities } = usePropertyStore();
 
   const calculateNights = (startDate: string, endDate: string) => {
     const start = new Date(startDate);

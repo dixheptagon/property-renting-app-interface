@@ -32,7 +32,7 @@ export default function BookingNavbar() {
 
           {/* Auth Button */}
           <div className="shrink-0">
-            <AuthButtons scrolled={false} handleAuth={handleAuth} />
+            <AuthButtons handleAuth={handleAuth} />
           </div>
         </div>
 

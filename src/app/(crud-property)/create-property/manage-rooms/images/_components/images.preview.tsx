@@ -34,7 +34,7 @@ export default function ImagesPreview() {
   const roomId = searchParams.get("roomId");
 
   // 2. get action for delete images to room id
-  const { rooms, removeRoomImage } = usePropertyStore();
+  const { removeRoomImage } = usePropertyStore();
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );

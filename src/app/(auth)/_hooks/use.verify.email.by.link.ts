@@ -5,8 +5,11 @@ export function useVerifyEmailByLink({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: any) => void;
-  onError?: (error: any) => void;
+  onSuccess?: (data: { data: unknown; message: string }) => void;
+  onError?: (error: {
+    message?: string;
+    response?: { data?: { error: string } };
+  }) => void;
 }) {
   return useMutation({
     mutationKey: ["verify-email-by-link"],

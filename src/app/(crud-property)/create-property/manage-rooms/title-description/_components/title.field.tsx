@@ -29,7 +29,7 @@ export const TitleField = memo(
       <div className="space-y-2">
         <Label className="text-xl">Title</Label>
         <FastField name="title">
-          {({ field, meta }: any) => (
+          {({ field }: any) => (
             <Input
               {...field}
               maxLength={TITLE_MAX_LENGTH}

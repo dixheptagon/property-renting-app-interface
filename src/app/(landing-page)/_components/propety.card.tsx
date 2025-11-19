@@ -4,7 +4,6 @@ import {
   Bed,
   Building,
   Building2,
-  Heart,
   House,
   MapPin,
   Star,

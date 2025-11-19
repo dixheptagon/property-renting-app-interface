@@ -5,7 +5,6 @@ import { SalesReportData } from "./sales-report-components/sales.report.data";
 import { SalesReportChart } from "./sales-report-components/sales.report.chart";
 import { useSalesReport } from "../_hooks/use.sales.report";
 import ErrorState from "./sales-report-components/error.state";
-import EmptyState from "./sales-report-components/empty.state";
 
 export function SalesReport() {
   const {

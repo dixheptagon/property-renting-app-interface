@@ -1,13 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import {
-  Star,
-  MapPin,
-  Edit3,
-  ImageOff,
-  LandPlot,
-  ShieldCheck,
-} from "lucide-react";
+import { Star, MapPin, ImageOff, LandPlot, ShieldCheck } from "lucide-react";
 import { Property } from "../_hooks/use.property.list";
 import { getCategoryIcon } from "./get.category.icon";
 import Link from "next/link";

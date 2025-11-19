@@ -13,7 +13,7 @@ import { SlidersHorizontal } from "lucide-react";
 import statusOptions from "../../_const/status.option";
 import { Label } from "@/components/ui/label";
 import { MultiSelect, MultiSelectRef } from "@/components/ui/multi-select";
-import { useRef, useState, forwardRef, useImperativeHandle } from "react";
+import { useRef, forwardRef, useImperativeHandle } from "react";
 import { IFilterButton } from "../../_types/filter.type";
 import PropertyCategoryOptions from "../../_const/property.category.option";
 

@@ -83,10 +83,10 @@ interface PropertyState {
     map_url: string | null;
 
     // Fitur Tambahan
-    amenities: any;
+    amenities: string[];
     custom_amenities: string[];
 
-    rules: any;
+    rules: string[];
     custom_rules: string[];
   };
 

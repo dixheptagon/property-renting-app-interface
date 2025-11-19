@@ -1,13 +1,11 @@
 "use client";
 import { useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import Image from "next/image";
 import { PaymentProofUploadProps } from "../../_types/upload.payment.proof";
 import { UploadPaymentProofValidationSchema } from "../../_validations/upload.payment.proof";
 import { useUploadPaymentProof } from "../../_hooks/use.upload.payment.proof";
 import { toast } from "sonner";
-import { Span } from "next/dist/trace";
 import { Loader2 } from "lucide-react";
 
 export default function PaymentProofUpload({

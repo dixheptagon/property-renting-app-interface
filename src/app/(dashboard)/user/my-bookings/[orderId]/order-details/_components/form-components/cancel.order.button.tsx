@@ -26,7 +26,6 @@ export default function CancelOrderButton({ orderId }: CancelOrderButtonProps) {
 
   const handleCancelOrder = async (values: { reason: string }) => {
     try {
-      // TODO: Implement cancel order API call
       await cancelOrderMutation.mutateAsync({
         orderId,
         cancellationReason: values.reason,

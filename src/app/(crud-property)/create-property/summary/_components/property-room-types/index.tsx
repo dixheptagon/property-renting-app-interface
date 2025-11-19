@@ -3,7 +3,6 @@
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import { RoomData } from "@/app/(crud-property)/_types/property.type";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { RoomCard } from "./room-card";
 import { ImageLightbox } from "./image.lightbox";
 import { CREATE_PROPERTY_STEPS } from "../../_constant/create.property.path";
@@ -14,8 +13,7 @@ import ButtonEditSection from "../button.edit.section";
  * Handles room editing and image viewing.
  */
 export default function PropertyRoomTypes() {
-  const { rooms: createdRooms, removeRoom } = usePropertyStore();
-  const router = useRouter();
+  const { rooms: createdRooms } = usePropertyStore();
 
   // Lightbox state for image viewing
   const [lightboxRoom, setLightboxRoom] = useState<RoomData | null>(null);
@@ -67,17 +65,6 @@ export default function PropertyRoomTypes() {
       {/* Room Cards */}
       <div className="space-y-6">
         {createdRooms.map((room) => {
-          const isIncomplete =
-            !room.name ||
-            !room.base_price ||
-            room.images.length === 0 ||
-            !room.description ||
-            !room.max_guest ||
-            !room.total_units ||
-            !room.bedrooms ||
-            !room.bathrooms ||
-            !room.beds;
-
           return (
             <RoomCard
               key={room.tempId}

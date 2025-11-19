@@ -4,8 +4,6 @@ import CreatePropertyHeader from "../_components/create.property.header";
 import PropertyProgressBar from "../_components/property.progress.bar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useScrolled } from "@/hooks/use.scrolled";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { usePropertyStore } from "../../_stores/property.store";
 import { PropertyValidationSchema } from "../../_validations/property.validation.schema";
 import { useFormik } from "formik";

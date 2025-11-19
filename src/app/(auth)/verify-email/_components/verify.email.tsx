@@ -4,15 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
-  FieldDescription,
   FieldGroup,
-  FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useFormik } from "formik";
-import { AlertCircle, ArrowLeft, TriangleAlert } from "lucide-react";
+import { AlertCircle, ArrowLeft } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthStore } from "../../_stores/auth.store";
 import { useEffect, useRef, useState } from "react";
@@ -38,7 +35,6 @@ export function VerifyEmail({
   const {
     mutate: verifyEmail,
     isPending: isVerifying,
-    error,
   } = UseVerifyEmail({
     onError: (error) => {
       if (axios.isAxiosError(error)) {
@@ -71,12 +67,11 @@ export function VerifyEmail({
     if (verification_token) {
       verifyEmailByLink({ verification_token });
     }
-  }, [verification_token]);
+  }, [verification_token, verifyEmailByLink]);
 
   const {
     mutate: resendVerification,
     isPending: isResending,
-    error: resendError,
   } = useResendVerification({
     onError: (error) => {
       if (error?.response?.data?.error) {

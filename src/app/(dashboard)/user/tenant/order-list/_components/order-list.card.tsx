@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Clock, ExternalLink, MapPin, User } from "lucide-react";
+import { ExternalLink, MapPin } from "lucide-react";
 import Link from "next/link";
 import { Order } from "../_types/order.status";
 import statusOptions from "../_const/status.option";

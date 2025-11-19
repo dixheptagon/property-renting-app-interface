@@ -1,10 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import { CompleteOrderResponse } from "../_types/order.details.type";
-import { useRouter } from "next/navigation";
 
 export const useCompleteOrder = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation<CompleteOrderResponse, Error, string>({

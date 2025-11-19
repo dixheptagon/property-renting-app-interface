@@ -141,7 +141,7 @@ export function MobileUserDropdown({
 }: {
   setMobileMenuOpen: (value: boolean) => void;
 }) {
-  const { first_name, clearToken } = useAuthStore();
+  const { clearToken } = useAuthStore();
 
   return (
     <div className="border-t">

@@ -18,15 +18,13 @@ import { toast } from "sonner";
 import { LoginSchema } from "../../_validations/login.form";
 import { useAuthStore } from "../../_stores/auth.store";
 import { useLoginAccount } from "../../_hooks/use.login.account";
-import { useRouter } from "next/navigation";
 import GoogleLoginButton from "./google.login.button";
 
 export function Login({ className, ...props }: React.ComponentProps<"div">) {
   const { email, storeAuth, storeEmail } = useAuthStore();
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const { mutate: loginAccount, error } = useLoginAccount({
+  const { mutate: loginAccount } = useLoginAccount({
     onSuccess: (data) => {
       storeAuth(data?.data);
       storeEmail(data?.data?.user?.email);

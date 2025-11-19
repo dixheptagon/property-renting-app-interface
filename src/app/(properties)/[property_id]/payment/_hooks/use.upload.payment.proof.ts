@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
-import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 interface UploadPaymentProofData {

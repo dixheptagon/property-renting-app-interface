@@ -6,7 +6,6 @@ import {
   Wrench,
   DoorOpen,
   AlertCircle,
-  Trash2,
   Clock,
   XCircle,
 } from "lucide-react";
@@ -84,7 +83,7 @@ export default function UnavailabilitiesData() {
         </div>
 
         <div className="divide-y divide-gray-200">
-          {unavailabilities.map((item, index) => (
+          {unavailabilities.map((item) => (
             <div
               key={item.tempId}
               className="grid grid-cols-4 gap-4 p-4 transition-all duration-200 hover:bg-red-50 hover:shadow-sm"
@@ -128,7 +127,7 @@ export default function UnavailabilitiesData() {
 
       {/* Mobile Card View */}
       <div className="space-y-4 md:hidden">
-        {unavailabilities.map((item, index) => (
+        {unavailabilities.map((item) => (
           <div
             key={item.tempId}
             className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"

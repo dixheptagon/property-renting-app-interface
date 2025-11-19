@@ -63,7 +63,7 @@ export const useMyBookings = (
     pagination,
     loading,
     error: error ? (error as Error).message : null,
-    refetch: async (params?: MyBookingsParams) => {
+    refetch: async () => {
       await refetch();
     },
   };

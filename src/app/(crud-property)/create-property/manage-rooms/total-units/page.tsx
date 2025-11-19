@@ -19,7 +19,7 @@ export default function Page() {
   const roomId = searchParams.get("roomId");
 
   // 2. get action for add title and description to room id
-  const { rooms, updateRoom } = usePropertyStore();
+  const { updateRoom } = usePropertyStore();
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );

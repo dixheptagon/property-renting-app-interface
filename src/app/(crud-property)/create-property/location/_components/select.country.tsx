@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -59,7 +59,7 @@ export default function SelectCountry({
             <CommandList>
               <CommandEmpty>No country found.</CommandEmpty>
               <CommandGroup>
-                {countries.map((country: any) => (
+                {countries.map((country: Record<string, string>) => (
                   <CommandItem
                     key={country.code}
                     value={country.name + " (" + country.code + ")"}

@@ -5,8 +5,11 @@ export function UseVerifyEmail({
   onError,
   onSuccess,
 }: {
-  onError?: (error: any) => void;
-  onSuccess?: (data: any) => void;
+  onError?: (error: {
+    message?: string;
+    response?: { data?: { error: string } };
+  }) => void;
+  onSuccess?: (data: { data: unknown; message: string }) => void;
 }) {
   return useMutation({
     mutationKey: ["verify-email"],

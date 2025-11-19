@@ -25,10 +25,10 @@ export function useReplyReview({
       );
       return response.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       onSuccess && onSuccess();
     },
-    onError: (error) => {
+    onError: () => {
       onError && onError();
     },
   });

@@ -1,6 +1,5 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { X } from "lucide-react";
 import statusOptions from "../../_const/status.option";
 import PropertyCategoryOptions from "../../_const/property.category.option";
 import { OrderStatus, OrderCategory } from "../../_types/order.status";

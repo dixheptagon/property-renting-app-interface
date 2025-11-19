@@ -9,13 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  CalendarIcon,
-  CircleDollarSign,
-  DollarSign,
-  House,
-} from "lucide-react";
-import { useState } from "react";
+import { CalendarIcon, CircleDollarSign, DollarSign } from "lucide-react";
 import { formatDate } from "../../_utils/format.date";
 import { Calendar } from "@/components/ui/calendar";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -25,7 +19,7 @@ import { formatPrice } from "../../_utils/format.price";
 import { Slider } from "@/components/ui/slider";
 import { calculatePeakPrice } from "../../_utils/calculate.peak.price";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { PeakSeasonRateValidationSchema } from "@/app/(crud-property)/_validations/peak.season.rate.validation.schema";
 
 export default function PeakPriceDialogContent() {

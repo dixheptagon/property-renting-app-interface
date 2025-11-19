@@ -7,10 +7,8 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
@@ -24,7 +22,6 @@ export function NavAccounts({
     icon: LucideIcon;
   }[];
 }) {
-  const { isMobile } = useSidebar();
   const { clearToken } = useAuthStore();
 
   return (

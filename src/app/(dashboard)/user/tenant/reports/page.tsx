@@ -6,7 +6,7 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { HousePlus, LandPlot, Star, Tag } from "lucide-react";
+import { HousePlus, LandPlot, Tag } from "lucide-react";
 import { SalesReport } from "./_components/sales.report";
 import PropertyReport from "./_components/property.report";
 import { AppSidebar } from "../../_components/app-sidebar";

@@ -17,7 +17,6 @@ export default function BookingForm() {
   const bookingState = useBookingStore();
   const paymentStore = usePaymentStore();
   const router = useRouter();
-  const { email: userEmail } = useAuthStore();
   const createBookingMutation = useCreateBooking();
 
   // Get Property_Id
@@ -70,7 +69,7 @@ export default function BookingForm() {
         validationSchema={BookingFormValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
+        {() => (
           <Form className="space-y-4">
             <div className="mx-auto flex min-h-full max-w-7xl flex-col rounded-xl bg-white p-4 text-gray-600 shadow-md md:p-8">
               <div className="space-y-2 pb-6">

@@ -1,10 +1,4 @@
-import {
-  CheckCircle,
-  Clock,
-  AlertCircle,
-  XCircle,
-  CheckSquare,
-} from "lucide-react";
+import { CheckCircle, Clock, XCircle, CheckSquare } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export interface BookingStatusConfig {

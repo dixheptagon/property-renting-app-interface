@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { AlertCircle, Images, LoaderCircle, Plus, Trash } from "lucide-react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
@@ -39,7 +40,7 @@ export default function ImageUploadDialog({
   const roomId = searchParams.get("roomId");
 
   // 2. get action for add images to room id
-  const { rooms, addRoomImage } = usePropertyStore();
+  const { addRoomImage } = usePropertyStore();
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );
@@ -272,8 +273,13 @@ export default function ImageUploadDialog({
                   key={index}
                   className="relative aspect-square overflow-hidden rounded-xl"
                 >
-                  <img
-                    src={image.url}
+                  <Image
+                    width={1080}
+                    height={1080}
+                    src={
+                      image.url ||
+                      "https://lightwidget.com/wp-content/uploads/localhost-file-not-found-480x480.avif"
+                    }
                     alt={`Preview ${index + 1}`}
                     className="h-full w-full object-cover"
                   />

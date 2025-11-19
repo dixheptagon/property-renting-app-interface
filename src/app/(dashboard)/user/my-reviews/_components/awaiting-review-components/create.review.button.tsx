@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ExternalLink, Loader, Star } from "lucide-react";
+import { ExternalLink, Loader } from "lucide-react";
 import { useFormik } from "formik";
 import reviewSchema from "../../_validations/review.schema";
 import { handleWriteReviewValues } from "../../_types/awating.reviews.type";
@@ -39,7 +39,7 @@ export function CreateReviewButton({
     isPending,
     isSuccess,
   } = useWriteReview({
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Review saved successfully!");
 
       setOpen(false);
@@ -96,7 +96,7 @@ export function CreateReviewButton({
 
           <DialogDescription>
             Share your thoughts about your experience below. Click save when
-            you're done.
+            you&apos;re done.
           </DialogDescription>
         </DialogHeader>
 

@@ -35,7 +35,7 @@ export const DescriptionField = memo(
       <div className="space-y-2">
         <Label className="text-xl">Description</Label>
         <FastField name="description">
-          {({ field, meta }: any) => (
+          {({ field }: any) => (
             <Textarea
               {...field}
               maxLength={DESCRIPTION_MAX_LENGTH}

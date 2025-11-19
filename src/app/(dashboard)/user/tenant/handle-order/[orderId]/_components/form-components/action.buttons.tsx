@@ -68,7 +68,6 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
 
   const handleCancelOrder = async (values: { reason: string }) => {
     try {
-      // TODO: Implement cancel order API call
       await cancelOrderMutation.mutateAsync({
         orderId,
         cancellationReason: values.reason,

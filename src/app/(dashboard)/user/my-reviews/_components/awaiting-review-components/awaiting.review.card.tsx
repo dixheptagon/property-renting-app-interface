@@ -1,16 +1,10 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import {
   Calendar,
   MapPin,
   BedDouble,
   CreditCard,
-  ArrowRight,
-  Star,
   ImageOff,
-  RotateCwSquare,
-  ExternalLink,
   CheckCheck,
 } from "lucide-react";
 import { AwaitingReview } from "../../_types/my.reviews.type";

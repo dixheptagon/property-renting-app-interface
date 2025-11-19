@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { Bed } from "lucide-react";
 import {
   Select,

@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, ChevronLeft, ChevronRight, Image, Edit } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
 import { BaseImage } from "@/app/(crud-property)/_types/property.type";
 import ButtonEditSection from "./button.edit.section";
 import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { all } from "axios";
+import Image from "next/image";
 
 interface PropertyImageGridProps {
   images: BaseImage[];
@@ -15,7 +14,6 @@ interface PropertyImageGridProps {
 export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
   const [showLightbox, setShowLightbox] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const isMobile = useIsMobile();
 
   // find not main images
   const notMainImages = images.filter((img) => !img.isMain);
@@ -65,8 +63,8 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
               className="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden"
               onClick={() => handleImageClick(0)}
             >
-              <img
-                src={mainImage?.secureUrl}
+              <Image
+                src={mainImage?.secureUrl || ""}
                 alt="Main property view"
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
@@ -97,7 +95,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
                     }}
                     className="absolute right-4 bottom-4 flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-lg transition-colors duration-200 hover:bg-gray-100"
                   >
-                    <Image
+                    <ImageIcon
                       className="h-4 w-4"
                       fill="none"
                       stroke="currentColor"
@@ -138,7 +136,9 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
 
           {/* Current Image */}
           <div className="mx-4 max-h-[80vh] max-w-5xl">
-            <img
+            <Image
+              width={1080}
+              height={1920}
               src={allImages[currentImageIndex]}
               alt={`Property view ${currentImageIndex + 1}`}
               className="max-h-[80vh] max-w-full rounded-lg object-contain"
@@ -159,13 +159,15 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
-                className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
+                className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                   currentImageIndex === index
                     ? "opacity-100 ring-2 ring-white"
                     : "opacity-50 hover:opacity-75"
                 }`}
               >
-                <img
+                <Image
+                  width={1080}
+                  height={1920}
                   src={imageUrl}
                   alt={`Thumbnail ${index + 1}`}
                   className="h-full w-full object-cover"

@@ -1,5 +1,4 @@
 import { propertyReportSearchConfig } from "../_utils/property.report.search.params";
-import { salesReportSearchConfig } from "../_utils/sales.report.search.params.config";
 import { useSearchParamsManager } from "./use.manage.search.params";
 
 export const usePropertyReportSearchParams = () => {

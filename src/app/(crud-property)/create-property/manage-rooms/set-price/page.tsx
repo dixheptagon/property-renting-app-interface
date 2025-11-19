@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import CreatePropertyHeader from "../../_components/create.property.header";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import { RoomValidationSchema } from "@/app/(crud-property)/_validations/room.validation.schema";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -32,7 +32,7 @@ export default function Page() {
   const roomId = searchParams.get("roomId");
 
   // 2. get action for add title and description to room id
-  const { rooms, updateRoom } = usePropertyStore();
+  const { updateRoom } = usePropertyStore();
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );

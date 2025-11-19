@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Building2, Calendar } from "lucide-react";
+import { Star, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Accordion,

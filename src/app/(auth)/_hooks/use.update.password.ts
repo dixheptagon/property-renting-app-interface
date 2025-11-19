@@ -1,12 +1,26 @@
 import { axiosInstance } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 
+interface UpdatePasswordResponse {
+  data: unknown;
+  message: string;
+}
+
+interface UpdatePasswordError {
+  message?: string;
+  response?: {
+    data?: {
+      error: string;
+    };
+  };
+}
+
 export function useUpdatePassword({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: any) => void;
-  onError?: (error: any) => void;
+  onSuccess?: (data: UpdatePasswordResponse) => void;
+  onError?: (error: UpdatePasswordError) => void;
 }) {
   return useMutation({
     mutationKey: ["update-password"],

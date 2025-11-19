@@ -7,7 +7,6 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -27,12 +26,12 @@ export function RegisterForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
-  const { email, storeAuth, storeEmail, storeToken } = useAuthStore();
+  const { email, storeAuthRegister } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutate: registerAccount, isPending } = useRegisterAccount({
     onSuccess: (data) => {
-      storeAuth(data.data);
+      storeAuthRegister(data.data);
       toast.success(data?.message);
       router.push("/");
     },
@@ -91,7 +90,7 @@ export function RegisterForm({
                 <FieldLabel htmlFor="first_name">First Name</FieldLabel>
                 <Input
                   id="first_name"
-                  type="name"
+                  type="text"
                   placeholder="first name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -107,7 +106,7 @@ export function RegisterForm({
                 <FieldLabel htmlFor="last_name">Last Name</FieldLabel>
                 <Input
                   id="last_name"
-                  type="name"
+                  type="text"
                   placeholder="last name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

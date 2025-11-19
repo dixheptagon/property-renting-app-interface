@@ -36,7 +36,7 @@ export default function OrderDetailsNavbar() {
 
           {/* Auth Button */}
           <div className="shrink-0">
-            <AuthButtons scrolled={false} />
+            <AuthButtons />
           </div>
         </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Star, ImageOff, Building } from "lucide-react";
+import { ImageOff, Building } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -13,9 +13,7 @@ import { PROPERTY_CATEGORIES } from "../_constant/property.category";
 import ButtonEditSection from "./button.edit.section";
 import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
-interface PropertyProfileProps {}
-
-export default function PropertyProfile({}: PropertyProfileProps) {
+export default function PropertyProfile() {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [showFullAddress, setShowFullAddress] = useState(false);
 

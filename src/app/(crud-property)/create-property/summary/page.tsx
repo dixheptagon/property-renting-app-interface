@@ -22,7 +22,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import PropertyProgressBar from "../_components/property.progress.bar";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CloudUpload, LogIn } from "lucide-react";
 import UploadProperty from "./_components/button-upload-property/button.upload.property";
 
 export default function Page() {

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function GoogleLoginButton() {
   const router = useRouter();
-  const { storeToken, storeAuth } = useAuthStore();
+  const { storeAuth } = useAuthStore();
 
   const { mutate: loginWithGoogle } = useGoogleLogin({
     onSuccess: (data) => {

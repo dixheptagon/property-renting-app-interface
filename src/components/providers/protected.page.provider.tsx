@@ -2,7 +2,7 @@
 
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import LoadingOverlay from "../ui/loading.overlay";
 
@@ -19,7 +19,7 @@ export default function ProtectedPageProvider({
       toast.error("You are not logged in.");
       router.push("/check-email");
     }
-  }, [access_token, router]);
+  }, [access_token, router, isHydrated]);
 
   if (!isHydrated) {
     return <LoadingOverlay />;

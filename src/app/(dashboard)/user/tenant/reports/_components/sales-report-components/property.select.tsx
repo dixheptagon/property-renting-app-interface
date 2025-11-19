@@ -23,7 +23,7 @@ export default function PropertySelect() {
     if (properties.length > 0 && !filters.sales_propertyId) {
       setPropertyId(properties[0].uid);
     }
-  }, [properties, filters.sales_propertyId]);
+  }, [properties, filters.sales_propertyId, setPropertyId]);
 
   const handlePropertyChange = (propertyId: string) => {
     setPropertyId(propertyId);

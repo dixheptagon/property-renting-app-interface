@@ -1,15 +1,12 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import CreatePropertyHeader from "../_components/create.property.header";
-import { useScrolled } from "@/hooks/use.scrolled";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { usePropertyStore } from "../../_stores/property.store";
 import PropertyProgressBar from "../_components/property.progress.bar";
 import { Button } from "@/components/ui/button";
 import { Camera } from "lucide-react";
-
 import ImageUploadDialog from "./_components/image.upload";
-import Image from "next/image";
 import ImagesPreview from "./_components/images.preview";
 
 export default function Page() {
@@ -28,8 +25,8 @@ export default function Page() {
             Add some photos of your property
           </h1>
           <p className="text-base text-gray-600 sm:text-lg lg:text-xl">
-            You'll need at least 5 photos to get started. You can add more or
-            make changes later.
+            You&apos;ll need at least 5 photos to get started. You can add more
+            or make changes later.
           </p>
         </div>
 

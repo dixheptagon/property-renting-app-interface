@@ -20,11 +20,8 @@ export function LandingPageDatePicker() {
   const isMobile = useIsMobile();
   const [open, setOpen] = React.useState(false);
 
-  const {
-    setDateRange: setPropertyDateRange,
-    filters,
-    clearDateRange,
-  } = usePropertySearchParams();
+  const { setDateRange: setPropertyDateRange, filters } =
+    usePropertySearchParams();
 
   // Convert filters date strings to Date objects for initial state
   const initialDateRange: DateRange | undefined = React.useMemo(() => {

@@ -10,8 +10,6 @@ export default function PropertyLocation({
   city = "",
   country = "",
   postal_code: postalCode = "",
-  latitude = 0,
-  longitude = 0,
   map_url,
 }: Pick<
   Property,

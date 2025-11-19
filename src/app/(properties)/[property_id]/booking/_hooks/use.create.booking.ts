@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 interface CreateBookingPayload {
   room_id: string;
@@ -14,8 +15,6 @@ interface CreateBookingPayload {
 }
 
 export const useCreateBooking = () => {
-  const { access_token } = useAuthStore();
-
   return useMutation({
     mutationFn: async (payload: CreateBookingPayload) => {
       const response = await axiosInstance.post(
@@ -25,7 +24,7 @@ export const useCreateBooking = () => {
 
       return response.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Booking created successfully!");
       // Handle success - maybe redirect to payment page
     },

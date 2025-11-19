@@ -1,9 +1,6 @@
 import {
   BedDouble,
   Bath,
-  DoorClosed,
-  Tv,
-  Wind,
   Snowflake,
   Wifi,
   Coffee,

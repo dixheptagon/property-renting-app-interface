@@ -16,7 +16,6 @@ export default function InitialNavbar() {
   const router = useRouter();
 
   const scrolled = useScrolled();
-  const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleAuth = () => {
@@ -36,7 +35,7 @@ export default function InitialNavbar() {
           <SearchBar />
 
           {/* Desktop Auth Buttons */}
-          <AuthButtons scrolled={scrolled} handleAuth={handleAuth} />
+          <AuthButtons handleAuth={handleAuth} />
 
           {/* Mobile Menu Button */}
           <button

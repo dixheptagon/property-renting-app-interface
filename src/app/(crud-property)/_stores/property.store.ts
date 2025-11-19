@@ -34,7 +34,7 @@ const initialState: PropertyState = {
 
 export const usePropertyStore = create<PropertyState & PropertyActions>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       ...initialState, // Default state
 
       // --- ACTIONS ---

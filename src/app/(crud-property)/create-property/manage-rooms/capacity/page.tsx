@@ -4,8 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import CreatePropertyHeader from "../../_components/create.property.header";
 import { CounterRow } from "./_components/counter.row";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useScrolled } from "@/hooks/use.scrolled";
-import { useIsMobile } from "@/hooks/use-mobile";
 import RoomProgressBar from "../../_components/room.progress.bar";
 import { Button } from "@/components/ui/button";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
@@ -24,7 +22,7 @@ export default function Page() {
   const roomId = searchParams.get("roomId");
 
   // 2. get action for add title and description to room id
-  const { rooms, updateRoom } = usePropertyStore();
+  const { updateRoom } = usePropertyStore();
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );
@@ -50,31 +48,37 @@ export default function Page() {
     }
   }, [currentRoom]);
 
-  const handleSubmit = useCallback(
-    (values: any) => {
-      if (!roomId || !currentRoom) {
-        toast.error(`Room id ${roomId} not found, You will be redirected`, {
-          duration: 4000,
-        });
-
-        setTimeout(() => {
-          router.push("/create-property/manage-rooms"); // ganti path sesuai kebutuhan
-        }, 4000);
-
-        return;
-      }
-
-      updateRoom(roomId, {
-        max_guest: guests,
-        bedrooms,
-        bathrooms,
-        beds,
+  const handleSubmit = useCallback(() => {
+    if (!roomId || !currentRoom) {
+      toast.error(`Room id ${roomId} not found, You will be redirected`, {
+        duration: 4000,
       });
 
-      router.push(`/create-property/manage-rooms/highlight?roomId=${roomId}`);
-    },
-    [roomId, updateRoom, router, currentRoom, guests, bedrooms, bathrooms, beds]
-  );
+      setTimeout(() => {
+        router.push("/create-property/manage-rooms"); // ganti path sesuai kebutuhan
+      }, 4000);
+
+      return;
+    }
+
+    updateRoom(roomId, {
+      max_guest: guests,
+      bedrooms,
+      bathrooms,
+      beds,
+    });
+
+    router.push(`/create-property/manage-rooms/highlight?roomId=${roomId}`);
+  }, [
+    roomId,
+    updateRoom,
+    router,
+    currentRoom,
+    guests,
+    bedrooms,
+    bathrooms,
+    beds,
+  ]);
 
   return (
     <main>

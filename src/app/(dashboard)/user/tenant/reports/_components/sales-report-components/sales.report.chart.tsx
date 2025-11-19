@@ -56,17 +56,6 @@ export function SalesReportChart({
     },
   } satisfies ChartConfig;
 
-  const totalCompleted =
-    salesReportPeriods?.periods?.reduce(
-      (sum: number, p: any) => sum + p.completed,
-      0
-    ) || 0;
-  const totalCancelled =
-    salesReportPeriods?.periods?.reduce(
-      (sum: number, p: any) => sum + p.cancelled,
-      0
-    ) || 0;
-
   return (
     <Card>
       <CardHeader>

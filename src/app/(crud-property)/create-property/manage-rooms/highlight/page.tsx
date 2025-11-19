@@ -2,8 +2,6 @@
 
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import { RoomValidationSchema } from "@/app/(crud-property)/_validations/room.validation.schema";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useScrolled } from "@/hooks/use.scrolled";
 import { useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
@@ -23,7 +21,7 @@ export default function Page() {
   const roomId = searchParams.get("roomId");
 
   // 2. get action for add title and description to room id
-  const { rooms, updateRoom } = usePropertyStore();
+  const { updateRoom } = usePropertyStore();
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );

@@ -26,8 +26,8 @@ export default function ContactUsPage() {
               Get in <span className="text-blue-600">Touch</span>
             </h1>
             <p className="mx-auto max-w-3xl text-xl text-gray-100">
-              Have questions about our properties or need assistance? We're here
-              to help you find your perfect stay.
+              Have questions about our properties or need assistance? We&apos;re
+              here to help you find your perfect stay.
             </p>
           </div>
         </section>
@@ -43,7 +43,7 @@ export default function ContactUsPage() {
                     Contact Information
                   </h2>
                   <p className="text-gray-600">
-                    We're available to answer your questions and provide
+                    We&apos;re available to answer your questions and provide
                     assistance with your property needs.
                   </p>
                 </div>

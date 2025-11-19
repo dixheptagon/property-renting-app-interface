@@ -9,7 +9,6 @@ import {
   ScanBarcode,
   Clock,
   ClockAlert,
-  ImageOff,
   XCircle,
 } from "lucide-react";
 import Image from "next/image";

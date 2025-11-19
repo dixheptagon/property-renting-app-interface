@@ -1,18 +1,10 @@
 "use client";
 
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
-import {
-  Calendar,
-  TrendingUp,
-  DollarSign,
-  Percent,
-  Flame,
-  Clock,
-} from "lucide-react";
+import { Calendar, TrendingUp, DollarSign, Percent, Flame } from "lucide-react";
 import { formatPrice } from "../../_utils/format.price";
 import { calculatePeakPrice } from "../../_utils/calculate.peak.price";
 import RemovePeakPrice from "./remove.peak.price";
-import { SetDialogPeakPrice } from "./set.dialog.peak.price";
 import getRoomName from "../_utils/get.room.name";
 import getRoomBasePrice from "../_utils/get.room.base.price";
 import formatDateRange from "../_utils/format.date.range";

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type DateRange } from "react-day-picker";
-import { differenceInCalendarDays, eachDayOfInterval, format } from "date-fns";
+import { eachDayOfInterval } from "date-fns";
 import {
   Property,
   RoomData,
@@ -139,7 +139,6 @@ export const useBookingStore = create<BookingState>()(
       },
 
       clearBooking: () => {
-        const currentProperty = get().property;
         set({
           selectedRoom: null,
           dateRange: undefined,

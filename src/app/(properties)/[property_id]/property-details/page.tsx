@@ -15,14 +15,12 @@ import { usePropertyDetail } from "./_hooks/use.property.detail";
 import { formatDate } from "./_utils/format.date";
 import LoadingData from "@/components/ui/loading.data";
 import { useEffect } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function PropertyDetails() {
   // set Global State Propety Being Chosen
   const { setProperty } = useBookingStore();
 
-  const { data, isLoading, isError, error, refetch, isFetching } =
-    usePropertyDetail();
+  const { data, isLoading, error, refetch } = usePropertyDetail();
 
   const property = data?.data;
 
@@ -125,54 +123,12 @@ export default function PropertyDetails() {
           />
 
           <div className="block lg:hidden">
-            <PropertySummary
-              room_unavailabilities={property.room_unavailabilities.map(
-                (unavail) => ({
-                  ...unavail,
-                  property_id: property.id,
-                  booking_id: null,
-                  created_at: "",
-                  start_date: formatDate(unavail.start_date),
-                  end_date: formatDate(unavail.end_date),
-                  reason: unavail.reason || "",
-                })
-              )}
-              peak_season_price={property.peak_season_rates.map((rate) => ({
-                ...rate,
-                property_id: property.id,
-                created_at: "",
-                start_date: formatDate(rate.start_date),
-                end_date: formatDate(rate.end_date),
-                adjustment_type: rate.adjustment_type as
-                  | "percentage"
-                  | "nominal",
-              }))}
-            />
+            <PropertySummary />
           </div>
         </div>
 
         <div className="col-span-1 hidden self-start lg:sticky lg:top-20 lg:block">
-          <PropertySummary
-            room_unavailabilities={property.room_unavailabilities.map(
-              (unavail) => ({
-                ...unavail,
-                property_id: 0,
-                booking_id: null,
-                created_at: "",
-                start_date: formatDate(unavail.start_date),
-                end_date: formatDate(unavail.end_date),
-                reason: unavail.reason || "",
-              })
-            )}
-            peak_season_price={property.peak_season_rates.map((rate) => ({
-              ...rate,
-              property_id: 0,
-              created_at: "",
-              start_date: formatDate(rate.start_date),
-              end_date: formatDate(rate.end_date),
-              adjustment_type: rate.adjustment_type as "percentage" | "nominal",
-            }))}
-          />
+          <PropertySummary />
         </div>
       </div>
 
@@ -187,7 +143,7 @@ export default function PropertyDetails() {
           longitude={property.longitude ?? 0}
           map_url={property.map_url ?? ""}
         />
-        <PropertyReviews propertyId={property.id} />
+        <PropertyReviews />
       </div>
     </div>
   );

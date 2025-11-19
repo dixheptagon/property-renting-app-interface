@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import { useRouter } from "next/navigation";
 import BookingForm from "./_components/booking.form";
 import BookingSummary from "./_components/booking.summary";
-import { LoadingState, ErrorState } from "./_components/loading.and.error";
+import { LoadingState } from "./_components/loading.and.error";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 

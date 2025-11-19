@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { QRCodeCanvas } from "qrcode.react";
 import {
-  CheckCircle,
   Mail,
   Phone,
   User,
@@ -15,7 +14,6 @@ import StatusLabel from "./form-components/status.label";
 import { OrderDetailsFormProps } from "../_types/order.details.type";
 import Link from "next/link";
 import CancelOrderButton from "./form-components/cancel.order.button";
-import { Label } from "@/components/ui/label";
 
 export default function OrderDetailsForm({
   bookingData,
@@ -112,7 +110,7 @@ export default function OrderDetailsForm({
                 <div className="flex w-full flex-col items-center justify-center text-white">
                   <QrCode className="h-32 w-32" />
                   <p className="max-w-50 text-center text-sm font-semibold">
-                    You'll receive your QR code right after payment!
+                    You&apos;ll receive your QR code right after payment!
                   </p>
                 </div>
               )}
@@ -192,7 +190,7 @@ export default function OrderDetailsForm({
         <div className="rounded-xl bg-linear-to-r p-6">
           <div className="text-center">
             <h3 className="mb-2 text-lg font-bold text-gray-900">
-              Have questions? We're here to help!
+              Have questions? We&apos;re here to help!
             </h3>
             <p className="mb-6 text-sm text-gray-600">
               Our support team is available 24/7 to assist you

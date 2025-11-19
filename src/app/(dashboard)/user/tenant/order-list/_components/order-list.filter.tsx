@@ -16,7 +16,7 @@ import { OrderCategory, OrderStatus } from "../_types/order.status";
 import FilterButton, {
   FilterButtonRef,
 } from "./filter-components/filter.button";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import ActiveFilters from "./filter-components/active.filter";
 import { useOrderSearchParams } from "../_utils/search.params";
 import { useSearchParams } from "next/navigation";
@@ -31,7 +31,6 @@ interface OrderListFiltersProps {
 }
 
 export default function OrderListFilters({
-  onToggleStatus,
   onClearFilters,
   onSortBy,
   currentSortBy = "created_at",

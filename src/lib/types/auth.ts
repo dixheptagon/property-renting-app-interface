@@ -15,6 +15,14 @@ export interface AuthResponse {
   user: User;
 }
 
+export interface RegisterData {
+  email: string;
+  first_name: string;
+  last_name: string;
+  display_name?: string;
+  access_token: string;
+}
+
 export interface RoleGuardProps {
   children: React.ReactNode;
   allowedRoles: UserRole[];

@@ -4,7 +4,6 @@ import * as React from "react";
 import {
   ReceiptText,
   BaggageClaim,
-  Settings,
   CirclePower,
   House,
   UsersRound,
@@ -12,7 +11,6 @@ import {
   HousePlus,
   ShoppingBag,
   UserRoundCog,
-  ShieldUser,
   HatGlasses,
   Star,
 } from "lucide-react";

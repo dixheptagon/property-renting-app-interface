@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Menu, X } from "lucide-react";
 import { Section } from "../../_types/property.navbar";
-import { Logo, MobileLogo } from "./initial-navbar-components/logo";
+import { MobileLogo } from "./initial-navbar-components/logo";
 
 export default function ScrolledNavbar({
   scrollToSection,

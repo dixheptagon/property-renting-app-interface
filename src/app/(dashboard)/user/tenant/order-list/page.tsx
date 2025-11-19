@@ -26,7 +26,6 @@ export default function OrderList() {
     error,
     refetch,
     totalItems,
-    totalPages,
     currentPage,
     limit,
     statictics,

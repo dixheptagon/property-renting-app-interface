@@ -26,24 +26,24 @@ export default function MapEmbedTips() {
               your browser.
             </li>
             <li>
-              <b>2. Search Your Location</b> Type your property's full address
-              or name into the search bar and press Enter.
+              <b>2. Search Your Location</b> Type your property&apos;s full
+              address or name into the search bar and press Enter.
             </li>
             <li>
-              <b>3. Click the "Share" Button</b> Once you see the pin for your
-              location, click the Share button.
+              <b>3. Click the &quot;Share&quot; Button</b> Once you see the pin
+              for your location, click the Share button.
             </li>
             <li>
-              <b>4. Select "Embed a map"</b> A new window will pop up. At the
-              top, click the "Embed a map" tab.
+              <b>4. Select &quot;Embed a map&quot;</b> A new window will pop up.
+              top, click the &quot;Embed a map&quot; tab.
             </li>
             <li>
               <b>5. Copy the Code</b> You will see a preview of the map and an
-              HTML code (it starts with &lt;iframe&gt;). Click the blue "COPY
-              HTML" button.
+              HTML code (it starts with &lt;iframe&gt;). Click the blue
+              &quot;COPY HTML&quot; button.
             </li>
             <li>
-              <b>6. Paste the Code</b> You're done! Now, come back to this page
+              <b>6. Paste the Code</b> You&apos;re done! Now, come back to this
               and paste the code you just copied into the form field below.
             </li>
           </ul>
@@ -55,8 +55,9 @@ export default function MapEmbedTips() {
         </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
           <p>
-            Paste the entire code you copied directly from Google Maps. There's
-            no need to edit it—we'll find the map link automatically.
+            Paste the entire code you copied directly from Google Maps.
+            There&apos;s no need to edit it—we'll find the map link
+            automatically.
           </p>
         </AccordionContent>
       </AccordionItem>

@@ -3,25 +3,16 @@
 import { useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import Image from "next/image";
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import { useUpdatePassword } from "@/app/(auth)/_hooks/use.update.password";
 import { useUpdateProfileImage } from "@/app/(auth)/_hooks/use.update.profile.image";
 import { UpdatePasswordSchema } from "@/app/(auth)/_validations/update.password";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
-import { Eye, EyeOff, Upload, User } from "lucide-react";
+import { User } from "lucide-react";
 
 export default function MyAccount() {
   const { first_name, last_name, email, image, display_name } = useAuthStore();
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const updatePasswordMutation = useUpdatePassword({
@@ -32,23 +23,6 @@ export default function MyAccount() {
     onError: (error: any) => {
       toast.error(
         error?.response?.data?.message || "Failed to update password"
-      );
-    },
-  });
-
-  const updateImageMutation = useUpdateProfileImage({
-    onSuccess: (data) => {
-      toast.success("Profile image updated successfully!");
-      // Update auth store with new image
-      useAuthStore
-        .getState()
-        .storeAuth({ user: { ...useAuthStore.getState(), image: data.image } });
-      setSelectedImage(null);
-      setImagePreview(null);
-    },
-    onError: (error: any) => {
-      toast.error(
-        error?.response?.data?.message || "Failed to update profile image"
       );
     },
   });
@@ -64,26 +38,6 @@ export default function MyAccount() {
       updatePasswordMutation.mutate(values);
     },
   });
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedImage(file);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreview(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleImageUpload = () => {
-    if (selectedImage) {
-      const formData = new FormData();
-      formData.append("image", selectedImage);
-      updateImageMutation.mutate(formData);
-    }
-  };
 
   const fullName = display_name || `${first_name} ${last_name}`;
 

@@ -60,7 +60,6 @@ export function UserAvatar({
     return <LogoComponent className={className} />;
   };
 
-  const { isMobile } = useSidebar();
   const [activeTeam, setActiveTeam] = React.useState(profiles[0]);
 
   if (!activeTeam) {

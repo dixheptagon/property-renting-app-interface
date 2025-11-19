@@ -1,10 +1,9 @@
 "use client";
 
-import { DateRange } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LandingPageDatePicker } from "./searchbar-component/date.picker";
-import { Search, X } from "lucide-react";
+import { X } from "lucide-react";
 
 import useDebounce from "../../_hooks/use.debounce";
 import { useState, useEffect } from "react";

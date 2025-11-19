@@ -7,18 +7,14 @@ import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 
 import { useRouter } from "next/navigation";
-import { useScrolled } from "@/hooks/use.scrolled";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { usePropertyStore } from "../../_stores/property.store";
 import PropertyProgressBar from "../_components/property.progress.bar";
 import MapEmbedTips from "./_components/map.embed.tips";
-import { useFormik } from "formik";
-import { PropertyValidationSchema } from "../../_validations/property.validation.schema";
 
 export default function Page() {
   const router = useRouter();
 
-  const { property, setPropertyData } = usePropertyStore();
+  const { setPropertyData } = usePropertyStore();
 
   // Handle Iframe Input and Preview
   const [iframeInput, setIframeInput] = useState("");

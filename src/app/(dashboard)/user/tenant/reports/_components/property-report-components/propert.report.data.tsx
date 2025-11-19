@@ -2,7 +2,7 @@ import { TrendingUp, Home, CheckCircle, XCircle } from "lucide-react";
 import { usePropertyReport } from "../../_hooks/use.property.report";
 
 export function PropertyReportData() {
-  const { propertyReportData, isLoading, isError } = usePropertyReport();
+  const { propertyReportData, isError } = usePropertyReport();
 
   if (isError || !propertyReportData) {
     return (

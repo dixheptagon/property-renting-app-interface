@@ -1,14 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import {
-  Calendar,
-  Clock,
-  CreditCard,
-  FileText,
-  Moon,
-  MapPin,
-} from "lucide-react";
+import { Calendar, Clock, CreditCard, FileText, Moon } from "lucide-react";
 import { useBookingStore } from "../../../_stores/booking.store";
 import { usePaymentStore } from "../../../_stores/payment.store";
 import { formatDate } from "../_utils/format.date";

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Star, MapPin, Edit3, ImageOff, FileText } from "lucide-react";
+import { MapPin, Edit3, ImageOff, FileText } from "lucide-react";
 import { getCategoryIcon } from "./get.category.icon";
 import Link from "next/link";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";

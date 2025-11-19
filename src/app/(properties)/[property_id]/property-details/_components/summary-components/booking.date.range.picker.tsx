@@ -106,7 +106,7 @@ export default function BookingDateRangePicker() {
 
     // No unavailable dates found, clear dynamic disabled dates
     setDynamicDisabledDates([]);
-  }, [dateRange?.from]);
+  }, [dateRange?.from, DatesUnavailabilities]);
 
   // 🧩 Handle select logic
   const handleDateSelect = (range: DateRange | undefined) => {
@@ -173,9 +173,6 @@ export default function BookingDateRangePicker() {
           }}
           components={{
             DayButton: ({ children, modifiers, day, ...props }) => {
-              const isWeekend =
-                day.date.getDay() === 0 || day.date.getDay() === 6;
-
               const isPeak = peakSeasonDates.some(
                 (d) => d.toDateString() === day.date.toDateString()
               );

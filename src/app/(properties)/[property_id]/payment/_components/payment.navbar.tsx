@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useScrolled } from "@/hooks/use.scrolled";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -34,7 +33,7 @@ export default function PaymentNavbar() {
 
           {/* Auth Button */}
           <div className="shrink-0">
-            <AuthButtons scrolled={false} handleAuth={handleAuth} />
+            <AuthButtons handleAuth={handleAuth} />
           </div>
         </div>
 

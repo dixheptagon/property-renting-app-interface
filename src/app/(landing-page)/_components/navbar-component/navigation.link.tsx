@@ -1,6 +1,5 @@
 import { Building2, Calendar, Home, Phone, UserCircle } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 
 const publicNavLinks = [
@@ -25,7 +24,6 @@ const scrollToSection = (href: string) => {
 };
 
 export function NavigationLink({ scrolled }: { scrolled: boolean }) {
-  const router = useRouter();
   const { access_token } = useAuthStore();
 
   const handleClick = (

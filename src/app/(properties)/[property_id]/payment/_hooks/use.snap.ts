@@ -9,7 +9,6 @@ import { toast } from "sonner";
 export const useSnap = () => {
   // Get Property_Id
   const params = useParams();
-  const property_id = params.property_id;
 
   const [snap, setSnap] = useState<any>(null);
 
@@ -28,7 +27,7 @@ export const useSnap = () => {
       setSnap(window.snap);
     };
 
-    script.onerror = (error) => {
+    script.onerror = () => {
       toast.error("Failed to load Snap payment widget.");
     };
 
@@ -48,15 +47,15 @@ export const useSnap = () => {
     try {
       snap.embed(token, {
         embedId,
-        onSuccess: (result: any) => {
+        onSuccess: () => {
           toast.success("Payment successful!");
           // Redirect to success page
           //   window.location.href = `/${property_id}/confirmed`;
         },
-        onPending: (result: any) => {
+        onPending: () => {
           toast.info("Payment is being processed...");
         },
-        onError: (result: any) => {
+        onError: () => {
           toast.error("Payment failed. Please try again later.");
         },
         onClose: () => {

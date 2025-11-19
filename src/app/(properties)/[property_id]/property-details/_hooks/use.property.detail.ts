@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { Property } from "../_types/property";
 import { axiosInstance } from "@/lib/axios";
 import { PropertyDetailsResponse } from "../_types/api";
 

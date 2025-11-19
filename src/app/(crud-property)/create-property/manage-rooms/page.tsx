@@ -1,15 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { CirclePlus, Hotel, Bed, Users, LogOut } from "lucide-react";
+import { CirclePlus, Hotel, LogOut } from "lucide-react";
 import CreatePropertyHeader from "../_components/create.property.header";
-import Link from "next/link";
 import PropertyProgressBar from "../_components/property.progress.bar";
 import { useRouter } from "next/navigation";
-import { useScrolled } from "@/hooks/use.scrolled";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { usePropertyStore } from "../../_stores/property.store";
-import { useRef } from "react";
 import PropertyRoomTypes from "./_components/room-types";
 
 export default function Page() {
@@ -81,8 +77,8 @@ export default function Page() {
                   Organize Room Types
                 </h2>
                 <h2 className="md:text-md max-w-md text-sm text-gray-600">
-                  Create different room categories to showcase your property's
-                  accommodation options
+                  Create different room categories to showcase your
+                  property&apos;s accommodation options
                 </h2>
               </div>
 

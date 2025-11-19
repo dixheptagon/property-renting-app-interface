@@ -1,11 +1,10 @@
 "use client";
 
 import CreatePropertyHeader from "../_components/create.property.header";
-import { Formik, FastField } from "formik";
+import { Formik } from "formik";
 import { PropertyValidationSchema } from "../../_validations/property.validation.schema";
 import { useRouter } from "next/navigation";
-import { useScrolled } from "@/hooks/use.scrolled";
-import { useIsMobile } from "@/hooks/use-mobile";
+
 import PropertyProgressBar from "../_components/property.progress.bar";
 import { Button } from "@/components/ui/button";
 import { useCallback } from "react";
@@ -25,10 +24,13 @@ export default function Page() {
   const router = useRouter();
   const { property, setPropertyData } = usePropertyStore();
 
-  const handleSubmit = useCallback((values: any) => {
-    setPropertyData({ title: values.title, description: values.description });
-    router.push("/create-property/location");
-  }, []);
+  const handleSubmit = useCallback(
+    (values: { title: string; description: string }) => {
+      setPropertyData({ title: values.title, description: values.description });
+      router.push("/create-property/location");
+    },
+    [router, setPropertyData]
+  );
 
   return (
     <main>

@@ -10,7 +10,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CalendarIcon, CalendarX, Clock, Home, XCircle } from "lucide-react";
-import { useState } from "react";
 import { formatDate } from "../../_utils/format.date";
 import { Calendar } from "@/components/ui/calendar";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -126,7 +125,7 @@ export default function ContentSetUnavailabilty() {
       validationSchema={UnavailabilityValidationSchema}
       onSubmit={handleSubmit}
     >
-      {({ values, setFieldValue, errors, touched, isSubmitting }) => (
+      {({ values, setFieldValue, errors, isSubmitting }) => (
         <Form className="w-full space-y-6">
           {/* Error Display */}
           {(errors as any).submit && (

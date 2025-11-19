@@ -41,7 +41,6 @@ export function PaginationComponent({
   const getPageNumbers = () => {
     const pages: (number | string)[] = [];
     const maxVisiblePages = 5;
-    const activePage = currentPage || 1;
 
     if (totalPages <= maxVisiblePages) {
       // Show all pages if total is small

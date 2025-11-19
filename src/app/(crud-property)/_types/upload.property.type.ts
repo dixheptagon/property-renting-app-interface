@@ -53,9 +53,9 @@ interface PropertyData {
   longitude: number | null;
   place_id: string | null;
   map_url: string | null;
-  amenities: any;
+  amenities: string[];
   custom_amenities: string[];
-  rules: any;
+  rules: string[];
   custom_rules: string[];
 }
 

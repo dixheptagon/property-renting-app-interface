@@ -2,7 +2,6 @@ import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
 import { MobileUserDropdown, UserDropdown } from "./user.dropdown";
-import { access } from "fs";
 
 export function AuthButtons({
   scrolled,

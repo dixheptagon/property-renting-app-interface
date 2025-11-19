@@ -7,9 +7,7 @@ import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import ButtonEditSection from "./button.edit.section";
 import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
-interface PropertyAmenitiesProps {}
-
-export default function PropertyAmenities({}: PropertyAmenitiesProps) {
+export default function PropertyAmenities() {
   const [showAmenities, setShowAmenities] = useState(false);
 
   const { property } = usePropertyStore();

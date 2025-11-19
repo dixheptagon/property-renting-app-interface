@@ -1,14 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import {
-  X,
-  Plus,
-  Images,
-  Trash2,
-  AlertCircle,
-  LoaderCircle,
-} from "lucide-react";
+import { useState, useRef } from "react";
+import { Plus, Images, Trash2, AlertCircle, LoaderCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,6 +17,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useUploadPropertyImages } from "@/app/(crud-property)/_hooks/use.upload.property.images";
 import { toast } from "sonner";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
+import Image from "next/image";
 
 export default function ImageUploadDialog({
   buttonText,
@@ -255,9 +249,14 @@ export default function ImageUploadDialog({
                   key={index}
                   className="relative aspect-square overflow-hidden rounded-xl"
                 >
-                  <img
-                    src={image.url}
+                  <Image
+                    src={
+                      image?.url ||
+                      "https://lightwidget.com/wp-content/uploads/localhost-file-not-found-480x480.avif"
+                    }
                     alt={`Preview ${index + 1}`}
+                    width={1080}
+                    height={1920}
                     className="h-full w-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black/0" />

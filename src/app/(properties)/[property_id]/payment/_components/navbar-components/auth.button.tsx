@@ -3,13 +3,7 @@ import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
 import { MobileUserDropdown, UserDropdown } from "./user.dropdown";
 
-export function AuthButtons({
-  scrolled,
-  handleAuth,
-}: {
-  scrolled: boolean;
-  handleAuth: () => void;
-}) {
+export function AuthButtons({ handleAuth }: { handleAuth: () => void }) {
   const { access_token } = useAuthStore();
 
   return (

@@ -1,4 +1,4 @@
-import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 
 import { usePurchaseSearchParams } from "../_utils/search.params";

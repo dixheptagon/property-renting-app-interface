@@ -2,10 +2,8 @@
 
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import { PropertyValidationSchema } from "@/app/(crud-property)/_validations/property.validation.schema";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useScrolled } from "@/hooks/use.scrolled";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 import CreatePropertyHeader from "../../_components/create.property.header";
 import { Formik } from "formik";
 import { TitleField } from "./_components/title.field";
@@ -30,13 +28,13 @@ export default function Page() {
   const roomId = searchParams.get("roomId");
 
   // 2. get action for add title and description to room id
-  const { rooms, updateRoom } = usePropertyStore();
+  const { updateRoom } = usePropertyStore();
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );
 
   const handleSubmit = useCallback(
-    (values: any) => {
+    (values: { title: string; description: string }) => {
       if (!roomId || !currentRoom) {
         toast.error(`Room id ${roomId} not found, You will be redirected`, {
           duration: 4000,

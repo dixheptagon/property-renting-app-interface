@@ -7,9 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import ButtonEditSection from "./button.edit.section";
 import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 
-interface PropertyLocationProps {}
-
-export default function PropertyLocation({}: PropertyLocationProps) {
+export default function PropertyLocation() {
   const { property } = usePropertyStore();
   const isMobile = useIsMobile();
 

@@ -4,7 +4,7 @@ import { User } from "lucide-react";
 import { MobileUserDropdown, UserDropdown } from "./user.dropdown";
 import Link from "next/link";
 
-export function AuthButtons({ scrolled }: { scrolled: boolean }) {
+export function AuthButtons() {
   const { access_token } = useAuthStore();
 
   return (

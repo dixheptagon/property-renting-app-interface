@@ -1,7 +1,5 @@
 "use client";
 
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useScrolled } from "@/hooks/use.scrolled";
 import { useRouter, useSearchParams } from "next/navigation";
 import CreatePropertyHeader from "../../_components/create.property.header";
 import { Camera } from "lucide-react";
@@ -19,7 +17,6 @@ export default function Page() {
   const roomId = searchParams.get("roomId");
 
   // 2. get action for add title and description to room id
-  const { rooms } = usePropertyStore();
   const currentRoom = usePropertyStore((state) =>
     state.rooms.find((room) => room.tempId === roomId)
   );

@@ -9,9 +9,7 @@ import { MoreHorizontal } from "lucide-react";
 
 // Photo Menu Component
 export default function PhotoMenu({
-  onSetCover,
   onDelete,
-  isCover = false,
 }: {
   onSetCover: () => void;
   onDelete: () => void;

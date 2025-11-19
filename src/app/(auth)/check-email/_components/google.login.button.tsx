@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { signInWithPopup } from "firebase/auth";
 import { useAuthStore } from "../../_stores/auth.store";
@@ -8,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 export default function GoogleLoginButton() {
   const router = useRouter();
-  const { storeToken, storeAuth } = useAuthStore();
+  const { storeAuth } = useAuthStore();
 
   const { mutate: loginWithGoogle } = useGoogleLogin({
     onSuccess: (data) => {
@@ -21,7 +23,6 @@ export default function GoogleLoginButton() {
         toast.error(error.response?.data.error);
       } else {
         toast.error("Something went wrong, please try again later.");
-        // router.push("/");
       }
     },
   });

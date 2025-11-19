@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, ChevronLeft, ChevronRight, Image } from "lucide-react";
-import { PropertyImage } from "@/app/(properties)/property-details/_types/property";
+
+import { X, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
+import { PropertyImage } from "../_types/property";
+import Image from "next/image";
 
 interface PropertyImageGridProps {
   images: PropertyImage[];
@@ -42,8 +44,10 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
             className="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden"
             onClick={() => handleImageClick(0)}
           >
-            <img
+            <Image
               src={imageUrls[0]}
+              height={1080}
+              width={1080}
               alt="Main property view"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
@@ -57,7 +61,9 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
               className="group relative cursor-pointer overflow-hidden"
               onClick={() => handleImageClick(index + 1)}
             >
-              <img
+              <Image
+                width={1080}
+                height={1920}
                 src={imageUrl}
                 alt={`Property view ${index + 2}`}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -74,7 +80,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
                   }}
                   className="absolute right-4 bottom-4 flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-lg transition-colors duration-200 hover:bg-gray-100"
                 >
-                  <Image
+                  <ImageIcon
                     className="h-4 w-4"
                     fill="none"
                     stroke="currentColor"
@@ -114,7 +120,9 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
 
           {/* Current Image */}
           <div className="mx-4 max-h-[80vh] max-w-5xl">
-            <img
+            <Image
+              width={1080}
+              height={1920}
               src={imageUrls[currentImageIndex]}
               alt={`Property view ${currentImageIndex + 1}`}
               className="max-h-[80vh] max-w-full rounded-lg object-contain"
@@ -141,7 +149,9 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
                     : "opacity-50 hover:opacity-75"
                 }`}
               >
-                <img
+                <Image
+                  width={1080}
+                  height={1920}
                   src={imageUrl}
                   alt={`Thumbnail ${index + 1}`}
                   className="h-full w-full object-cover"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Home } from "lucide-react";
 import {
   Select,
@@ -23,7 +23,7 @@ export default function PropertySelect() {
     if (properties.length > 0 && !filters.property_propertyId) {
       setPropertyId(properties[0].uid);
     }
-  }, [properties, filters.property_propertyId]);
+  }, [properties, filters.property_propertyId, setPropertyId]);
 
   const handlePropertyChange = (propertyId: string) => {
     setPropertyId(propertyId);

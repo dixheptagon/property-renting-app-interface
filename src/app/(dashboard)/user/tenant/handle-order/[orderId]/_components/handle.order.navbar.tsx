@@ -3,11 +3,11 @@
 import { useScrolled } from "@/hooks/use.scrolled";
 import { AuthButtons, MobileAuthButton } from "./navbar-components/auth.button";
 import { Logo, MobileLogo } from "./navbar-components/logo";
-import { ReservationStep } from "./navbar-components/reservation.step";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
 export default function OrderDetailsNavbar() {
   const router = useRouter();
   const scrolled = useScrolled();
@@ -41,7 +41,7 @@ export default function OrderDetailsNavbar() {
 
           {/* Auth Button */}
           <div className="shrink-0">
-            <AuthButtons scrolled={false} />
+            <AuthButtons />
           </div>
         </div>
 

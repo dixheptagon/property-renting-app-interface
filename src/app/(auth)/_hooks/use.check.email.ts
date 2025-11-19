@@ -34,7 +34,7 @@ export function useCheckEmail() {
       mutation.reset();
       mutation.mutate(debouncedEmail);
     }
-  }, [debouncedEmail]);
+  }, [debouncedEmail, mutation]);
 
   return {
     email,

@@ -47,7 +47,7 @@ export function CheckEmail({
     },
   });
 
-  const { email, setEmail, data, isPending, error } = useCheckEmail();
+  const { setEmail, data, isPending, error } = useCheckEmail();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     formik.handleChange(event);
@@ -61,7 +61,7 @@ export function CheckEmail({
     if (!formik.isValid || !email) return;
 
     setEmail(email);
-  }, [formik.values.email, formik.isValid]);
+  }, [formik.values.email, formik.isValid, setEmail]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -78,7 +78,7 @@ export function CheckEmail({
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Get Started!</h1>
                 <p className="text-muted-foreground text-balance">
-                  Let's get you set up. Enter your email.
+                  Let&apos;s get you set up. Enter your email.
                 </p>
               </div>
 

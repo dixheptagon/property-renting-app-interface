@@ -1,4 +1,4 @@
-import { RoomHighlight } from "@/app/(properties)/property-details/_types/property";
+import { RoomHighlight } from "../../_types/property";
 
 /**
  * Formats a price number to Indonesian Rupiah currency string.

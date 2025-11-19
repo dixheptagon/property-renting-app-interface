@@ -2,19 +2,11 @@
 
 import { Label } from "@/components/ui/label";
 import { useBookingStore } from "@/app/(properties)/_stores/booking.store";
-
 import { CircleX } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { BookingDateRangePicker, GuestDropdown } from "./summary-components";
-import { PeakSeasonRate, RoomUnavailability } from "../_types/property";
 
-export default function PropertySummary({
-  room_unavailabilities,
-  peak_season_price,
-}: {
-  room_unavailabilities: RoomUnavailability[];
-  peak_season_price: PeakSeasonRate[];
-}) {
+export default function PropertySummary() {
   const router = useRouter();
   const params = useParams();
   const bookingState = useBookingStore();
@@ -151,7 +143,7 @@ export default function PropertySummary({
           </button>
 
           <p className="mt-3 text-center text-xs text-gray-500">
-            You won't be charged yet
+            You won&apos;t be charged yet
           </p>
         </div>
       </div>

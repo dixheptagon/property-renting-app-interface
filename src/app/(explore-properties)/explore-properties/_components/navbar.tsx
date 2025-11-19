@@ -4,7 +4,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useScrolled } from "@/hooks/use.scrolled";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Logo, MobileLogo } from "./navbar-component/logo";
+import { Logo } from "./navbar-component/logo";
 import { AuthButtons, MobileAuthButton } from "./navbar-component/auth.button";
 import { Menu, X } from "lucide-react";
 import SearchBar from "./navbar-component/search.bar";
@@ -13,7 +13,6 @@ export default function Navbar() {
   const router = useRouter();
 
   const scrolled = useScrolled();
-  const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleAuth = () => {

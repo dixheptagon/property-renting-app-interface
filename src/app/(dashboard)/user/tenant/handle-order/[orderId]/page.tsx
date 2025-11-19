@@ -3,7 +3,6 @@ import { useParams } from "next/navigation";
 import HandleOrderForm from "./_components/handle.order.form";
 import HandleOrderNavbar from "./_components/handle.order.navbar";
 import OrderSummary from "./_components/order.summary";
-import PaymentProofUpload from "../../../my-bookings/[orderId]/order-details/_components/form-components/upload.payment.proof";
 
 export default function Page() {
   const params = useParams();

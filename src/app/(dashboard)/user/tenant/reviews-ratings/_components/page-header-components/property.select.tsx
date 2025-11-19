@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Home, ChevronDown } from "lucide-react";
+import { useEffect } from "react";
+import { Home } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -23,7 +23,7 @@ export default function PropertySelect() {
     if (properties.length > 0 && !filters.propertyId) {
       setPropertyId(properties[0].uid);
     }
-  }, [properties, filters.propertyId]);
+  }, [properties, filters.propertyId, setPropertyId]);
 
   const handlePropertyChange = (propertyId: string) => {
     setPropertyId(propertyId);

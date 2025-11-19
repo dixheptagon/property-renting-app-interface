@@ -10,6 +10,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Image from "next/image";
 
 interface RoomCardProps {
   room: RoomData;
@@ -165,7 +166,9 @@ export const RoomCard: React.FC<RoomCardProps> = ({
             onClick={() => onViewImages(room)}
           >
             {room.images.length > 0 && (
-              <img
+              <Image
+                width={1080}
+                height={1920}
                 src={
                   room.images.find((img) => img.is_main)?.url ||
                   room.images[0]?.url
