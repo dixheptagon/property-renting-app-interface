@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { FunnelX, SlidersHorizontal, Star } from "lucide-react";
 import {
@@ -19,6 +19,9 @@ import { useReviewSearchParams } from "../../_hooks/use.review.search.params";
 
 export default function FilterByRating() {
   const { setRatingFilter, clearFilters, filters } = useReviewSearchParams();
+  const [localRatings, setLocalRatings] = useState<number[]>(
+    filters.rating || []
+  );
 
   const ratings = [
     { value: 5, label: "5 Stars", stars: 5 },
@@ -29,35 +32,31 @@ export default function FilterByRating() {
   ];
 
   const handleRatingChange = (ratingValue: number) => {
-    const currentRatings = filters.rating || [];
-    const newRatings = currentRatings.includes(ratingValue)
-      ? currentRatings.filter((r) => r !== ratingValue)
-      : [...currentRatings, ratingValue];
-
-    console.log("Selected Ratings:", newRatings);
-    setRatingFilter(newRatings);
+    const newRatings = localRatings.includes(ratingValue)
+      ? localRatings.filter((r) => r !== ratingValue)
+      : [...localRatings, ratingValue];
+    setLocalRatings(newRatings);
   };
 
   const handleApplyFilter = () => {
-    // Since we're updating in real-time, this could be used for additional logic
-    console.log("Applying filters with ratings:", filters.rating);
+    setRatingFilter(localRatings);
   };
 
   const handleClearAll = () => {
     clearFilters();
-    console.log("Filters cleared");
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
+      {/* Filter Button */}
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="group/btn w-full bg-blue-600 text-white transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
+          <Button className="group/btn w-full justify-center bg-blue-600 text-white transition-all hover:bg-blue-700 hover:shadow-lg md:w-auto md:justify-start">
             <SlidersHorizontal className="mr-2 h-4 w-4" />
             Filters
-            {(filters.rating?.length || 0) > 0 && (
+            {localRatings.length > 0 && (
               <span className="ml-2 rounded-full bg-white px-2 py-0.5 text-xs text-blue-600">
-                {filters.rating?.length || 0}
+                {localRatings.length}
               </span>
             )}
           </Button>
@@ -80,7 +79,7 @@ export default function FilterByRating() {
               >
                 <Checkbox
                   id={`rating-${rating.value}`}
-                  checked={filters.rating?.includes(rating.value) || false}
+                  checked={localRatings.includes(rating.value)}
                   onCheckedChange={() => handleRatingChange(rating.value)}
                   className="border-2 border-gray-300"
                 />
@@ -113,7 +112,7 @@ export default function FilterByRating() {
               <Button
                 type="button"
                 variant="outline"
-                className="order-2 sm:order-1"
+                className="order-2 w-full sm:order-1 sm:w-auto"
               >
                 Cancel
               </Button>
@@ -121,7 +120,7 @@ export default function FilterByRating() {
             <Button
               type="button"
               onClick={handleApplyFilter}
-              className="order-1 bg-blue-600 text-white hover:bg-blue-700 sm:order-2"
+              className="order-1 w-full bg-blue-600 text-white hover:bg-blue-700 sm:order-2 sm:w-auto"
             >
               Apply Filter
             </Button>
@@ -129,11 +128,13 @@ export default function FilterByRating() {
         </DialogContent>
       </Dialog>
 
+      {/* Clear Filters Button */}
       <Button
         onClick={handleClearAll}
-        className="bg-white text-gray-500 hover:bg-red-100 hover:text-red-700"
+        variant="outline"
+        className="w-full justify-center border-gray-300 text-gray-600 hover:border-red-300 hover:bg-red-50 hover:text-red-600 md:w-auto md:justify-start"
       >
-        <FunnelX className="h-4 w-4" />
+        <FunnelX className="mr-2 h-4 w-4" />
         Clear Filters
       </Button>
     </div>

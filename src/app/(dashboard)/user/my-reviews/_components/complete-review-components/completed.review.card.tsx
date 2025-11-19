@@ -1,3 +1,6 @@
+"use client";
+
+import React from "react";
 import { Star, Building2, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -8,6 +11,7 @@ import {
 } from "@/components/ui/accordion";
 import { formatDate } from "../../_utils/format.date";
 import { CompletedReviewItem } from "../../_types/completed.reviews.type";
+import { truncateComment, truncateReply } from "../../_utils/truncate.data";
 
 interface CompletedReviewCardProps {
   review: CompletedReviewItem;
@@ -16,8 +20,11 @@ interface CompletedReviewCardProps {
 export default function CompletedReviewCard({
   review: reviewData,
 }: CompletedReviewCardProps) {
+  const [showFullReply, setShowFullReply] = React.useState(false);
+  const [showFullComment, setShowFullComment] = React.useState(false);
+
   return (
-    <Card className="mt-4 w-full overflow-hidden transition-shadow hover:shadow-lg">
+    <Card className="mt-4 w-full overflow-hidden">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1 space-y-1">
@@ -58,9 +65,19 @@ export default function CompletedReviewCard({
         {/* Review Text */}
         <div className="space-y-2">
           <h4 className="font-semibold text-gray-900">My Review</h4>
-          <p className="leading-relaxed text-gray-700">
-            {reviewData.review.comment}
+          <p className="leading-relaxed whitespace-pre-line text-gray-700">
+            {showFullComment
+              ? reviewData.review.comment
+              : truncateComment(reviewData.review.comment)}
           </p>
+          {reviewData.review.comment.length > 100 && (
+            <button
+              onClick={() => setShowFullComment(!showFullComment)}
+              className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
+            >
+              {showFullComment ? "Show less" : "Read more"}
+            </button>
+          )}
         </div>
 
         {/* Tenant Reply Accordion */}
@@ -87,9 +104,19 @@ export default function CompletedReviewCard({
                       {formatDate(new Date(reviewData.review.updatedAt))}
                     </span>
                   </div>
-                  <p className="text-sm leading-relaxed text-gray-700">
-                    {reviewData.review.reply}
+                  <p className="text-sm leading-relaxed tracking-wide whitespace-pre-line text-gray-700">
+                    {showFullReply
+                      ? reviewData.review.reply
+                      : truncateReply(reviewData.review.reply)}
                   </p>
+                  {reviewData.review.reply.length > 100 && (
+                    <button
+                      onClick={() => setShowFullReply(!showFullReply)}
+                      className="mt-3 text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
+                    >
+                      {showFullReply ? "Show less" : "Read more"}
+                    </button>
+                  )}
                 </div>
               </AccordionContent>
             </AccordionItem>

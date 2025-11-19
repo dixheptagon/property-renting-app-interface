@@ -118,7 +118,6 @@ export default function PeakPriceDialogContent() {
         submit: "Failed to save peak season rates. Please try again.",
       });
       setSubmitting(false);
-      console.error("Error saving peak rates:", error);
     }
   };
 

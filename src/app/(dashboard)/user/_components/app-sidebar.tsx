@@ -34,10 +34,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 import capitalize from "../my-reviews/_utils/capitalize.letter";
+import { useIsDraftProperty } from "./hooks/use.is.draft.property";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Get User Profile
   const { first_name, last_name, image, role } = useAuthStore();
+  const isDraft = useIsDraftProperty();
 
   // This is sample data.
   const data = {
@@ -90,7 +92,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         title: "Create Accomodation",
-        url: "/create-property",
+        url: `${isDraft ? "/create-property/summary" : "/create-property"}`,
         icon: HousePlus,
       },
     ],
@@ -107,7 +109,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         name: "Log Out",
-        url: "#",
+        url: "/",
         icon: CirclePower,
       },
     ],

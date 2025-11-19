@@ -15,8 +15,6 @@ export function useResendVerification({
         email,
       });
 
-      console.log(res.data);
-
       return res.data;
     },
     onError,

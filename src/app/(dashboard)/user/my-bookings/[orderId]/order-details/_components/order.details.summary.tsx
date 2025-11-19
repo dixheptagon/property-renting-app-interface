@@ -17,8 +17,6 @@ import PaymentProofUpload from "./form-components/upload.payment.proof";
 export default function OrderDetailsSummary({
   bookingData,
 }: OrderDetailsSummaryProps) {
-  console.log(bookingData);
-
   const checkInDate = bookingData
     ? formatDate(new Date(bookingData.check_in_date))
     : "N/A";

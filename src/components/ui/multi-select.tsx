@@ -553,16 +553,16 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
         const action = deduplicateOptions
           ? "automatically removed"
           : "detected";
-        console.warn(
-          `MultiSelect: Duplicate option values ${action}: ${duplicates.join(
-            ", "
-          )}. ` +
-            `${
-              deduplicateOptions
-                ? "Duplicates have been removed automatically."
-                : "This may cause unexpected behavior. Consider setting 'deduplicateOptions={true}' or ensure all option values are unique."
-            }`
-        );
+        // console.warn(
+        //   `MultiSelect: Duplicate option values ${action}: ${duplicates.join(
+        //     ", "
+        //   )}. ` +
+        //     `${
+        //       deduplicateOptions
+        //         ? "Duplicates have been removed automatically."
+        //         : "This may cause unexpected behavior. Consider setting 'deduplicateOptions={true}' or ensure all option values are unique."
+        //     }`
+        // );
       }
       return deduplicateOptions ? uniqueOptions : allOptions;
     }, [options, deduplicateOptions, isGroupedOptions]);
@@ -571,9 +571,9 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
       (value: string): MultiSelectOption | undefined => {
         const option = getAllOptions().find((option) => option.value === value);
         if (!option && process.env.NODE_ENV === "development") {
-          console.warn(
-            `MultiSelect: Option with value "${value}" not found in options list`
-          );
+          // console.warn(
+          //   `MultiSelect: Option with value "${value}" not found in options list`
+          // );
         }
         return option;
       },

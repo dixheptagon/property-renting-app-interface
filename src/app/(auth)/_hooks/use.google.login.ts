@@ -13,7 +13,6 @@ export function useGoogleLogin({
     mutationFn: async (data: { idToken: string }) => {
       const res = await axiosInstance.post("/api/auth/social-login", data);
 
-      console.log(res.data);
       return res.data;
     },
     onSuccess,

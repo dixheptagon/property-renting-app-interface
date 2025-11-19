@@ -11,7 +11,7 @@ export type ReviewFilters = {
   sort_by: string | null; //created_at
   sort_dir: "asc" | "desc" | null;
   search: string | null; //"john"
-  propertyId: string | null; //"123"
+  propertyId: string | undefined; //"123"
 };
 
 export const reviewSearchConfig: SearchParamsConfig<ReviewFilters> = {
@@ -24,7 +24,7 @@ export const reviewSearchConfig: SearchParamsConfig<ReviewFilters> = {
     sort_by: null,
     sort_dir: "desc",
     search: null,
-    propertyId: null,
+    propertyId: "",
   },
 
   parse: (params) => ({
@@ -39,7 +39,7 @@ export const reviewSearchConfig: SearchParamsConfig<ReviewFilters> = {
     sort_by: params.get("sort_by") || null,
     sort_dir: (params.get("sort_dir") as "asc" | "desc") || "desc",
     search: params.get("search") || null,
-    propertyId: params.get("propertyId") || null,
+    propertyId: params.get("propertyId") || "",
   }),
 
   serialize: (key, value) => {

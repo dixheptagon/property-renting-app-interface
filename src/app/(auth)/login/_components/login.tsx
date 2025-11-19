@@ -28,14 +28,12 @@ export function Login({ className, ...props }: React.ComponentProps<"div">) {
 
   const { mutate: loginAccount, error } = useLoginAccount({
     onSuccess: (data) => {
-      console.log(data);
       storeAuth(data?.data);
       storeEmail(data?.data?.user?.email);
       toast.success(data?.message);
       // router.push("/");
     },
     onError: (error) => {
-      console.log(error);
       if (error?.response?.data?.error) {
         toast.error(error.response?.data.error);
       } else {

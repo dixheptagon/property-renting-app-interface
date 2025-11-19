@@ -1,66 +1,60 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { startTransition, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LandingPageDatePicker } from "./searchbar-component/date.picker";
-import { SelectCategory } from "../filtering-box-component/select.category";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
+
+import useDebounce from "../../_hooks/use.debounce";
+import { useState, useEffect } from "react";
+import { usePropertySearchParams } from "../../_hooks/use.property.search.params";
 
 export default function SearchBar() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [location, setLocation] = useState(searchParams.get("location") || "");
-  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const { filters, setLocation, clearLocation } = usePropertySearchParams();
+  const [localLocation, setLocalLocation] = useState(filters.location || "");
+  const debouncedLocation = useDebounce(localLocation, 500);
 
-  const handleSearch = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (location) params.set("location", location);
-    if (dateRange?.from)
-      params.set("checkin", dateRange.from.toISOString().split("T")[0]);
-    if (dateRange?.to)
-      params.set("checkout", dateRange.to.toISOString().split("T")[0]);
+  useEffect(() => {
+    setLocation(debouncedLocation);
+  }, [debouncedLocation, setLocation]);
 
-    if (!location) params.delete("location");
-    if (!dateRange?.from) params.delete("checkin");
-    if (!dateRange?.to) params.delete("checkout");
+  useEffect(() => {
+    setLocalLocation(filters.location || "");
+  }, [filters.location]);
 
-    startTransition(() => {
-      router.push(`/explore-properties?${params.toString()}`);
-    });
+  const handleLocationChange = (value: string) => {
+    setLocalLocation(value);
+  };
 
-    console.log(params.toString());
+  const handleClearLocation = () => {
+    setLocalLocation("");
+    clearLocation();
   };
 
   return (
     <section className="mx-6 w-full">
       <div className="grid grid-cols-1 items-center gap-2 md:grid-cols-8">
         {/* Input Location and Destination */}
-        <div className="md:col-span-5">
+        <div className="relative md:col-span-5">
           <Input
             type="text"
             placeholder="Search location or destination"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSearch();
-            }}
+            value={localLocation}
+            onChange={(e) => handleLocationChange(e.target.value)}
             className="h-10 w-full bg-white"
           />
+          <Button
+            variant={"link"}
+            className="absolute top-0.5 right-0.5 text-gray-400 hover:text-red-700"
+            onClick={handleClearLocation}
+          >
+            <X className="h-4 w-4 stroke-3" />
+          </Button>
         </div>
         {/* Input Date Range */}
-        <div className="md:col-span-2">
-          <LandingPageDatePicker onDateRangeChange={setDateRange} />
-        </div>
-
-        {/* Button Search  */}
-        <div className="flex md:col-span-1">
-          <Button onClick={handleSearch} className="h-10 w-full">
-            <Search className="h-4 w-4 stroke-2" />
-            <h2 className="hidden lg:block">Search</h2>
-          </Button>
+        <div className="md:col-span-3">
+          <LandingPageDatePicker />
         </div>
       </div>
     </section>

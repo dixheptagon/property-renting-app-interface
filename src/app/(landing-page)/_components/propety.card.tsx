@@ -14,6 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Property } from "../_types";
 import { formatPrice } from "../_utils/format.price";
+import formatNumberShort from "../_utils/format.number.short";
 
 const getCategoryIcon = (category: string) => {
   const iconClass = "h-4 w-4";
@@ -65,7 +66,10 @@ export const PropertyCard = ({ property }: { property: Property }) => {
           {/* Rating Badge */}
           <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-1.5 text-xs font-bold text-white shadow-lg transition-all duration-300 group-hover:scale-105">
             <Star className="h-3.5 w-3.5 fill-white" />
-            <span>{property.rating_avg || "N/A"}</span>
+            <span>
+              {`${property.rating_avg} • ${formatNumberShort(property.review_count)} reviews` ||
+                "N/A"}
+            </span>
           </div>
         </div>
 

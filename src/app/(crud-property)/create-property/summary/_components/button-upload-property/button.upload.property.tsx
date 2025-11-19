@@ -17,6 +17,7 @@ import { useUploadPropertyForm } from "@/app/(crud-property)/_hooks/use.upload.p
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useDisabledUploadProperty } from "@/app/(crud-property)/_hooks/use.disabled.upload.property";
 
 export default function UploadProperty() {
   const router = useRouter();
@@ -45,7 +46,6 @@ export default function UploadProperty() {
       }, 4000);
     },
     onError: (error) => {
-      console.log(error);
       if (error?.response?.data?.error) {
         toast.error(error.response?.data.error);
       } else {
@@ -56,14 +56,6 @@ export default function UploadProperty() {
   });
 
   const handleUploadProperty = () => {
-    console.log({
-      propertyImages,
-      property,
-      rooms,
-      peakSeasonRates,
-      unavailabilities,
-    });
-
     uploadProperty({
       propertyImages,
       property,
@@ -73,16 +65,7 @@ export default function UploadProperty() {
     });
   };
 
-  const disabledUpload =
-    !propertyImages?.length ||
-    !property?.category ||
-    !property?.title ||
-    !property?.description ||
-    !property?.base_price ||
-    !property?.address ||
-    !property?.map_url ||
-    !(property?.amenities?.length > 0) ||
-    !(property?.rules?.length > 0);
+  const disabledUpload = useDisabledUploadProperty();
 
   return (
     <Dialog>
@@ -116,7 +99,7 @@ export default function UploadProperty() {
             </Alert>
           )}
 
-          {!disabledUpload && (
+          {disabledUpload && (
             <Alert
               variant="destructive"
               className="border border-red-400 bg-red-50"
@@ -144,7 +127,7 @@ export default function UploadProperty() {
             </DialogClose>
             <Button
               className="hover:bg-blue-700 hover:shadow-xl"
-              disabled={!disabledUpload || isPending}
+              disabled={disabledUpload || isPending}
               onClick={handleUploadProperty}
             >
               {isPending ? (

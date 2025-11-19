@@ -38,7 +38,6 @@ export default function CancelOrderButton({ orderId }: CancelOrderButtonProps) {
           ? error.response?.data?.error
           : "An error occurred during cancellation"
       );
-      console.error("Cancel order error:", error);
     }
   };
 

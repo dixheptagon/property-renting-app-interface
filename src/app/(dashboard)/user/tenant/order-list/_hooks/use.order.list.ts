@@ -54,7 +54,6 @@ export const useOrderList = () => {
         { params }
       );
 
-      console.log("response", response.data);
       return response.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes

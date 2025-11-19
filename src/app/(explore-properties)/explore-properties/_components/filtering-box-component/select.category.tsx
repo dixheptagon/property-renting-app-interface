@@ -11,32 +11,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Bed, Building, Building2, House, TentTree } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePropertySearchParams } from "../../_hooks/use.property.search.params";
 
 export function SelectCategory() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const [category, setCategory] = React.useState(
-    searchParams.get("category") || ""
-  );
+  const { filters, setCategory } = usePropertySearchParams();
 
   const onValueChange = (value: string) => {
     setCategory(value);
-
-    // Buat copy search params lama biar gak hilang query lain (misal location/date)
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set("category", value);
-    } else {
-      params.delete("category");
-    }
-
-    router.push(`/explore-properties?${params.toString()}`, { scroll: false });
   };
 
   return (
-    <Select value={category} onValueChange={onValueChange}>
+    <Select value={filters.category || ""} onValueChange={onValueChange}>
       <SelectTrigger className="h-10 w-full border-gray-200 bg-white font-medium text-black transition-all focus:ring-3 focus:ring-gray-500">
         <SelectValue placeholder="Select Category" />
       </SelectTrigger>

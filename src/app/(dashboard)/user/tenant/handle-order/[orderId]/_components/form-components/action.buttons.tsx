@@ -41,9 +41,9 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
 
   // Mapping status → buttons that should be visible
   const rules: Record<string, string[]> = {
-    processing: ["confirm", "reject", "cancel"],
+    processing: ["confirm", "reject"],
     pending_payment: ["cancel"],
-    confirmed: ["complete", "cancel"],
+    confirmed: ["complete"],
   };
 
   const visibleButtons = rules[status] || [];
@@ -63,7 +63,6 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           ? error.response?.data.error
           : "Failed to reject order"
       );
-      console.error("Reject order error:", error);
     }
   };
 
@@ -82,7 +81,6 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           ? error.response?.data.error
           : "An error occurred during cancellation"
       );
-      console.error("Cancel order error:", error);
     }
   };
 
@@ -97,7 +95,6 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           ? error.response?.data.error
           : "Failed to confirm order"
       );
-      console.error("Confirm order error:", error);
     }
   };
 
@@ -105,6 +102,7 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
     try {
       await completeOrderMutation.mutateAsync(orderId);
       toast.success("Order completed successfully");
+      window.location.reload();
       // Close dialog would be handled by DialogClose
     } catch (error) {
       toast.error(
@@ -112,7 +110,6 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
           ? error.response?.data.error
           : "Failed to complete order"
       );
-      console.error("Complete order error:", error);
     }
   };
 

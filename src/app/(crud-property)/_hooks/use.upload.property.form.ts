@@ -12,8 +12,6 @@ export function useUploadPropertyForm({
   return useMutation({
     mutationKey: ["upload-property-form"],
     mutationFn: async (data: UploadPropertyData) => {
-      console.log("data", data);
-
       const res = await axiosInstance.post(
         "/api/properties/upload-property",
         data,

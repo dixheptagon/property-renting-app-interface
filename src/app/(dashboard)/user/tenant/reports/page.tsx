@@ -6,10 +6,11 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { HousePlus } from "lucide-react";
+import { HousePlus, LandPlot, Star, Tag } from "lucide-react";
 import { SalesReport } from "./_components/sales.report";
 import PropertyReport from "./_components/property.report";
 import { AppSidebar } from "../../_components/app-sidebar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function MyAccomodation() {
   return (
@@ -34,9 +35,35 @@ export default function MyAccomodation() {
         </header>
 
         <div className="min-h-screen space-y-2 bg-white px-4 py-4">
-          <SalesReport />
+          <div className="mx-auto w-full">
+            {/* Tabs  */}
+            <Tabs defaultValue="awaiting_reviews">
+              <TabsList className="mx-auto h-12 w-full">
+                <TabsTrigger
+                  value="awaiting_reviews"
+                  className="text-md p-4 font-semibold"
+                >
+                  <Tag className="h-6 w-6 stroke-3 text-blue-700" />
+                  Sales Report
+                </TabsTrigger>
+                <TabsTrigger
+                  value="completed_reviews"
+                  className="text-md p-4 font-semibold"
+                >
+                  <LandPlot className="h-6 w-6 text-yellow-500" />
+                  Property Report
+                </TabsTrigger>
+              </TabsList>
 
-          <PropertyReport />
+              {/* Tabs Content */}
+              <TabsContent value="awaiting_reviews">
+                <SalesReport />
+              </TabsContent>
+              <TabsContent value="completed_reviews" className="w-full">
+                <PropertyReport />
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>

@@ -41,12 +41,10 @@ export function CreateReviewButton({
   } = useWriteReview({
     onSuccess: (data) => {
       toast.success("Review saved successfully!");
-      console.log("Write Review Data:", data);
 
       setOpen(false);
     },
     onError: (error) => {
-      console.log("Error:", error);
       if (error instanceof AxiosError && error.response?.data?.error) {
         toast.error(error.response.data.error);
       } else {
@@ -68,11 +66,6 @@ export function CreateReviewButton({
   });
 
   const handleSaveReview = (values: handleWriteReviewValues) => {
-    console.log("Review Data:", {
-      rating: values.rating,
-      review: values.review,
-    });
-
     writeReview({
       bookingUid: booking_uid,
       reviewData: {
@@ -129,7 +122,7 @@ export function CreateReviewButton({
               id="review"
               name="review"
               placeholder="Tell us about your experience..."
-              className="min-h-[120px] resize-none"
+              className="min-h-[120px] break-all"
               value={formik.values.review}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

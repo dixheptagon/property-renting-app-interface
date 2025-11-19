@@ -21,7 +21,7 @@ export default function OrderDetailsNavbar() {
           <div className="flex shrink-0 items-center gap-4">
             <Button
               className="group hidden h-10 w-10 items-center justify-center rounded-lg bg-gray-200 transition-colors hover:bg-gray-300 md:flex"
-              onClick={() => router.back()}
+              onClick={() => router.push("/user/tenant/order-list")}
             >
               <ChevronLeft className="h-5 w-5 text-gray-600 transition-transform group-hover:-translate-x-0.5" />
             </Button>
@@ -51,7 +51,7 @@ export default function OrderDetailsNavbar() {
           <div className="mx-4 flex items-center gap-2">
             <Button
               className="group flex h-8 w-8 items-center justify-center rounded-lg bg-gray-200 transition-colors hover:bg-gray-300 md:hidden"
-              onClick={() => router.back()}
+              onClick={() => router.push("/user/tenant/order-list")}
             >
               <ChevronLeft className="h-4 w-4 text-gray-600 transition-transform group-hover:-translate-x-0.5" />
             </Button>

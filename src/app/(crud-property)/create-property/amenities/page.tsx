@@ -32,7 +32,6 @@ export default function Page() {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       setPropertyData({
         amenities: values.amenities,
         custom_amenities: values.custom_amenities,

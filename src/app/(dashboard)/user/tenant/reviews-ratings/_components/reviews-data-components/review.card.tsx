@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Circle, Star, Pencil, ShieldAlert, User } from "lucide-react";
 import React from "react";
 import { truncateComment, truncateReply } from "../../_utils/truncate.data";
+import { ReplyReview } from "./review-card-components/reply.review";
+import { formatDate } from "../../_utils/format.date";
 
 export interface Review {
   id: number;
@@ -43,6 +45,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
   const username =
     review.user.display_name ||
     `${review.user.first_name} ${review.user.last_name}`;
+
   const [showFullReply, setShowFullReply] = React.useState(false);
   const [showFullComment, setShowFullComment] = React.useState(false);
 
@@ -61,7 +64,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
             <div>
               <h2 className="text-lg font-bold text-gray-900">{username}</h2>
               <p className="text-sm text-gray-500">
-                Posted on {new Date(review.created_at).toLocaleDateString()}
+                Posted on {formatDate(new Date(review.created_at))}
               </p>
             </div>
           </div>
@@ -91,7 +94,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           <p className="leading-relaxed whitespace-pre-line text-gray-700">
             {showFullComment ? review.comment : truncateComment(review.comment)}
           </p>
-          {review.comment.length > 200 && (
+          {review.comment.length > 100 && (
             <button
               onClick={() => setShowFullComment(!showFullComment)}
               className="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700"
@@ -102,7 +105,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
 
           {/* Owner Reply */}
           {review.reply && (
-            <div className="rounded-lg border-l-4 border-green-500 bg-green-50 p-4 shadow-sm">
+            <div className="relative rounded-lg border-l-4 border-green-500 bg-green-50 p-4 shadow-sm">
               <div className="mb-2 flex items-center gap-2">
                 <Circle className="h-3 w-3 fill-green-600 text-green-600" />
                 <span className="text-xs leading-relaxed font-semibold tracking-wide whitespace-pre-line text-green-700 uppercase">
@@ -112,7 +115,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
               <p className="leading-relaxed whitespace-pre-line text-gray-700">
                 {showFullReply ? review.reply : truncateReply(review.reply)}
               </p>
-              {review.reply.length > 200 && (
+              {review.reply.length > 100 && (
                 <button
                   onClick={() => setShowFullReply(!showFullReply)}
                   className="mt-3 text-sm font-medium text-green-600 transition-colors hover:text-green-700"
@@ -120,6 +123,11 @@ export default function ReviewCard({ review }: ReviewCardProps) {
                   {showFullReply ? "Show less" : "Read more"}
                 </button>
               )}
+
+              {/* Reply date & time */}
+              <div className="absolute top-3 right-3 text-sm text-green-700">
+                {formatDate(new Date(review.updated_at))}
+              </div>
             </div>
           )}
         </div>
@@ -141,28 +149,11 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           )}
 
           {/* Action Buttons */}
-          <div className="self-end">
-            <div className="flex flex-wrap gap-3 self-end">
-              <Button
-                className={`group/btn flex-1 transition-all hover:shadow-lg sm:flex-none ${
-                  status === "restricted"
-                    ? "bg-emerald-500 hover:bg-emerald-600"
-                    : "bg-amber-500 hover:bg-amber-600"
-                }`}
-              >
-                <ShieldAlert className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-12" />
-                <span className="text-sm font-semibold">
-                  {status === "restricted" ? "Unrestrict" : "Restrict"}
-                </span>
-              </Button>
-              <Button className="group/btn flex-1 bg-blue-500 transition-all hover:bg-blue-600 sm:flex-none">
-                <Pencil className="mr-2 h-4 w-4 transition-transform group-hover/btn:-rotate-12" />
-                <span className="text-sm font-semibold">
-                  {review.reply ? "Edit Reply" : "Reply"}
-                </span>
-              </Button>
-            </div>
-          </div>
+          <ReplyReview
+            bookingUid={review.booking.uid}
+            username={review.user.first_name + " " + review.user.last_name}
+            reply={review.reply}
+          />
         </div>
       </div>
     </div>

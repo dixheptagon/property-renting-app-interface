@@ -3,6 +3,7 @@
 import Navbar from "./(landing-page)/_components/navbar";
 import Hero from "./(landing-page)/_components/hero";
 import PropertyList from "./(landing-page)/_components/property.list";
+import Footer from "./(landing-page)/_components/footer";
 import { usePropertyList } from "./(landing-page)/_hooks/use.property.list";
 import LoadingData from "@/components/ui/loading.data";
 
@@ -55,6 +56,8 @@ export default function Page() {
           <PropertyList properties={propertiesData} />
         )}
       </div>
+
+      <Footer />
     </main>
   );
 }

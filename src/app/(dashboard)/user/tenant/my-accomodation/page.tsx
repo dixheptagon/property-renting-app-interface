@@ -10,13 +10,17 @@ import { Button } from "@/components/ui/button";
 import { Home, HousePlus } from "lucide-react";
 
 import AccomodationCard from "./_components/accomodation.card";
+import IsDraftAccomodationCard from "./_components/is.draft.accomodation.card";
 import { AppSidebar } from "../../_components/app-sidebar";
 import Link from "next/link";
 import { usePropertyList } from "./_hooks/use.property.list";
 import LoadingData from "@/components/ui/loading.data";
+import { useIsDraftProperty } from "./_hooks/use.is.draft.property";
 
 export default function MyAccomodation() {
   const { data, isLoading, error, refetch } = usePropertyList();
+
+  const isDraft = useIsDraftProperty();
 
   return (
     <SidebarProvider>
@@ -35,7 +39,9 @@ export default function MyAccomodation() {
               </span>
 
               {/* Button Create New Accomodation */}
-              <Link href="/create-property">
+              <Link
+                href={`${isDraft ? "/create-property/summary" : "/create-property"}`}
+              >
                 <Button className="group/btn transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
                   <HousePlus className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-15" />
                   Add New Accomodation
@@ -74,7 +80,9 @@ export default function MyAccomodation() {
 
           {data && (
             <section className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-4">
-              {data.data.data.length === 0 ? (
+              {isDraft && <IsDraftAccomodationCard />}
+
+              {data.data.data.length === 0 && !isDraft ? (
                 <div className="col-span-full flex flex-col items-center justify-center py-12">
                   <Home className="mb-4 h-12 w-12 text-gray-400" />
                   <p className="text-center text-gray-600">

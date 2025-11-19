@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 
 interface UploadPaymentProofData {
   paymentProof: File;
@@ -43,9 +44,6 @@ export const useUploadPaymentProof = () => {
         return response.data;
       },
       onSuccess: (data, variables) => {
-        // Invalidate and refetch booking data after successful upload
-        console.log("useUploadPaymentProof - onSuccess:", data);
-
         queryClient.invalidateQueries({
           queryKey: ["booking", variables.orderId],
         });
@@ -57,7 +55,7 @@ export const useUploadPaymentProof = () => {
       },
 
       onError: (error, variables, context) => {
-        console.error("useUploadPaymentProof - onError:", error);
+        toast.error("Failed to upload payment proof");
       },
     }
   );

@@ -49,7 +49,6 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return axiosInstance(originalRequest); // ulang request
       } catch (err) {
-        console.error("Refresh token failed:", err);
         useAuthStore.getState().clearToken();
         toast.error(
           "Your session has expired. Please verify your email to continue."

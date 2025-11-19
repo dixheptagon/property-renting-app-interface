@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ImageOff } from "lucide-react";
+import Image from "next/image";
 import { Purchase, PurchaseStatus } from "../_types/purchase.status";
 import statusOptions from "../_const/status.option";
 import { formatDate } from "../_utils/format.date";
@@ -22,7 +23,7 @@ export default function PurchaseCard({ purchase }: PurchaseCardProps) {
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md md:mt-4">
+    <div className="relative rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md md:mt-4">
       <div className="mb-3 flex items-start justify-between">
         <div>
           <p className="text-sm font-semibold text-blue-600">
@@ -33,11 +34,31 @@ export default function PurchaseCard({ purchase }: PurchaseCardProps) {
           </h3>
           <p className="text-sm text-gray-600">{purchase.room.name}</p>
         </div>
-        <span
-          className={`rounded-full border px-3 py-1 text-xs font-semibold ${getStatusStyle(purchase.status)}`}
-        >
-          {getStatusLabel(purchase.status)}
-        </span>
+
+        <div className="relative">
+          <span
+            className={`absolute -top-2 -right-2 rounded-full border px-3 py-1 text-xs font-semibold ${getStatusStyle(purchase.status)}`}
+          >
+            {getStatusLabel(purchase.status)}
+          </span>
+
+          {/* Property Image */}
+          <div className="h-25 w-25 overflow-hidden rounded-lg border border-gray-200">
+            {purchase.room.property.main_image ? (
+              <Image
+                src={purchase.room.property.main_image}
+                alt={purchase.room.property.name}
+                width={1080}
+                height={1920}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-gray-100">
+                <ImageOff className="h-6 w-6 text-gray-400" />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       <div className="space-y-2 border-t pt-3 text-sm">

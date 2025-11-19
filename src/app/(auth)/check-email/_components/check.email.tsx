@@ -36,8 +36,6 @@ export function CheckEmail({
     },
     validationSchema: EmailCheckingValidationSchema,
     onSubmit: (values) => {
-      console.log(values);
-
       if (data?.data?.exists) {
         storeEmail(values.email);
         router.push("/login");

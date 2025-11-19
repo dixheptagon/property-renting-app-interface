@@ -68,7 +68,7 @@ export default function Navbar() {
       >
         <div className="flex h-full flex-col">
           {/* Mobile Menu Header */}
-          <MobileLogo />
+          {/* <MobileLogo /> */}
 
           {/* Mobile Auth Buttons */}
           <MobileAuthButton

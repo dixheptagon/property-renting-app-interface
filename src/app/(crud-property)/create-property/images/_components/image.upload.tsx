@@ -46,14 +46,12 @@ export default function ImageUploadDialog({
   const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
   const { mutate: uploadImages, isPending } = useUploadPropertyImages({
     onSuccess: (data) => {
-      console.log(data);
       setSelectedImages([]);
       addPropertyImage(data?.data);
       toast.success(data?.message || "Images uploaded successfully!");
       setOpen(false);
     },
     onError: (error) => {
-      console.log(error);
       if (error?.response?.data?.error) {
         toast.error(error.response?.data.error);
       } else {
@@ -148,9 +146,6 @@ export default function ImageUploadDialog({
       return;
     }
 
-    // Logic untuk upload gambar ke server
-    console.log("Uploading images:", selectedImages);
-
     const formData = new FormData();
     selectedImages.forEach((image) => {
       if (image.file) {
@@ -161,7 +156,6 @@ export default function ImageUploadDialog({
     if (tempGroupId) {
       formData.append("temp_group_id", tempGroupId);
     }
-    console.log(formData);
 
     uploadImages(formData);
   };

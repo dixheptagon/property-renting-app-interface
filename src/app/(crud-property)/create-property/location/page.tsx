@@ -36,7 +36,6 @@ export default function Page() {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       setPropertyData(values);
       router.push("/create-property/map-spot");
     },
