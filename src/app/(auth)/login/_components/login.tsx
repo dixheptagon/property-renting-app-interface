@@ -151,8 +151,8 @@ export function Login({ className, ...props }: React.ComponentProps<"div">) {
 
               <FieldDescription className="z-50 px-6 text-center">
                 By clicking continue, you agree to our{" "}
-                <a href="#">Terms of Service</a> and{" "}
-                <a href="#">Privacy Policy</a>.
+                <a href="/terms">Terms of Service</a> and{" "}
+                <a href="/privacy">Privacy Policy</a>.
               </FieldDescription>
             </FieldGroup>
           </form>

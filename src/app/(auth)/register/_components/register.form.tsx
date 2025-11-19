@@ -179,8 +179,8 @@ export function RegisterForm({
 
               <FieldDescription className="z-50 px-6 text-center">
                 By creating an account, you agree to our{" "}
-                <Link href="#">Terms of Service</Link> and{" "}
-                <Link href="#">Privacy Policy</Link>.
+                <Link href="/terms">Terms of Service</Link> and{" "}
+                <Link href="/privacy">Privacy Policy</Link>.
               </FieldDescription>
             </FieldGroup>
           </form>
