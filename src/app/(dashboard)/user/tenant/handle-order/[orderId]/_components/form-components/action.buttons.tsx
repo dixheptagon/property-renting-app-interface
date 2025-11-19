@@ -41,9 +41,9 @@ export function ActionButtons({ status, orderId }: ActionButtonsProps) {
 
   // Mapping status → buttons that should be visible
   const rules: Record<string, string[]> = {
-    processing: ["confirm", "reject", "cancel"],
+    processing: ["confirm", "reject"],
     pending_payment: ["cancel"],
-    confirmed: ["complete", "cancel"],
+    confirmed: ["complete"],
   };
 
   const visibleButtons = rules[status] || [];
