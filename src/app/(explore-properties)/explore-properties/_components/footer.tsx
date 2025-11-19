@@ -61,8 +61,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#home"
-                  onClick={(e) => handleClick(e, "/#home")}
+                  href="/contact-us"
                   className="text-gray-400 transition-colors hover:text-white hover:underline"
                 >
                   Contact Us

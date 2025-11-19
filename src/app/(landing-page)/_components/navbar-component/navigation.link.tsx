@@ -6,7 +6,7 @@ import { useAuthStore } from "@/app/(auth)/_stores/auth.store";
 const publicNavLinks = [
   { name: "Home", href: "/#home", icon: Home },
   { name: "Property List", href: "/#property-list", icon: Building2 },
-  { name: "Contact Us", href: "/#home", icon: Phone },
+  { name: "Contact Us", href: "/contact-us", icon: Phone },
 ];
 
 const authenticatedNavLinks = [
