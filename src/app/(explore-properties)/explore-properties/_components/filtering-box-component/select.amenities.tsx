@@ -4,7 +4,7 @@
 import * as React from "react";
 import { MultiSelect, MultiSelectOption } from "@/components/ui/multi-select";
 import { propertyAmenities } from "../../_constant/property.amenities";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePropertySearchParams } from "../../_hooks/use.property.search.params";
 
 interface SelectAmenitiesProps {
   value?: string[];
@@ -15,12 +15,11 @@ export function SelectAmenities({
   value,
   onValueChange,
 }: SelectAmenitiesProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const { filters, setAmenities } = usePropertySearchParams();
 
-  const [selectedAmenities, setSelectedAmenities] = React.useState<string[]>(
-    value || searchParams.get("amenities")?.split(",") || []
-  );
+  const selectedAmenities = React.useMemo(() => {
+    return value || (filters.amenities ? filters.amenities.split(",") : []);
+  }, [value, filters.amenities]);
 
   const options: MultiSelectOption[] = React.useMemo(() => {
     return propertyAmenities.flatMap((category) =>
@@ -33,14 +32,7 @@ export function SelectAmenities({
   }, []);
 
   const handleValueChange = (newValue: string[]) => {
-    setSelectedAmenities(newValue);
-    const params = new URLSearchParams(searchParams.toString());
-    if (newValue.length > 0) {
-      params.set("amenities", newValue.join(","));
-    } else {
-      params.delete("amenities");
-    }
-    router.push(`/explore-properties?${params.toString()}`, { scroll: false });
+    setAmenities(newValue.join(","));
     if (onValueChange) {
       onValueChange(newValue);
     }

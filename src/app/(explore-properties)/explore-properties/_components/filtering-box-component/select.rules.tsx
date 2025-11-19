@@ -4,20 +4,14 @@
 import * as React from "react";
 import { MultiSelect, MultiSelectOption } from "@/components/ui/multi-select";
 import { propertyRules } from "../../_constant/propety.rules";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePropertySearchParams } from "../../_hooks/use.property.search.params";
 
-interface SelectRulesProps {
-  value?: string[];
-  onValueChange?: (value: string[]) => void;
-}
+export function SelectRules() {
+  const { filters, setRules } = usePropertySearchParams();
 
-export function SelectRules({ value, onValueChange }: SelectRulesProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const [selectedRules, setSelectedRules] = React.useState<string[]>(
-    value || searchParams.get("rules")?.split(",") || []
-  );
+  const selectedRules = React.useMemo(() => {
+    return filters.rules ? filters.rules.split(",") : [];
+  }, [filters.rules]);
 
   const options: MultiSelectOption[] = React.useMemo(() => {
     return propertyRules.flatMap((category) =>
@@ -30,23 +24,13 @@ export function SelectRules({ value, onValueChange }: SelectRulesProps) {
   }, []);
 
   const handleValueChange = (newValue: string[]) => {
-    setSelectedRules(newValue);
-    const params = new URLSearchParams(searchParams.toString());
-    if (newValue.length > 0) {
-      params.set("rules", newValue.join(","));
-    } else {
-      params.delete("rules");
-    }
-    router.push(`/explore-properties?${params.toString()}`, { scroll: false });
-    if (onValueChange) {
-      onValueChange(newValue);
-    }
+    setRules(newValue.join(","));
   };
 
   return (
     <MultiSelect
       options={options}
-      value={selectedRules}
+      value={filters.rules ? filters.rules.split(",") : []}
       onValueChange={handleValueChange}
       placeholder="Select rules"
       className="w-full"

@@ -55,7 +55,7 @@ export function LandingPageDatePicker({
                 ? `${formatDate(dateRange?.from)} - ${formatDate(dateRange?.to)}`
                 : "Pick dates"}
             </span>
-            <ChevronDownIcon className="ml-2 h-4 w-4 flex-shrink-0" />
+            <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0" />
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -88,7 +88,11 @@ export function LandingPageDatePicker({
             disabled={{
               before: today,
             }}
+            min={1}
           />
+          <div className="text-muted-foreground my-4 text-center text-xs">
+            A minimum of 1 nights is required
+          </div>
         </PopoverContent>
       </Popover>
     </div>

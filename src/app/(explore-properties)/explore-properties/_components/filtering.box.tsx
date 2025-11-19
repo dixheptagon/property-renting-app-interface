@@ -4,30 +4,19 @@ import { SelectCategory } from "./filtering-box-component/select.category";
 import { SelectAmenities } from "./filtering-box-component/select.amenities";
 import { SelectRules } from "./filtering-box-component/select.rules";
 import { FunnelX } from "lucide-react";
+import { usePropertySearchParams } from "../_hooks/use.property.search.params";
 
 interface FilteringBoxProps {
-  category?: string;
-  onCategoryChange?: (value: string) => void;
-  amenities?: string[];
-  onAmenitiesChange?: (value: string[]) => void;
-  rules?: string[];
-  onRulesChange?: (value: string[]) => void;
   onClearFilters?: () => void;
 }
 
-export default function FilteringBox({
-  category,
-  onCategoryChange,
-  amenities,
-  onAmenitiesChange,
-  rules,
-  onRulesChange,
-  onClearFilters,
-}: FilteringBoxProps) {
+export default function FilteringBox({ onClearFilters }: FilteringBoxProps) {
+  const { filters } = usePropertySearchParams();
+
   const hasFilters =
-    category ||
-    (amenities && amenities.length > 0) ||
-    (rules && rules.length > 0);
+    filters.category ||
+    (filters.amenities && filters.amenities.split(",").length > 0) ||
+    (filters.rules && filters.rules.split(",").length > 0);
 
   return (
     <section>
@@ -45,16 +34,13 @@ export default function FilteringBox({
           <Label className="text-lg font-semibold text-gray-800">
             Amenities
           </Label>
-          <SelectAmenities
-            value={amenities}
-            onValueChange={onAmenitiesChange}
-          />
+          <SelectAmenities />
         </div>
 
         {/* Select Rules */}
         <div className="space-y-3">
           <Label className="text-lg font-semibold text-gray-800">Rules</Label>
-          <SelectRules value={rules} onValueChange={onRulesChange} />
+          <SelectRules />
         </div>
 
         {/* Clear Filters Button */}
