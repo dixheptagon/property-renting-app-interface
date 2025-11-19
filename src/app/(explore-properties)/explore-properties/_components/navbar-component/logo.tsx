@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function Logo() {
   return (
-    <Link href="/" className="flex-shrink-0">
+    <Link href="/" className="hidden shrink-0 lg:block">
       <Image
         src="/logo/staysia-logo.png"
         alt="Staysia Logo"

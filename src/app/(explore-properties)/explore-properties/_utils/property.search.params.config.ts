@@ -7,8 +7,6 @@ export type PropertyParams = {
   checkin: string | undefined | null; //"2023-01-01"
   checkout: string | undefined | null; //"2023-01-31"
   category: string | undefined; //"apartment"
-  amenities: string | undefined; //"bathroom,kitchen"
-  rules: string | undefined; //"pets,smoking"
   sortBy: string | undefined; //created_at
   page: number; //1
   limit: number; //20
@@ -20,8 +18,6 @@ export const propertySearchConfig: SearchParamsConfig<PropertyParams> = {
     checkin: "",
     checkout: "",
     category: "",
-    amenities: "",
-    rules: "",
     sortBy: "",
     page: 1,
     limit: 12,

@@ -19,12 +19,6 @@ export const usePropertySearchParams = () => {
   const setCategory = (category: string) =>
     update({ category, page: 1 }, { resetPage: true });
 
-  const setAmenities = (amenities: string) =>
-    update({ amenities, page: 1 }, { resetPage: true });
-
-  const setRules = (rules: string) =>
-    update({ rules, page: 1 }, { resetPage: true });
-
   const clearLocation = () =>
     update({ location: "", page: 1 }, { resetPage: true });
 
@@ -42,8 +36,6 @@ export const usePropertySearchParams = () => {
     setLocation,
     setDateRange,
     setCategory,
-    setAmenities,
-    setRules,
     clearLocation,
     clearDateRange,
     clearAll,

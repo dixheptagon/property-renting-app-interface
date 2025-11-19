@@ -34,16 +34,16 @@ export default function Page() {
   };
 
   return (
-    <>
-      <main className="mx-10 mt-25 grid grid-cols-4 gap-6">
-        <div className="col-span-1">
+    <div>
+      <main className="mx-4 mt-38 grid w-auto grid-cols-1 gap-6 md:mx-10 md:mt-25 md:grid-cols-4">
+        <div className="md:col-span-1">
           <FilteringBox onClearFilters={handleClearFilters} />
         </div>
 
-        <div className="col-span-3 mb-6">
+        <div className="mb-6 md:col-span-3">
           {/* Controls Section */}
           <div className="flex flex-col items-start justify-between gap-4 rounded-xl border border-gray-200 bg-white p-6 shadow-lg sm:flex-row sm:items-center">
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
               <SortBy value={sortBy} />
               <LimitShows value={limit} />
             </div>
@@ -101,6 +101,6 @@ export default function Page() {
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }

@@ -1,8 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { SelectCategory } from "./filtering-box-component/select.category";
-import { SelectAmenities } from "./filtering-box-component/select.amenities";
-import { SelectRules } from "./filtering-box-component/select.rules";
 import { FunnelX } from "lucide-react";
 import { usePropertySearchParams } from "../_hooks/use.property.search.params";
 
@@ -13,10 +11,7 @@ interface FilteringBoxProps {
 export default function FilteringBox({ onClearFilters }: FilteringBoxProps) {
   const { filters } = usePropertySearchParams();
 
-  const hasFilters =
-    filters.category ||
-    (filters.amenities && filters.amenities.split(",").length > 0) ||
-    (filters.rules && filters.rules.split(",").length > 0);
+  const hasFilters = filters.category;
 
   return (
     <section>
@@ -27,20 +22,6 @@ export default function FilteringBox({ onClearFilters }: FilteringBoxProps) {
             Category
           </Label>
           <SelectCategory />
-        </div>
-
-        {/* Select Amenities */}
-        <div className="space-y-3">
-          <Label className="text-lg font-semibold text-gray-800">
-            Amenities
-          </Label>
-          <SelectAmenities />
-        </div>
-
-        {/* Select Rules */}
-        <div className="space-y-3">
-          <Label className="text-lg font-semibold text-gray-800">Rules</Label>
-          <SelectRules />
         </div>
 
         {/* Clear Filters Button */}
