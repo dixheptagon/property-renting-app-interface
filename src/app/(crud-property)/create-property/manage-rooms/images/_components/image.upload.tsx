@@ -22,7 +22,6 @@ import {
   Plus,
   Trash,
 } from "lucide-react";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
@@ -281,8 +280,7 @@ export default function ImageUploadDialog({
                   className="relative aspect-square overflow-hidden rounded-xl"
                 >
                   {image.url ? ( // Check if image exists
-                    <Image
-                      fill
+                    <img
                       src={image.url}
                       alt={`Preview ${index + 1}`}
                       className="h-full w-full object-cover"

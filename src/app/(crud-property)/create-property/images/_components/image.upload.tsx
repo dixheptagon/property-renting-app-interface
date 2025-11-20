@@ -25,7 +25,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useUploadPropertyImages } from "@/app/(crud-property)/_hooks/use.upload.property.images";
 import { toast } from "sonner";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
-import Image from "next/image";
 
 export default function ImageUploadDialog({
   buttonText,
@@ -258,9 +257,8 @@ export default function ImageUploadDialog({
                   className="relative aspect-square overflow-hidden rounded-xl"
                 >
                   {image.url ? ( // Check if image exists
-                    <Image
+                    <img
                       src={image.url}
-                      fill
                       alt={`Preview ${index + 1}`}
                       className="h-full w-full object-cover"
                     />

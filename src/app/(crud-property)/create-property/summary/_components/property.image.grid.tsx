@@ -12,7 +12,6 @@ import { BaseImage } from "@/app/(crud-property)/_types/property.type";
 import ButtonEditSection from "./button.edit.section";
 import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 import { useIsMobile } from "@/hooks/use-mobile";
-import Image from "next/image";
 
 interface PropertyImageGridProps {
   images: BaseImage[];
@@ -72,8 +71,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
               onClick={() => handleImageClick(0)}
             >
               {mainImage?.secureUrl ? ( // Check if image exists
-                <Image
-                  fill
+                <img
                   src={mainImage?.secureUrl}
                   alt="Main property view"
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -92,8 +90,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
                 className={`group relative cursor-pointer overflow-hidden`}
                 onClick={() => handleImageClick(index + 1)}
               >
-                <Image
-                  fill
+                <img
                   src={imageUrl}
                   alt={`Property view ${index + 2}`}
                   className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-105`}
@@ -151,8 +148,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
 
           {/* Current Image */}
           <div className="mx-4 max-h-[80vh] max-w-5xl">
-            <Image
-              fill
+            <img
               src={allImages[currentImageIndex]}
               alt={`Property view ${currentImageIndex + 1}`}
               className="max-h-[80vh] max-w-full rounded-lg object-contain"
@@ -179,8 +175,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
                     : "opacity-50 hover:opacity-75"
                 }`}
               >
-                <Image
-                  fill
+                <img
                   src={imageUrl}
                   alt={`Thumbnail ${index + 1}`}
                   className="h-full w-full object-cover"

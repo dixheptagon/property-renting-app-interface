@@ -163,7 +163,7 @@ export default function BookingDateRangePicker() {
           onSelect={handleDateSelect}
           disabled={[
             ...DatesUnavailabilities,
-            { before: new Date() },
+            { before: new Date(addDays(new Date(), 1)) },
             ...dynamicDisabledDates,
           ]}
           className="rounded-b-lg [--cell-size:--spacing(9)] md:[--cell-size:--spacing(10)]"

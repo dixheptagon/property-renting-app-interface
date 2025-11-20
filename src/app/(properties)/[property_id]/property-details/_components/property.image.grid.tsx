@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { X, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
 import { PropertyImage } from "../_types/property";
-import Image from "next/image";
 
 interface PropertyImageGridProps {
   images: PropertyImage[];
@@ -43,8 +42,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
             className="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden"
             onClick={() => handleImageClick(0)}
           >
-            <Image
-              fill
+            <img
               src={imageUrls[0]}
               alt="Main property view"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -59,8 +57,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
               className="group relative cursor-pointer overflow-hidden"
               onClick={() => handleImageClick(index + 1)}
             >
-              <Image
-                fill
+              <img
                 src={imageUrl}
                 alt={`Property view ${index + 2}`}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -117,8 +114,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
 
           {/* Current Image */}
           <div className="mx-4 max-h-[80vh] max-w-5xl">
-            <Image
-              fill
+            <img
               src={imageUrls[currentImageIndex]}
               alt={`Property view ${currentImageIndex + 1}`}
               className="max-h-[80vh] max-w-full rounded-lg object-contain"
@@ -145,8 +141,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
                     : "opacity-50 hover:opacity-75"
                 }`}
               >
-                <Image
-                  fill
+                <img
                   src={imageUrl}
                   alt={`Thumbnail ${index + 1}`}
                   className="h-full w-full object-cover"

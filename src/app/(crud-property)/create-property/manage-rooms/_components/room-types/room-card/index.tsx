@@ -31,7 +31,6 @@ import { SpecItem } from "./spec.item";
 import { formatToIDR } from "../../../_utils/format.price.idr";
 import { roomHighlights } from "../../../_constant/room.higlights";
 import { formatPrice } from "@/app/(crud-property)/create-property/_utils/format.price";
-import Image from "next/image";
 
 interface RoomCardProps {
   room: RoomData;
@@ -276,8 +275,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
             onClick={() => onViewImages(room)}
           >
             {room.images.length > 0 && (
-              <Image
-                fill
+              <img
                 src={
                   room.images.find((img) => img.isMain)?.secureUrl ||
                   room.images[0]?.secureUrl

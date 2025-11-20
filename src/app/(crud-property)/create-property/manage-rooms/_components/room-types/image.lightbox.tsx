@@ -57,8 +57,7 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
 
       {/* Current Image */}
       <div className="max-h-[80vh] max-w-5xl">
-        <Image
-          fill
+        <img
           src={room.images[currentImageIndex].secureUrl}
           alt={`${room.name} - Image ${currentImageIndex + 1}`}
           className="max-h-[80vh] max-w-full rounded-lg object-contain"
@@ -82,14 +81,13 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
             <button
               key={index}
               onClick={() => onSelectImage(index)}
-              className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
+              className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                 currentImageIndex === index
                   ? "opacity-100 ring-2 ring-white"
                   : "opacity-50 hover:opacity-75"
               }`}
             >
-              <Image
-                fill
+              <img
                 src={image.secureUrl}
                 alt={`Thumbnail ${index + 1}`}
                 className="h-full w-full object-cover"
