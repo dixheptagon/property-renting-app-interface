@@ -1,0 +1,93 @@
+import { Button } from "@/components/ui/button";
+import { ExternalLink, ImageOff } from "lucide-react";
+import Image from "next/image";
+import { Purchase, PurchaseStatus } from "../_types/purchase.status";
+import statusOptions from "../_const/status.option";
+import { formatDate } from "../_utils/format.date";
+import { formatPrice } from "../_utils/format.price";
+import Link from "next/link";
+
+interface PurchaseCardProps {
+  purchase: Purchase;
+}
+
+export default function PurchaseCard({ purchase }: PurchaseCardProps) {
+  const getStatusStyle = (status: PurchaseStatus): string => {
+    const statusObj = statusOptions.find((s) => s.value === status);
+    return statusObj ? statusObj.color : "bg-gray-100 text-gray-800";
+  };
+
+  const getStatusLabel = (status: PurchaseStatus): string => {
+    const statusObj = statusOptions.find((s) => s.value === status);
+    return statusObj ? statusObj.label : status;
+  };
+
+  return (
+    <div className="relative rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md md:mt-4">
+      <div className="mb-3 flex items-start justify-between">
+        <div>
+          <p className="text-sm font-semibold text-blue-600">
+            {purchase.order_id.split("-").pop()?.toUpperCase()}
+          </p>
+          <h3 className="mt-1 font-bold text-gray-800">
+            {purchase.room.property.name}
+          </h3>
+          <p className="text-sm text-gray-600">{purchase.room.name}</p>
+        </div>
+
+        <div className="relative">
+          <span
+            className={`absolute -top-2 -right-2 rounded-full border px-3 py-1 text-xs font-semibold ${getStatusStyle(purchase.status)}`}
+          >
+            {getStatusLabel(purchase.status)}
+          </span>
+
+          {/* Property Image */}
+          <div className="h-25 w-25 overflow-hidden rounded-lg border border-gray-200">
+            {purchase.room.property.main_image ? (
+              <Image
+                src={purchase.room.property.main_image}
+                alt={purchase.room.property.name}
+                width={1080}
+                height={1920}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-gray-100">
+                <ImageOff className="h-6 w-6 text-gray-400" />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-2 border-t pt-3 text-sm">
+        <div className="flex justify-between">
+          <span className="text-gray-600">Check In:</span>
+          <span className="font-medium text-gray-800">
+            {formatDate(new Date(purchase.check_in_date))}
+          </span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-gray-600">Check Out:</span>
+          <span className="font-medium text-gray-800">
+            {formatDate(new Date(purchase.check_out_date))}
+          </span>
+        </div>
+        <div className="flex justify-between border-t pt-2">
+          <span className="font-semibold text-gray-700">Total Price:</span>
+          <span className="font-bold text-blue-600">
+            {formatPrice(Number(purchase.total_price))}
+          </span>
+        </div>
+      </div>
+
+      <Link href={`my-bookings/${purchase.order_id}/order-details`}>
+        <Button className="mt-4 w-full bg-blue-600 hover:bg-blue-700">
+          <ExternalLink className="mr-2 h-4 w-4" />
+          View Details
+        </Button>
+      </Link>
+    </div>
+  );
+}
