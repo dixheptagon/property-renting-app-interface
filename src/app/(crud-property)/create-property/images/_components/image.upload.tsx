@@ -8,6 +8,7 @@ import {
   Trash2,
   AlertCircle,
   LoaderCircle,
+  ImageOff,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +25,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useUploadPropertyImages } from "@/app/(crud-property)/_hooks/use.upload.property.images";
 import { toast } from "sonner";
 import { usePropertyStore } from "@/app/(crud-property)/_stores/property.store";
+import Image from "next/image";
 
 export default function ImageUploadDialog({
   buttonText,
@@ -255,11 +257,17 @@ export default function ImageUploadDialog({
                   key={index}
                   className="relative aspect-square overflow-hidden rounded-xl"
                 >
-                  <img
-                    src={image.url}
-                    alt={`Preview ${index + 1}`}
-                    className="h-full w-full object-cover"
-                  />
+                  {image.url ? ( // Check if image exists
+                    <Image
+                      src={image.url}
+                      fill
+                      alt={`Preview ${index + 1}`}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <ImageOff className="h-full w-full text-gray-400" />
+                  )}
+
                   <div className="absolute inset-0 bg-black/0" />
                   <Button
                     variant="destructive"

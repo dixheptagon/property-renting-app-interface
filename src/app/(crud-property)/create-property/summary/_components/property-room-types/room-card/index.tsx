@@ -14,6 +14,7 @@ import { SpecItem } from "./spec.item";
 import { roomHighlights } from "@/app/(crud-property)/create-property/manage-rooms/_constant/room.higlights";
 import { formatToIDR } from "@/app/(crud-property)/create-property/manage-rooms/_utils/format.price.idr";
 import { formatPrice } from "@/app/(landing-page)/_utils/format.price";
+import Image from "next/image";
 
 interface RoomCardProps {
   room: RoomData;
@@ -193,7 +194,8 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onViewImages }) => {
             onClick={() => onViewImages(room)}
           >
             {room.images.length > 0 && (
-              <img
+              <Image
+                fill
                 src={
                   room.images.find((img) => img.isMain)?.secureUrl ||
                   room.images[0]?.secureUrl

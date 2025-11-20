@@ -55,12 +55,12 @@ export default function Page() {
                   Become a Host on Staysia
                 </div>
                 <h1 className="text-5xl leading-tight font-bold text-gray-900 lg:text-6xl">
-                  Let’s make your place{" "}
+                  Let&apos;s make your place{" "}
                   <p className="text-blue-600">ready for guests</p>
                 </h1>
                 <p className="text-xl text-gray-600">
-                  Join thousands of hosts earning on Staysia. It's quick, easy,
-                  and we'll guide you every step of the way.
+                  Join thousands of hosts earning on Staysia. It&apos;s quick,
+                  easy, and we&apos;ll guide you every step of the way.
                 </p>
               </div>
 

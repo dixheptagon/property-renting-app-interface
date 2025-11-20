@@ -1,7 +1,7 @@
 import React from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { Room } from "@/app/(properties)/property-details/_types/property";
 import { RoomData } from "@/app/(crud-property)/_types/property.type";
+import Image from "next/image";
 
 interface ImageLightboxProps {
   room: RoomData | null;
@@ -57,7 +57,8 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
 
       {/* Current Image */}
       <div className="max-h-[80vh] max-w-5xl">
-        <img
+        <Image
+          fill
           src={room.images[currentImageIndex].secureUrl}
           alt={`${room.name} - Image ${currentImageIndex + 1}`}
           className="max-h-[80vh] max-w-full rounded-lg object-contain"
@@ -87,7 +88,8 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
                   : "opacity-50 hover:opacity-75"
               }`}
             >
-              <img
+              <Image
+                fill
                 src={image.secureUrl}
                 alt={`Thumbnail ${index + 1}`}
                 className="h-full w-full object-cover"

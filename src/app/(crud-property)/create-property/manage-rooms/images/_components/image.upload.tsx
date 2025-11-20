@@ -14,7 +14,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { AlertCircle, Images, LoaderCircle, Plus, Trash } from "lucide-react";
+import {
+  AlertCircle,
+  ImageOff,
+  Images,
+  LoaderCircle,
+  Plus,
+  Trash,
+} from "lucide-react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
@@ -272,11 +280,17 @@ export default function ImageUploadDialog({
                   key={index}
                   className="relative aspect-square overflow-hidden rounded-xl"
                 >
-                  <img
-                    src={image.url}
-                    alt={`Preview ${index + 1}`}
-                    className="h-full w-full object-cover"
-                  />
+                  {image.url ? ( // Check if image exists
+                    <Image
+                      fill
+                      src={image.url}
+                      alt={`Preview ${index + 1}`}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <ImageOff className="h-full w-full text-gray-400" />
+                  )}
+
                   <div className="absolute inset-0 bg-black/0" />
                   <Button
                     variant="destructive"

@@ -7,7 +7,7 @@ import { LoadingState, ErrorState } from "./_components/loading.and.error";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
 
   return (

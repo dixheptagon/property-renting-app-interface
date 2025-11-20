@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { BadgeCheck } from "lucide-react";
 import { propertyAmenities } from "../_const/property.amenities";
-import { Amenities } from "@/app/(properties)/property-details/_types/property";
+import { Amenities } from "../_types/property";
 
 interface PropertyAmenitiesProps {
   amenities: Amenities;

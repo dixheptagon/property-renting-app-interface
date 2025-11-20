@@ -151,7 +151,7 @@ export default function PropertySummary({
           </button>
 
           <p className="mt-3 text-center text-xs text-gray-500">
-            You won't be charged yet
+            You won&apos;t be charged yet
           </p>
         </div>
       </div>

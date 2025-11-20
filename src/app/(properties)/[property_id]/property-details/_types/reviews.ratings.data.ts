@@ -1,6 +1,6 @@
 // Types for Get Reviews by Property ID API
 
-export interface PublicReview {
+interface PublicReview {
   username: string;
   roomTypeName: string;
   reviewComment: string;
@@ -11,12 +11,12 @@ export interface PublicReview {
   updatedAt: string;
 }
 
-export interface RatingStatistic {
+interface RatingStatistic {
   rating: number;
   count: number;
 }
 
-export interface RatingDistribution {
+interface RatingDistribution {
   "1": number;
   "2": number;
   "3": number;
@@ -24,32 +24,32 @@ export interface RatingDistribution {
   "5": number;
 }
 
-export interface PublicReviewStatistics {
+interface PublicReviewStatistics {
   totalReviews: number;
   averageRating: number;
   ratingStatistics: RatingDistribution;
 }
 
-export interface PublicReviewPagination {
+interface PublicReviewPagination {
   page: number;
   limit: number;
   totalPages: number;
   totalItems: number;
 }
 
-export interface PublicReviewsData {
+interface PublicReviewsData {
   reviews: PublicReview[];
   statistics: PublicReviewStatistics;
   pagination: PublicReviewPagination;
 }
 
-export interface PublicReviewsResponse {
+interface PublicReviewsResponse {
   success: boolean;
   message: string;
   data: PublicReviewsData;
 }
 
-export interface PublicReviewsParams {
+interface PublicReviewsParams {
   page?: number;
   limit?: number;
   rating?: string; // comma-separated ratings like "4,5"
@@ -60,3 +60,13 @@ export interface PublicReviewsParams {
   search?: string;
   propertyId?: string;
 }
+
+export type {
+  PublicReviewsParams,
+  PublicReviewsResponse,
+  PublicReview,
+  PublicReviewStatistics,
+  PublicReviewPagination,
+  RatingStatistic,
+  RatingDistribution,
+};

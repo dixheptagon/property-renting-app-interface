@@ -133,7 +133,7 @@ export default function TenantVerificationForm() {
                     <SelectItem value="KTP">KTP</SelectItem>
                     <SelectItem value="Passport">Passport</SelectItem>
                     <SelectItem value="Driver's License">
-                      Driver's License
+                      Driver&apos;s License
                     </SelectItem>
                   </SelectContent>
                 </Select>

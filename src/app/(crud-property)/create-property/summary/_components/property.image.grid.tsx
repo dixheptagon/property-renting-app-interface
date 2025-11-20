@@ -1,12 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, ChevronLeft, ChevronRight, Image, Edit } from "lucide-react";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Image as ImageIcon,
+  ImageOff,
+} from "lucide-react";
 import { BaseImage } from "@/app/(crud-property)/_types/property.type";
 import ButtonEditSection from "./button.edit.section";
 import { CREATE_PROPERTY_STEPS } from "../_constant/create.property.path";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { all } from "axios";
+import Image from "next/image";
 
 interface PropertyImageGridProps {
   images: BaseImage[];
@@ -65,11 +71,17 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
               className="group relative col-span-2 row-span-2 cursor-pointer overflow-hidden"
               onClick={() => handleImageClick(0)}
             >
-              <img
-                src={mainImage?.secureUrl}
-                alt="Main property view"
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
+              {mainImage?.secureUrl ? ( // Check if image exists
+                <Image
+                  fill
+                  src={mainImage?.secureUrl}
+                  alt="Main property view"
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              ) : (
+                <ImageOff className="h-full w-full text-gray-400" />
+              )}
+
               <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
             </div>
 
@@ -80,7 +92,8 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
                 className={`group relative cursor-pointer overflow-hidden`}
                 onClick={() => handleImageClick(index + 1)}
               >
-                <img
+                <Image
+                  fill
                   src={imageUrl}
                   alt={`Property view ${index + 2}`}
                   className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-105`}
@@ -97,7 +110,7 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
                     }}
                     className="absolute right-4 bottom-4 flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-lg transition-colors duration-200 hover:bg-gray-100"
                   >
-                    <Image
+                    <ImageIcon
                       className="h-4 w-4"
                       fill="none"
                       stroke="currentColor"
@@ -138,7 +151,8 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
 
           {/* Current Image */}
           <div className="mx-4 max-h-[80vh] max-w-5xl">
-            <img
+            <Image
+              fill
               src={allImages[currentImageIndex]}
               alt={`Property view ${currentImageIndex + 1}`}
               className="max-h-[80vh] max-w-full rounded-lg object-contain"
@@ -165,7 +179,8 @@ export default function PropertyImageGrid({ images }: PropertyImageGridProps) {
                     : "opacity-50 hover:opacity-75"
                 }`}
               >
-                <img
+                <Image
+                  fill
                   src={imageUrl}
                   alt={`Thumbnail ${index + 1}`}
                   className="h-full w-full object-cover"

@@ -78,7 +78,7 @@ export function CheckEmail({
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Get Started!</h1>
                 <p className="text-muted-foreground text-balance">
-                  Let's get you set up. Enter your email.
+                  Let&apos;s get started by creating your account.
                 </p>
               </div>
 

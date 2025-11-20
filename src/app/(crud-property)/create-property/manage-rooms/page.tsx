@@ -81,8 +81,8 @@ export default function Page() {
                   Organize Room Types
                 </h2>
                 <h2 className="md:text-md max-w-md text-sm text-gray-600">
-                  Create different room categories to showcase your property's
-                  accommodation options
+                  Create different room categories to showcase your
+                  property&apos;s accommodation options
                 </h2>
               </div>
 

@@ -81,7 +81,7 @@ export default function Page() {
                   </div>
                 </div>
                 <p className="text-md text-gray-600">
-                  By clicking <b>"Continue"</b>, you agree that all the
+                  By clicking <b>&quot;Continue&quot;</b>, you agree to our{" "}
                   information provided is true and accurate, and that you have
                   read and understood our property posting guidelines.
                 </p>

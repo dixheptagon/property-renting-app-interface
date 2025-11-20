@@ -96,7 +96,7 @@ export function CreateReviewButton({
 
           <DialogDescription>
             Share your thoughts about your experience below. Click save when
-            you're done.
+            you&apos;re done.
           </DialogDescription>
         </DialogHeader>
 

@@ -31,6 +31,7 @@ import { SpecItem } from "./spec.item";
 import { formatToIDR } from "../../../_utils/format.price.idr";
 import { roomHighlights } from "../../../_constant/room.higlights";
 import { formatPrice } from "@/app/(crud-property)/create-property/_utils/format.price";
+import Image from "next/image";
 
 interface RoomCardProps {
   room: RoomData;
@@ -170,8 +171,8 @@ export const RoomCard: React.FC<RoomCardProps> = ({
             <DialogHeader>
               <DialogTitle>Remove Room</DialogTitle>
               <DialogDescription>
-                Are you sure you want to remove "{room.name || "this room"}"?
-                This action cannot be undone.
+                Are you sure you want to remove &quot;{room.name}&quot;? This
+                action cannot be undone.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="flex gap-2 sm:justify-end">
@@ -275,7 +276,8 @@ export const RoomCard: React.FC<RoomCardProps> = ({
             onClick={() => onViewImages(room)}
           >
             {room.images.length > 0 && (
-              <img
+              <Image
+                fill
                 src={
                   room.images.find((img) => img.isMain)?.secureUrl ||
                   room.images[0]?.secureUrl

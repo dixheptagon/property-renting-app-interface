@@ -187,7 +187,7 @@ export default function PropertyDetails() {
           longitude={property.longitude ?? 0}
           map_url={property.map_url ?? ""}
         />
-        <PropertyReviews propertyId={property.id} />
+        <PropertyReviews />
       </div>
     </div>
   );

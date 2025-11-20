@@ -28,8 +28,8 @@ export default function Page() {
             Add some photos of your property
           </h1>
           <p className="text-base text-gray-600 sm:text-lg lg:text-xl">
-            You'll need at least 5 photos to get started. You can add more or
-            make changes later.
+            You&apos;ll be able to add more photos later, but for now,
+            let&apos;s make changes later.
           </p>
         </div>
 

@@ -33,8 +33,8 @@ export default function RemovePeakPrice({ tempId }: { tempId: string }) {
           <DialogHeader>
             <DialogTitle>Remove Room</DialogTitle>
             <DialogDescription className="text-gray-600">
-              Are you sure you want to remove "{"this room"}"? This action
-              cannot be undone.
+              Are you sure you want to remove &quot;{"this room"}&quot;? This
+              action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex gap-2 sm:justify-end">

@@ -42,7 +42,13 @@ export const useReviewsRatingsData = () => {
     statistics: query.data?.data.statistics || {
       totalReviews: 0,
       averageRating: 0,
-      ratingStatistics: [],
+      ratingStatistics: {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+      },
     },
     pagination: query.data?.data.pagination || {
       page: 1,
