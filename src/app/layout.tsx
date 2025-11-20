@@ -66,7 +66,6 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
-  themeColor: "#ffffff",
   robots: {
     index: true,
     follow: true,
