@@ -46,13 +46,19 @@ export function LandingPageDatePicker() {
   };
 
   React.useEffect(() => {
+    if (
+      localDateRange?.from?.toISOString() === filters.checkin &&
+      localDateRange?.to?.toISOString() === filters.checkout
+    )
+      return;
+
     if (localDateRange?.from && localDateRange?.to) {
       setPropertyDateRange(
         localDateRange.from.toISOString(),
         localDateRange.to.toISOString()
       );
     }
-  }, [localDateRange, setPropertyDateRange]);
+  }, [localDateRange, setPropertyDateRange, filters.checkin, filters.checkout]);
 
   React.useEffect(() => {
     setLocalDateRange(initialDateRange);

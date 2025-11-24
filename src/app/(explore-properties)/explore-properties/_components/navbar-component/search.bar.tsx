@@ -9,6 +9,7 @@ import { Search, X } from "lucide-react";
 import useDebounce from "../../_hooks/use.debounce";
 import { useState, useEffect } from "react";
 import { usePropertySearchParams } from "../../_hooks/use.property.search.params";
+import { de } from "date-fns/locale";
 
 export default function SearchBar() {
   const { filters, setLocation, clearLocation } = usePropertySearchParams();
@@ -20,8 +21,9 @@ export default function SearchBar() {
   }, [debouncedLocation, setLocation]);
 
   useEffect(() => {
+    if (debouncedLocation === filters.location) return;
     setLocalLocation(filters.location || "");
-  }, [filters.location]);
+  }, [filters.location, debouncedLocation]);
 
   const handleLocationChange = (value: string) => {
     setLocalLocation(value);
