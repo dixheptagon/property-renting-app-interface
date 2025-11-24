@@ -23,10 +23,7 @@ export const usePropertyDetail = () => {
     // Cache for 5 minutes
     staleTime: 5 * 60 * 1000,
     // Retry failed requests
-    retry: 3,
-    retryDelay: (attemptIndex: number) =>
-      Math.min(1000 * 2 ** attemptIndex, 30000),
-    enabled: !!propertyId,
+    retry: false,
   });
 
   return {
