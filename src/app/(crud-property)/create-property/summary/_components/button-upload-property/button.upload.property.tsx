@@ -99,7 +99,7 @@ export default function UploadProperty() {
             </Alert>
           )}
 
-          {!disabledUpload && (
+          {disabledUpload && (
             <Alert
               variant="destructive"
               className="border border-red-400 bg-red-50"
@@ -127,7 +127,7 @@ export default function UploadProperty() {
             </DialogClose>
             <Button
               className="hover:bg-blue-700 hover:shadow-xl"
-              disabled={!disabledUpload || isPending}
+              disabled={disabledUpload || isPending}
               onClick={handleUploadProperty}
             >
               {isPending ? (

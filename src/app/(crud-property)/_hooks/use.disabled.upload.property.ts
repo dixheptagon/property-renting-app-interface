@@ -12,7 +12,6 @@ export const useDisabledUploadProperty = () => {
       !property.title ||
       !property.category ||
       !property.description ||
-      !property?.base_price ||
       !property?.address ||
       !property?.map_url ||
       !(property?.amenities?.length > 0) ||
