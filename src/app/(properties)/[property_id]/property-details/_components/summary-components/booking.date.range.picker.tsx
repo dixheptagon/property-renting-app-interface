@@ -34,10 +34,12 @@ export default function BookingDateRangePicker() {
   const { dateRange: storedDateRange, setDateRange: setStoredDateRange } =
     useBookingStore();
 
-  const { property } = useBookingStore();
+  const { property, selectedRoom } = useBookingStore();
 
   // Map room unavailability data to a more usable format
-  const roomUnavailabilities = property?.room_unavailabilities || [];
+  const roomUnavailabilities = (property?.room_unavailabilities || []).filter(
+    (unavailability) => unavailability.room_id === selectedRoom?.id
+  );
   const DatesUnavailabilities = roomUnavailabilities.flatMap(
     (unavailability) => {
       return eachDayOfInterval({
@@ -48,7 +50,9 @@ export default function BookingDateRangePicker() {
   );
 
   //   Map Peak Season Dates
-  const peakSeasonRates = property?.peak_season_rates || [];
+  const peakSeasonRates = (property?.peak_season_rates || []).filter(
+    (rate) => !rate.room_id || rate.room_id === selectedRoom?.id
+  );
   const peakSeasonDates = peakSeasonRates.flatMap((peakSeason) => {
     return eachDayOfInterval({
       start: new Date(peakSeason.start_date),
@@ -181,7 +185,7 @@ export default function BookingDateRangePicker() {
               );
 
               // Harga dasar
-              let basePrice = property?.base_price || 0;
+              let basePrice = selectedRoom?.base_price || 0;
 
               // Kalau peak season, tambahkan adjustment
               if (isPeak) {

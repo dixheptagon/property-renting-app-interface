@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { formatDate } from "../../_utils/format.date";
+import { formatDateString } from "../../_utils/normalized.date";
 import { Calendar } from "@/components/ui/calendar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { DateRange } from "react-day-picker";
@@ -45,8 +46,8 @@ export default function PeakPriceDialogContent() {
     dateRange: DateRange,
     percentage: number
   ) => {
-    const startDate = dateRange.from!.toISOString().split("T")[0];
-    const endDate = dateRange.to!.toISOString().split("T")[0];
+    const startDate = formatDateString(dateRange.from!);
+    const endDate = formatDateString(dateRange.to!);
 
     for (const roomTempId of selectedRooms) {
       const existingRate = peakSeasonRates.find(
@@ -87,8 +88,8 @@ export default function PeakPriceDialogContent() {
         const peakRateData = {
           tempId: `peak-rate-${Date.now()}-${roomTempId}`, // Generate unique tempId
           targetTempRoomId: roomTempId,
-          start_date: values.dateRange.from!.toISOString().split("T")[0], // Format as YYYY-MM-DD
-          end_date: values.dateRange.to!.toISOString().split("T")[0],
+          start_date: formatDateString(values.dateRange.from!), // Format as YYYY-MM-DD
+          end_date: formatDateString(values.dateRange.to!),
           adjustment_type: "percentage" as const,
           adjustment_value: values.peakPricePercentage,
         };
