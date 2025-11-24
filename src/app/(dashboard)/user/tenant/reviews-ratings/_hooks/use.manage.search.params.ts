@@ -19,10 +19,12 @@ export const useSearchParamsManager = <T extends Record<string, any>>(
 
   const update = useCallback(
     (updates: Partial<T>, options?: { resetPage?: boolean }) => {
+      const prevParams = new URLSearchParams(searchParams.toString());
       const newParams = new URLSearchParams(searchParams.toString());
 
       Object.entries(updates).forEach(([key, value]) => {
         const serialized = config.serialize(key, value);
+
         if (
           serialized === null ||
           serialized === undefined ||
@@ -40,6 +42,11 @@ export const useSearchParamsManager = <T extends Record<string, any>>(
 
       if (options?.resetPage) {
         newParams.set("page", "1");
+      }
+
+      // ⛔ STOP terus push kalau tidak ada perubahan
+      if (newParams.toString() === prevParams.toString()) {
+        return;
       }
 
       router.push(`?${newParams.toString()}`, { scroll: false });

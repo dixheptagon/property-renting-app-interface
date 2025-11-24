@@ -5,34 +5,36 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { axiosInstance } from "@/lib/axios";
 import { PropertyListParams, PropertyListResponse } from "../_types";
+import { useMemo } from "react";
 
 export const usePropertyList = () => {
   const searchParams = useSearchParams();
 
-  // Build query parameters from URL search params (exclude client-side handled params)
-  const queryParams: PropertyListParams = {
-    location: searchParams.get("location") || undefined,
-    checkin: searchParams.get("checkin") || undefined,
-    checkout: searchParams.get("checkout") || undefined,
-    category: searchParams.get("category") || undefined,
-    sortBy: searchParams.get("sortBy") || undefined,
-    page: searchParams.get("page") || undefined,
-    limit: searchParams.get("limit") || undefined,
-    // sortBy, page, limit handled client-side
-  };
+  const queryParams: PropertyListParams = useMemo(() => {
+    return {
+      location: searchParams.get("location") || undefined,
+      checkin: searchParams.get("checkin") || undefined,
+      checkout: searchParams.get("checkout") || undefined,
+      category: searchParams.get("category") || undefined,
+      sortBy: searchParams.get("sortBy") || undefined,
+      page: searchParams.get("page") || undefined,
+      limit: searchParams.get("limit") || undefined,
+    };
+  }, [searchParams.toString()]);
 
-  // Create query key that includes all parameters for proper caching
-  const queryKey = [
-    "properties",
-    queryParams.location,
-    queryParams.checkin,
-    queryParams.checkout,
-    queryParams.category,
-    queryParams.sortBy,
-    queryParams.page,
-    queryParams.limit,
-    // sortBy, page, limit handled client-side
-  ];
+  const queryKey = useMemo(
+    () => [
+      "properties",
+      queryParams.location,
+      queryParams.checkin,
+      queryParams.checkout,
+      queryParams.category,
+      queryParams.sortBy,
+      queryParams.page,
+      queryParams.limit,
+    ],
+    [queryParams]
+  );
 
   const { data, isLoading, isError, error, refetch, isFetching } =
     useQuery<PropertyListResponse>({
@@ -50,9 +52,6 @@ export const usePropertyList = () => {
       refetchOnWindowFocus: false,
       // Cache for 5 minutes
       staleTime: 5 * 60 * 1000,
-      // Retry failed requests
-      retry: 3,
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     });
 
   return {

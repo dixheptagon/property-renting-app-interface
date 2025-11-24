@@ -10,15 +10,10 @@ function useDebounce<T>(value: T, delay: number = 500): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
-    // Set timeout untuk update nilai setelah delay
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+    if (debouncedValue === value) return;
 
-    // Bersihkan timeout jika value atau delay berubah sebelum delay selesai
-    return () => {
-      clearTimeout(handler);
-    };
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
   }, [value, delay]);
 
   return debouncedValue;

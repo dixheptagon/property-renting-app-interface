@@ -54,9 +54,7 @@ export const usePropertyList = () => {
       refetchOnWindowFocus: false,
       // Cache for 5 minutes
       staleTime: 5 * 60 * 1000,
-      // Retry failed requests
-      retry: 3,
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+      retry: false,
     });
 
   return {
