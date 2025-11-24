@@ -71,6 +71,7 @@ export const usePurchaseList = () => {
     queryFn: () => fetchPurchaseList(params),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
+    retry: false,
   });
 
   // Extract data from response
