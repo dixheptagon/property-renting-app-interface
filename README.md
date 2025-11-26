@@ -1,168 +1,238 @@
-# Purwadhika Final Project Repository
+# Staysia - Property Renting App Interface
 
-This project use Next.js for frontend framework. It is used to build both a mini-project and a final-project for students of the Job Connector Web Development program.
+[![Next.js](https://img.shields.io/badge/Next.js-15.3.1-black)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.0.0-blue)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 
-📃 Rules
+A modern, responsive web application for property renting, built with Next.js. Staysia allows users to browse, search, and book properties seamlessly, with integrated payment processing and user authentication.
 
-        ⌨️ Commit & Pull Request
+## Table of Contents
 
-            ✔️ Selalu gunakan `conventional commit message` saat melakukan commit atau pada saat `creating pull request`: https://www.conventionalcommits.org/en/v1.0.0/
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-            ✔️ `Squash and Merge` pull request menuju ke `branch main`
+## Features
 
+- 🏠 **Property Browsing**: Explore a wide range of properties including houses, apartments, hotels, villas, and rooms.
+- 🔍 **Advanced Search & Filtering**: Filter properties by location, category, price, amenities, and more.
+- 📅 **Booking System**: Easy-to-use booking flow with date selection and room availability checking.
+- 💳 **Payment Integration**: Secure payment processing via Midtrans payment gateway.
+- ⭐ **Review System**: Read and write reviews for properties.
+- ❤️ **Wishlist**: Save favorite properties for later.
+- 🔐 **User Authentication**: Firebase-based authentication with role-based access (guest, tenant).
+- 📱 **Responsive Design**: Optimized for desktop and mobile devices.
+- 🗺️ **Location Integration**: Google Maps integration for property locations.
+- 📊 **Dashboard**: Manage bookings, properties, and user profiles.
 
-        🏷️ Standarisasi Penamaan
+## Technology Stack
 
-            📂 Penamaan File
+### Frontend
 
-                ✔️ Gunakan Format Penamaan yang Sama untuk Directory atau Files:
-                        ▪️Format penamaan directory dan file di dalam 1 project harus konsisten dan seragam antara 1 developer dengan developer lainnya.
-                        ▪️Untuk penamaan yang lebih dari 1 suku kata bisa menggunakan format `camelCase`.
-                        ▪️Example: page.tsx, productCard.tsx
+- **Framework**: Next.js 15.3.1
+- **Language**: TypeScript 5.0
+- **Styling**: Tailwind CSS 4.1.14
+- **UI Components**: Radix UI
+- **State Management**: Zustand 5.0.8
+- **Data Fetching**: TanStack React Query 5.90.2
+- **Forms**: Formik 2.4.6 with Yup validation
+- **Charts**: Recharts 2.15.4
 
-                ✔️ Gunakan Nama File yang Deskriptif:
-                        ▪️Pilih nama yang secara akurat menggambarkan konten dari file tersebut.
-                        ▪️Hindari nama file yang terlalu umum seperti `utils.ts` atau `decode.ts`.
+### Backend & Database
 
-                ✔️ Ikuti Standarisasi Penamaan File untuk Jenis File Tertentu:
-                        ▪️Untuk file konfigurasi, gunakan nama seperti .env, config.js, atau settings.json.
-                        ▪️Gunakan penamaan yang konsisten untuk file test, seperti menambahkan .test.js atau .spec.js ke nama file yang sedang diuji.
+- **Database**: PostgreSQL
+- **ORM**: Prisma
+- **Authentication**: Firebase Auth
+- **Storage**: Firebase Storage
+- **Payment Gateway**: Midtrans
 
-# 📘 Git & GitHub Collaboration Guideline
+### Development Tools
 
-✨ Tujuan
+- **Linting**: ESLint 9
+- **Code Formatting**: Prettier
+- **Commit Linting**: Husky + Commitlint
+- **Package Manager**: npm
 
-Panduan ini dibuat untuk membantu tim developer dalam berkolaborasi menggunakan Git dan GitHub secara efisien, rapi, dan terstruktur.
+## Prerequisites
 
-📂 Struktur Branch
+Before running this project, ensure you have the following installed:
 
-        ▪️main\*
-        Branch utama yang mencerminkan kode production atau versi yang sudah stable. Semua fitur yang rilis ditandai dari branch ini (misalnya dengan tag v.1.0.).
-        ⚠️ Developer tidak diperbolehkan melakukan development langsung di branch main.
+- **Node.js** (version 18 or higher)
+- **npm** or **yarn**
+- **PostgreSQL** database
+- **Git**
 
-        ▪️develop/\*
-        Branch untuk integrasi seluruh fitur baru sebelum di rilis ke production. Semua fitur dan bugfix digabung kesini terlebih dahulu melalui Pull Request. Bisa dianggap sebagai versi staging sebelum masuk ke branch main.
+## Installation
 
-        ▪️feat/\*
-        Prefix untuk pengembangan fitur baru. Branch ini dibuat based on branch develop dan akan di-merge kembali ke branch develop setelah selesai.
+1. **Clone the repository:**
 
-        Contoh: feat/login-page, feat/user-profile.
+   ```bash
+   git clone https://github.com/your-username/property-renting-app-interface.git
+   cd property-renting-app-interface
+   ```
 
-        ▪️ bugfix/\*
-        Digunakan untuk memperbaiki bug non-kritis yang ditemukan saat fase development. Dibuat based on branch
-        develop, dan setelah selesai diperbaiki akan di-merge kembali ke branch develop.
+2. **Install dependencies:**
 
-        Contoh: bugfix/fix-password-validation.
+   ```bash
+   npm install
+   ```
 
-        ▪️hotfix/\*
-        Untuk perbaikan darurat terhadap masalah kritis di production. Dibuat based on branch main, dan setelah selesai, hasil perbaikan harus di-merge ke branch main dan branch develop untuk menjaga sinkronisasi.
+3. **Set up environment variables:**
+   Copy `.env.example` to `.env.local` and fill in the required values (see [Environment Variables](#environment-variables) section).
 
-        Contoh: hotfix/fix-crash-on-payment.
+4. **Set up the database:**
+   - Ensure PostgreSQL is running
+   - Update the `DIRECT_URL` in your environment variables
+   - Run Prisma migrations:
+     ```bash
+     npx prisma migrate dev
+     ```
 
-🌱 Alur Kerja Git (Git Flow)
+5. **Generate Prisma client:**
+   ```bash
+   npx prisma generate
+   ```
 
-        • Checkout ke branch develop
-                ➡️ git checkout develop
+## Environment Variables
 
-        • Buat branch baru based on branch develop:
+Create a `.env.local` file in the root directory and add the following variables:
 
-                Format:
-                ➡️ git checkout -b branch-type/nama-fitur
+```env
+# API Configuration
+NEXT_PUBLIC_API_URL=your_api_url
+NEXT_PUBLIC_BASE_URL=your_base_url
 
-                Contoh:
-                ➡️ git checkout -b feat/login-page
-                ➡️ git checkout -b bugfix/fix-login-error
+# Firebase Configuration
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
 
-        • Lakukan pengerjaan fitur ataupun perbaikan (bug fixing)
-        • Commit perubahan dengan format yang jelas. Gunakan format commit yang deskriptif, misalnya:
+# Payment Gateway (Midtrans)
+NEXT_PUBLIC_MIDTRANS_CLIENT_KEY=your_midtrans_client_key
+NEXT_PUBLIC_MIDTRANS_API_URL=your_midtrans_api_url
 
-                Format:
-                ➡️ git add .
-                ➡️ git commit -m “<type>: <deskripsi>”
+# Database
+DIRECT_URL=your_postgresql_connection_string
+```
 
-                Contoh:
-                ➡️ git commit -m “feat: implement login page layout”
-                                        ➡️ git commit -m “fix: fix axios error response”
+## Usage
 
-        • Push branch ke remote
+1. **Development server:**
 
-                Format:
-                ➡️ git push origin  branch-type/nama-fitur
+   ```bash
+   npm run dev
+   ```
 
-                Contoh:
-                ➡️ git push origin feat/login-page
-                ➡️ git push origin bugfix/fix-login-error
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-        • Lakukan create Compare & Pull Request (PR) menuju ke branch develop
-        • Pull Request akan di review dan approve oleh Project Manager (PM)
-        • Apabila:
+2. **Build for production:**
 
-                ❌ Pull Request belum mendapatkan approval oleh PM dan butuh perbaikan, lakukan perbaikan tersebut di local. Setelah perbaikan selesai, lakukan ulang commit dan push branch ke remote. ⚠️Tidak perlu melakukan `Compare and Pull Request` lagi!
+   ```bash
+   npm run build
+   npm start
+   ```
 
-                ✅ Pull Request telah mendapatkan approval oleh PM, lakukan `Merge Pull Request`
+3. **Linting:**
+   ```bash
+   npm run lint
+   ```
 
-🔤 Format Commit Message (Conventional Commits)
+## Project Structure
 
-Conventional Commit adalah sebuah standar penulisan pesan commit (commit message) yang terstruktur dan konsisten, digunakan untuk mempermudah:
+```
+src/
+├── app/                          # Next.js app directory
+│   ├── (landing-page)/           # Landing page route group
+│   ├── (explore-properties)/     # Property exploration pages
+│   ├── (properties)/             # Property-specific pages (details, booking, payment)
+│   ├── layout.tsx                # Root layout
+│   └── page.tsx                  # Home page
+├── components/                   # Reusable UI components
+│   ├── providers/                # Context providers
+│   └── ui/                       # Base UI components
+├── hooks/                        # Custom React hooks
+├── lib/                          # Utility libraries and configurations
+└── types/                        # TypeScript type definitions
 
-• Membaca riwayat perubahan (changelog).
+public/                           # Static assets
+├── data/                         # Static data files
+├── logo/                         # Logo assets
+└── background/                   # Background images
 
-• Review dan kolaborasi tim.
+prisma/                           # Database schema (if separate)
+```
 
-        Format:
-        <type>(optional-scope): short description
+## Contributing
 
-        Contoh:
-        ➡️ feat(auth): add JWT middleware
-        ➡️ fix(schedule): fix timezone bug
-        ➡️ docs(readme): update setup instruction
+We welcome contributions! Please follow these steps:
 
-⌨️ Commit Type:
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Open a pull request
 
-        ▪️feat
-        Menambahkan fitur baru pada code atau aplikasi.
-        Contoh: menambah halaman login, fitur notifikasi, filter pencarian, dll.
+### Development Guidelines
 
-        ▪️fix
-        Melakukan perbaikan bug/error yang memengaruhi fungsionalitas.
-        Contoh: memperbaiki validasi form, memperbaiki crash saat submit, dll.
+- Follow the existing code style
+- Write meaningful commit messages (enforced by commitlint)
+- Add tests for new features
+- Update documentation as needed
+- Ensure all linting passes: `npm run lint`
 
-        ▪️docs
-        Perubahan pada dokumentasi saja, tidak menyentuh kode program.
-        Contoh: update README, komentar dokumentasi, wiki internal, dll.
+### Git & GitHub Collaboration Guidelines
 
-        ▪️style
-        Perubahan yang hanya menyangkut gaya penulisan kode tanpa mengubah logika atau perilaku.
-        Contoh: perbaikan indentasi, penyesuaian whitespace, penghapusan baris kosong.
+#### Branch Structure
 
-        ▪️refactor
-        Melakukan perubahan struktur kode tanpa menambah fitur atau memperbaiki bug.
-        Tujuannya untuk meningkatkan kualitas kode, readability, atau efisiensi.
-        test Menambahkan atau memodifikasi kode pengujian (unit/integration test).
-        Contoh: menambahkan test case baru, memperbaiki test yang gagal.
+- `main`: Production branch (no direct development)
+- `develop`: Integration branch for features
+- `feat/*`: New features (e.g., `feat/login-page`)
+- `bugfix/*`: Non-critical bug fixes (e.g., `bugfix/fix-validation`)
+- `hotfix/*`: Critical production fixes
 
-        ▪️chore
-        Perubahan kecil atau non-kode yang tidak berdampak langsung ke aplikasi.
-        Contoh: instalasi dependensi, update dependensi, perubahan script, konfigurasi CI/CD, rename file, dll.
+#### Git Flow
 
-🔀 Pull Request (PR) Rules
+1. Checkout to develop: `git checkout develop`
+2. Create feature branch: `git checkout -b feat/your-feature`
+3. Work on feature and commit with conventional commits
+4. Push: `git push origin feat/your-feature`
+5. Create Pull Request to develop
+6. After approval, merge via Squash and Merge
 
-        • Judul PR harus jelas, contoh: feat(auth): implement login endpoint
-        • Deskripsikan perubahan dan tujuan PR
-        • Tambahkan screenshot (jika relevan)
-        • Assign minimal 1 reviewer
-        • Hindari PR besar; jika perlu, pecah menjadi beberapa PR kecil
+#### Conventional Commits
 
-⛔ Hal yang Harus Dihindari
+Use format: `<type>(scope): description`
 
-        • Push langsung ke branch main maupun branch develop
-        • Pesan commit tanpa deskripsi jelas
-        • PR besar tanpa penjelasan
-        • Menghapus branch orang lain tanpa izin
+Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
-✅ Checklist Sebelum Merge
+Examples:
 
-        • Apakah sudah lulus testing?
-        • Apakah telah di review oleh rekan satu tim?
-        • Apakah sudah tidak ada confilcit pada saat melakukan merge?
-        • Apakah sudah melakukan update dokumentasi (jika perlu)?
+- `feat(auth): add JWT middleware`
+- `fix(schedule): fix timezone bug`
+- `docs(readme): update setup instruction`
+
+#### Pull Request Rules
+
+- Clear title and description
+- Add screenshots if relevant
+- Assign reviewers
+- Keep PRs small and focused
+
+## License
+
+This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Built with ❤️ using Next.js and TypeScript.
+© 2025 Staysia - Forentino Haryanto
