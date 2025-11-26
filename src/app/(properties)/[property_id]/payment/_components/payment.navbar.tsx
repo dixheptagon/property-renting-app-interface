@@ -39,24 +39,26 @@ export default function PaymentNavbar() {
         </div>
 
         {/* Mobile Steps - Visible only on mobile */}
-        <div className="flex justify-between md:hidden">
+        <div className="grid grid-cols-3 justify-between md:hidden">
           {/* Mobile Logo */}
           <MobileLogo />
 
           <ReservationStep currentStep={2} />
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`mr-3 text-blue-800 lg:hidden ${scrolled ? "" : "z-60"}`}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+          <div className="flex justify-end">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`mr-3 text-blue-800 lg:hidden ${scrolled ? "" : "z-60"}`}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu Overlay */}

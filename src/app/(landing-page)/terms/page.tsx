@@ -16,7 +16,7 @@ export default function TermsPage() {
       <Navbar />
       <main className="min-h-screen bg-linear-to-br from-slate-50 via-white to-green-50">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20">
+        <section className="relative overflow-hidden px-3 py-20">
           {/* Background Image */}
           <Image
             src="/background/landing-page.jpg"

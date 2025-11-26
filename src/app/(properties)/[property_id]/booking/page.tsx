@@ -11,7 +11,7 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <div className="mx-3 mt-20 mb-10 min-h-full">
+    <div className="mx-3 mt-25 mb-10 min-h-full lg:mt-20">
       <div className="mx-auto max-w-7xl">
         <Button
           id="modify-booking"

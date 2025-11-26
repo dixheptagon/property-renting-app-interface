@@ -12,5 +12,9 @@ export const useGetBooking = (orderId: string) => {
       return response.data;
     },
     enabled: !!orderId,
+    refetchOnMount: "always",
+    staleTime: 0,
+    gcTime: 10 * 60 * 1000, // 10 minutes
+    retry: false,
   });
 };

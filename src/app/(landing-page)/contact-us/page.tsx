@@ -10,7 +10,7 @@ export default function ContactUsPage() {
 
       <main className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-35">
+        <section className="relative overflow-hidden px-3 py-35">
           {/* Background Image */}
           <Image
             src="/background/landing-page.jpg"

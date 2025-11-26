@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 
 export function useReplyReview({
@@ -8,6 +8,8 @@ export function useReplyReview({
   onSuccess?: () => void;
   onError?: () => void;
 }) {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async ({
       bookingUid,
@@ -26,6 +28,19 @@ export function useReplyReview({
       return response.data;
     },
     onSuccess: (data) => {
+      // Invalidate awaiting reviews query to refresh the list
+      queryClient.invalidateQueries({
+        queryKey: ["awaiting-reviews"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["completed-reviews"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["review-ratings-data"],
+      });
+
       onSuccess && onSuccess();
     },
     onError: (error) => {

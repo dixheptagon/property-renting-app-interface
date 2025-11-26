@@ -22,7 +22,7 @@ const menuItems = [
   {
     icon: ShoppingBag,
     label: "Purchase List",
-    href: "/user",
+    href: "/user/purchase-list",
     description: "View your orders",
   },
   {

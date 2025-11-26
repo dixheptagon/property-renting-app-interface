@@ -41,9 +41,8 @@ export default function UploadProperty() {
       );
 
       resetStore();
-      setTimeout(() => {
-        router.push("/");
-      }, 4000);
+
+      router.push("/");
     },
     onError: (error) => {
       if (error?.response?.data?.error) {
@@ -93,7 +92,7 @@ export default function UploadProperty() {
               <LoaderCircle className="h-4 w-4 animate-spin text-amber-500" />
               <AlertDescription>
                 <p className="text-amber-600">
-                  Please wait while your image is being uploaded.
+                  Please wait while your property is being uploaded...
                 </p>
               </AlertDescription>
             </Alert>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Logo } from "./navbar-component/logo";
+import { usePathname, useRouter } from "next/navigation.js";
 
 const scrollToSection = (href: string) => {
   if (href.startsWith("/#")) {
@@ -14,6 +15,9 @@ const scrollToSection = (href: string) => {
 };
 
 export default function Footer() {
+  const path = usePathname();
+  const router = useRouter();
+
   const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
@@ -21,6 +25,11 @@ export default function Footer() {
     if (href.startsWith("/#")) {
       e.preventDefault();
       scrollToSection(href);
+
+      if (path !== "/") {
+        router.push("/");
+        scrollToSection(href);
+      }
     }
   };
 

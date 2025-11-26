@@ -29,9 +29,9 @@ export function useTenantVerification({
     },
     onSuccess: (data) => {
       // Invalidate and refetch tenant profile data
-      queryClient.invalidateQueries({ queryKey: ["tenant-profile"] });
       toast.success("Verification submitted successfully!");
       onSuccess?.(data);
+      queryClient.invalidateQueries({ queryKey: ["tenant-profile"] });
     },
     onError: (error: any) => {
       toast.error(

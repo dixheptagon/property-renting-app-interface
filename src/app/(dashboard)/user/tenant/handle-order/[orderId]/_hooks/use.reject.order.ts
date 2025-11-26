@@ -4,6 +4,7 @@ import {
   RejectOrderParams,
   RejectOrderResponse,
 } from "../_types/order.details.type";
+import { toast } from "sonner";
 
 export const useRejectOrder = () => {
   const queryClient = useQueryClient();
@@ -21,14 +22,28 @@ export const useRejectOrder = () => {
       return response.data;
     },
     onSuccess: (data, orderId) => {
+      toast.success(data?.message || "Order rejected successfully");
+
       // Invalidate and refetch booking data after successful rejection
       queryClient.invalidateQueries({
         queryKey: ["order-list", orderId],
       });
 
-      // Optionally invalidate any booking lists
       queryClient.invalidateQueries({
         queryKey: ["order-list"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["my-bookings"],
+      });
+
+      // Optionally invalidate any booking lists
+      queryClient.invalidateQueries({
+        queryKey: ["booking", orderId],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["purchase-list"],
       });
     },
   });

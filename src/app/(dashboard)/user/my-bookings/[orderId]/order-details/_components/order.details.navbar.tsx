@@ -41,7 +41,7 @@ export default function OrderDetailsNavbar() {
         </div>
 
         {/* Mobile Steps - Visible only on mobile */}
-        <div className="grid grid-cols-3 gap-2 md:hidden">
+        <div className="grid grid-cols-3 gap-2 py-3 md:hidden">
           {/* Mobile Logo */}
           <div className="mx-4 flex items-center gap-2">
             <Button
@@ -50,11 +50,11 @@ export default function OrderDetailsNavbar() {
             >
               <ChevronLeft className="h-4 w-4 text-gray-600 transition-transform group-hover:-translate-x-0.5" />
             </Button>
-
-            <MobileLogo />
           </div>
 
-          <ReservationStep currentStep={3} />
+          <div className="mx-auto">
+            <MobileLogo />
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -68,6 +68,11 @@ export default function OrderDetailsNavbar() {
               <Menu className="h-6 w-6" />
             )}
           </button>
+        </div>
+
+        <div className="flex w-full items-center gap-2 bg-blue-100 p-2 lg:hidden">
+          <div className="h-2 w-2 rounded-full bg-blue-500" />
+          <h1 className="text-sm font-bold text-blue-700">View Order</h1>
         </div>
 
         {/* Mobile Menu Overlay */}

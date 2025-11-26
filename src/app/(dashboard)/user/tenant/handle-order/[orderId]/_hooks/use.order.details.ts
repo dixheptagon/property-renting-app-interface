@@ -11,6 +11,9 @@ export const useGetBooking = (orderId: string) => {
       );
       return response.data;
     },
+    refetchOnMount: "always",
+    staleTime: 0,
+    gcTime: 10 * 60 * 1000, // 10 minutes
     enabled: !!orderId,
   });
 };

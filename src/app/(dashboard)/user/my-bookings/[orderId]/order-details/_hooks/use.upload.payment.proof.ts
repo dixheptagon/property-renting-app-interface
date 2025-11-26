@@ -48,9 +48,17 @@ export const useUploadPaymentProof = () => {
           queryKey: ["booking", variables.orderId],
         });
 
+        queryClient.invalidateQueries({
+          queryKey: ["order-list"],
+        });
+
         // Optionally invalidate any booking lists
         queryClient.invalidateQueries({
-          queryKey: ["bookings"],
+          queryKey: ["my-bookings"],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: ["purchase-list"],
         });
       },
 

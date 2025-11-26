@@ -19,18 +19,25 @@ export const useCancelOrder = () => {
       return response.data;
     },
     onSuccess: (data, orderId) => {
+      toast.success(data?.message || "Order cancelled successfully");
+
       // Invalidate and refetch booking data after successful rejection
       queryClient.invalidateQueries({
         queryKey: ["booking", orderId],
       });
 
-      // Optionally invalidate any booking lists
       queryClient.invalidateQueries({
-        queryKey: ["bookings"],
+        queryKey: ["order-list"],
       });
 
-      toast.success(data?.message || "Order cancelled successfully");
-      window.location.reload();
+      // Optionally invalidate any booking lists
+      queryClient.invalidateQueries({
+        queryKey: ["my-bookings"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["purchase-list"],
+      });
     },
   });
 };

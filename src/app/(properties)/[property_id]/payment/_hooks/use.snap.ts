@@ -2,6 +2,7 @@ import {
   MIDTRANS_API_URL,
   MIDTRANS_CLIENT_KEY,
 } from "@/app/(properties)/[property_id]/payment/_utils/env";
+import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -10,6 +11,8 @@ export const useSnap = () => {
   // Get Property_Id
   const params = useParams();
   const property_id = params.property_id;
+
+  const queryClient = useQueryClient();
 
   const [snap, setSnap] = useState<any>(null);
 
@@ -50,8 +53,20 @@ export const useSnap = () => {
         embedId,
         onSuccess: (result: any) => {
           toast.success("Payment successful!");
-          // Redirect to success page
-          //   window.location.href = `/${property_id}/confirmed`;
+
+          // Invalidate and refetch booking data after successful completion
+          queryClient.invalidateQueries({
+            queryKey: ["order-list"],
+          });
+
+          // Optionally invalidate any booking lists
+          queryClient.invalidateQueries({
+            queryKey: ["my-bookings"],
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: ["purchase-list"],
+          });
         },
         onPending: (result: any) => {
           toast.info("Payment is being processed...");

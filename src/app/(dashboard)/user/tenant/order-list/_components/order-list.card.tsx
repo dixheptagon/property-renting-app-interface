@@ -71,7 +71,7 @@ export default function OrderListCard({ order }: OrderListCardProps) {
         </div>
 
         {/* Action Button */}
-        <Link href={`/tenant/handle-order`}>
+        <Link href={`/user/tenant/handle-order/${order.orderId}`}>
           {/* /tenant/handle-order/${order.id} */}
           <Button className="w-full rounded-lg bg-linear-to-r from-blue-600 to-blue-700 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:from-blue-700 hover:to-blue-800 hover:shadow-lg">
             <ExternalLink className="mr-2 h-4 w-4" />

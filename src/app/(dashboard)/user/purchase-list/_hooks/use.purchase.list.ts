@@ -69,7 +69,8 @@ export const usePurchaseList = () => {
   } = useQuery({
     queryKey: ["purchase-list", params],
     queryFn: () => fetchPurchaseList(params),
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnMount: "always",
+    staleTime: 0,
     gcTime: 10 * 60 * 1000, // 10 minutes
     retry: false,
   });

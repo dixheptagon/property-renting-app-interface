@@ -37,24 +37,28 @@ export default function BookingNavbar() {
         </div>
 
         {/* Mobile Steps - Visible only on mobile */}
-        <div className="flex justify-between md:hidden">
+        <div className="grid w-full grid-cols-3 justify-around md:hidden">
           {/* Mobile Logo */}
           <MobileLogo />
 
-          <ReservationStep currentStep={1} />
+          <div>
+            <ReservationStep currentStep={1} />
+          </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`mr-3 text-blue-800 lg:hidden ${scrolled ? "" : "z-60"}`}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+          <div className="flex justify-end">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`mr-3 text-blue-800 lg:hidden ${scrolled ? "" : "z-60"}`}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu Overlay */}

@@ -29,8 +29,9 @@ export const usePropertyReport = () => {
       );
       return response.data;
     },
+    refetchOnMount: "always",
     enabled: !!params.property_uid && !!params.selected_date,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 0,
     gcTime: 10 * 60 * 1000, // 10 minutes
     retry: false,
   });

@@ -33,6 +33,15 @@ export const useWriteReview = ({
       queryClient.invalidateQueries({
         queryKey: ["awaiting-reviews"],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["completed-reviews"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["review-ratings-data"],
+      });
+
       SuccessResponse && SuccessResponse(data);
     },
     onError: ErrorResponse,

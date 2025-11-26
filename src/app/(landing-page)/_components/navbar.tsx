@@ -90,7 +90,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Sidebar */}
       <div
-        className={`fixed top-0 right-0 z-40 h-full w-[280px] transform bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed top-0 right-0 z-60 h-full w-[280px] transform bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
