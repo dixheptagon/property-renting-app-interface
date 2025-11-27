@@ -29,7 +29,9 @@ export default function OrderDetailsForm({
   };
 
   const enableQrCode =
-    booking.status === "processing" || booking.status === "completed";
+    booking.status === "processing" ||
+    booking.status === "confirmed" ||
+    booking.status === "completed";
 
   return (
     <div className="relative mx-auto max-w-4xl">
