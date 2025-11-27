@@ -1,0 +1,15 @@
+export const CREATE_PROPERTY_STEPS = [
+  { label: "Create Property", value: "/create-property" },
+  { label: "Guidelines", value: "/create-property/guidelines" },
+  { label: "Select Category", value: "/create-property/select-category" },
+  { label: "Title & Description", value: "/create-property/title-description" },
+  { label: "Location", value: "/create-property/location" },
+  { label: "Map Spot", value: "/create-property/map-spot" },
+  { label: "Amenities", value: "/create-property/amenities" },
+  { label: "Rules", value: "/create-property/rules" },
+  { label: "Images", value: "/create-property/images" },
+  { label: "Manage Rooms", value: "/create-property/manage-rooms" },
+  { label: "Create Peak Rate", value: "/create-property/peak-season-rate" },
+  { label: "Unavailabilities", value: "/create-property/unavailabilities" },
+  { label: "Summary", value: "/create-property/summary" },
+];
