@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useScrolled } from "@/hooks/use.scrolled";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

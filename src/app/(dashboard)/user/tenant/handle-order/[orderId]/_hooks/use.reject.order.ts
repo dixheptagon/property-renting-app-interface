@@ -37,9 +37,8 @@ export const useRejectOrder = () => {
         queryKey: ["my-bookings"],
       });
 
-      // Optionally invalidate any booking lists
       queryClient.invalidateQueries({
-        queryKey: ["booking", orderId],
+        queryKey: ["booking"],
       });
 
       queryClient.invalidateQueries({

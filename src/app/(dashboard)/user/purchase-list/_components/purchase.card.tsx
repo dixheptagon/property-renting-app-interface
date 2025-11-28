@@ -22,6 +22,11 @@ export default function PurchaseCard({ purchase }: PurchaseCardProps) {
     return statusObj ? statusObj.label : status;
   };
 
+  const href =
+    purchase.status === "pending_payment"
+      ? `/${purchase.order_id}/payment`
+      : `my-bookings/${purchase.order_id}/order-details`;
+
   return (
     <div className="relative rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md md:mt-4">
       <div className="mb-3 flex items-start justify-between">
@@ -82,7 +87,7 @@ export default function PurchaseCard({ purchase }: PurchaseCardProps) {
         </div>
       </div>
 
-      <Link href={`my-bookings/${purchase.order_id}/order-details`}>
+      <Link href={href}>
         <Button className="mt-4 w-full bg-blue-600 hover:bg-blue-700">
           <ExternalLink className="mr-2 h-4 w-4" />
           View Details

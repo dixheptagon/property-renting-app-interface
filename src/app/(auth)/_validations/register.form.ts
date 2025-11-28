@@ -12,8 +12,8 @@ export const RegisterFormValidationSchema = Yup.object().shape({
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")
     .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
-      "Password must contain at least one letter and one number"
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{}\[\]|;:'",.<>/?`~\\]).{8,}$/,
+      "Password must contain at least one letter, one number, and one special charater"
     ),
   confirm_password: Yup.string()
     .required("Confirm password is required")
