@@ -28,6 +28,12 @@ export default function BookingCard({ booking }: BookingCardProps) {
   // Get status configuration
   const statusConfig = getBookingStatusConfig(booking.status);
   const StatusIcon = statusConfig.icon;
+
+  const href =
+    booking.status === "pending_payment"
+      ? `/${booking.order_id}/payment`
+      : `my-bookings/${booking.order_id}/order-details`;
+
   return (
     <div className="group relative mt-4 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:border-blue-400 hover:shadow-xl">
       <div className="relative flex flex-col gap-4 p-4 sm:flex-row sm:p-6">
@@ -121,10 +127,7 @@ export default function BookingCard({ booking }: BookingCardProps) {
 
             {/* Action Button */}
             <Button className="group/btn w-full px-6 py-6 transition-all hover:bg-blue-700 hover:shadow-lg sm:w-auto">
-              <Link
-                href={`my-bookings/${booking.order_id}/order-details`}
-                className="flex items-center gap-2"
-              >
+              <Link href={href} className="flex items-center gap-2">
                 See Details
                 <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
               </Link>

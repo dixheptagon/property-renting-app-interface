@@ -31,14 +31,13 @@ export function Login({ className, ...props }: React.ComponentProps<"div">) {
       storeAuth(data?.data);
       storeEmail(data?.data?.user?.email);
       toast.success(data?.message);
-      // router.push("/");
+      router.push("/");
     },
     onError: (error) => {
       if (error?.response?.data?.error) {
         toast.error(error.response?.data.error);
       } else {
         toast.error("Something went wrong, please try again later.");
-        // router.push("/");
       }
     },
   });

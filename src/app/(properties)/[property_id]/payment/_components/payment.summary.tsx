@@ -1,26 +1,19 @@
 "use client";
 
-import Image from "next/image";
-import {
-  Calendar,
-  Clock,
-  CreditCard,
-  FileText,
-  Moon,
-  MapPin,
-} from "lucide-react";
-import { useBookingStore } from "../../../_stores/booking.store";
-import { usePaymentStore } from "../../../_stores/payment.store";
+import { Calendar, Clock, CreditCard, FileText, Moon } from "lucide-react";
 import { formatDate } from "../_utils/format.date";
 import { formatPrice } from "../_utils/format.price";
 import { getTotalNights } from "../_utils/get.total.nights";
 import PaymentProofUpload from "./form-components/upload.payment.proof";
 import { useRouter } from "next/navigation";
+import { BookingResponse } from "../_types/order.details.type.js";
 
-export default function PaymentSummary() {
-  const paymentState = usePaymentStore();
-
-  const order = paymentState.orderResponse?.data.order;
+export default function PaymentSummary({
+  bookingResponse,
+}: {
+  bookingResponse?: BookingResponse;
+}) {
+  const order = bookingResponse?.data;
 
   const router = useRouter();
 
@@ -106,7 +99,9 @@ export default function PaymentSummary() {
               </div>
               <div>
                 <p className="text-lg font-bold text-gray-800">
-                  {formatDate(order?.check_in_date) || "N/A"}
+                  {order?.check_in_date
+                    ? formatDate(new Date(order.check_in_date))
+                    : "N/A"}
                 </p>
                 <p className="text-sm text-gray-600">14:00</p>
               </div>
@@ -120,7 +115,9 @@ export default function PaymentSummary() {
               </div>
               <div>
                 <p className="text-lg font-bold text-gray-800">
-                  {formatDate(order?.check_out_date) || "N/A"}
+                  {order?.check_out_date
+                    ? formatDate(new Date(order.check_out_date))
+                    : "N/A"}
                 </p>
                 <p className="text-sm text-gray-600">12:00</p>
               </div>
@@ -131,7 +128,12 @@ export default function PaymentSummary() {
           <div className="flex flex-col items-center justify-center rounded-lg border border-purple-200 bg-linear-to-br from-purple-50 to-violet-50 p-4 md:col-span-2">
             <Moon className="mb-2 h-8 w-8 text-purple-600" />
             <span className="text-2xl font-bold text-gray-800">
-              {getTotalNights(order?.check_in_date, order?.check_out_date)}
+              {order?.check_in_date && order?.check_out_date
+                ? getTotalNights(
+                    new Date(order.check_in_date),
+                    new Date(order.check_out_date)
+                  )
+                : "N/A"}
             </span>
             <span className="text-sm text-gray-600">nights</span>
           </div>

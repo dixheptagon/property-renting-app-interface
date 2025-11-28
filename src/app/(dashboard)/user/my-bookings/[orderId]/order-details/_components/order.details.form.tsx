@@ -82,6 +82,7 @@ export default function OrderDetailsForm({
             )}
           </div>
         )}
+
         {/* QR Code and Instructions */}
         <div className="grid gap-6 md:grid-cols-2">
           {/* QR Code Section */}
